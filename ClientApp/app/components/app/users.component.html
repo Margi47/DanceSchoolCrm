@@ -1,0 +1,20 @@
+﻿<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Status</th>
+        <th><button>Add</button></th>
+    </tr> 
+    <tr *ngFor="let user of users">
+        <td>{{user.id}}</td>
+        <td>{{user.name}}</td>
+        <td>{{user.phone}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.active}}</td>
+        <td><button>Edit</button></td>
+        <td><button>Delete</button></td>
+        <td><button (click)="showDetails(user)">Show Details</button></td>
+     </tr>
+</table>
