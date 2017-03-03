@@ -10,6 +10,7 @@ import { Router } from '@angular/router'
 
 export class UserListComponent {
     users : User[];
+    selectedUser : User
 
     constructor( private router: Router, private userService: UserService) { }
 
@@ -21,7 +22,11 @@ export class UserListComponent {
         this.userService.addUser(1,"smith", "123", "sdgf", false,false,false);
     }
 
-    showDetails(): void {
-        this.router.navigate(['/detail']);
+    showDetails(user : User): void {
+        this.selectedUser = user;
+    }
+
+    goToList(): void {
+        this.selectedUser = null;
     }
 }

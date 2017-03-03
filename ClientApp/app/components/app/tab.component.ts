@@ -3,9 +3,9 @@
 @Component({
     selector: 'tab',
     template: `
-        <div [hidden]="!active" class="pane">
-            <ng-content></ng-content>
-        </div>
+    <div [hidden]="!active" class="pane">
+      <ng-content></ng-content>
+    </div>
     `
 })
 export class TabComponent {

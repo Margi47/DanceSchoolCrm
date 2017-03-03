@@ -7,7 +7,8 @@ import { UserListComponent } from './components/app/user-list.component';
 import { UserDetailComponent } from './components/app/user-detail.component';
 import { TabsComponent } from './components/app/tabs.component';
 import { TabComponent } from './components/app/tab.component';
-import { UsersComponent } from './components/app/users.component'
+import { UsersComponent } from './components/app/users.component';
+import { GroupsComponent } from './components/app/groups.component';
 
 import { UserService } from './components/app/user.service';
 
@@ -19,7 +20,8 @@ import { UserService } from './components/app/user.service';
         UserDetailComponent,
         TabsComponent,
         TabComponent,
-        UsersComponent
+        UsersComponent,
+        GroupsComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.

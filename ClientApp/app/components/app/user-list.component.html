@@ -1,4 +1,4 @@
-﻿<table>
+﻿<table *ngIf="!selectedUser">
     <tr>
         <th>Id</th>
         <th>Name</th>
@@ -15,6 +15,13 @@
         <td>{{user.active}}</td>
         <td><button>Edit</button></td>
         <td><button>Delete</button></td>
-        <td><button (click)="showDetails()">Show Details</button></td>
+        <td><button (click)="showDetails(user)">Show Details</button></td>
      </tr>
 </table>
+
+<div *ngIf="selectedUser">
+    <button (click)="goToList()">Back</button>
+    <h2>
+        {{selectedUser.name | uppercase}}
+    </h2>
+</div>
