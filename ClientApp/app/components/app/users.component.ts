@@ -1,23 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { User } from './user';
-import { UserService } from './user.service';
-import { Router } from '@angular/router'
+﻿import { Component } from '@angular/core';
 
 @Component({
-    selector: 'users-list',
-    templateUrl: './users.component.html'
+    selector: 'users',
+    template: `<users-list></users-list>`
 })
-
 export class UsersComponent {
-    users : User[];
-
-    constructor( private router: Router, private userService: UserService) { }
-
-    ngOnInit(): void {
-        this.userService.getUsers().then((u)=>this.users = u)
-    }
-
-    showDetails(): void {
-        this.router.navigate(['/detail']);
-    }
 }

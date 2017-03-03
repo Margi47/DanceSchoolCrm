@@ -5,7 +5,7 @@
         <th>Phone</th>
         <th>Email</th>
         <th>Status</th>
-        <th><button>Add</button></th>
+        <th><button (click)="addUser()">Add</button></th>
     </tr> 
     <tr *ngFor="let user of users">
         <td>{{user.id}}</td>

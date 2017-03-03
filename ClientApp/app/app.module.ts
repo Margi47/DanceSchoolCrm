@@ -1,20 +1,25 @@
 import { NgModule } from '@angular/core';
 import { UniversalModule } from 'angular2-universal';
+import { AppRoutingModule } from './app-routing.module';
+
 import { AppComponent } from './components/app/app.component';
-import { UsersComponent } from './components/app/users.component';
-import { UserDetailComponent } from './components/app/user-detail.component'
+import { UserListComponent } from './components/app/user-list.component';
+import { UserDetailComponent } from './components/app/user-detail.component';
+import { TabsComponent } from './components/app/tabs.component';
+import { TabComponent } from './components/app/tab.component';
+import { UsersComponent } from './components/app/users.component'
 
 import { UserService } from './components/app/user.service';
-
-import { AppRoutingModule } from './app-routing.module'
-
 
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [
         AppComponent,
-        UsersComponent,
-        UserDetailComponent
+        UserListComponent,
+        UserDetailComponent,
+        TabsComponent,
+        TabComponent,
+        UsersComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
