@@ -31,7 +31,7 @@ export class UserListComponent {
     }
 
     delete(): void {
-        
+        this.userService.deleteUser(this.selectedUser)
         this.goToList();
     }
 }

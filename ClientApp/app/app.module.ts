@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { UniversalModule } from 'angular2-universal';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
 
 import { AppComponent } from './components/app/app.component';
 import { UserListComponent } from './components/app/user-list.component';
@@ -25,7 +26,8 @@ import { UserService } from './components/app/user.service';
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
-        AppRoutingModule
+        AppRoutingModule,
+        FormsModule
     ],
     providers: [UserService]
 })

@@ -1,5 +1,34 @@
 ﻿<div *ngIf="user">
     <h2>{{user.name}}</h2>
-    <button>Edit</button>
+    <div>
+        <div><label>Id: {{user.id}}</label></div>
+        <div>
+            <label>Name:</label><input [(ngModel)]="user.name">
+        </div>
+        <div>
+            <label>Phone:</label><input [(ngModel)]="user.phone">
+        </div>
+        <div>
+            <label>Email:</label><input [(ngModel)]="user.email">
+        </div>
+        <div>
+            <label>
+                Is Active
+                <input type="checkbox" name="isActive" [(ngModel)]="user.active">
+            </label>
+        </div>
+        <div>
+            <label>
+                Is Admin
+                <input type="checkbox" name="isAdmin" [(ngModel)]="user.isAdmin">
+            </label>
+        </div>
+        <div>
+            <label>
+                Is Teacher
+                <input type="checkbox" name="isTeacher" [(ngModel)]="user.iaTeacher">
+            </label>
+        </div>
+    </div>
     <button (click)="delete()">Delete</button>
 </div>

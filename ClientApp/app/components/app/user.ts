@@ -5,5 +5,5 @@
     email: string;
     active: boolean;
     isAdmin: boolean;
-    isTeacher: boolean
+    isTeacher: boolean;
 }
