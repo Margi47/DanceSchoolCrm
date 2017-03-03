@@ -29,4 +29,9 @@ export class UserListComponent {
     goToList(): void {
         this.selectedUser = null;
     }
+
+    delete(): void {
+        
+        this.goToList();
+    }
 }

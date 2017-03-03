@@ -20,4 +20,8 @@ export class UserService {
         user.isTeacher = isTeacher;
         USERS.push(user);
     }
+
+    deleteUser(user: User): void {
+        USERS.splice(USERS.indexOf(user), 1);
+    }
 }
