@@ -1,35 +1,42 @@
 ﻿<button (click)="goBack()">Back</button>
-<div *ngIf="user">
-    <h2>{{user.name}}</h2>
-    <div>
-        <div><label>Id: {{user.id}}</label></div>
-        <div>
-            <label>Name:</label><input [(ngModel)]="user.name">
-        </div>
-        <div>
-            <label>Phone:</label><input [(ngModel)]="user.phone">
-        </div>
-        <div>
-            <label>Email:</label><input [(ngModel)]="user.email">
-        </div>
-        <div>
-            <label>
-                Is Active
-                <input type="checkbox" name="isActive" [(ngModel)]="user.active">
-            </label>
-        </div>
-        <div>
-            <label>
-                Is Admin
-                <input type="checkbox" name="isAdmin" [(ngModel)]="user.isAdmin">
-            </label>
-        </div>
-        <div>
-            <label>
-                Is Teacher
-                <input type="checkbox" name="isTeacher" [(ngModel)]="user.iaTeacher">
-            </label>
-        </div>
-    </div>
+<div *ngIf="model">
+        <div><label>Id: {{model.id}}</label></div>
+        <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+            <div>
+                <label>Name</label>
+                <input type="text"
+                       required
+                       [(ngModel)]="model.name"
+                       name="name">
+            </div>
+            <div>
+                <label>Phone number</label>
+                <input type="text"
+                       [(ngModel)]="model.phone"
+                       name="phone">
+            </div>
+            <div>
+                <label>Email</label>
+                <input type="text"
+                       [(ngModel)]="model.email"
+                       name="email">
+            </div>
+            <div>
+                <label>Is Active</label>
+                <input type="checkbox" [(ngModel)]="model.active"
+                       name="active">
+            </div>
+            <div>
+                <label>Is Admin</label>
+                <input type="checkbox" [(ngModel)]="model.isAdmin"
+                       name="admin">
+            </div>
+            <div>
+                <label>Is Teacher</label>
+                <input type="checkbox" [(ngModel)]="model.isTeacher"
+                       name="teacher">
+            </div>
+            <button type="submit" [disabled]="!heroForm.form.valid">Save</button>
+        </form>
     <button (click)="delete()">Delete</button>
 </div>

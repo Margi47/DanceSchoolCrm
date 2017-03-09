@@ -11,7 +11,8 @@ import { Location } from '@angular/common';
 })
 
 export class UserDetailComponent implements OnInit{
-    user: User
+    user: User;
+    model: User;
 
     constructor(private router: ActivatedRoute,
                 private service: UserService,
@@ -22,11 +23,18 @@ export class UserDetailComponent implements OnInit{
         this.goBack();
     }
 
+
     ngOnInit(): void {
-        this.router.params.switchMap((params: Params) => this.service.getUser(+params['id'])).subscribe(user => this.user = user);
+        this.router.params
+            .switchMap((params: Params) => this.service.getUser(+params['id']))
+            .subscribe(user => this.model =  Object.assign({}, user));
+    }
+
+    onSubmit(): void {
+        this.goBack();
     }
 
     goBack(): void {
-        this.location.back();
+         this.location.back();
     }
 }
