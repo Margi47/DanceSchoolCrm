@@ -19,7 +19,7 @@ export class UserListComponent {
     }
 
     addUser(): void {
-        this.userService.addUser(1,"smith", "123", "sdgf", false,false,false);
+        this.router.navigate(['/userForm']);
     }
 
     showDetails(id: Number): void {

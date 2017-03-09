@@ -10,6 +10,8 @@ import { TabsComponent } from './components/app/tabs.component';
 import { TabComponent } from './components/app/tab.component';
 import { UsersComponent } from './components/app/users.component';
 import { GroupsComponent } from './components/app/groups.component';
+import { UserFormComponent } from './components/app/user-form.component';
+
 
 
 import { UserService } from './components/app/user.service';
@@ -24,7 +26,7 @@ import { UserService } from './components/app/user.service';
         TabComponent,
         UsersComponent,
         GroupsComponent,
-
+        UserFormComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.

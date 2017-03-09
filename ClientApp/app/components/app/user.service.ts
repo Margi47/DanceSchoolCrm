@@ -14,15 +14,7 @@ export class UserService {
             .then(users => users.find(user => user.id === id));
     }
 
-    addUser(id: number, name: string, phone: string, email: string, isActive: boolean, isAdmin: boolean, isTeacher: boolean): void {
-        var user = new User();
-        user.id = id;
-        user.name = name;
-        user.phone = phone;
-        user.email = email;
-        user.active = isActive;
-        user.isAdmin = isAdmin;
-        user.isTeacher = isTeacher;
+    addUser(user: User): void {
         USERS.push(user);
     }
 

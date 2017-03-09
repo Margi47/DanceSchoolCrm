@@ -41,4 +41,5 @@
                name="teacher">
     </div>
     <button type="submit" [disabled]="!heroForm.form.valid">Submit</button>
+    <button (click)="onCancel(); heroForm.reset()">Cancel</button>
 </form>
