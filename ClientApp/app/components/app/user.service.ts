@@ -9,6 +9,11 @@ export class UserService {
         return Promise.resolve(USERS);
     }
 
+    getUser(id: number): Promise<User> {
+        return this.getUsers()
+            .then(users => users.find(user => user.id === id));
+    }
+
     addUser(id: number, name: string, phone: string, email: string, isActive: boolean, isAdmin: boolean, isTeacher: boolean): void {
         var user = new User();
         user.id = id;

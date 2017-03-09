@@ -22,16 +22,7 @@ export class UserListComponent {
         this.userService.addUser(1,"smith", "123", "sdgf", false,false,false);
     }
 
-    showDetails(user : User): void {
-        this.selectedUser = user;
-    }
-
-    goToList(): void {
-        this.selectedUser = null;
-    }
-
-    delete(): void {
-        this.userService.deleteUser(this.selectedUser)
-        this.goToList();
+    showDetails(id: Number): void {
+        this.router.navigate(['detail', id]);
     }
 }

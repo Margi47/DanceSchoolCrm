@@ -1,4 +1,4 @@
-﻿<table *ngIf="!selectedUser">
+﻿<table>
     <tr>
         <th>Id</th>
         <th>Name</th>
@@ -13,11 +13,8 @@
         <td>{{user.phone}}</td>
         <td>{{user.email}}</td>
         <td>{{user.active}}</td>
-        <td><button (click)="showDetails(user)">Show Details</button></td>
+        <td><button (click)="showDetails(user.id)">Show Details</button></td>
+        <!--<td><a [routerLink]="['/detail', user.id]">Show Details</a></td>-->
      </tr>
 </table>
 
-<div *ngIf="selectedUser">
-    <button (click)="goToList()">Back</button>
-    <user-detail [user] ="selectedUser" (userDeleted)="delete($event)"></user-detail>
-</div>
