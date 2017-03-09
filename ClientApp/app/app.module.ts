@@ -11,6 +11,7 @@ import { TabComponent } from './components/app/tab.component';
 import { UsersComponent } from './components/app/users.component';
 import { GroupsComponent } from './components/app/groups.component';
 
+
 import { UserService } from './components/app/user.service';
 
 @NgModule({
@@ -22,7 +23,8 @@ import { UserService } from './components/app/user.service';
         TabsComponent,
         TabComponent,
         UsersComponent,
-        GroupsComponent
+        GroupsComponent,
+
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.

@@ -1,0 +1,44 @@
+﻿<form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+    <div>
+        <label>Id</label>
+        <input type="text"
+               required
+               [(ngModel)]="model.id"
+               name="id">
+    </div>
+    <div>
+        <label>Name</label>
+        <input type="text"
+               required
+               [(ngModel)]="model.name"
+               name="name">
+    </div>
+    <div>
+        <label>Phone number</label>
+        <input type="text"
+               [(ngModel)]="model.phone"
+               name="phone">
+    </div>
+    <div>
+        <label>Email</label>
+        <input type="text"
+               [(ngModel)]="model.email"
+               name="email">
+    </div>
+    <div>
+        <label>Is Active</label>
+        <input type="checkbox" [(ngModel)]="model.active"
+               name="active">
+    </div>
+    <div>
+        <label>Is Admin</label>
+        <input type="checkbox" [(ngModel)]="model.isAdmin"
+               name="admin">
+    </div>
+    <div>
+        <label>Is Teacher</label>
+        <input type="checkbox" [(ngModel)]="model.isTeacher"
+               name="teacher">
+    </div>
+    <button type="submit" [disabled]="!heroForm.form.valid">Submit</button>
+</form>
