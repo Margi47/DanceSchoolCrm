@@ -23,6 +23,6 @@ export class GroupListComponent {
     }
 
     showDetails(id: Number): void {
-        //this.router.navigate(['detail', id]);
+        this.router.navigate(['groupdetail', id]);
     }
 }

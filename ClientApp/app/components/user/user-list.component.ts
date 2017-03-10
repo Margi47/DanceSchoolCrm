@@ -23,6 +23,6 @@ export class UserListComponent {
     }
 
     showDetails(id: Number): void {
-        this.router.navigate(['detail', id]);
+        this.router.navigate(['userdetail', id]);
     }
 }

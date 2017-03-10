@@ -18,7 +18,12 @@ export class GroupService {
         GROUPS.push(group);
     }
 
-    deleteGroup(group: Group): void {
-        GROUPS.splice(GROUPS.indexOf(group), 1);
+    deleteGroup(id: number): void {
+        this.getGroup(id).then(group => GROUPS.splice(GROUPS.indexOf(group), 1));
+    }
+
+    update(groupData: Group) {
+        this.getGroup(groupData.id).then(group => this.deleteGroup(group.id));
+        GROUPS.push(groupData);
     }
 }

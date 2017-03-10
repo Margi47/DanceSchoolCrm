@@ -1,7 +1,7 @@
 ﻿<button (click)="goBack()">Back</button>
 <div *ngIf="model">
         <div><label>Id: {{model.id}}</label></div>
-        <form (ngSubmit)="onSubmit()" #heroForm="ngForm">
+        <form (ngSubmit)="onSubmit()" #userForm="ngForm">
             <div>
                 <label>Name</label>
                 <input type="text"
@@ -36,7 +36,7 @@
                 <input type="checkbox" [(ngModel)]="model.isTeacher"
                        name="teacher">
             </div>
-            <button type="submit" [disabled]="!heroForm.form.valid">Save</button>
+            <button type="submit" [disabled]="!userForm.form.valid">Save</button>
         </form>
     <button (click)="delete()">Delete</button>
 </div>

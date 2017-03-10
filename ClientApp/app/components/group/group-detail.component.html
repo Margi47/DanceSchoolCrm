@@ -1,0 +1,26 @@
+﻿<button (click)="goBack()">Back</button>
+<div *ngIf="model">
+    <div><label>Id: {{model.id}}</label></div>
+    <form (ngSubmit)="onSubmit()" #groupForm="ngForm">
+        <div>
+            <label>Name</label>
+            <input type="text"
+                   required
+                   [(ngModel)]="model.name"
+                   name="name">
+        </div>
+        <div>
+            <label>Description</label>
+            <input type="text"
+                   [(ngModel)]="model.description"
+                   name="description">
+        </div>
+        <div>
+            <label>Is Active</label>
+            <input type="checkbox" [(ngModel)]="model.active"
+                   name="active">
+        </div>
+        <button type="submit" [disabled]="!groupForm.form.valid">Save</button>
+    </form>
+    <button (click)="delete()">Delete</button>
+</div>
