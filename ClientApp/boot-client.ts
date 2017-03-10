@@ -1,7 +1,7 @@
 import 'angular2-universal-polyfills/browser';
 import { enableProdMode } from '@angular/core';
 import { platformUniversalDynamic } from 'angular2-universal';
-import { AppModule } from './app/app.module';
+import { AppModule } from './app/components/app/app.module';
 import 'bootstrap';
 const rootElemTagName = 'app'; // Update this if you change your root component selector
 

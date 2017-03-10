@@ -4,7 +4,7 @@ import 'zone.js';
 import { createServerRenderer, RenderResult } from 'aspnet-prerendering';
 import { enableProdMode } from '@angular/core';
 import { platformNodeDynamic } from 'angular2-universal';
-import { AppModule } from './app/app.module';
+import { AppModule } from './app/components/app/app.module';
 
 enableProdMode();
 const platform = platformNodeDynamic();

@@ -1,0 +1,17 @@
+﻿<table>
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Status</th>
+        <th><button (click)="addGroup()">Add</button></th>
+    </tr>
+    <tr *ngFor="let group of groups">
+        <td>{{group.id}}</td>
+        <td>{{group.name}}</td>
+        <td>{{group.description}}</td>
+        <td>{{group.active}}</td>
+        <td><button (click)="showDetails(group.id)">Show Details</button></td>
+        <!--<td><a [routerLink]="['/detail', user.id]">Show Details</a></td>-->
+    </tr>
+</table>
