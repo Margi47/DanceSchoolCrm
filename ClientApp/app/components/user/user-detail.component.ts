@@ -11,7 +11,6 @@ import { Location } from '@angular/common';
 })
 
 export class UserDetailComponent implements OnInit{
-    user: User;
     model: User;
 
     constructor(private router: ActivatedRoute,
@@ -19,7 +18,7 @@ export class UserDetailComponent implements OnInit{
                 private location: Location) { }
 
     delete() {
-        this.service.deleteUser(this.user);
+        this.service.deleteUser(this.model.id);
         this.goBack();
     }
 
@@ -31,6 +30,7 @@ export class UserDetailComponent implements OnInit{
     }
 
     onSubmit(): void {
+        this.service.update(this.model);
         this.goBack();
     }
 

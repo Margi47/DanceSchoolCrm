@@ -18,7 +18,12 @@ export class UserService {
         USERS.push(user);
     }
 
-    deleteUser(user: User): void {
-        USERS.splice(USERS.indexOf(user), 1);
+    deleteUser(id: number): void {
+        this.getUser(id).then(user=>  USERS.splice(USERS.indexOf(user), 1));
+    }
+
+    update(userData: User) {
+        this.getUser(userData.id).then(user => this.deleteUser(user.id));
+        USERS.push(userData);
     }
 }
