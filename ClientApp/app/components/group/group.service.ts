@@ -11,7 +11,10 @@ export class GroupService {
 
     getGroup(id: number): Promise<Group> {
         return this.getGroups()
-            .then(groups => groups.find(group => group.id === id));
+            .then(groups => {
+                var g = groups.find(group => group.id === id);
+                return g;
+            });
     }
 
     addGroup(group: Group): void {

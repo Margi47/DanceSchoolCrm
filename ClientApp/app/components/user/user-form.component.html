@@ -1,45 +1,57 @@
-﻿<form (ngSubmit)="onSubmit()" #userForm="ngForm">
-    <div>
-        <label>Id</label>
-        <input type="text"
-               required
-               [(ngModel)]="model.id"
-               name="id">
-    </div>
-    <div>
-        <label>Name</label>
-        <input type="text"
-               required
-               [(ngModel)]="model.name"
-               name="name">
-    </div>
-    <div>
-        <label>Phone number</label>
-        <input type="text"
-               [(ngModel)]="model.phone"
-               name="phone">
-    </div>
-    <div>
-        <label>Email</label>
-        <input type="text"
-               [(ngModel)]="model.email"
-               name="email">
-    </div>
-    <div>
-        <label>Is Active</label>
-        <input type="checkbox" [(ngModel)]="model.active"
-               name="active">
-    </div>
-    <div>
-        <label>Is Admin</label>
-        <input type="checkbox" [(ngModel)]="model.isAdmin"
-               name="admin">
-    </div>
-    <div>
-        <label>Is Teacher</label>
-        <input type="checkbox" [(ngModel)]="model.isTeacher"
-               name="teacher">
-    </div>
-    <button type="submit" [disabled]="!heroForm.form.valid">Submit</button>
-    <button (click)="onCancel(); heroForm.reset()">Cancel</button>
+﻿<form (ngSubmit)="onSubmit()" #userForm="ngForm" class="col-sm-6">
+        <div class="form-group">
+            <label for="id">Id</label>
+            <input type="number" 
+                   class="form-control" 
+                   id="id"
+                   required
+                   [(ngModel)]="model.id"
+                   name="id">
+        </div>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text"
+                   class="form-control" 
+                   id="name"
+                   required
+                   [(ngModel)]="model.name"
+                   name="name">
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input type="text"
+                   class="form-control" 
+                   id="phone"
+                   [(ngModel)]="model.phone"
+                   name="phone">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email"
+                   class="form-control" 
+                   id="email"
+                   [(ngModel)]="model.email"
+                   name="email">
+        </div>
+        <div class="form-group">          
+            <input type="checkbox" 
+                   [(ngModel)]="model.active"
+                   name="active">
+            <label>Is Active</label>
+        </div>
+        <div class="form-group">
+            <input type="checkbox"  
+                   [(ngModel)]="model.isAdmin"
+                   name="admin">
+            <label>Is Admin</label>
+        </div>
+        <div class="form-group">
+            
+            <input type="checkbox" 
+                   [(ngModel)]="model.isTeacher"
+                   name="teacher">
+            <label>Is Teacher</label>
+        </div>
+        <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Submit</button>
+        <button (click)="onCancel(); userForm.reset()" class="btn btn-default">Cancel</button>
 </form>

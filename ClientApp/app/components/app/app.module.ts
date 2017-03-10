@@ -11,6 +11,7 @@ import { UserFormComponent } from '../user/user-form.component';
 
 import { GroupListComponent } from '../group/group-list.component';
 import { GroupDetailComponent } from '../group/group-detail.component';
+import { GroupFormComponent } from '../group/group-form.component';
 
 import { UserService } from '../user/user.service';
 import { GroupService } from '../group/group.service';
@@ -24,7 +25,8 @@ import { GroupService } from '../group/group.service';
         UsersComponent,
         UserFormComponent,
         GroupListComponent,
-        GroupDetailComponent
+        GroupDetailComponent,
+        GroupFormComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.

@@ -26,7 +26,7 @@ export class GroupDetailComponent implements OnInit {
     ngOnInit(): void {
         this.router.params
             .switchMap((params: Params) => this.service.getGroup(+params['id']))
-            .subscribe(group => this.model = Object.assign({}, group));
+            .subscribe(group => { console.log(group); this.model = Object.assign({}, group); });
     }
 
     onSubmit(): void {

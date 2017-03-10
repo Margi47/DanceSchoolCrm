@@ -18,11 +18,12 @@ export class GroupListComponent {
         this.groupService.getGroups().then((g) => this.groups = g)
     }
 
-    addUser(): void {
-       // this.router.navigate(['/userForm']);
+    addGroup(): void {
+        this.router.navigate(['/groupform']);
     }
 
     showDetails(id: Number): void {
+        console.log(id);
         this.router.navigate(['groupdetail', id]);
     }
 }

@@ -18,8 +18,7 @@ export class UserFormComponent {
         this.location.back();
     }
 
-    onCancel(): void {
-        
+    onCancel(): void {       
         this.location.back();
     }
 }

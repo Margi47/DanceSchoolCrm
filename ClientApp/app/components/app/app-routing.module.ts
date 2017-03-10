@@ -7,6 +7,7 @@ import { UsersComponent } from '../user/users.component';
 import { UserFormComponent } from '../user/user-form.component';
 import { GroupListComponent } from '../group/group-list.component';
 import { GroupDetailComponent } from '../group/group-detail.component';
+import { GroupFormComponent } from '../group/group-form.component';
 
 const routes: Routes = [
     { path: '', redirectTo: '/userlist', pathMatch: 'full' },
@@ -14,7 +15,8 @@ const routes: Routes = [
     { path: 'userdetail/:id', component: UserDetailComponent },
     { path: 'userForm', component: UserFormComponent },
     { path: 'grouplist', component: GroupListComponent },
-    { path: 'groupdetail/:id', component: GroupDetailComponent }
+    { path: 'groupdetail/:id', component: GroupDetailComponent },
+    { path: 'groupform', component: GroupFormComponent }
 ];
 
 @NgModule({
