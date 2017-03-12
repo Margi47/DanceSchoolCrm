@@ -1,29 +1,36 @@
-﻿<form (ngSubmit)="onSubmit()" #groupForm="ngForm">
-    <div>
-        <label>Id</label>
+﻿<form (ngSubmit)="onSubmit()" #groupForm="ngForm" class="col-sm-6">
+    <div class="form-group">
+        <label for="id">Id</label>
         <input type="number"
+               class="form-control" 
+               id="id"
                required
                [(ngModel)]="model.id"
                name="id">
     </div>
-    <div>
-        <label>Name</label>
+    <div class="form-group">
+        <label for="name">Name</label>
         <input type="text"
+               class="form-control" 
+               id="name"
                required
                [(ngModel)]="model.name"
                name="name">
     </div>
-    <div>
-        <label>Description</label>
+    <div class="form-group">
+        <label for="description">Description</label>
         <input type="text"
+               class="form-control" 
+               id="description"
                [(ngModel)]="model.description"
                name="description">
     </div>
-    <div>
-        <label>Is Active</label>
-        <input type="checkbox" [(ngModel)]="model.active"
+    <div class="form-group">       
+        <input type="checkbox" 
+               [(ngModel)]="model.active"
                name="active">
+        <label>Is Active</label>
     </div>
-    <button type="submit" [disabled]="!groupForm.form.valid">Submit</button>
-    <button (click)="onCancel(); groupForm.reset()">Cancel</button>
+    <button type="submit" [disabled]="!groupForm.form.valid" class="btn btn-default">Submit</button>
+    <button (click)="onCancel(); groupForm.reset()" class="btn btn-default">Cancel</button>
 </form>
