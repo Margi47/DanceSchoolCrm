@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using angular.Models;
 
 namespace angular
 {
@@ -28,8 +30,13 @@ namespace angular
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var connectionString = "Data Source=.\\SQLEXPRESS;Initial Catalog=Crm;Integrated Security=True;MultipleActiveResultSets=True";
+            services.AddDbContext<CrmContext>(options =>
+                options.UseSqlServer(connectionString));
             // Add framework services.
             services.AddMvc();
+            
+            services.AddSingleton<IUserRepository, UserRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
