@@ -10,13 +10,18 @@ import { Router } from '@angular/router'
 
 export class UserListComponent {
     users : User[];
-    selectedUser : User
+    selectedUser: User
+    errorMessage: string;
 
     constructor( private router: Router, private userService: UserService) { }
 
     ngOnInit(): void {
-        this.userService.getUsers().then((u)=>this.users = u)
-    }
+        this.userService.getUsers()
+            .subscribe(
+            u => this.users = u,
+            error => this.errorMessage = <any>error);
+    };
+
 
     addUser(): void {
         this.router.navigate(['/userForm']);

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { UniversalModule } from 'angular2-universal';
 import { AppRoutingModule } from './app-routing.module';
 import { FormsModule } from '@angular/forms';
+import { HttpModule, JsonpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
 import { UserListComponent } from '../user/user-list.component';

@@ -18,7 +18,7 @@ export class UserDetailComponent implements OnInit{
                 private location: Location) { }
 
     delete() {
-        this.service.deleteUser(this.model.id);
+        this.service.deleteUser(this.model.id).subscribe();
         this.goBack();
     }
 
