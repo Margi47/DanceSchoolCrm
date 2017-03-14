@@ -24,7 +24,7 @@ namespace angular.Models
 
         public User Find(int key)
         {
-            return _context.Users.FirstOrDefault(t => t.Id == key);
+            return _context.Users.FirstOrDefault(u => u.Id == key);
         }
 
         public IEnumerable<User> GetAll()
@@ -34,7 +34,7 @@ namespace angular.Models
 
         public void Remove(int key)
         {
-            var entity = _context.Users.First(t => t.Id == key);
+            var entity = _context.Users.First(u => u.Id == key);
             _context.Users.Remove(entity);
             _context.SaveChanges();
         }

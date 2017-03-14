@@ -30,7 +30,7 @@ export class UserDetailComponent implements OnInit{
     }
 
     onSubmit(): void {
-        this.service.update(this.model);
+        this.service.update(this.model).subscribe(u => console.log(u));
         this.goBack();
     }
 

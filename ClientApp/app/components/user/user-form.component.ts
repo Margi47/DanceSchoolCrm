@@ -14,7 +14,7 @@ export class UserFormComponent {
     constructor(private service: UserService, private location: Location) { }
 
     onSubmit(): void {
-        this.service.addUser(this.model);
+        this.service.addUser(this.model).subscribe(u => console.log(u));
         this.location.back();
     }
 

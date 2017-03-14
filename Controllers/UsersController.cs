@@ -69,7 +69,7 @@ namespace angular.Controllers
             baseUser.IsTeacher = user.IsTeacher;
 
             _userRepository.Update(baseUser);
-            return new NoContentResult();
+            return new ObjectResult(baseUser);
         }
 
         [HttpDelete("{id}")]
@@ -82,7 +82,7 @@ namespace angular.Controllers
             }
 
             _userRepository.Remove(id);
-            return new NoContentResult();
+            return new ObjectResult(_userRepository.GetAll());
         }
     }
 }
