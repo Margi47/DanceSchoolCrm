@@ -18,7 +18,7 @@ export class UserDetailComponent implements OnInit{
                 private location: Location) { }
 
     delete() {
-        this.service.deleteUser(this.model.id).subscribe();
+        this.service.deleteUser(this.model.id).subscribe(res => console.log(res), error => console.log(error));
         this.goBack();
     }
 
@@ -30,7 +30,7 @@ export class UserDetailComponent implements OnInit{
     }
 
     onSubmit(): void {
-        this.service.update(this.model).subscribe(u => console.log(u));
+        this.service.update(this.model.id, this.model).subscribe(u => console.log(u));
         this.goBack();
     }
 

@@ -28,6 +28,7 @@ export class UserService {
 
     addUser(user: User): Observable<User[]> {
         var body = JSON.stringify(user);
+        console.log(body);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
@@ -37,18 +38,22 @@ export class UserService {
     }
 
     deleteUser(id: number): Observable<User[]> {
-        return this.http.delete(`${this.usersUrl}/${id}`)
-            .map((res: Response) => res.json())
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.delete(`${this.usersUrl}/${id}`, headers)
+            .map((res: Response) => { return; })
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 
-    update(userData: User): Observable<User> {
+    update(id:number, userData: User): Observable<User> {
         var body = JSON.stringify(userData);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.put(`${this.usersUrl}/${body['id']}`, body, options)
-            .map((res: Response) => res.json())
+        console.log(body);
+        return this.http.put(`${this.usersUrl}/${id}`, body, options)
+            .map((res: Response) => { return; })
             .catch((error: any) => Observable.throw(error.json().error || 'Server error'));
     }
 }

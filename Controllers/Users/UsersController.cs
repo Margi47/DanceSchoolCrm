@@ -4,8 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using angular.Models;
+using AutoMapper;
 
-namespace angular.Controllers
+namespace angular.Controllers.Users
 {
     [Route("api/[controller]")]
     public class UsersController : Controller
@@ -15,12 +16,21 @@ namespace angular.Controllers
         public UsersController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
+            
         }
 
         [HttpGet]
-        public IEnumerable<User> GetAll()
+        public IEnumerable<UserApiModel> GetAll()
         {
-            return _userRepository.GetAll();
+            var users = _userRepository.GetAll();
+            var result = new List<UserApiModel>();
+            foreach(var u in users)
+            {
+                var resultUser = Mapper.Map<User, UserApiModel>(u);
+                result.Add(resultUser);
+            }
+
+            return result.ToArray();
         }
 
         [HttpGet("{id}", Name = "GetUser")]
@@ -31,24 +41,27 @@ namespace angular.Controllers
             {
                 return NotFound();
             }
-            return new ObjectResult(user);
+
+            var result = Mapper.Map<User, UserApiModel>(user);
+            return new ObjectResult(result);
         }
 
         [HttpPost]
-        public IActionResult Create([FromBody] User user)
+        public IActionResult Create([FromBody] UserApiModel user)
         {
             if (user == null)
             {
                 return BadRequest();
             }
 
-            _userRepository.Add(user);
+            var result = Mapper.Map<UserApiModel, User>(user);
+            _userRepository.Add(result);
 
             return CreatedAtRoute("GetUser", new { id = user.Id }, user);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] User user)
+        public IActionResult Update(int id, [FromBody] UserApiModel user)
         {
             if (user == null || user.Id != id)
             {
@@ -60,7 +73,7 @@ namespace angular.Controllers
             {
                 return NotFound();
             }
-
+           
             baseUser.Name = user.Name;
             baseUser.Phone = user.Phone;
             baseUser.Email = user.Email;
@@ -69,7 +82,7 @@ namespace angular.Controllers
             baseUser.IsTeacher = user.IsTeacher;
 
             _userRepository.Update(baseUser);
-            return new ObjectResult(baseUser);
+            return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
@@ -82,7 +95,7 @@ namespace angular.Controllers
             }
 
             _userRepository.Remove(id);
-            return new ObjectResult(_userRepository.GetAll());
+            return new NoContentResult();
         }
     }
 }

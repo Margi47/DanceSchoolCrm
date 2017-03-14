@@ -12,8 +12,6 @@ namespace angular.Models
         public UserRepository(CrmContext context)
         {
             _context = context;
-            Add(new User {
-                Name = "Mr N", Phone = "12345678", Email = "asdf@dgh", IsActive = true, IsAdmin = false, IsTeacher = true });
         }
 
         public void Add(User user)

@@ -3,7 +3,7 @@
     name: string;
     phone: string;
     email: string;
-    active: boolean;
+    isActive: boolean;
     isAdmin: boolean;
     isTeacher: boolean;
 }
