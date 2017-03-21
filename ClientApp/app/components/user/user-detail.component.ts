@@ -1,36 +1,38 @@
-﻿import { Component, Input, Output, EventEmitter, OnInit} from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { User } from './user';
 import { UserService } from './user.service';
-import 'rxjs/add/operator/switchMap';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'user-detail',
-    templateUrl: './user-detail.component.html'
+    template: `<button (click)="goBack()" class="btn btn-default">Back</button>
+               <user-detail-form [model] = "model$ | async" 
+                                 (submit)="onSubmit($event)" 
+                                 (delete)="delete($event)">
+               </user-detail-form>`
 })
 
 export class UserDetailComponent implements OnInit{
-    model: User;
+    model$: Observable<User>;
 
     constructor(private router: ActivatedRoute,
                 private service: UserService,
                 private location: Location) { }
 
-    delete() {
-        this.service.deleteUser(this.model.id).subscribe(res => console.log(res), error => console.log(error));
+    delete(id: number) {
+        this.service.deleteUser(id).subscribe()
         this.goBack();
     }
 
 
     ngOnInit(): void {
-        this.router.params
-            .switchMap((params: Params) => this.service.getUser(+params['id']))
-            .subscribe(user => this.model =  Object.assign({}, user));
+        this.router.params.subscribe(params => this.model$ = this.service.getUser(+params['id']));
     }
 
-    onSubmit(): void {
-        this.service.update(this.model.id, this.model).subscribe(u => console.log(u));
+    onSubmit(user: User): void {
+        this.service.update(user.id, user).subscribe();
         this.goBack();
     }
 

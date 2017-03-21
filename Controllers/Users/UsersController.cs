@@ -16,21 +16,15 @@ namespace angular.Controllers.Users
         public UsersController(IUserRepository userRepository)
         {
             _userRepository = userRepository;
-            
         }
 
         [HttpGet]
         public IEnumerable<UserApiModel> GetAll()
         {
             var users = _userRepository.GetAll();
-            var result = new List<UserApiModel>();
-            foreach(var u in users)
-            {
-                var resultUser = Mapper.Map<User, UserApiModel>(u);
-                result.Add(resultUser);
-            }
+            var result = Mapper.Map<UserApiModel[]>(users);
 
-            return result.ToArray();
+            return result;
         }
 
         [HttpGet("{id}", Name = "GetUser")]
@@ -42,7 +36,7 @@ namespace angular.Controllers.Users
                 return NotFound();
             }
 
-            var result = Mapper.Map<User, UserApiModel>(user);
+            var result = Mapper.Map<UserApiModel>(user);
             return new ObjectResult(result);
         }
 
@@ -53,11 +47,11 @@ namespace angular.Controllers.Users
             {
                 return BadRequest();
             }
-
+            //do without mapper
             var result = Mapper.Map<UserApiModel, User>(user);
             _userRepository.Add(result);
 
-            return CreatedAtRoute("GetUser", new { id = user.Id }, user);
+            return CreatedAtRoute("GetUser", new { id = user.Id });
         }
 
         [HttpPut("{id}")]
@@ -67,7 +61,7 @@ namespace angular.Controllers.Users
             {
                 return BadRequest();
             }
-
+            
             var baseUser = _userRepository.Find(id);
             if (baseUser == null)
             {

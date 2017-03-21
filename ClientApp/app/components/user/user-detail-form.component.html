@@ -1,5 +1,4 @@
-﻿<button (click)="goBack()" class="btn btn-default">Back</button>
-<div *ngIf="model" style="margin-top:20px">
+﻿<div *ngIf="model" style="margin-top:20px">
         <form (ngSubmit)="onSubmit()" #userForm="ngForm" class="col-sm-6">
             <div><label>Id: {{model.id}}</label></div>
             <div class="form-group">
@@ -47,6 +46,6 @@
                 <label>Is Teacher</label>
             </div>
             <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Save changes</button>
-            <button (click)="delete()" class="btn btn-default">Delete user</button>
+            <button (click)="onDelete()" class="btn btn-default">Delete user</button>
         </form>
 </div>

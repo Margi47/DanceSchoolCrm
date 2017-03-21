@@ -7,8 +7,10 @@ import { HttpModule, JsonpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import { UserListComponent } from '../user/user-list.component';
 import { UserDetailComponent } from '../user/user-detail.component';
+import { UserDetailFormComponent } from '../user/user-detail-form.component';
 import { UsersComponent } from '../user/users.component';
-import { UserFormComponent } from '../user/user-form.component';
+import { UserAddComponent } from '../user/user-add.component';
+import { UserAddFormComponent } from '../user/user-add-form.component';
 
 import { GroupListComponent } from '../group/group-list.component';
 import { GroupDetailComponent } from '../group/group-detail.component';
@@ -23,8 +25,10 @@ import { GroupService } from '../group/group.service';
         AppComponent,
         UserListComponent,
         UserDetailComponent,
+        UserDetailFormComponent,
         UsersComponent,
-        UserFormComponent,
+        UserAddComponent,
+        UserAddFormComponent,
         GroupListComponent,
         GroupDetailComponent,
         GroupFormComponent

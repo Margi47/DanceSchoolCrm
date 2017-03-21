@@ -1,19 +1,19 @@
 ﻿import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
+import { UsersComponent } from '../user/users.component'
 import { UserListComponent } from '../user/user-list.component'
 import { UserDetailComponent } from '../user/user-detail.component';
-import { UsersComponent } from '../user/users.component';
-import { UserFormComponent } from '../user/user-form.component';
+import { UserAddComponent } from '../user/user-add.component';
 import { GroupListComponent } from '../group/group-list.component';
 import { GroupDetailComponent } from '../group/group-detail.component';
 import { GroupFormComponent } from '../group/group-form.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: '/userlist', pathMatch: 'full' },
-    { path: 'userlist', component: UserListComponent },
+    { path: '', redirectTo: '/users', pathMatch: 'full' },
+    { path: 'users', component: UsersComponent },
     { path: 'userdetail/:id', component: UserDetailComponent },
-    { path: 'userForm', component: UserFormComponent },
+    { path: 'useradd', component: UserAddComponent },
     { path: 'grouplist', component: GroupListComponent },
     { path: 'groupdetail/:id', component: GroupDetailComponent },
     { path: 'groupform', component: GroupFormComponent }
