@@ -4,6 +4,7 @@ import { UserService } from './user.service';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'user-detail',
@@ -17,13 +18,14 @@ import { Observable } from 'rxjs/Observable';
 export class UserDetailComponent implements OnInit{
     model$: Observable<User>;
 
-    constructor(private router: ActivatedRoute,
+    constructor(private r: Router,
+                private router: ActivatedRoute,
                 private service: UserService,
                 private location: Location) { }
 
     delete(id: number) {
-        this.service.deleteUser(id).subscribe()
-        this.goBack();
+        this.service.deleteUser(id).subscribe(() => this.goBack());
+        
     }
 
 
@@ -32,11 +34,11 @@ export class UserDetailComponent implements OnInit{
     }
 
     onSubmit(user: User): void {
-        this.service.update(user.id, user).subscribe();
-        this.goBack();
+        this.service.update(user.id, user).subscribe(() => this.goBack());
+        
     }
 
     goBack(): void {
-         this.location.back();
+        this.r.navigate(['/users']);
     }
 }
