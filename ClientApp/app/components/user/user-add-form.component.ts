@@ -8,9 +8,9 @@ import { User } from './user';
 export class UserAddFormComponent {
     model = new User();
 
-    @Output() save = new EventEmitter<User>()
-    @Output() cancel = new EventEmitter()
+    @Output() userSave = new EventEmitter<User>()
+    @Output() userCancel = new EventEmitter()
 
-    onSubmit() { this.save.emit(this.model); }
-    onCancel() { this.cancel.emit(); }
+    onUserSubmit() { this.userSave.emit(this.model); }
+    onUserCancel() { this.userCancel.emit(); }
 }

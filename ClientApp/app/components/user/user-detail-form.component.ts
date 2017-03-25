@@ -8,9 +8,9 @@ import { User } from './user';
 
 export class UserDetailFormComponent {
     @Input() model: User;
-    @Output() submit = new EventEmitter<User>();
-    @Output() delete = new EventEmitter<number>();
+    @Output() userSubmit = new EventEmitter<User>();
+    @Output() userDelete = new EventEmitter<number>();
 
-    onSubmit() { this.submit.emit(this.model); }
-    onDelete() { this.delete.emit(this.model.id); }
+    onUserSubmit(e) { this.userSubmit.emit(this.model); }
+    onUserDelete() { this.userDelete.emit(this.model.id); }
 }

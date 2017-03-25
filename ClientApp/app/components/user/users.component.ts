@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, NgZone } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { User } from './user';
 import { UserService } from './user.service';
 import { Router } from '@angular/router'
@@ -16,11 +16,11 @@ import { Observable } from 'rxjs/Observable';
 export class UsersComponent implements OnInit {
     users$: Observable<User[]>;
 
-    constructor(private zone: NgZone, private router: Router, private userService: UserService) { }
+    constructor(private router: Router, private userService: UserService) { }
 
     ngOnInit(): void {
-        this.zone.run(() => 
-        this.users$ = this.userService.getUsers());
+        this.users$ = this.userService.getUsers();
+        console.log("getting list");
     };
 
     addUser(): void {

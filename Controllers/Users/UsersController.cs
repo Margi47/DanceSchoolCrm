@@ -47,11 +47,13 @@ namespace angular.Controllers.Users
             {
                 return BadRequest();
             }
-            //do without mapper
+            
             var result = Mapper.Map<UserApiModel, User>(user);
             _userRepository.Add(result);
 
-            return CreatedAtRoute("GetUser", new { id = user.Id });
+            //return new ObjectResult(result);
+
+            return CreatedAtRoute("GetUser", new { id = result.Id }, result );
         }
 
         [HttpPut("{id}")]

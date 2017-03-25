@@ -47,7 +47,7 @@ export class UserService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        console.log(body);
+        console.log('before update');
         return this.http.put(`${this.usersUrl}/${id}`, body, options)
             .map((res: Response) => { return; });
     }

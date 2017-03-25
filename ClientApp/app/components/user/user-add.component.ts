@@ -8,18 +8,18 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'add-user',
     template: `
-<add-form (save)="onSubmit($event)" (cancel)="onCancel()"></add-form>`
+<add-form (userSave)="onUserSubmit($event)" (userCancel)="onUserCancel()"></add-form>`
 })
 export class UserAddComponent {
     constructor(private router: Router, private service: UserService, private location: Location) { }
 
-    onSubmit(user: User): void {
+    onUserSubmit(user: User): void {
         console.log(user);
         this.service.addUser(user).subscribe();
         this.router.navigate(['/users'])
     }
 
-    onCancel(): void {
+    onUserCancel(): void {
         this.router.navigate(['/users']);
     }
 }

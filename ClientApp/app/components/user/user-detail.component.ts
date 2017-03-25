@@ -10,8 +10,8 @@ import { Router } from '@angular/router';
     selector: 'user-detail',
     template: `<button (click)="goBack()" class="btn btn-default">Back</button>
                <user-detail-form [model] = "model$ | async" 
-                                 (submit)="onSubmit($event)" 
-                                 (delete)="delete($event)">
+                                 (userSubmit)="onUserSubmit($event)" 
+                                 (userDelete)="onUserDelete($event)">
                </user-detail-form>`
 })
 
@@ -23,19 +23,16 @@ export class UserDetailComponent implements OnInit{
                 private service: UserService,
                 private location: Location) { }
 
-    delete(id: number) {
-        this.service.deleteUser(id).subscribe(() => this.goBack());
-        
+    onUserDelete(id: number) {
+        this.service.deleteUser(id).subscribe(() => this.goBack());       
     }
-
 
     ngOnInit(): void {
         this.router.params.subscribe(params => this.model$ = this.service.getUser(+params['id']));
     }
 
-    onSubmit(user: User): void {
-        this.service.update(user.id, user).subscribe(() => this.goBack());
-        
+    onUserSubmit(user: User): void {      
+        this.service.update(user.id, user).subscribe(() => { this.goBack(); });        
     }
 
     goBack(): void {

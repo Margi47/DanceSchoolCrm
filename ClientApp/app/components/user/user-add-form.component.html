@@ -1,4 +1,4 @@
-﻿<form (ngSubmit)="onSubmit()" #userForm="ngForm" class="col-sm-6">
+﻿<form (ngSubmit)="onUserSubmit()" #userForm="ngForm" class="col-sm-6">
         <div class="form-group">
             <label for="name">Name</label>
             <input type="text"
@@ -44,5 +44,5 @@
             <label>Is Teacher</label>
         </div>
         <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Submit</button>
-        <button (click)="onCancel(); userForm.reset()" class="btn btn-default">Cancel</button>
+        <button (click)="onUserCancel(); userForm.reset()" class="btn btn-default" type="button">Cancel</button>
 </form>
