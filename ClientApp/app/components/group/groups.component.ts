@@ -1,25 +1,33 @@
 ﻿import { Component, OnInit } from '@angular/core';
 import { Group } from '../../models/group';
-import { GroupService } from '../../services/group.service';
 import { Router } from '@angular/router'
+import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';;
+import { AppState } from '../../reducers';
+import { GroupActions } from '../../actions/group.actions';
 
 @Component({
     selector: 'groups',
-    template: '<h1>groupsComponent</h1>'
+    template: `
+<group-list [groups]="groups$ | async" 
+            (addNewGroup) = "addGroup()" 
+            (groupDetails) = "showDetails($event)">
+</group-list>`
 })
 
 export class GroupsComponent {
-    groups: Group[];
-    selectedGroup: Group
+    groups$: Observable<any>;
 
-    constructor(private router: Router, private groupService: GroupService) { }
-
-    ngOnInit(): void {
-        this.groupService.getGroups().then((g) => this.groups = g)
+    constructor(
+        private store: Store<AppState>,
+        private groupActions: GroupActions,
+        private router: Router) {
+        this.groups$ = store.select('groups');
     }
 
     addGroup(): void {
-        this.router.navigate(['/groupform']);
+        console.log("navigating to add comp");
+        this.router.navigate(['/groupadd']);
     }
 
     showDetails(id: Number): void {

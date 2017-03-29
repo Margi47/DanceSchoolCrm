@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'add-user',
     template: `
-<add-form (userSave)="onUserSubmit($event)" (userCancel)="onUserCancel()"></add-form>`
+<user-add-form (userSave)="onUserSubmit($event)" (userCancel)="onUserCancel()"></user-add-form>`
 })
 export class UserAddComponent {
     constructor(private router: Router, private service: UserService, private location: Location) { }

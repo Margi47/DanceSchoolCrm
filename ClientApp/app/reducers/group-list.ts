@@ -10,11 +10,13 @@ export type GroupListState = Group[];
 const initialState: GroupListState = [];
 
 export default function (state = initialState, action: Action): GroupListState {
+    console.log(action);
     switch (action.type) {
         case GroupActions.LOAD_GROUPS_SUCCESS: {
             return action.payload;
         }
         case GroupActions.ADD_GROUP_SUCCESS: {
+            console.log("add from reducer");
             return [...state, action.payload];
         }
         case GroupActions.SAVE_GROUP_SUCCESS: {

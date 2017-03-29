@@ -1,7 +1,5 @@
-﻿import { Component, OnInit } from '@angular/core';
-import { Group } from './group';
-import { GroupService } from './group.service';
-import { Router } from '@angular/router'
+﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Group } from '../../models/group';
 
 @Component({
     selector: 'group-list',
@@ -9,21 +7,11 @@ import { Router } from '@angular/router'
 })
 
 export class GroupListComponent {
-    groups: Group[];
-    selectedGroup: Group
+    @Input() groups: Group[];
 
-    constructor(private router: Router, private groupService: GroupService) { }
+    @Output() addNewGroup = new EventEmitter();
+    @Output() groupDetails = new EventEmitter<number>();
 
-    ngOnInit(): void {
-        this.groupService.getGroups().then((g) => this.groups = g)
-    }
-
-    addGroup(): void {
-        this.router.navigate(['/groupform']);
-    }
-
-    showDetails(id: Number): void {
-        console.log(id);
-        this.router.navigate(['groupdetail', id]);
-    }
+    addGroup() { this.addNewGroup.emit(); }
+    showDetails(id: number) { this.groupDetails.emit(id); }
 }

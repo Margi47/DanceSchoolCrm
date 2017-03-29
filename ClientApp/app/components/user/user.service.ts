@@ -6,7 +6,6 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { User } from './user';
-import { USERS } from './mock-users';
 
 @Injectable()
 export class UserService {

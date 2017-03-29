@@ -2,7 +2,7 @@
 import { User } from './user';
 
 @Component({
-    selector: 'add-form',
+    selector: 'user-add-form',
     templateUrl: './user-add-form.component.html'
 })
 export class UserAddFormComponent {
