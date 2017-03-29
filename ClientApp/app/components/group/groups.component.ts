@@ -1,14 +1,14 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { Group } from './group';
-import { GroupService } from './group.service';
+import { Group } from '../../models/group';
+import { GroupService } from '../../services/group.service';
 import { Router } from '@angular/router'
 
 @Component({
-    selector: 'group-list',
-    templateUrl: './group-list.component.html'
+    selector: 'groups',
+    template: '<h1>groupsComponent</h1>'
 })
 
-export class GroupListComponent {
+export class GroupsComponent {
     groups: Group[];
     selectedGroup: Group
 

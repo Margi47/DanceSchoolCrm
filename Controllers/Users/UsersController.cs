@@ -51,8 +51,6 @@ namespace angular.Controllers.Users
             var result = Mapper.Map<UserApiModel, User>(user);
             _userRepository.Add(result);
 
-            //return new ObjectResult(result);
-
             return CreatedAtRoute("GetUser", new { id = result.Id }, result );
         }
 

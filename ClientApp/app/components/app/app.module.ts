@@ -12,12 +12,13 @@ import { UsersComponent } from '../user/users.component';
 import { UserAddComponent } from '../user/user-add.component';
 import { UserAddFormComponent } from '../user/user-add-form.component';
 
+import { GroupsComponent } from '../group/groups.component';
 import { GroupListComponent } from '../group/group-list.component';
 import { GroupDetailComponent } from '../group/group-detail.component';
 import { GroupFormComponent } from '../group/group-form.component';
 
 import { UserService } from '../user/user.service';
-import { GroupService } from '../group/group.service';
+import { GroupService } from '../../services/group.service';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -29,6 +30,7 @@ import { GroupService } from '../group/group.service';
         UsersComponent,
         UserAddComponent,
         UserAddFormComponent,
+        GroupsComponent,
         GroupListComponent,
         GroupDetailComponent,
         GroupFormComponent

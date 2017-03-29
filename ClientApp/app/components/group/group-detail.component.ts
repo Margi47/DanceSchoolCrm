@@ -1,6 +1,6 @@
 ﻿import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { Group } from './group';
-import { GroupService } from './group.service';
+import { Group } from '../../models/group';
+import { GroupService } from '../../services/group.service';
 import 'rxjs/add/operator/switchMap';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Location } from '@angular/common';

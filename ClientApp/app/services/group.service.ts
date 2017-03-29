@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 
-import { Group } from './group';
-import { GROUPS } from './mock-groups';
+import { Group } from '../models/group';
+import { GROUPS } from '../components/group/mock-groups';
 
 @Injectable()
 export class GroupService {

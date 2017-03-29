@@ -14,5 +14,6 @@ namespace angular.Models
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Group> Groups { get; set; }
     }
 }

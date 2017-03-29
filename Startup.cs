@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using angular.Models;
 using AutoMapper;
 using angular.Controllers.Users;
+using angular.Controllers.Groups;
 
 namespace angular
 {
@@ -39,11 +40,14 @@ namespace angular
             services.AddMvc();
             
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IGroupRepository, GroupRepository>();
 
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<User, UserApiModel>();
                 cfg.CreateMap<UserApiModel, User>();
-                });
+                cfg.CreateMap<Group, GroupApiModel>();
+                cfg.CreateMap<GroupApiModel, Group>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
