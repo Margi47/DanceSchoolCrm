@@ -1,6 +1,6 @@
 ﻿<button (click)="goBack()" class="btn btn-default">Back</button>
 <div *ngIf="model" style="margin-top:20px">
-    <form (ngSubmit)="onSubmit()" #groupForm="ngForm" class="col-sm-6">
+    <form (ngSubmit)="onGroupSubmit()" #groupForm="ngForm" class="col-sm-6">
         <div><label>Id: {{model.id}}</label></div>
         <div class="form-group">
             <label for="name">Name</label>
@@ -26,6 +26,6 @@
             <label>Is Active</label>
         </div>
         <button type="submit" [disabled]="!groupForm.form.valid" class="btn btn-default">Save changes</button>
-        <button (click)="delete()" class="btn btn-default">Delete group</button>
+        <button (click)="onGroupDelete()" class="btn btn-default">Delete group</button>
     </form>
 </div>

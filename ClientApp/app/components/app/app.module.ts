@@ -18,6 +18,7 @@ import { GroupsComponent } from '../group/groups.component';
 import { GroupListComponent } from '../group/group-list.component';
 import { GroupAddComponent } from '../group/group-add.component';
 import { GroupDetailComponent } from '../group/group-detail.component';
+import { GroupDetailFormComponent } from '../group/group-detail-form.component';
 import { GroupAddFormComponent } from '../group/group-add-form.component';
 import reducer from '../../reducers';
 
@@ -40,6 +41,7 @@ import { GroupEffects } from '../../effects/group';
         GroupListComponent,
         GroupAddComponent,
         GroupDetailComponent,
+        GroupDetailFormComponent,
         GroupAddFormComponent
     ],
     imports: [

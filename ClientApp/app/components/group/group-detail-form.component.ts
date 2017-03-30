@@ -1,40 +1,27 @@
-﻿import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Group } from '../../models/group';
-import { GroupService } from '../../services/group.service';
-import 'rxjs/add/operator/switchMap';
-import { ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
 
 @Component({
-    selector: 'group-detail',
-    templateUrl: './group-detail.component.html'
+    selector: 'group-detail-form',
+    templateUrl: './group-detail-form.component.html'
 })
 
-export class GroupDetailComponent implements OnInit {
-    model: Group;
+export class GroupDetailFormComponent{
+    @Input() model: Group;
 
-    constructor(private router: ActivatedRoute,
-        private service: GroupService,
-        private location: Location) { }
+    @Output() deleteGroup = new EventEmitter<Group>();
+    @Output() updateGroup = new EventEmitter<Group>();
+    @Output() groupGoBack = new EventEmitter();
 
-    delete() {
-        this.service.deleteGroup(this.model);
-        this.goBack();
+    onGroupDelete() {
+        this.deleteGroup.emit(this.model);
     }
 
-
-    ngOnInit(): void {
-        this.router.params
-            .switchMap((params: Params) => this.service.getGroup(+params['id']))
-            .subscribe(group => { console.log(group); this.model = Object.assign({}, group); });
-    }
-
-    onSubmit(): void {
-        this.service.update(this.model);
-        this.goBack();
+    onGroupSubmit(): void {
+        this.updateGroup.emit(this.model);
     }
 
     goBack(): void {
-        this.location.back();
+        this.groupGoBack.emit();
     }
 }
