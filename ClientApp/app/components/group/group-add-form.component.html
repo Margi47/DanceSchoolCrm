@@ -18,10 +18,10 @@
     </div>
     <div class="form-group">       
         <input type="checkbox" 
-               [(ngModel)]="model.active"
+               [(ngModel)]="model.isActive"
                name="active">
         <label>Is Active</label>
     </div>
     <button type="submit" [disabled]="!groupForm.form.valid" class="btn btn-default">Submit</button>
-    <button (click)="onCancel(); groupForm.reset()" class="btn btn-default">Cancel</button>
+    <button type="button" (click)="onCancel(); groupForm.reset()" class="btn btn-default">Cancel</button>
 </form>

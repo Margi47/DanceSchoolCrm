@@ -9,7 +9,7 @@ const initialState: GroupState = {
     id: 0,
     name: '',
     description: '',
-    active: false
+    isActive: false
 };
 
 export default function (state = initialState, action: Action): GroupState {

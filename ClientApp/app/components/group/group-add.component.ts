@@ -20,7 +20,6 @@ export class GroupAddComponent {
         private router: Router) { }
 
     onGroupSubmit(group: Group): void {
-        console.log(group);
         this.store.dispatch(this.groupActions.addGroup(group));
         this.router.navigate(['/groups'])
     }

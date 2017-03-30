@@ -26,13 +26,12 @@ export class GroupService {
 
     addGroup(group: Group): Observable<Group> {
         var body = JSON.stringify(group);
-        console.log("add from service");
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
 
         return this.http.post(this.groupsUrl, body, options)
-            .map((res: Response) => res.json());
+            .map(response => response.json());
     }
 
     deleteGroup(group: Group): Observable<Group> {
@@ -40,16 +39,16 @@ export class GroupService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.delete(`${this.groupsUrl}/${group.id}`, headers)
-            .map((res: Response) => group);
+            .map(response => group);
     }
 
-    update(groupData: Group): Observable<void> {
+    update(groupData: Group): Observable<Group> {
         var body = JSON.stringify(groupData);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         console.log('before update');
         return this.http.put(`${this.groupsUrl}/${groupData.id}`, body, options)
-            .map((res: Response) => { return; });
+            .map(response => groupData);
     }
 }

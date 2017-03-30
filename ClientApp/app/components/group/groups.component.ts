@@ -15,7 +15,7 @@ import { GroupActions } from '../../actions/group.actions';
 </group-list>`
 })
 
-export class GroupsComponent {
+export class GroupsComponent implements OnInit {
     groups$: Observable<any>;
 
     constructor(
@@ -25,8 +25,11 @@ export class GroupsComponent {
         this.groups$ = store.select('groups');
     }
 
+    ngOnInit() {
+        this.store.dispatch(this.groupActions.loadGroups());
+    }
+
     addGroup(): void {
-        console.log("navigating to add comp");
         this.router.navigate(['/groupadd']);
     }
 

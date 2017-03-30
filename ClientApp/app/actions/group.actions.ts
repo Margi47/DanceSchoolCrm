@@ -69,7 +69,6 @@ export class GroupActions {
 
     static ADD_GROUP_SUCCESS = '[Group] Add Group Success';
     addGroupSuccess(group): Action {
-        console.log("add from action success"); console.log(group);
         return {
             type: GroupActions.ADD_GROUP_SUCCESS,
             payload: group

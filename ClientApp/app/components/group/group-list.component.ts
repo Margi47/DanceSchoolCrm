@@ -6,7 +6,7 @@ import { Group } from '../../models/group';
     templateUrl: './group-list.component.html'
 })
 
-export class GroupListComponent {
+export class GroupListComponent{
     @Input() groups: Group[];
 
     @Output() addNewGroup = new EventEmitter();

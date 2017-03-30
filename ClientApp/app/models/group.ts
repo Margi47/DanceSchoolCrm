@@ -2,5 +2,5 @@
     id: number;
     name: string;
     description: string;
-    active: boolean;
+    isActive: boolean;
 }

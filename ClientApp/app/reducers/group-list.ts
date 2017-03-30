@@ -16,7 +16,6 @@ export default function (state = initialState, action: Action): GroupListState {
             return action.payload;
         }
         case GroupActions.ADD_GROUP_SUCCESS: {
-            console.log("add from reducer");
             return [...state, action.payload];
         }
         case GroupActions.SAVE_GROUP_SUCCESS: {
