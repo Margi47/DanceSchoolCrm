@@ -5,6 +5,7 @@
     "test": "karma start ClientApp/test/karma.conf.js"
   },
   "dependencies": {
+    "@angular/cli": "^1.0.0",
     "@angular/common": "^2.4.5",
     "@angular/compiler": "^2.4.5",
     "@angular/core": "^2.4.10",
