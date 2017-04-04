@@ -5,12 +5,12 @@ using System.Threading.Tasks;
 
 namespace angular.Models
 {
-    public interface IGroupRepository
+    public interface ICrudRepository<T>
     {
-        void Add(Group group);
-        IEnumerable<Group> GetAll();
-        Group Find(int key);
+        void Add(T item);
+        IEnumerable<T> GetAll();
+        T Find(int key);
         void Remove(int key);
-        void Update(Group group);
+        void Update(T item);
     }
 }
