@@ -13,15 +13,7 @@ export class GroupDetailFormComponent{
     @Output() updateGroup = new EventEmitter<Group>();
     @Output() groupGoBack = new EventEmitter();
 
-    onGroupDelete() {
-        this.deleteGroup.emit(this.model);
-    }
-
-    onGroupSubmit(): void {
-        this.updateGroup.emit(this.model);
-    }
-
-    goBack(): void {
-        this.groupGoBack.emit();
-    }
+    onGroupDelete() { this.deleteGroup.emit(this.model); }
+    onGroupSubmit() { this.updateGroup.emit(this.model); }
+    goBack() { this.groupGoBack.emit(); }
 }

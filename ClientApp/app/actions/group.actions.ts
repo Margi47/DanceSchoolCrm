@@ -36,13 +36,6 @@ export class GroupActions {
         };
     }
 
-    static RESET_BLANK_GROUP = '[Group] Reset Blank Group';
-    resetBlankGroup(): Action {
-        return {
-            type: GroupActions.RESET_BLANK_GROUP
-        };
-    }
-
     static SAVE_GROUP = '[Group] Save Group';
     saveGroup(group): Action {
         return {

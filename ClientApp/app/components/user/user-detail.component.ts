@@ -1,41 +1,52 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { User } from './user';
-import { UserService } from './user.service';
+import { User } from '../../models/user';
+import { Group } from '../../models/group';
 import { ActivatedRoute, Params } from '@angular/router';
-import { Location } from '@angular/common';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';;
+import { AppState } from '../../reducers';
+import { UserActions } from '../../actions/user.actions';
 
 @Component({
     selector: 'user-detail',
     template: `<button (click)="goBack()" class="btn btn-default">Back</button>
                <user-detail-form [model] = "model$ | async" 
+                                 
                                  (userSubmit)="onUserSubmit($event)" 
                                  (userDelete)="onUserDelete($event)">
                </user-detail-form>`
 })
 
 export class UserDetailComponent implements OnInit{
-    model$: Observable<User>;
+    model$: Observable<any>;
+    //userGroups$: Observable<Group[]>;
 
-    constructor(private r: Router,
-                private router: ActivatedRoute,
-                private service: UserService,
-                private location: Location) { }
+    constructor(
+        private router: Router,
+        private route: ActivatedRoute,
+        private store: Store<AppState>,
+        private userActions: UserActions) {
+        this.model$ = this.store.select('user');
+    }
+
+   ngOnInit(): void {
+       this.route.params.subscribe(params =>
+           this.store.dispatch(this.userActions.getUser(+params['id'])));
+        //this.router.params.subscribe(params => this.userGroups$ = this.service.getUserGroups(+params['id']));
+    }
 
     onUserDelete(id: number) {
-        this.service.deleteUser(id).subscribe(() => this.goBack());       
+        this.store.dispatch(this.userActions.deleteUser(id));
+        this.goBack();
     }
 
-    ngOnInit(): void {
-        this.router.params.subscribe(params => this.model$ = this.service.getUser(+params['id']));
-    }
-
-    onUserSubmit(user: User): void {      
-        this.service.update(user.id, user).subscribe(() => { this.goBack(); });        
+    onUserSubmit(user: User): void {
+        this.store.dispatch(this.userActions.saveUser(user));
+        this.goBack();        
     }
 
     goBack(): void {
-        this.r.navigate(['/users']);
+        this.router.navigate(['/users']);
     }
 }

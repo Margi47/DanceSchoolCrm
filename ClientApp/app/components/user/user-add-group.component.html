@@ -1,0 +1,8 @@
+﻿<div>
+    <ul>
+        <li *ngFor="let group of groups"
+            (click)="onSelect(group.id)">
+            {{group.name}}
+        </li>
+    </ul>
+</div>

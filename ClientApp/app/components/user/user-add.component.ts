@@ -1,21 +1,28 @@
 ﻿import { Component } from '@angular/core';
 
-import { User } from './user';
-import { UserService } from './user.service';
-import { Location } from '@angular/common';
+import { User } from '../../models/user';
 import { Router } from '@angular/router';
+
+import { Store } from '@ngrx/store';;
+import { AppState } from '../../reducers';
+import { UserActions } from '../../actions/user.actions';
 
 @Component({
     selector: 'add-user',
     template: `
-<user-add-form (userSave)="onUserSubmit($event)" (userCancel)="onUserCancel()"></user-add-form>`
+<user-add-form 
+        (userSave)="onUserSubmit($event)" 
+        (userCancel)="onUserCancel()">
+</user-add-form>`
 })
 export class UserAddComponent {
-    constructor(private router: Router, private service: UserService, private location: Location) { }
+    constructor(
+        private router: Router,
+        private store: Store<AppState>,
+        private userActions: UserActions) { }
 
     onUserSubmit(user: User): void {
-        console.log(user);
-        this.service.addUser(user).subscribe();
+        this.store.dispatch(this.userActions.saveUser(user));
         this.router.navigate(['/users'])
     }
 

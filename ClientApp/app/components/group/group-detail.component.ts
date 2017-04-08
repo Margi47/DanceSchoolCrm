@@ -20,7 +20,8 @@ import { Router } from '@angular/router'
 export class GroupDetailComponent implements OnInit {
     model$: Observable<Group>;
 
-    constructor(private store: Store<AppState>,
+    constructor(
+        private store: Store<AppState>,
         private groupActions: GroupActions,
         private router: Router,
         private route: ActivatedRoute, ) {

@@ -14,9 +14,6 @@ const initialState: GroupState = {
 
 export default function (state = initialState, action: Action): GroupState {
     switch (action.type) {
-        case GroupActions.RESET_BLANK_GROUP: {
-            return initialState;
-        }
         case GroupActions.GET_GROUP_SUCCESS: {
             return action.payload;
         }

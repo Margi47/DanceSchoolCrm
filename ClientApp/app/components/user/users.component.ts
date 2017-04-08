@@ -1,8 +1,10 @@
 ﻿import { Component, OnInit } from '@angular/core';
-import { User } from './user';
-import { UserService } from './user.service';
+import { User } from '../../models/user';
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs/Observable';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../reducers';
+import { UserActions } from '../../actions/user.actions'
 
 @Component({
     selector: 'users',
@@ -14,20 +16,25 @@ import { Observable } from 'rxjs/Observable';
 `
 })
 export class UsersComponent implements OnInit {
-    users$: Observable<User[]>;
+    users$: Observable<any>;
 
-    constructor(private router: Router, private userService: UserService) { }
+    constructor(
+        private router: Router,
+        private store: Store<AppState>,
+        private userActions: UserActions) {
+        this.users$ = store.select('users');
+    }
 
-    ngOnInit(): void {
-        this.users$ = this.userService.getUsers();
+    ngOnInit() {
+        this.store.dispatch(this.userActions.loadUsers());
         console.log("getting list");
     };
 
-    addUser(): void {
+    addUser() {
         this.router.navigate(['/useradd']);
     }
 
-    showDetails(id: number): void {
+    showDetails(id: number) {
         this.router.navigate(['userdetail', id]);
     }
 }

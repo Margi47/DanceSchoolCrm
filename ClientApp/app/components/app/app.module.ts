@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { UniversalModule } from 'angular2-universal';
 import { FormsModule } from '@angular/forms';
+import { Store, StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { GroupModule } from '../group/group.module';
 import { UserModule } from '../user/user.module';
 
 import { AppComponent } from './app.component';
+
+import reducer from '../../reducers';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -18,7 +21,8 @@ import { AppComponent } from './app.component';
         AppRoutingModule,
         FormsModule,
         GroupModule,
-        UserModule
+        UserModule,
+        StoreModule.provideStore(reducer)
     ],
     providers: []
 })

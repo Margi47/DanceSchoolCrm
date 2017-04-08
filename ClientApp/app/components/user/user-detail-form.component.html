@@ -45,7 +45,17 @@
                        name="teacher">
                 <label>Is Teacher</label>
             </div>
+            
+
             <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Save changes</button>
             <button (click)="onUserDelete()" class="btn btn-default" type="button">Delete user</button>
         </form>
+
+        <!--<div class="form-group">
+            <label>Groups</label>
+            <button type="button" (click)="onAddGroup()" class="btn btn-default"></button>
+            <ul>
+                <li *ngFor="let group of groups">{{group.name}}</li>
+            </ul>
+        </div>-->
 </div>

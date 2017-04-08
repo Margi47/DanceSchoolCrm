@@ -1,5 +1,4 @@
 ﻿import { Component, Output, EventEmitter } from '@angular/core';
-
 import { Group } from '../../models/group';
 
 @Component({
@@ -12,11 +11,6 @@ export class GroupAddFormComponent {
     @Output() groupSave = new EventEmitter<Group>();
     @Output() groupCancel = new EventEmitter();
 
-    onSubmit(): void {
-        this.groupSave.emit(this.model);
-    }
-
-    onCancel(): void {
-        this.groupCancel.emit();
-    }
+    onSubmit() { this.groupSave.emit(this.model); }
+    onCancel() { this.groupCancel.emit(); }
 }

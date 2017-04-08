@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using angular.Models;
 using AutoMapper;
+using angular.Controllers.Groups;
 
 namespace angular.Controllers.Users
 {
@@ -90,6 +91,27 @@ namespace angular.Controllers.Users
 
             _userRepository.Remove(id);
             return new NoContentResult();
+        }
+
+        [HttpGet("{id}/groups", Name = "GetUserGroups")]
+        public IActionResult GetGroups(int id)
+        {
+            var groups = _userRepository.GetGroups(id);
+            if (groups == null)
+            {
+                return NotFound();
+            }
+
+            var result = Mapper.Map<IList<GroupApiModel>>(groups);
+            return new ObjectResult(result);
+        }
+
+        [HttpPost("{userId}/groups/{groupId}")]
+        public IActionResult AddGroup(int userId, int groupId)
+        {
+            _userRepository.AddGroup(userId, groupId);
+
+            return CreatedAtRoute("GetUserGroups", new { id = userId }, null);
         }
     }
 }

@@ -9,45 +9,45 @@ namespace angular.Models
 {
     public abstract class CrudRepository<T> : ICrudRepository<T> where T: class 
     {
-        private readonly CrmContext _context;
+        protected readonly CrmContext Context;
 
         public CrudRepository(CrmContext context)
         {
-            _context = context;
+            Context = context;
         }
 
         public void Add(T item)
         {
-            var items = GetQuery(_context);
+            var items = GetQuery(Context);
             items. Add(item);
-            _context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public T Find(int key)
         {
-            var items = GetQuery(_context);
+            var items = GetQuery(Context);
             return items.FirstOrDefault(GetExpression(key));
         }
 
         public IEnumerable<T> GetAll()
         {
-            var items = GetQuery(_context);
+            var items = GetQuery(Context);
             return items.ToList();
         }
 
         public void Remove(int key)
         {
-            var items = GetQuery(_context);
+            var items = GetQuery(Context);
             var entity = items.First(GetExpression(key));
             items.Remove(entity);
-            _context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public void Update(T item)
         {
-            var items = GetQuery(_context);
+            var items = GetQuery(Context);
             items.Update(item);
-            _context.SaveChanges();
+            Context.SaveChanges();
         }
 
         public abstract DbSet<T> GetQuery(CrmContext context);

@@ -1,6 +1,7 @@
 ﻿import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { EffectsModule } from '@ngrx/effects';
 
 import { UsersComponent } from '../user/users.component';
 import { UserListComponent } from '../user/user-list.component';
@@ -9,12 +10,15 @@ import { UserDetailFormComponent } from '../user/user-detail-form.component';
 import { UserAddComponent } from '../user/user-add.component';
 import { UserAddFormComponent } from '../user/user-add-form.component';
 
-import { UserService } from '../user/user.service';
+import { UserService } from '../../services/user.service';
+import { UserActions } from '../../actions/user.actions';
+import { UserEffects } from '../../effects/user';
 
 @NgModule({
     imports: [
         CommonModule,
-        FormsModule
+        FormsModule,
+        EffectsModule.run(UserEffects)
     ],
     declarations: [
         UsersComponent,
@@ -25,6 +29,6 @@ import { UserService } from '../user/user.service';
         UserAddFormComponent
     ],
     exports: [UsersComponent],
-    providers: [UserService]
+    providers: [UserService, UserActions]
 })
 export class UserModule { }

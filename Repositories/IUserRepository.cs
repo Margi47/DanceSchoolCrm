@@ -6,5 +6,8 @@ using System.Threading.Tasks;
 namespace angular.Models
 {
     public interface IUserRepository: ICrudRepository<User>
-    {}
+    {
+        IEnumerable<Group> GetGroups(int id);
+        void AddGroup(int userId, int groupId);
+    }
 }

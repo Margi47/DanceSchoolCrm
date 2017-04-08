@@ -2,7 +2,7 @@
 import { Group } from '../../models/group';
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';;
+import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { GroupActions } from '../../actions/group.actions';
 
