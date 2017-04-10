@@ -11,9 +11,9 @@ export class UserDetailFormComponent {
     @Input() model: User;
     //@Input() groups: Group[];
     @Output() userSubmit = new EventEmitter<User>();
-    @Output() userDelete = new EventEmitter<number>();
+    @Output() userDelete = new EventEmitter<User>();
 
     onUserSubmit() { this.userSubmit.emit(this.model); }
-    onUserDelete() { this.userDelete.emit(this.model.id); }
+    onUserDelete() { this.userDelete.emit(this.model); }
     //onAddGroup() { }
 }

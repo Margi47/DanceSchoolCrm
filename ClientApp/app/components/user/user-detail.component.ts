@@ -36,8 +36,8 @@ export class UserDetailComponent implements OnInit{
         //this.router.params.subscribe(params => this.userGroups$ = this.service.getUserGroups(+params['id']));
     }
 
-    onUserDelete(id: number) {
-        this.store.dispatch(this.userActions.deleteUser(id));
+    onUserDelete(user: User) {
+        this.store.dispatch(this.userActions.deleteUser(user));
         this.goBack();
     }
 

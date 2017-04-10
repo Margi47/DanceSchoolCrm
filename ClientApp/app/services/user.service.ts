@@ -24,32 +24,32 @@ export class UserService {
             .map(response => response.json());
     }
 
-    addUser(user: User): Observable<void> {
+    addUser(user: User): Observable<User> {
         var body = JSON.stringify(user);
         console.log(body);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.usersUrl, body, options)
-            .map((res: Response) => { return; });
+            .map(response => response.json());
     }
 
-    deleteUser(id: number): Observable<void> {
+    deleteUser(user: User): Observable<User> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.usersUrl}/${id}`, headers)
-            .map((res: Response) => { return; });
+        return this.http.delete(`${this.usersUrl}/${user.id}`, headers)
+            .map(response => user);
     }
 
-    update(userData: User): Observable<void> {
+    update(userData: User): Observable<User> {
         var body = JSON.stringify(userData);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         console.log('before update');
         return this.http.put(`${this.usersUrl}/${userData.id}`, body, options)
-            .map((res: Response) => { return; });
+            .map(response => userData);
     }
 
     getUserGroups(userId: number): Observable<Group[]> {

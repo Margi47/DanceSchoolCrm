@@ -22,7 +22,7 @@ export class UserAddComponent {
         private userActions: UserActions) { }
 
     onUserSubmit(user: User): void {
-        this.store.dispatch(this.userActions.saveUser(user));
+        this.store.dispatch(this.userActions.addUser(user));
         this.router.navigate(['/users'])
     }
 
