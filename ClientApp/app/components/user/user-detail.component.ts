@@ -15,12 +15,13 @@ import { UserActions } from '../../actions/user.actions';
                                  
                                  (userSubmit)="onUserSubmit($event)" 
                                  (userDelete)="onUserDelete($event)">
-               </user-detail-form>`
+               </user-detail-form>
+               <group-list [groups]=userGroup$></group-list>`
 })
 
 export class UserDetailComponent implements OnInit{
     model$: Observable<any>;
-    //userGroups$: Observable<Group[]>;
+    userGroups$: Observable<Group[]>;
 
     constructor(
         private router: Router,
@@ -33,7 +34,7 @@ export class UserDetailComponent implements OnInit{
    ngOnInit(): void {
        this.route.params.subscribe(params =>
            this.store.dispatch(this.userActions.getUser(+params['id'])));
-        //this.router.params.subscribe(params => this.userGroups$ = this.service.getUserGroups(+params['id']));
+           this.router.params.subscribe(params => this.userGroups$ = this.service.getUserGroups(+params['id']));
     }
 
     onUserDelete(user: User) {

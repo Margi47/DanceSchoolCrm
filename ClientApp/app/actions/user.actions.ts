@@ -84,4 +84,19 @@ export class UserActions {
             payload: user
         };
     }
+
+    static LOAD_USER_GROUPS = '[User] Load User Groups';
+    loadUserGroups(id): Action {
+        return {
+            type: UserActions.LOAD_USER_GROUPS,
+            payload: id
+        }
+    }
+    static LOAD_USER_GROUPS_SUCCESS = '[User] Load User Groups Success';
+    loadUserGroupsSuccess(groups): Action {
+        return {
+            type: UserActions.LOAD_USER_GROUPS_SUCCESS,
+            payload: groups
+        }
+    }
 }

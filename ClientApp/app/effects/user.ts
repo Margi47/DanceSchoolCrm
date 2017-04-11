@@ -42,4 +42,10 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(user => this.service.deleteUser(user))
         .map(user => this.userActions.deleteUserSuccess(user));
+
+    @Effect() loadUserGroups$ = this.update$
+        .ofType(UserActions.LOAD_USER_GROUPS)
+        .map(action => action.payload)
+        .switchMap(user => this.service.getUserGroups(user))
+        .map(groups => this.userActions.loadUserGroupsSuccess(groups));
 }
