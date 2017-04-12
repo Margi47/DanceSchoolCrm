@@ -1,4 +1,6 @@
-﻿export class User {
+﻿import { Group } from './group';
+
+export class User {
     id: number;
     name: string;
     phone: string;
@@ -6,4 +8,5 @@
     isActive: boolean;
     isAdmin: boolean;
     isTeacher: boolean;
+    groups: Group[];
 }

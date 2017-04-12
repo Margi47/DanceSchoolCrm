@@ -12,7 +12,8 @@ const initialState: UserState = {
     email: '',
     isActive: false,
     isAdmin: false,
-    isTeacher: false
+    isTeacher: false,
+    groups: []
 };
 
 export default function (state = initialState, action: Action): UserState {
@@ -21,7 +22,8 @@ export default function (state = initialState, action: Action): UserState {
             return action.payload;
         }
         case UserActions.LOAD_USER_GROUPS_SUCCESS: {
-            return action.payload;
+            state.groups = action.payload;
+            return state;
         }
         default: {
             return state;

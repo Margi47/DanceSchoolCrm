@@ -111,7 +111,7 @@ namespace angular.Controllers.Users
         {
             _userRepository.AddGroup(userId, groupId);
 
-            return CreatedAtRoute("GetUserGroups", new { id = userId }, null);
+            return CreatedAtRoute("GetUser", new { id = userId }, null);
         }
     }
 }

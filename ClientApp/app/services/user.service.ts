@@ -10,7 +10,7 @@ import { Group } from '../models/group';
 
 @Injectable()
 export class UserService {
-    private usersUrl = 'api/users'; 
+    private usersUrl = 'api/users';
 
     constructor(private http: Http) { }
 
@@ -22,6 +22,10 @@ export class UserService {
     getUser(id: number): Observable<User> {
         return this.http.get(`${this.usersUrl}/${id}`)
             .map(response => response.json());
+    }
+
+    getUserWithGroups(id: number): Observable<User> {
+        return this.getUser(id).map(u => { this.getUserGroups(id).map(g => u.groups = g); return u;});
     }
 
     addUser(user: User): Observable<User> {
@@ -54,7 +58,7 @@ export class UserService {
 
     getUserGroups(userId: number): Observable<Group[]> {
         return this.http.get(`${this.usersUrl}/${userId}/groups`)
-            .map(response => response.json());
+            .map(response => { console.log(response); return response.json(); });
     }
 
     getAllGroups(): Observable<Group[]> {
@@ -62,11 +66,11 @@ export class UserService {
             .map(response => response.json());
     }
 
-    addGroup(userId: number, groupId: number): Observable<void> {
+    addGroup(userId: number, groupId: number): Observable<User> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(`${this.usersUrl}/${userId}/groups/${groupId}`, options)
-            .map(response => { return; });
+            .map(response =>  response.json() );
     }
 }

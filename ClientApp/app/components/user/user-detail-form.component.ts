@@ -15,5 +15,5 @@ export class UserDetailFormComponent {
 
     onUserSubmit() { this.userSubmit.emit(this.model); }
     onUserDelete() { this.userDelete.emit(this.model); }
-    //onAddGroup() { }
+    onAddGroup() { }
 }
