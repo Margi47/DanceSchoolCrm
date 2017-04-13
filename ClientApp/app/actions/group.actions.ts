@@ -83,4 +83,38 @@ export class GroupActions {
             payload: group
         };
     }
+
+    static LOAD_STUDENTS = '[Group] Load Group Students';
+    loadStudents(groupId): Action {
+        return {
+            type: GroupActions.LOAD_STUDENTS,
+            payload: groupId
+        };
+    }
+
+    static LOAD_STUDENTS_SUCCESS = '[Group] Load Group Students Success';
+    loadStudentsSuccess(users): Action {
+        return {
+            type: GroupActions.LOAD_STUDENTS_SUCCESS,
+            payload: users
+        };
+    }
+
+
+    static ADD_STUDENT = '[Group] Add Group Student';
+    addGroupStudent(groupId, userId): Action {
+        console.log(userId + "from action");
+        return {
+            type: GroupActions.ADD_STUDENT,
+            payload: { group: groupId, user: userId  },
+        }
+    }
+
+    static ADD_STUDENT_SUCCESS = '[Group] Add Group Student Success';
+    addGroupStudentSuccess(user): Action {
+        return {
+            type: GroupActions.ADD_STUDENT_SUCCESS,
+            payload: user
+        }
+    }
 }

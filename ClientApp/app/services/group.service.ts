@@ -6,6 +6,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
 import { Group } from '../models/group';
+import { User } from '../models/user';
 
 
 @Injectable()
@@ -50,5 +51,19 @@ export class GroupService {
         console.log('before update');
         return this.http.put(`${this.groupsUrl}/${groupData.id}`, body, options)
             .map(response => groupData);
+    }
+
+    getStudents(groupId: number): Observable<User[]> {
+        return this.http.get(`${this.groupsUrl}/${groupId}/users`)
+            .map(response => response.json());
+    }
+
+    addStudent(groupId: number, userId: number): Observable<User> {
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        console.log(groupId);
+        return this.http.post(`${this.groupsUrl}/${groupId}/users/${userId}`, options)
+            .map(response => response.json());
     }
 }

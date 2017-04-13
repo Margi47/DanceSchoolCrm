@@ -24,10 +24,6 @@ export class UserService {
             .map(response => response.json());
     }
 
-    getUserWithGroups(id: number): Observable<User> {
-        return this.getUser(id).map(u => { this.getUserGroups(id).map(g => u.groups = g); return u;});
-    }
-
     addUser(user: User): Observable<User> {
         var body = JSON.stringify(user);
         console.log(body);
@@ -61,16 +57,15 @@ export class UserService {
             .map(response => { console.log(response); return response.json(); });
     }
 
-    getAllGroups(): Observable<Group[]> {
-        return this.http.get('api/groups')
-            .map(response => response.json());
-    }
-
-    addGroup(userId: number, groupId: number): Observable<User> {
+    addGroup(userId: number, groupId: number): Observable<Group> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
+        console.log(userId + "from service");
         return this.http.post(`${this.usersUrl}/${userId}/groups/${groupId}`, options)
-            .map(response =>  response.json() );
+            .map(response => {
+                console.log(response);
+                return response.json();
+            });
     }
 }

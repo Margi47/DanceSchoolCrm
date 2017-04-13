@@ -42,4 +42,19 @@ export class GroupEffects {
         .map(action => action.payload)
         .switchMap(group => this.service.deleteGroup(group))
         .map(group => this.groupActions.deleteGroupSuccess(group));
+
+    @Effect() loadStudents$ = this.update$
+        .ofType(GroupActions.LOAD_STUDENTS)
+        .map(action => action.payload)
+        .switchMap(group => this.service.getStudents(group))
+        .map(users => this.groupActions.loadStudentsSuccess(users));
+
+    @Effect() addGroupStudent$ = this.update$
+        .ofType(GroupActions.ADD_STUDENT)
+        .map(action => action.payload)
+        .switchMap(obj => {
+            console.log(obj);
+            return this.service.addStudent(obj.group, obj.user);
+        })
+        .map(user => this.groupActions.addGroupStudentSuccess(user));
 }

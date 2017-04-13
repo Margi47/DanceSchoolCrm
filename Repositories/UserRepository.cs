@@ -29,6 +29,11 @@ namespace angular.Models
                 .ToList();
         }
 
+        public Group GetUserGroup(int groupId)
+        {
+            return Context.Groups.FirstOrDefault(g => g.Id == groupId);
+        }
+
         public void AddGroup(int userId, int groupId)
         {
             if (!Context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))

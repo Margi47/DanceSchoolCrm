@@ -1,5 +1,5 @@
-﻿<div *ngIf="model" style="margin-top:20px">
-        <form (ngSubmit)="onUserSubmit($event)" #userForm="ngForm" class="col-sm-6">
+﻿<div *ngIf="model" style="margin-top:20px" class="col-sm-6">
+        <form (ngSubmit)="onUserSubmit($event)" #userForm="ngForm">
             <div><label>Id: {{model.id}}</label></div>
             <div class="form-group">
                 <label for="name">Name</label>
@@ -51,11 +51,39 @@
             <button (click)="onUserDelete()" class="btn btn-default" type="button">Delete user</button>
         </form>
 
-        <div>
+        <div style="margin-top:20px">
             <label>Groups</label>
-            <button type="button" (click)="onAddGroup()" class="btn btn-default"></button>
-            <ul>
-                <li *ngFor="let group of model.groups">{{group.name}}</li>
-            </ul>
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th><button (click)="addingGroup = true" 
+                                    class="btn btn-default" 
+                                    type="button">Add Group</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngIf="addingGroup">
+                         <td colspan="3">
+                            <select class="form-control" [(ngModel)]="selectedGroup">
+                                <option *ngFor="let group of allGroups" [ngValue]="group">{{group.name}}</option>
+                            </select>
+                         </td>
+                         <td>
+                            <button (click)="addGroup()" class="btn btn-default" type="button">Add</button>
+                        </td>
+                    </tr>
+                    <tr *ngFor="let group of model.groups">
+                        <td>{{group.id}}</td>
+                        <td>{{group.name}}</td>
+                        <td>{{group.description}}</td>
+                        <td><button (click)="showDetails(group.id)" 
+                                    class="btn btn-default" 
+                                    type="button">Show Details</button></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 </div>

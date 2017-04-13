@@ -16,6 +16,6 @@ namespace angular.Models
         public string Description { get; set; }
         public bool IsActive { get; set; }
 
-        public List<GroupUser> Users { get; set; }
+        public List<GroupUser> Students { get; set; }
     }
 }

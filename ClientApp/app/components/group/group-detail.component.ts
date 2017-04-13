@@ -5,32 +5,44 @@ import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';;
 import { AppState } from '../../reducers';
 import { GroupActions } from '../../actions/group.actions';
+import { UserActions } from '../../actions/user.actions';
 import { Router } from '@angular/router'
+import { Location } from '@angular/common';
 
 @Component({
     selector: 'group-detail',
     template: `
 <group-detail-form [model] = "model$ | async"
+                   [allUsers] = "allUsers$ | async"
                    (deleteGroup) = "deleteGroup($event)"
                    (updateGroup) = "groupUpdate($event)"
-                   (groupGoBack) = "goBack()">
+                   (groupGoBack) = "goBack()"
+                   (showUserDetails) = showUserDetails($event)
+                   (addGroupUser) = addUserToGroup($event)>
 </group-detail-form>`
 })
 
 export class GroupDetailComponent implements OnInit {
-    model$: Observable<Group>;
+    model$: Observable<any>;
+    allUsers$: Observable<any>;
 
     constructor(
         private store: Store<AppState>,
         private groupActions: GroupActions,
+        private userActions: UserActions,
         private router: Router,
-        private route: ActivatedRoute, ) {
+        private route: ActivatedRoute,
+        private location: Location) {
         this.model$ = store.select('group');
+        this.allUsers$ = store.select('users');
     }
 
     ngOnInit(): void {
-        this.route.params.subscribe(params =>
-            this.store.dispatch(this.groupActions.getGroup(+params['id'])));
+        this.route.params.subscribe(params => {
+            this.store.dispatch(this.groupActions.getGroup(+params['id']));
+            this.store.dispatch(this.groupActions.loadStudents(+params['id']));
+        });
+        this.store.dispatch(this.userActions.loadUsers());
     }
 
     deleteGroup(group: Group) {
@@ -43,7 +55,15 @@ export class GroupDetailComponent implements OnInit {
         this.goBack();
     }
 
+    showUserDetails(id: number) {
+        this.router.navigate(['userdetail', id]);
+    }
+
+    addUserToGroup($event) {
+        this.store.dispatch(this.groupActions.addGroupStudent($event.groupId, $event.userId));
+    }
+
     goBack(): void {
-        this.router.navigate(['/groups']);
+        this.location.back();
     }
 }

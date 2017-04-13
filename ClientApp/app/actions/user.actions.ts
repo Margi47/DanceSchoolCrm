@@ -99,4 +99,20 @@ export class UserActions {
             payload: groups
         }
     }
+
+    static ADD_USER_GROUP = '[User] Add User Group';
+    addUserGroup(userId, groupId): Action {
+        console.log(userId + "from action");
+        return {
+            type: UserActions.ADD_USER_GROUP,
+            payload: { user: userId, group: groupId },
+        }
+    }
+    static ADD_USER_GROUP_SUCCESS = '[User] Add User Group Success';
+    addUserGroupSuccess(group): Action {
+        return {
+            type: UserActions.ADD_USER_GROUP_SUCCESS,
+            payload: group
+        }
+    }
 }

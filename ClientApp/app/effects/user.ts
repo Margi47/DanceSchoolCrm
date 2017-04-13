@@ -48,4 +48,13 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(user => this.service.getUserGroups(user))
         .map(groups => this.userActions.loadUserGroupsSuccess(groups));
+
+    @Effect() addUserGroup$ = this.update$
+        .ofType(UserActions.ADD_USER_GROUP)
+        .map(action => action.payload)
+        .switchMap(obj => {
+            console.log(obj);
+            return this.service.addGroup(obj.user, obj.group);
+        })
+        .map(group => this.userActions.addUserGroupSuccess(group));
 }

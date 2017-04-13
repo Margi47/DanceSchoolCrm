@@ -23,7 +23,7 @@ namespace angular.Models
 
             modelBuilder.Entity<GroupUser>()
                 .HasOne(gu => gu.Group)
-                .WithMany(g => g.Users)
+                .WithMany(g => g.Students)
                 .HasForeignKey(gu => gu.GroupId);
 
             modelBuilder.Entity<GroupUser>()

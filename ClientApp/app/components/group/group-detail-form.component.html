@@ -28,4 +28,45 @@
         <button type="submit" [disabled]="!groupForm.form.valid" class="btn btn-default">Save changes</button>
         <button type="button" (click)="onGroupDelete()" class="btn btn-default">Delete group</button>
     </form>
+    <div style="margin-top:20px">
+        <label>Students</label>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th><button (click)="addingUser = true" 
+                                class="btn btn-default" 
+                                type="button">Add User</button></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="addingUser">
+                    <td colspan="5">
+                        <select class="form-control" [(ngModel)]="selectedUser">
+                            <option *ngFor="let user of allUsers" [ngValue]="user">{{user.name}}</option>
+                        </select>
+                    </td>
+                    <td>
+                        <button (click)="addUser()" 
+                                class="btn btn-default" 
+                                type="button">Add</button>
+                    </td>
+                </tr>
+                <tr *ngFor="let user of model.students">
+                    <td>{{user.id}}</td>
+                    <td>{{user.name}}</td>
+                    <td>{{user.phone}}</td>
+                    <td>{{user.email}}</td>
+                    <td>{{user.isActive}}</td>
+                    <td><button (click)="showDetails(user.id)" 
+                                class="btn btn-default" 
+                                type="button">Show Details</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

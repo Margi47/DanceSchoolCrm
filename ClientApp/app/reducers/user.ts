@@ -25,6 +25,10 @@ export default function (state = initialState, action: Action): UserState {
             state.groups = action.payload;
             return state;
         }
+        case UserActions.ADD_USER_GROUP_SUCCESS: {
+            state.groups = [...state.groups, action.payload];
+            return state;
+        }
         default: {
             return state;
         }

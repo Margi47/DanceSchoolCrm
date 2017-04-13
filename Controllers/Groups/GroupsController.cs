@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using angular.Models;
 using AutoMapper;
+using angular.Controllers.Users;
 
 namespace angular.Controllers.Groups
 {
@@ -87,6 +88,23 @@ namespace angular.Controllers.Groups
 
             _groupRepository.Remove(id);
             return new NoContentResult();
+        }
+
+        [HttpGet("{groupId}/users")]
+        public IEnumerable<UserApiModel> GetStudents(int groupId)
+        {
+            var users = _groupRepository.GetStudents(groupId);
+            var result = Mapper.Map<UserApiModel[]>(users);
+
+            return result;
+        }
+
+        [HttpPost("{groupId}/users/{userId}")]
+        public IActionResult AddStudent(int groupId, int userId)
+        {
+            _groupRepository.AddStudent(groupId, userId);
+
+            return new ObjectResult(Mapper.Map<UserApiModel>(_groupRepository.GetGroupUser(userId)));
         }
     }
 }

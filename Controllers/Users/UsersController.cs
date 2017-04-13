@@ -111,7 +111,7 @@ namespace angular.Controllers.Users
         {
             _userRepository.AddGroup(userId, groupId);
 
-            return CreatedAtRoute("GetUser", new { id = userId }, null);
+            return new ObjectResult(Mapper.Map<GroupApiModel>(_userRepository.GetUserGroup(groupId)));
         }
     }
 }
