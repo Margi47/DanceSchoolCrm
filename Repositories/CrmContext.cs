@@ -15,6 +15,8 @@ namespace angular.Models
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<GroupUser> GroupUser { get; set; }
+        public DbSet<Teacher> Teachers { get; set; }
+        public DbSet<GroupTeachers> GroupTeachers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,6 +32,24 @@ namespace angular.Models
                 .HasOne(gu => gu.User)
                 .WithMany(u => u.Groups)
                 .HasForeignKey(gu => gu.UserId);
+
+            modelBuilder.Entity<GroupTeachers>()
+                .HasKey(gt => new { gt.GroupId, gt.TeacherId });
+
+            modelBuilder.Entity<GroupTeachers>()
+                .HasOne(gu => gu.Group)
+                .WithMany(g => g.Teachers)
+                .HasForeignKey(gu => gu.GroupId);
+
+            modelBuilder.Entity<GroupTeachers>()
+                .HasOne(gu => gu.Teacher)
+                .WithMany(u => u.Groups)
+                .HasForeignKey(gu => gu.TeacherId);
+
+            modelBuilder.Entity<Teacher>()
+                .HasOne(t => t.UserInfo)
+                .WithOne(i => i.TeacherInfo)
+                .HasForeignKey<Teacher>(t => t.UserInfoId);
         }
     }
 }

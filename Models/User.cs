@@ -19,6 +19,7 @@ namespace angular.Models
         public bool IsAdmin { get; set; }
         public bool IsTeacher { get; set; }
 
+        public Teacher TeacherInfo { get; set; }
         public List<GroupUser> Groups { get; set; }
     }
 }

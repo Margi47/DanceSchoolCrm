@@ -8,9 +8,10 @@ using angular.Models;
 namespace angular.Migrations
 {
     [DbContext(typeof(CrmContext))]
-    partial class CrmContextModelSnapshot : ModelSnapshot
+    [Migration("20170414130158_GroupTeachers")]
+    partial class GroupTeachers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -70,7 +71,7 @@ namespace angular.Migrations
                     b.HasIndex("UserInfoId")
                         .IsUnique();
 
-                    b.ToTable("Teachers");
+                    b.ToTable("Teacher");
                 });
 
             modelBuilder.Entity("angular.Models.User", b =>

@@ -7,16 +7,15 @@ using System.Threading.Tasks;
 
 namespace angular.Models
 {
-    public class Group
+    public class Teacher
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public bool IsActive { get; set; }
 
-        public List<GroupUser> Students { get; set; }
-        public List<GroupTeachers> Teachers { get; set; }
+        public int UserInfoId { get; set; }
+        public User UserInfo { get; set; }
+        public List<GroupTeachers> Groups { get; set; }
+        //public List<string> Styles { get; set; }
     }
 }
