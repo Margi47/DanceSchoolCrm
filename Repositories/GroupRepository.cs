@@ -42,5 +42,16 @@ namespace angular.Models
                 Context.SaveChanges();
             }
         }
+
+        public void RemoveStudent(int groupId, int userId)
+        {
+            if (Context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))
+            {
+                var entity = Context.GroupUser.First(g => g.GroupId == groupId && g.UserId == userId);
+
+                Context.GroupUser.Remove(entity);
+                Context.SaveChanges();
+            }
+        }
     }
 }

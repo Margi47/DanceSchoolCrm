@@ -57,4 +57,10 @@ export class GroupEffects {
             return this.service.addStudent(obj.group, obj.user);
         })
         .map(user => this.groupActions.addGroupStudentSuccess(user));
+
+    @Effect() removeStudent = this.update$
+        .ofType(GroupActions.REMOVE_STUDENT)
+        .map(action => action.payload)
+        .switchMap(obj => this.service.removeStudent(obj.group, obj.user))
+        .map(user => this.groupActions.removeStudentSuccess(user));
 }

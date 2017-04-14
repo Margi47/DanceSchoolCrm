@@ -26,6 +26,11 @@ export default function (state = initialState, action: Action): GroupState {
             state.students = [...state.students, action.payload];
             return state;
         }
+        case GroupActions.REMOVE_STUDENT_SUCCESS: {
+            state.students = state.students.filter(student => student.id !== action.payload);
+            console.log(state);
+            return state;
+        }
         default: {
             return state;
         }

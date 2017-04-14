@@ -38,20 +38,20 @@
                     <th>Phone</th>
                     <th>Email</th>
                     <th>Status</th>
-                    <th><button (click)="addingUser = true" 
+                    <th><button (click)="addingStudent = true" 
                                 class="btn btn-default" 
                                 type="button">Add User</button></th>
                 </tr>
             </thead>
             <tbody>
-                <tr *ngIf="addingUser">
+                <tr *ngIf="addingStudent">
                     <td colspan="5">
                         <select class="form-control" [(ngModel)]="selectedUser">
                             <option *ngFor="let user of allUsers" [ngValue]="user">{{user.name}}</option>
                         </select>
                     </td>
                     <td>
-                        <button (click)="addUser()" 
+                        <button (click)="addStudent()" 
                                 class="btn btn-default" 
                                 type="button">Add</button>
                     </td>
@@ -65,6 +65,9 @@
                     <td><button (click)="showDetails(user.id)" 
                                 class="btn btn-default" 
                                 type="button">Show Details</button></td>
+                    <td><button (click)="removeStudent(user.id)"
+                                class="btn btn-default"
+                                type="button">Remove Student</button></td>
                 </tr>
             </tbody>
         </table>

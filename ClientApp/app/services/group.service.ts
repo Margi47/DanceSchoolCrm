@@ -54,7 +54,7 @@ export class GroupService {
     }
 
     getStudents(groupId: number): Observable<User[]> {
-        return this.http.get(`${this.groupsUrl}/${groupId}/users`)
+        return this.http.get(`${this.groupsUrl}/${groupId}/students`)
             .map(response => response.json());
     }
 
@@ -63,7 +63,15 @@ export class GroupService {
         let options = new RequestOptions({ headers: headers });
 
         console.log(groupId);
-        return this.http.post(`${this.groupsUrl}/${groupId}/users/${userId}`, options)
+        return this.http.post(`${this.groupsUrl}/${groupId}/students/${userId}`, options)
             .map(response => response.json());
+    }
+
+    removeStudent(groupId: number, userId: number): Observable<number> {
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.delete(`${this.groupsUrl}/${groupId}/students/${userId}`, headers)
+            .map(response => userId);
     }
 }

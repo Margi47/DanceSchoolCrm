@@ -117,4 +117,20 @@ export class GroupActions {
             payload: user
         }
     }
+
+    static REMOVE_STUDENT = '[Group] Remove Student';
+    removeStudent(groupId, userId): Action {
+        return {
+            type: GroupActions.REMOVE_STUDENT,
+            payload: { group: groupId, user: userId }
+        };
+    }
+
+    static REMOVE_STUDENT_SUCCESS = '[Group] Remove Student Success';
+    removeStudentSuccess(user): Action {
+        return {
+            type: GroupActions.REMOVE_STUDENT_SUCCESS,
+            payload: user
+        };
+    }
 }

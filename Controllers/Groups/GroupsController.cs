@@ -90,7 +90,7 @@ namespace angular.Controllers.Groups
             return new NoContentResult();
         }
 
-        [HttpGet("{groupId}/users")]
+        [HttpGet("{groupId}/students")]
         public IEnumerable<UserApiModel> GetStudents(int groupId)
         {
             var users = _groupRepository.GetStudents(groupId);
@@ -99,12 +99,19 @@ namespace angular.Controllers.Groups
             return result;
         }
 
-        [HttpPost("{groupId}/users/{userId}")]
+        [HttpPost("{groupId}/students/{userId}")]
         public IActionResult AddStudent(int groupId, int userId)
         {
             _groupRepository.AddStudent(groupId, userId);
 
             return new ObjectResult(Mapper.Map<UserApiModel>(_groupRepository.GetGroupUser(userId)));
+        }
+
+        [HttpDelete("{groupId}/students/{userId}")]
+        public IActionResult RemoveStudent(int groupId, int userId)
+        {
+            _groupRepository.RemoveStudent(groupId, userId);
+            return new NoContentResult();
         }
     }
 }
