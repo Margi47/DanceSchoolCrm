@@ -10,5 +10,6 @@ namespace angular.Models
         IEnumerable<Group> GetGroups(int id);
         void AddGroup(int userId, int groupId);
         Group GetUserGroup(int groupId);
+        void RemoveGroup(int userId, int groupId);
     }
 }

@@ -113,5 +113,12 @@ namespace angular.Controllers.Users
 
             return new ObjectResult(Mapper.Map<GroupApiModel>(_userRepository.GetUserGroup(groupId)));
         }
+
+        [HttpDelete("{userId}/groups/{groupId}")]
+        public IActionResult RemoveGroup(int userId, int groupId)
+        {
+            _userRepository.RemoveGroup(userId, groupId);
+            return new NoContentResult();
+        }
     }
 }

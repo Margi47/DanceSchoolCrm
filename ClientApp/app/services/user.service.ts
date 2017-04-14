@@ -68,4 +68,17 @@ export class UserService {
                 return response.json();
             });
     }
+
+    removeGroup(userId: number, groupId: number): Observable<number> {
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        console.log(userId + "from service");
+
+        return this.http.delete(`${this.usersUrl}/${userId}/groups/${groupId}`, options)
+            .map(response => {
+                console.log(response);
+                return groupId;
+            });
+    }
 }

@@ -12,8 +12,10 @@ export class UserDetailFormComponent {
     @Input() allGroups: Group[];
     @Output() userSubmit = new EventEmitter<User>();
     @Output() userDelete = new EventEmitter<User>();
+
     @Output() addUserGroup = new EventEmitter<any>();
     @Output() showGroupDetails = new EventEmitter<number>();
+    @Output() removeUserGroup = new EventEmitter<any>();
 
     addingGroup: boolean = false;
     selectedGroup: Group;
@@ -21,13 +23,10 @@ export class UserDetailFormComponent {
     onUserSubmit() { this.userSubmit.emit(this.model); }
     onUserDelete() { this.userDelete.emit(this.model); }
     addGroup() {
-        console.log(this.selectedGroup.name);
         this.addingGroup = false;
         this.addUserGroup.emit({ userId: this.model.id, groupId: this.selectedGroup.id });
         this.selectedGroup = null;
-        console.log(this.model.groups);
     }
-    showDetails(id: number) {
-        this.showGroupDetails.emit(id);
-    }
+    showDetails(id: number) { this.showGroupDetails.emit(id); }
+    removeGroup(id: number) { this.removeUserGroup.emit({ userId: this.model.id, groupId: id }); }
 }

@@ -115,4 +115,20 @@ export class UserActions {
             payload: group
         }
     }
+
+    static REMOVE_USER_GROUP = '[User] Remove User Group';
+    removeUserGroup(userId, groupId): Action {
+        console.log(userId + "from action");
+        return {
+            type: UserActions.REMOVE_USER_GROUP,
+            payload: { user: userId, group: groupId },
+        }
+    }
+    static REMOVE_USER_GROUP_SUCCESS = '[User] Remove User Group Success';
+    removeUserGroupSuccess(group): Action {
+        return {
+            type: UserActions.REMOVE_USER_GROUP_SUCCESS,
+            payload: group
+        }
+    }
 }

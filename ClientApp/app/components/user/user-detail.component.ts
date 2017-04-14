@@ -18,7 +18,8 @@ import { Location } from '@angular/common';
                                  (userSubmit)="onUserSubmit($event)" 
                                  (userDelete)="onUserDelete($event)"
                                  (addUserGroup)="onAddGroup($event)"
-                                 (showGroupDetails)="onShowGroupDetails($event)">
+                                 (showGroupDetails)="onShowGroupDetails($event)"
+                                 (removeUserGroup)="removeUserGroup($event)">
                </user-detail-form>
                `
 })
@@ -66,6 +67,10 @@ export class UserDetailComponent implements OnInit{
 
     onShowGroupDetails(groupId: number) {
         this.router.navigate(['/groupdetail', groupId]);
+    }
+
+    removeUserGroup($event) {
+        this.store.dispatch(this.userActions.removeUserGroup($event.userId, $event.groupId));
     }
 
     goBack(): void {

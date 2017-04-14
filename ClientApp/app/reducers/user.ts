@@ -29,6 +29,11 @@ export default function (state = initialState, action: Action): UserState {
             state.groups = [...state.groups, action.payload];
             return state;
         }
+        case UserActions.REMOVE_USER_GROUP_SUCCESS: {
+            state.groups = state.groups.filter(g => g.id !== action.payload);
+            console.log(state);
+            return state;
+        }
         default: {
             return state;
         }

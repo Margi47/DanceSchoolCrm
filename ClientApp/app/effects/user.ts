@@ -57,4 +57,13 @@ export class UserEffects {
             return this.service.addGroup(obj.user, obj.group);
         })
         .map(group => this.userActions.addUserGroupSuccess(group));
+
+    @Effect() removeUserGroup$ = this.update$
+        .ofType(UserActions.REMOVE_USER_GROUP)
+        .map(action => action.payload)
+        .switchMap(obj => {
+            console.log(obj);
+            return this.service.removeGroup(obj.user, obj.group);
+        })
+        .map(group => this.userActions.removeUserGroupSuccess(group));
 }
