@@ -20,6 +20,21 @@ export class TeacherActions {
         };
     }
 
+    static LOAD_ALL_GROUPS = '[Teacher] Load All Groups';
+    loadAllGroups(): Action {
+        return {
+            type: TeacherActions.LOAD_ALL_GROUPS
+        };
+    }
+
+    static LOAD_ALL_GROUPS_SUCCESS = '[Teacher] Load All Groups Success';
+    loadAllGroupsSuccess(groups): Action {
+        return {
+            type: TeacherActions.LOAD_ALL_GROUPS_SUCCESS,
+            payload: groups
+        };
+    }
+
     static GET_TEACHER = '[Teacher] Get Teacher';
     getTeacher(id): Action {
         return {

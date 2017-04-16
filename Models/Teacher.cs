@@ -10,9 +10,6 @@ namespace angular.Models
     public class Teacher
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         public int UserInfoId { get; set; }
         public User UserInfo { get; set; }
         public List<GroupTeachers> Groups { get; set; }

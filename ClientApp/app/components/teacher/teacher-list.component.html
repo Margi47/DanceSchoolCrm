@@ -1,0 +1,28 @@
+﻿<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Groups</th>
+            <th><button (click)="addTeacher()">Add</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let teacher of teachers">
+            <td>{{teacher.id}}</td>
+            <td>{{teacher.name}}</td>'
+            <td>
+                <ul>
+                    <li *ngFor="let group of teacher.groups">{{group.name}}</li>
+                </ul>
+            </td>
+            <!--<td>
+                <ul>
+                    <li *ngFor="let style of teacher.styles">{{style}}</li>
+                </ul>
+            </td>-->
+            <td><button (click)="showDetails(teacher.id)">Show Details</button></td>
+        </tr>
+    </tbody>
+</table>
+

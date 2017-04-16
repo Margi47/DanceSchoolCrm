@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace angular.Models
 {
-    public interface ITeacherRepository: ICrudRepository<Teacher>
+    public interface ITeacherRepository
     {
-
+        IEnumerable<User> GetAllUsers();
+        Group[][] GetAllGroups();
     }
 }

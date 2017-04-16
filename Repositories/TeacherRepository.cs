@@ -6,30 +6,42 @@ using Microsoft.EntityFrameworkCore;
 
 namespace angular.Models
 {
-    public class TeacherRepository : CrudRepository<Teacher>, ITeacherRepository
+    public class TeacherRepository : ITeacherRepository
     {
-        public TeacherRepository(CrmContext context) : base(context)
-        {}
+        readonly CrmContext _context;
 
-        public override Func<Teacher, bool> GetExpression(int key)
+        public TeacherRepository(CrmContext context)
         {
-            return Teacher=>Teacher.Id == key;
+            _context = context;
         }
 
-        public override DbSet<Teacher> GetQuery(CrmContext context)
+        public IEnumerable<User> GetAllUsers()
         {
-            return context.Teachers;
+            return _context.Teachers.Select(t => t.UserInfo);
+        }
+       
+        public Group[][] GetAllGroups()
+        {
+            var teachers = _context.Teachers.ToList();
+            var c = teachers.Count();
+            var allGroups = new Group[c][];
+            for (var i= 0; i<teachers.Count; i++)
+            {
+                var teacherGroups = new List<Group>();
+                var groups = _context.GroupTeachers.Where(t => t.TeacherId == teachers[i].UserInfoId)
+                    .Select(gr => gr.Group).ToList();
+
+                foreach (var g in groups)
+                {
+                    teacherGroups.Add(g);
+                }
+                allGroups[i] = teacherGroups.ToArray();
+            }
+
+            return allGroups;
         }
 
-        /*public IEnumerable<Group> GetGroups(int id)
-        {
-            return Context.Users.Where(u => u.Id == id)
-                .SelectMany(x => x.Groups)
-                .Select(x=> x.Group)
-                .ToList();
-        }
-
-        public Group GetUserGroup(int groupId)
+        /*public Group GetUserGroup(int groupId)
         {
             return Context.Groups.FirstOrDefault(g => g.Id == groupId);
         }

@@ -6,6 +6,7 @@ import { Store, StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from './app-routing.module';
 import { GroupModule } from '../group/group.module';
 import { UserModule } from '../user/user.module';
+import { TeacherModule } from '../teacher/teacher.module';
 
 import { AppComponent } from './app.component';
 
@@ -22,6 +23,7 @@ import reducer from '../../reducers';
         FormsModule,
         GroupModule,
         UserModule,
+        TeacherModule,
         StoreModule.provideStore(reducer)
     ],
     providers: []

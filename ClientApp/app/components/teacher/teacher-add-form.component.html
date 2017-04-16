@@ -1,0 +1,45 @@
+﻿<form (ngSubmit)="onUserSubmit()" #userForm="ngForm" class="col-sm-6">
+        <div class="form-group">
+            <label for="name">User</label>
+            <select class="form-control" [(ngModel)]="selectedGroup">
+                <option *ngFor="let group of allGroups" [ngValue]="group">{{group.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="phone">Phone number</label>
+            <input type="text"
+                   class="form-control" 
+                   id="phone"
+                   [(ngModel)]="model.phone"
+                   name="phone">
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email"
+                   class="form-control" 
+                   id="email"
+                   [(ngModel)]="model.email"
+                   name="email">
+        </div>
+        <div class="form-group">          
+            <input type="checkbox" 
+                   [(ngModel)]="model.isActive"
+                   name="active">
+            <label>Is Active</label>
+        </div>
+        <div class="form-group">
+            <input type="checkbox"  
+                   [(ngModel)]="model.isAdmin"
+                   name="admin">
+            <label>Is Admin</label>
+        </div>
+        <div class="form-group">
+            
+            <input type="checkbox" 
+                   [(ngModel)]="model.isTeacher"
+                   name="teacher">
+            <label>Is Teacher</label>
+        </div>
+        <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Submit</button>
+        <button (click)="onUserCancel(); userForm.reset()" class="btn btn-default" type="button">Cancel</button>
+</form>

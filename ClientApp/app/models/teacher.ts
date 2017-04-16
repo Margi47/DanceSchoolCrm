@@ -3,7 +3,7 @@ import { Group } from './group';
 
 export class Teacher {
     id: number;
-    userInfo: User;
+    name: string;
     groups: Group[];
     styles: string[];
 }
