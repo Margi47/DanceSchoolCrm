@@ -10,7 +10,6 @@ export type TeacherListState = Teacher[];
 const initialState: TeacherListState = [];
 
 export default function (state = initialState, action: Action): TeacherListState {
-    console.log(action);
     switch (action.type) {
         case TeacherActions.LOAD_TEACHERS_SUCCESS: {
             return action.payload;
@@ -23,6 +22,14 @@ export default function (state = initialState, action: Action): TeacherListState
         }
         case TeacherActions.ADD_TEACHER_SUCCESS: {
             return [...state, action.payload];
+        }
+        case TeacherActions.ADD_TEACHER_GROUPS_SUCCESS: {
+            let index = _.findIndex(state, { id: action.payload.id });
+            if (index >= 0) {
+                state[index].groups = action.payload.groups;
+                console.log(state[index]);
+            }
+            return state;
         }
         case TeacherActions.UPDATE_TEACHER_SUCCESS: {
             let index = _.findIndex(state, { id: action.payload.id });

@@ -17,7 +17,7 @@ namespace angular.Models
 
         public IEnumerable<User> GetAllUsers()
         {
-            return _context.Teachers.Select(t => t.UserInfo);
+            return _context.Teachers.Select(t => t.User);
         }
        
         public Group[][] GetAllGroups()
@@ -28,7 +28,7 @@ namespace angular.Models
             for (var i= 0; i<teachers.Count; i++)
             {
                 var teacherGroups = new List<Group>();
-                var groups = _context.GroupTeachers.Where(t => t.TeacherId == teachers[i].UserInfoId)
+                var groups = _context.GroupTeachers.Where(t => t.TeacherId == teachers[i].Id)
                     .Select(gr => gr.Group).ToList();
 
                 foreach (var g in groups)
@@ -39,6 +39,21 @@ namespace angular.Models
             }
 
             return allGroups;
+        }
+
+        public void AddTeacher(Teacher teacher)
+        {
+            _context.Teachers.Add(teacher);
+            _context.SaveChanges();
+        }
+
+        public void AddGroup(int teacherId, int[] groups)
+        {
+            foreach (var g in groups)
+            {
+                _context.GroupTeachers.Add(new GroupTeachers { GroupId = g, TeacherId = teacherId });
+            }
+            _context.SaveChanges();
         }
 
         /*public Group GetUserGroup(int groupId)

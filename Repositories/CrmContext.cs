@@ -47,9 +47,9 @@ namespace angular.Models
                 .HasForeignKey(gu => gu.TeacherId);
 
             modelBuilder.Entity<Teacher>()
-                .HasOne(t => t.UserInfo)
+                .HasOne(t => t.User)
                 .WithOne(i => i.TeacherInfo)
-                .HasForeignKey<Teacher>(t => t.UserInfoId);
+                .HasForeignKey<Teacher>(t => t.Id);
         }
     }
 }

@@ -11,7 +11,6 @@ export class TeacherActions {
             type: TeacherActions.LOAD_TEACHERS
         };
     }
-
     static LOAD_TEACHERS_SUCCESS = '[Teacher] Load Teachers Success';
     loadTeachersSuccess(teachers): Action {
         return {
@@ -26,7 +25,6 @@ export class TeacherActions {
             type: TeacherActions.LOAD_ALL_GROUPS
         };
     }
-
     static LOAD_ALL_GROUPS_SUCCESS = '[Teacher] Load All Groups Success';
     loadAllGroupsSuccess(groups): Action {
         return {
@@ -34,6 +32,42 @@ export class TeacherActions {
             payload: groups
         };
     }
+
+    static ADD_TEACHER = '[Teacher] Add Teacher';
+    addTeacher(teacher): Action {
+        return {
+            type: TeacherActions.ADD_TEACHER,
+            payload: teacher
+        };
+    }
+    static ADD_TEACHER_SUCCESS = '[Teacher] Add Teacher Success';
+    addTeacherSuccess(teacher): Action {
+        return {
+            type: TeacherActions.ADD_TEACHER_SUCCESS,
+            payload: teacher
+        };
+    }
+
+    static ADD_TEACHER_GROUPS = '[Teacher] Add Teacher Groups';
+    addTeacherGroups(teacher): Action {
+        return {
+            type: TeacherActions.ADD_TEACHER_GROUPS,
+            payload: teacher
+        };
+    }
+    static ADD_TEACHER_GROUPS_SUCCESS = '[Teacher] Add Teacher Groups Success';
+    addTeacherGroupsSuccess(teacher): Action {
+        return {
+            type: TeacherActions.ADD_TEACHER_GROUPS_SUCCESS,
+            payload: {
+                teacher: teacher
+            }
+        };
+    }
+
+
+
+
 
     static GET_TEACHER = '[Teacher] Get Teacher';
     getTeacher(id): Action {
@@ -67,21 +101,6 @@ export class TeacherActions {
         };
     }
 
-    static ADD_TEACHER = '[Teacher] Add Teacher';
-    addTeacher(teacher): Action {
-        return {
-            type: TeacherActions.ADD_TEACHER,
-            payload: teacher
-        };
-    }
-
-    static ADD_TEACHER_SUCCESS = '[Teacher] Add Teacher Success';
-    addTeacherSuccess(teacher): Action {
-        return {
-            type: TeacherActions.ADD_TEACHER_SUCCESS,
-            payload: teacher
-        };
-    }
 
     static DELETE_TEACHER = '[Teacher] Delete Teacher';
     deleteTeacher(teacher): Action {

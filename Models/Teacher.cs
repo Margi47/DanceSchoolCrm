@@ -10,8 +10,8 @@ namespace angular.Models
     public class Teacher
     {
         [Key]
-        public int UserInfoId { get; set; }
-        public User UserInfo { get; set; }
+        public int Id { get; set; }
+        public User User { get; set; }
         public List<GroupTeachers> Groups { get; set; }
         //public List<string> Styles { get; set; }
     }

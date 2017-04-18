@@ -1,6 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs/Observable';
 
 import { TeacherActions } from '../actions/teacher.actions';
 import { TeacherService } from '../services/teacher.service';
@@ -23,11 +25,33 @@ export class TeacherEffects {
         .switchMap(() => this.service.getAllGroups())
         .map(groups => this.teacherActions.loadAllGroupsSuccess(groups));
 
-    @Effect() getTeacher$ = this.update$
-        .ofType(TeacherActions.GET_TEACHER)
+    @Effect() addTeacher$ = this.update$
+        .ofType(TeacherActions.ADD_TEACHER)
         .map(action => action.payload)
-        .switchMap(id => this.service.getTeacher(id))
-        .map(teacher => this.teacherActions.getTeacherSuccess(teacher));
+        .switchMap(teacher => {
+            console.log("adding teacher from effect");
+            return this.service.addTeacher(teacher);
+        })
+        .map(teacher => this.teacherActions.addTeacherSuccess(teacher));
+
+    @Effect() addGroupsToNewTeacher$ = this.update$
+        .ofType(TeacherActions.ADD_TEACHER_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(teacher => {
+            console.log("going to add groups from effect");
+            return Observable.of(this.teacherActions.addTeacherGroups(teacher));
+        });
+
+    @Effect() addTeacherGroups$ = this.update$
+        .ofType(TeacherActions.ADD_TEACHER_GROUPS)
+        .map(action => action.payload)
+        .switchMap(teacher => {
+            console.log("adding groups from effects")
+            return this.service.addGroups(teacher);
+        })
+        .map(teacher => this.teacherActions.addTeacherGroupsSuccess(teacher));
+
+
 
     @Effect() updateTeacher$ = this.update$
         .ofType(TeacherActions.UPDATE_TEACHER)
@@ -35,11 +59,7 @@ export class TeacherEffects {
         .switchMap(teacher => this.service.update(teacher))
         .map(teacher => this.teacherActions.updateTeacherSuccess(teacher));
 
-    @Effect() addTeacher$ = this.update$
-        .ofType(TeacherActions.ADD_TEACHER)
-        .map(action => action.payload)
-        .switchMap(teacher => this.service.addTeacher(teacher))
-        .map(teacher => this.teacherActions.addTeacherSuccess(teacher));
+
 
     @Effect() deleteTeacher$ = this.update$
         .ofType(TeacherActions.DELETE_TEACHER)

@@ -1,45 +1,25 @@
-﻿<form (ngSubmit)="onUserSubmit()" #userForm="ngForm" class="col-sm-6">
-        <div class="form-group">
-            <label for="name">User</label>
-            <select class="form-control" [(ngModel)]="selectedGroup">
-                <option *ngFor="let group of allGroups" [ngValue]="group">{{group.name}}</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="phone">Phone number</label>
-            <input type="text"
-                   class="form-control" 
-                   id="phone"
-                   [(ngModel)]="model.phone"
-                   name="phone">
-        </div>
-        <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email"
-                   class="form-control" 
-                   id="email"
-                   [(ngModel)]="model.email"
-                   name="email">
-        </div>
-        <div class="form-group">          
-            <input type="checkbox" 
-                   [(ngModel)]="model.isActive"
-                   name="active">
-            <label>Is Active</label>
-        </div>
-        <div class="form-group">
-            <input type="checkbox"  
-                   [(ngModel)]="model.isAdmin"
-                   name="admin">
-            <label>Is Admin</label>
-        </div>
-        <div class="form-group">
-            
-            <input type="checkbox" 
-                   [(ngModel)]="model.isTeacher"
-                   name="teacher">
-            <label>Is Teacher</label>
-        </div>
-        <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Submit</button>
-        <button (click)="onUserCancel(); userForm.reset()" class="btn btn-default" type="button">Cancel</button>
-</form>
+﻿<div class="form-group">
+    <label for="user">User</label>
+    <select class="form-control" [(ngModel)]="selectedUser">
+        <option *ngFor="let user of allUsers" [ngValue]="user">{{user.name}}</option>
+    </select>
+</div>
+<div class="form-group">
+    <label for="user">Add Group</label>
+    <select class="form-control" [ngModel] ="selectedGroup" (ngModelChange) ="onGroupAdd($event)">
+        <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
+    </select>
+</div>
+
+<div *ngIf="selectedUser">
+    <label>{{selectedUser.id}}</label>
+    <label>{{selectedUser.name}}</label>
+</div>
+<div *ngIf="allSelectedGroups">
+    <ul>
+        <li *ngFor="let group of allSelectedGroups">{{group.id}} - {{group.name}}</li>
+    </ul>
+</div>
+
+<button (click)="onTeacherSave()" type="submit" [disabled]="!selectedUser" class="btn btn-default">Submit</button>
+<button (click)="onTeacherCancel()" class="btn btn-default" type="button">Cancel</button>

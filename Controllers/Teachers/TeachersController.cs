@@ -41,18 +41,39 @@ namespace angular.Controllers.Users
             return new ObjectResult(result);
         }
 
-        /*[HttpGet("user/{id}", Name = "GetTeacher")]
-        public IActionResult GetTeacher(int id)
+        [HttpPost]
+        public IActionResult Create([FromBody] TeacherApiModel teacher)
         {
-            var user = _teacherRepository.GetUserInfo(id);
-            if (user == null)
+            if (teacher == null)
             {
-                return NotFound();
+                return BadRequest();
             }
 
-            var result = Mapper.Map<UserApiModel>(user);
-            return new ObjectResult(result);
+            var result = Mapper.Map<Teacher>(teacher);
+            _teacherRepository.AddTeacher(result);
+
+            return CreatedAtRoute("GetTeacher", new { id = result.Id }, result);
         }
+
+
+        [HttpPost("teacher/{teacherId}/groups")]
+        public IActionResult AddGroup(int teacherId, [FromBody] int[] groups)
+        {
+            _teacherRepository.AddGroup(teacherId, groups);
+
+            return new NoContentResult();
+        }
+
+
+        [HttpGet("user/{id}", Name = "GetTeacher")]
+        public IActionResult GetTeacher(int id)
+        {
+
+            return new ObjectResult(null);
+        }
+
+        /*
+
 
         [HttpPost]
         public IActionResult Create([FromBody] TeacherApiModel teacher)

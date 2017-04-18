@@ -4,7 +4,7 @@ import { Group } from '../../models/group';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';;
+import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { UserActions } from '../../actions/user.actions';
 import { GroupActions } from '../../actions/group.actions';

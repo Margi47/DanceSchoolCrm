@@ -8,9 +8,10 @@ using angular.Models;
 namespace angular.Migrations
 {
     [DbContext(typeof(CrmContext))]
-    partial class CrmContextModelSnapshot : ModelSnapshot
+    [Migration("20170418095611_TeacherIdName")]
+    partial class TeacherIdName
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -60,9 +61,9 @@ namespace angular.Migrations
 
             modelBuilder.Entity("angular.Models.Teacher", b =>
                 {
-                    b.Property<int>("Id");
+                    b.Property<int>("UserId");
 
-                    b.HasKey("Id");
+                    b.HasKey("UserId");
 
                     b.ToTable("Teachers");
                 });
@@ -119,7 +120,7 @@ namespace angular.Migrations
                 {
                     b.HasOne("angular.Models.User", "User")
                         .WithOne("TeacherInfo")
-                        .HasForeignKey("angular.Models.Teacher", "Id")
+                        .HasForeignKey("angular.Models.Teacher", "UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
         }

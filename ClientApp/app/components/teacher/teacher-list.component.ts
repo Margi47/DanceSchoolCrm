@@ -6,15 +6,11 @@ import { Teacher } from '../../models/teacher';
     templateUrl: './teacher-list.component.html'
 })
 
-export class TeacherListComponent implements OnChanges {
+export class TeacherListComponent{
     @Input() teachers: Teacher[];
     @Output() add = new EventEmitter();
     @Output() details = new EventEmitter<number>();
 
     addTeacher() { this.add.emit(); }
     showDetails(id: number) { this.details.emit(id); }
-
-    ngOnChanges() {
-        console.log(this.teachers);
-    }
 }

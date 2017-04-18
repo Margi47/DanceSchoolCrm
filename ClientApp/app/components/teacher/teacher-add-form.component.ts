@@ -1,16 +1,34 @@
-﻿import { Component, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Teacher } from '../../models/teacher';
+import { User } from '../../models/user';
+import { Group } from '../../models/group';
 
 @Component({
-    selector: 'user-add-form',
+    selector: 'teacher-add-form',
     templateUrl: './teacher-add-form.component.html'
 })
 export class TeacherAddFormComponent {
     model = new Teacher();
 
-    @Output() userSave = new EventEmitter<User>()
-    @Output() userCancel = new EventEmitter()
+    @Input() allUsers: User[];
+    @Input() allGroups: Group[];
 
-    onUserSubmit() { this.userSave.emit(this.model); }
-    onUserCancel() { this.userCancel.emit(); }
+    @Output() teacherSave = new EventEmitter<Teacher>();
+    @Output() teacherCancel = new EventEmitter();
+
+    selectedUser: User;
+    selectedGroup: Group;
+    allSelectedGroups: Group[] = [];
+
+    onGroupAdd(group) {
+        this.allSelectedGroups.push(group);
+    }
+
+    onTeacherSave() {
+        this.model.id = this.selectedUser.id;
+        this.model.name = this.selectedUser.name;
+        this.model.groups = this.allSelectedGroups;
+        this.teacherSave.emit(this.model);
+    }
+    onTeacherCancel() { this.teacherCancel.emit(); }
 }

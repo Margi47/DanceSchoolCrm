@@ -9,5 +9,7 @@ namespace angular.Models
     {
         IEnumerable<User> GetAllUsers();
         Group[][] GetAllGroups();
+        void AddTeacher(Teacher teacher);
+        void AddGroup(int teacherId, int[] groups);
     }
 }
