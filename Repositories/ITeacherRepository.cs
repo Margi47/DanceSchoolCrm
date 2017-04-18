@@ -8,8 +8,10 @@ namespace angular.Models
     public interface ITeacherRepository
     {
         IEnumerable<User> GetAllUsers();
-        Group[][] GetAllGroups();
+        IEnumerable<TeacherDto> GetAllTeacherGroups();
         void AddTeacher(Teacher teacher);
         void AddGroup(int teacherId, int[] groups);
+        User GetTeacher(int teacherId);
+        Group[] GetTeacherGroups(int teacherId);
     }
 }

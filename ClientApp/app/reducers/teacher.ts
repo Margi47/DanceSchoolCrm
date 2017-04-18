@@ -14,10 +14,14 @@ const initialState: TeacherState = {
     styles: []
 };
 
-export default function (state = initialState, action: Action): Teacher {
+export default function (state = initialState, action: Action): TeacherState {
     switch (action.type) {
         case TeacherActions.GET_TEACHER_SUCCESS: {
             return action.payload;
+        }
+        case TeacherActions.GET_TEACHER_GROUPS_SUCCESS: {
+            state.groups = action.payload;
+            return state;
         }
         default: {
             return state;

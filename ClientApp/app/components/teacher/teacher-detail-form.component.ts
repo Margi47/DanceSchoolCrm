@@ -10,12 +10,18 @@ import { Group } from '../../models/group';
 export class TeacherDetailFormComponent {
     @Input() model: Teacher;
     @Input() allGroups: Group[];
+    @Output() showGroupDetails = new EventEmitter<number>();
     @Output() teacherSubmit = new EventEmitter<Teacher>();
     @Output() teacherDelete = new EventEmitter<Teacher>();
 
     addingGroup: boolean = false;
     selectedGroup: Group;
 
+    onGroupAdd(group: Group) {
+        this.model.groups.push(group);
+        this.addingGroup = false;
+    }
+    showDetails(id: number) { this.showGroupDetails.emit(id); }
     onTeacherSubmit() { this.teacherSubmit.emit(this.model); }
     onTeacherDelete() { this.teacherDelete.emit(this.model); }
     /*addGroup() {

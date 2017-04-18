@@ -5,31 +5,17 @@ import { Teacher } from '../models/teacher';
 
 @Injectable() 
 export class TeacherActions {
-    static LOAD_TEACHERS = '[Teacher] Load Teachers';
-    loadTeachers(): Action {
+    static LOAD_ALL_TEACHERS = '[Teacher] Load All Teachers';
+    loadAllTeachers(): Action {
         return {
-            type: TeacherActions.LOAD_TEACHERS
+            type: TeacherActions.LOAD_ALL_TEACHERS
         };
     }
-    static LOAD_TEACHERS_SUCCESS = '[Teacher] Load Teachers Success';
-    loadTeachersSuccess(teachers): Action {
+    static LOAD_ALL_TEACHERS_SUCCESS = '[Teacher] Load All Teachers Success';
+    loadAllTeachersSuccess(teachers): Action {
         return {
-            type: TeacherActions.LOAD_TEACHERS_SUCCESS,
+            type: TeacherActions.LOAD_ALL_TEACHERS_SUCCESS,
             payload: teachers
-        };
-    }
-
-    static LOAD_ALL_GROUPS = '[Teacher] Load All Groups';
-    loadAllGroups(): Action {
-        return {
-            type: TeacherActions.LOAD_ALL_GROUPS
-        };
-    }
-    static LOAD_ALL_GROUPS_SUCCESS = '[Teacher] Load All Groups Success';
-    loadAllGroupsSuccess(groups): Action {
-        return {
-            type: TeacherActions.LOAD_ALL_GROUPS_SUCCESS,
-            payload: groups
         };
     }
 
@@ -65,10 +51,6 @@ export class TeacherActions {
         };
     }
 
-
-
-
-
     static GET_TEACHER = '[Teacher] Get Teacher';
     getTeacher(id): Action {
         return {
@@ -84,6 +66,27 @@ export class TeacherActions {
             payload: teacher
         };
     }
+
+    static GET_TEACHER_GROUPS = '[Teacher] Get Teacher Groups';
+    getTeacherGroups(id): Action {
+        return {
+            type: TeacherActions.GET_TEACHER_GROUPS,
+            payload: id
+        };
+    }
+
+    static GET_TEACHER_GROUPS_SUCCESS = '[Teacher] Get Teacher Groups Success';
+    getTeacherGroupsSuccess(groups): Action {
+        return {
+            type: TeacherActions.GET_TEACHER_GROUPS_SUCCESS,
+            payload: groups
+        };
+    }
+
+
+
+
+
 
     static UPDATE_TEACHER = '[Teacher] Uptade Teacher';
     updateTeacher(teacher): Action {

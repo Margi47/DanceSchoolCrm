@@ -10,11 +10,11 @@
     <tbody>
         <tr *ngFor="let teacher of teachers">
             <td>{{teacher.id}}</td>
-            <td>{{teacher.name}}</td>'
+            <td>{{teacher.name}}</td>
             <td>
-                <ul>
+                <ol>
                     <li *ngFor="let group of teacher.groups">{{group.name}}</li>
-                </ul>
+                </ol>
             </td>
             <!--<td>
                 <ul>

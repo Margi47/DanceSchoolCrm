@@ -6,6 +6,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace angular.Models
 {
+    public class TeacherDto
+    {
+        public User Teacher { get; set; }
+        public Group[] Groups { get; set; }
+    }
+
     public class TeacherRepository : ITeacherRepository
     {
         readonly CrmContext _context;
@@ -19,26 +25,28 @@ namespace angular.Models
         {
             return _context.Teachers.Select(t => t.User);
         }
-       
-        public Group[][] GetAllGroups()
+
+        public IEnumerable<TeacherDto> GetAllTeacherGroups()
         {
-            var teachers = _context.Teachers.ToList();
-            var c = teachers.Count();
-            var allGroups = new Group[c][];
-            for (var i= 0; i<teachers.Count; i++)
+            var users = _context.Teachers.Select(t => t.User).ToArray();
+            var usersId = users.Select(u => u.Id).ToArray();
+            var groups = _context.GroupTeachers.Where(g => usersId.Contains(g.TeacherId))
+                .Select(g => new { g.TeacherId, g.Group})
+                .ToArray()
+                .GroupBy(x => x.TeacherId)
+                .ToDictionary(x => x.Key, e => e.Select(y => y.Group).ToArray());
+
+            var teachers = new List<TeacherDto>();
+            foreach(var user in users)
             {
-                var teacherGroups = new List<Group>();
-                var groups = _context.GroupTeachers.Where(t => t.TeacherId == teachers[i].Id)
-                    .Select(gr => gr.Group).ToList();
-
-                foreach (var g in groups)
+                var teacherDto = new TeacherDto
                 {
-                    teacherGroups.Add(g);
-                }
-                allGroups[i] = teacherGroups.ToArray();
+                    Teacher = user,
+                    Groups = groups.ContainsKey(user.Id) ? groups[user.Id] : new Group[0]
+                };
+                teachers.Add(teacherDto);
             }
-
-            return allGroups;
+            return teachers;
         }
 
         public void AddTeacher(Teacher teacher)
@@ -56,12 +64,18 @@ namespace angular.Models
             _context.SaveChanges();
         }
 
-        /*public Group GetUserGroup(int groupId)
+        public User GetTeacher(int teacherId)
         {
-            return Context.Groups.FirstOrDefault(g => g.Id == groupId);
+            return _context.Teachers.Where(t => t.Id == teacherId).Select(t => t.User).First();
         }
 
-        public void AddGroup(int userId, int groupId)
+        public Group[] GetTeacherGroups(int teacherId)
+        {
+            return _context.GroupTeachers.Where(t => t.TeacherId == teacherId)
+                .Select(t => t.Group).ToArray();
+        }
+
+        /*public void AddGroup(int userId, int groupId)
         {
             if (!Context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))
             {

@@ -26,8 +26,7 @@ export class TeachersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.store.dispatch(this.teacherActions.loadTeachers());
-        this.store.dispatch(this.teacherActions.loadAllGroups());
+        this.store.dispatch(this.teacherActions.loadAllTeachers());
     };
 
     addTeacher() {

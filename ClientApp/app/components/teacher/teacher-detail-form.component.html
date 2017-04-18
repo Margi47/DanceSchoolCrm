@@ -1,10 +1,6 @@
 ﻿<div *ngIf="model" style="margin-top:20px" class="col-sm-6">
-        <form (ngSubmit)="onTeacherSubmit($event)" #teacherForm="ngForm">
-            <div><label>Id: {{model.id}}</label></div>
-            <div><label>Name: {{model.userInfo.name}}</label></div>
-            <button type="submit" [disabled]="!teacherForm.form.valid" class="btn btn-default">Save changes</button>
-            <button (click)="onTeacherDelete()" class="btn btn-default" type="button">Delete user</button>
-        </form>
+        <div><label>Id: {{model.id}}</label></div>
+        <div><label>Name: {{model.name}}</label></div>
 
         <div style="margin-top:20px">
             <label>Groups</label>
@@ -22,13 +18,12 @@
                 <tbody>
                     <tr *ngIf="addingGroup">
                          <td colspan="3">
-                            <select class="form-control" [(ngModel)]="selectedGroup">
-                                <option *ngFor="let group of allGroups" [ngValue]="group">{{group.name}}</option>
+                            <select class="form-control" [ngModel] ="selectedGroup" (ngModelChange) ="onGroupAdd($event)">
+                                <option *ngFor="let group of allGroups" [ngValue]="group">
+                                    {{group.id}} - {{group.name}}
+                                </option>
                             </select>
                          </td>
-                         <td>
-                            <button (click)="addGroup()" class="btn btn-default" type="button">Add</button>
-                        </td>
                     </tr>
                     <tr *ngFor="let group of model.groups">
                         <td>{{group.id}}</td>

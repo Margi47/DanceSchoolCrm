@@ -29,15 +29,15 @@ namespace angular.Controllers.Users
         }
 
         [HttpGet("groups")]
-        public IActionResult GetGroups()
+        public IActionResult GetAllWithGroups()
         {
-            var groups = _teacherRepository.GetAllGroups();
-            if (groups == null)
+            var teachers = _teacherRepository.GetAllTeacherGroups();
+            if (teachers == null)
             {
                 return NotFound();
             }
 
-            var result = Mapper.Map<GroupApiModel[][]>(groups);
+            var result = Mapper.Map<TeacherApiModel[]>(teachers);
             return new ObjectResult(result);
         }
 
@@ -56,7 +56,7 @@ namespace angular.Controllers.Users
         }
 
 
-        [HttpPost("teacher/{teacherId}/groups")]
+        [HttpPost("{teacherId}/groups")]
         public IActionResult AddGroup(int teacherId, [FromBody] int[] groups)
         {
             _teacherRepository.AddGroup(teacherId, groups);
@@ -65,11 +65,26 @@ namespace angular.Controllers.Users
         }
 
 
-        [HttpGet("user/{id}", Name = "GetTeacher")]
+        [HttpGet("{id}", Name = "GetTeacher")]
         public IActionResult GetTeacher(int id)
         {
+            var teacher = _teacherRepository.GetTeacher(id);
+             if(teacher == null)
+            {
+                return NotFound();
+            }
 
-            return new ObjectResult(null);
+            var result = Mapper.Map<TeacherApiModel>(teacher);
+            return new ObjectResult(result);
+        }
+
+        [HttpGet("{id}/groups", Name = "GetTeacherGroups")]
+        public IActionResult GetTeacherGroups(int id)
+        {
+            var groups = _teacherRepository.GetTeacherGroups(id);
+
+            var result = Mapper.Map<GroupApiModel[]>(groups);
+            return new ObjectResult(result);
         }
 
         /*

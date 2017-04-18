@@ -11,14 +11,8 @@ const initialState: TeacherListState = [];
 
 export default function (state = initialState, action: Action): TeacherListState {
     switch (action.type) {
-        case TeacherActions.LOAD_TEACHERS_SUCCESS: {
-            return action.payload;
-        }
-        case TeacherActions.LOAD_ALL_GROUPS_SUCCESS: {
-            for (var i = 0; i < action.payload.length; i++) {
-                state[i].groups = action.payload[i];
-            }
-            return state;
+        case TeacherActions.LOAD_ALL_TEACHERS_SUCCESS: {
+            return Object.assign([{}], state, action.payload);
         }
         case TeacherActions.ADD_TEACHER_SUCCESS: {
             return [...state, action.payload];

@@ -15,6 +15,7 @@ import { Location } from '@angular/common';
     template: `<button (click)="goBack()" class="btn btn-default">Back</button>
                <teacher-detail-form [model] = "model$ | async" 
                                     [allGroups] = "allGroups$ | async"
+                                    (showGroupDetails) = "onShowGroupDetails($event)"
                                     (teacherSubmit)="onTeacherSubmit($event)" 
                                     (teacherDelete)="onTeacherDelete($event)">
                </teacher-detail-form>
@@ -40,10 +41,14 @@ export class TeacherDetailComponent implements OnInit{
        this.route.params.subscribe(params =>
        {
            this.store.dispatch(this.teacherActions.getTeacher(+params['id']));
-           //this.store.dispatch(this.userActions.loadUserGroups(+params['id']));
+           this.store.dispatch(this.teacherActions.getTeacherGroups(+params['id']));
        });
 
        this.store.dispatch(this.groupActions.loadGroups());
+    }
+
+   onShowGroupDetails(id: number) {
+       this.router.navigate(['groupdetail', id]);
    }
 
    onTeacherDelete(teacher: Teacher) {

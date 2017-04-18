@@ -52,6 +52,9 @@ namespace angular
                 cfg.CreateMap<TeacherApiModel, Teacher>();
                 cfg.CreateMap<User, TeacherApiModel>();
                 cfg.CreateMap<TeacherApiModel, User>();
+                cfg.CreateMap<TeacherDto, TeacherApiModel>()
+                .ForMember(x => x.Id, y => y.MapFrom(src => src.Teacher.Id))
+                .ForMember(x => x.Name, y => y.MapFrom(src => src.Teacher.Name));
             });
         }
 
