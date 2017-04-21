@@ -19,17 +19,15 @@ export default function (state = initialState, action: Action): GroupState {
             return action.payload;
         }
         case GroupActions.LOAD_STUDENTS_SUCCESS: {
-            state.students = action.payload;
-            return state;
+            return Object.assign({}, state, { students: action.payload });
         }
         case GroupActions.ADD_STUDENT_SUCCESS: {
-            state.students = [...state.students, action.payload];
-            return state;
+            return Object.assign({}, state, { students: [...state.students, action.payload] });
         }
         case GroupActions.REMOVE_STUDENT_SUCCESS: {
-            state.students = state.students.filter(student => student.id !== action.payload);
-            console.log(state);
-            return state;
+            return Object.assign({}, state, {
+                students: state.students.filter(student => student.id !== action.payload)
+            });
         }
         default: {
             return state;

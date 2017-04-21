@@ -20,8 +20,14 @@ export default function (state = initialState, action: Action): TeacherState {
             return action.payload;
         }
         case TeacherActions.GET_TEACHER_GROUPS_SUCCESS: {
-            state.groups = action.payload;
-            return state;
+            return Object.assign({}, state, { groups: action.payload });
+        }
+        case TeacherActions.ADD_TEACHER_GROUPS_SUCCESS: {
+            return Object.assign({}, state, { groups: [...state.groups, ...action.payload] });
+        }
+        case TeacherActions.REMOVE_TEACHER_GROUPS_SUCCESS: {
+            return Object.assign({}, state,
+                { groups: state.groups.filter(g => g.id !== action.payload) });
         }
         default: {
             return state;

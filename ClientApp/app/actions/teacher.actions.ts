@@ -35,19 +35,34 @@ export class TeacherActions {
     }
 
     static ADD_TEACHER_GROUPS = '[Teacher] Add Teacher Groups';
-    addTeacherGroups(teacher): Action {
+    addTeacherGroups(teacherId, groups): Action {
         return {
             type: TeacherActions.ADD_TEACHER_GROUPS,
-            payload: teacher
+            payload: { teacher: teacherId, groups: groups }
         };
     }
     static ADD_TEACHER_GROUPS_SUCCESS = '[Teacher] Add Teacher Groups Success';
-    addTeacherGroupsSuccess(teacher): Action {
+    addTeacherGroupsSuccess(groups): Action {
         return {
             type: TeacherActions.ADD_TEACHER_GROUPS_SUCCESS,
-            payload: {
-                teacher: teacher
-            }
+            payload: groups
+        };
+    }
+
+    static REMOVE_TEACHER_GROUP = '[Teacher] Remove Teacher Groups';
+    removeTeacherGroup(teacherId, groupId): Action {
+        console.log(groupId);
+        return {
+            type: TeacherActions.REMOVE_TEACHER_GROUP,
+            payload: { teacher: teacherId, group: groupId }
+        };
+    }
+    static REMOVE_TEACHER_GROUPS_SUCCESS = '[Teacher] Remove Teacher Groups Success';
+    removeTeacherGroupsSuccess(group): Action {
+        console.log(group);
+        return {
+            type: TeacherActions.REMOVE_TEACHER_GROUPS_SUCCESS,
+            payload: group
         };
     }
 

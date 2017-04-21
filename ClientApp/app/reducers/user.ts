@@ -22,17 +22,14 @@ export default function (state = initialState, action: Action): UserState {
             return action.payload;
         }
         case UserActions.LOAD_USER_GROUPS_SUCCESS: {
-            state.groups = action.payload;
-            return state;
+            return Object.assign({}, state, { groups: action.payload });
         }
         case UserActions.ADD_USER_GROUP_SUCCESS: {
-            state.groups = [...state.groups, action.payload];
-            return state;
+            return Object.assign({}, state, { groups: [...state.groups, action.payload ]});
         }
         case UserActions.REMOVE_USER_GROUP_SUCCESS: {
-            state.groups = state.groups.filter(g => g.id !== action.payload);
-            console.log(state);
-            return state;
+            return Object.assign({}, state,
+                { groups: state.groups.filter(g => g.id !== action.payload) });
         }
         default: {
             return state;

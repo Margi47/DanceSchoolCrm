@@ -11,22 +11,25 @@ export class TeacherDetailFormComponent {
     @Input() model: Teacher;
     @Input() allGroups: Group[];
     @Output() showGroupDetails = new EventEmitter<number>();
-    @Output() teacherSubmit = new EventEmitter<Teacher>();
+    @Output() showUser = new EventEmitter<number>();
     @Output() teacherDelete = new EventEmitter<Teacher>();
+    @Output() addGroup = new EventEmitter<any>();
+    @Output() removeGroup = new EventEmitter<any>();
 
     addingGroup: boolean = false;
     selectedGroup: Group;
 
     onGroupAdd(group: Group) {
-        this.model.groups.push(group);
+        console.log([group.id]);
+        this.addGroup.emit({ teacher: this.model.id, group: [group.id] });
         this.addingGroup = false;
+        this.selectedGroup = null;
+    }
+    onGroupRemove(groupId: number) {
+        this.removeGroup.emit({ teacher: this.model.id, group: groupId });
     }
     showDetails(id: number) { this.showGroupDetails.emit(id); }
-    onTeacherSubmit() { this.teacherSubmit.emit(this.model); }
-    onTeacherDelete() { this.teacherDelete.emit(this.model); }
-    /*addGroup() {
-        this.addingGroup = false;
-        this.addUserGroup.emit({ userId: this.model.id, groupId: this.selectedGroup.id });
-        this.selectedGroup = null;
-    }*/
+    showUserInfo() { this.showUser.emit(this.model.id); }
+    deleteTeacher() { this.teacherDelete.emit(this.model); }
+
 }

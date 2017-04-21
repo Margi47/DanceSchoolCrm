@@ -12,13 +12,17 @@ import { Location } from '@angular/common';
 
 @Component({
     selector: 'teacher-detail',
-    template: `<button (click)="goBack()" class="btn btn-default">Back</button>
-               <teacher-detail-form [model] = "model$ | async" 
-                                    [allGroups] = "allGroups$ | async"
-                                    (showGroupDetails) = "onShowGroupDetails($event)"
-                                    (teacherSubmit)="onTeacherSubmit($event)" 
-                                    (teacherDelete)="onTeacherDelete($event)">
-               </teacher-detail-form>
+    template: `<div class="col-sm-6">
+                    <button (click)="goBack()" class="btn btn-default" type = "button">Back</button>
+                    <teacher-detail-form [model] = "model$ | async" 
+                                         [allGroups] = "allGroups$ | async"
+                                         (showGroupDetails) = "onShowGroupDetails($event)"
+                                         (showUser) = "onShowUserInfo($event)"
+                                         (teacherDelete)="onTeacherDelete($event)"
+                                         (addGroup) = "onAddGroup($event)"
+                                         (removeGroup) = "onRemoveGroup($event)">
+                    </teacher-detail-form>
+               <div>
                `
 })
 
@@ -41,7 +45,6 @@ export class TeacherDetailComponent implements OnInit{
        this.route.params.subscribe(params =>
        {
            this.store.dispatch(this.teacherActions.getTeacher(+params['id']));
-           this.store.dispatch(this.teacherActions.getTeacherGroups(+params['id']));
        });
 
        this.store.dispatch(this.groupActions.loadGroups());
@@ -51,15 +54,22 @@ export class TeacherDetailComponent implements OnInit{
        this.router.navigate(['groupdetail', id]);
    }
 
+   onShowUserInfo(id: number) {
+       this.router.navigate(['userdetail', id]);
+   }
+
    onTeacherDelete(teacher: Teacher) {
         this.store.dispatch(this.teacherActions.deleteTeacher(teacher));
         this.goBack();
-    }
+   }
 
-   onTeacherSubmit(teacher: Teacher): void {
-        this.store.dispatch(this.teacherActions.updateTeacher(teacher));
-        this.goBack();        
-    }
+   onAddGroup($event) {
+       this.store.dispatch(this.teacherActions.addTeacherGroups($event.teacher, $event.group));
+   }
+
+   onRemoveGroup($event) {
+       this.store.dispatch(this.teacherActions.removeTeacherGroup($event.teacher, $event.group));
+   }
 
     goBack(): void {
         this.location.back();

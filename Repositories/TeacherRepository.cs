@@ -21,12 +21,12 @@ namespace angular.Models
             _context = context;
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public IEnumerable<User> GetTeachers()
         {
             return _context.Teachers.Select(t => t.User);
         }
 
-        public IEnumerable<TeacherDto> GetAllTeacherGroups()
+        public IEnumerable<TeacherDto> GetAllTeachersInfo()
         {
             var users = _context.Teachers.Select(t => t.User).ToArray();
             var usersId = users.Select(u => u.Id).ToArray();
@@ -55,45 +55,65 @@ namespace angular.Models
             _context.SaveChanges();
         }
 
-        public void AddGroup(int teacherId, int[] groups)
+        public Group[] AddGroups(int teacherId, int[] groups)
         {
             foreach (var g in groups)
             {
-                _context.GroupTeachers.Add(new GroupTeachers { GroupId = g, TeacherId = teacherId });
+                if (!_context.GroupTeachers.Any(x => x.TeacherId == teacherId && x.GroupId == g))
+                {
+                    _context.GroupTeachers.Add(new GroupTeachers { GroupId = g, TeacherId = teacherId });
+                }
             }
+            _context.SaveChanges();
+
+            var groupItems = new List<Group>();
+            foreach(var g in groups)
+            {
+                groupItems.Add(GetGroup(g));
+            }
+            return groupItems.ToArray();
+        }
+
+        public TeacherDto GetTeacher(int teacherId)
+        {
+            var user = _context.Teachers
+                .Where(t => t.Id == teacherId)
+                .Select(t => t.User).First();
+            var groups = _context.GroupTeachers
+                .Where(g => g.TeacherId == user.Id)
+                .Select(g => g.Group).ToArray();
+
+            var teacherDto = new TeacherDto
+            {
+                Teacher = user,
+                Groups = groups
+            };
+
+            return teacherDto;
+        }
+
+        public void RemoveTeacher(int id)
+        {
+            var entity = _context.Teachers.First(t => t.Id == id);
+            _context.Teachers.Remove(entity);
             _context.SaveChanges();
         }
 
-        public User GetTeacher(int teacherId)
+
+        public Group GetGroup(int groupId)
         {
-            return _context.Teachers.Where(t => t.Id == teacherId).Select(t => t.User).First();
+            return _context.Groups.First(g => g.Id == groupId);
         }
 
-        public Group[] GetTeacherGroups(int teacherId)
+        public void RemoveGroup(int teacherId, int groupId)
         {
-            return _context.GroupTeachers.Where(t => t.TeacherId == teacherId)
-                .Select(t => t.Group).ToArray();
-        }
-
-        /*public void AddGroup(int userId, int groupId)
-        {
-            if (!Context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))
+            var entity = _context.GroupTeachers.FirstOrDefault(g => g.GroupId == groupId && g.TeacherId == teacherId);
+            if (entity != null)
             {
-                Context.GroupUser.Add(new GroupUser { GroupId = groupId, UserId = userId });
-                Context.SaveChanges();
+                _context.GroupTeachers.Remove(entity);
+                _context.SaveChanges();
             }
         }
-
-        public void RemoveGroup(int userId, int groupId)
-        {
-            if (Context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))
-            {
-                var entity = Context.GroupUser.First(g => g.GroupId == groupId && g.UserId == userId);
-
-                Context.GroupUser.Remove(entity);
-                Context.SaveChanges();
-            }
-        }*/
 
     }
 }
