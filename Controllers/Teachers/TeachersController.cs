@@ -68,6 +68,13 @@ namespace angular.Controllers.Users
             return new ObjectResult(result);
         }
 
+        [HttpGet("{id}/groups", Name = "GetTeacherGroups")]
+        public IActionResult GetTeacherGroups(int id)
+        {
+            var groups = _teacherRepository.GetTeacherGroups(id);
+            return new ObjectResult(Mapper.Map<GroupApiModel[]>(groups));
+        }
+
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -84,9 +91,8 @@ namespace angular.Controllers.Users
         [HttpPost("{teacherId}/groups")]
         public IActionResult AddGroup(int teacherId, [FromBody] int[] groups)
         {
-            var result = _teacherRepository.AddGroups(teacherId, groups);
-
-            return new ObjectResult(Mapper.Map<GroupApiModel[]>(result));
+            _teacherRepository.AddGroups(teacherId, groups);
+            return new NoContentResult();
         }
 
         [HttpDelete("{teacherId}/groups/{groupId}")]

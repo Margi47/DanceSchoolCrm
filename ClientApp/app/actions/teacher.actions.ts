@@ -91,10 +91,10 @@ export class TeacherActions {
     }
 
     static GET_TEACHER_GROUPS_SUCCESS = '[Teacher] Get Teacher Groups Success';
-    getTeacherGroupsSuccess(groups): Action {
+    getTeacherGroupsSuccess(teacher): Action {
         return {
             type: TeacherActions.GET_TEACHER_GROUPS_SUCCESS,
-            payload: groups
+            payload: teacher
         };
     }
 

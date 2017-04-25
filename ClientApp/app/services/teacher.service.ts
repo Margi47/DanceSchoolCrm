@@ -36,7 +36,12 @@ export class TeacherService {
             .map(response => teacher);
     }
 
-    addGroups(teacherId: number, groups: number[]): Observable<Group[]> {
+    getTeacherGroups(teacherId: number) {
+        return this.http.get(`${this.teachersUrl}/${teacherId}/groups`)
+            .map(response => response.json());
+    }
+
+    addGroups(teacherId: number, groups: number[]): Observable<number> {
         console.log("adding groups from service, teacher id:" + groups);
         var body = JSON.stringify(groups);
         console.log(body);
@@ -44,7 +49,7 @@ export class TeacherService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(`${this.teachersUrl}/${teacherId}/groups`, body, options)
-            .map(response => response.json());
+            .map(response => teacherId);        
     }
 
     deleteGroup(teacherId: number, groupId: number): Observable<number> {

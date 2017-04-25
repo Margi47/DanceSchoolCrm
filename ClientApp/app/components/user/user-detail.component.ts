@@ -12,16 +12,18 @@ import { Location } from '@angular/common';
 
 @Component({
     selector: 'user-detail',
-    template: `<button (click)="goBack()" class="btn btn-default">Back</button>
-               <user-detail-form [model] = "model$ | async" 
-                                 [allGroups] = "allGroups$ | async"
-                                 (userSubmit)="onUserSubmit($event)" 
-                                 (userDelete)="onUserDelete($event)"
-                                 (addUserGroup)="onAddGroup($event)"
-                                 (showGroupDetails)="onShowGroupDetails($event)"
-                                 (removeUserGroup)="removeUserGroup($event)">
-               </user-detail-form>
-               `
+    template: `
+<div  class="col-sm-6">
+    <button (click)="goBack()" class="btn btn-default">Back</button>
+    <user-detail-form [model] = "model$ | async" 
+                      [allGroups] = "allGroups$ | async"
+                      (userSubmit)="onUserSubmit($event)" 
+                      (userDelete)="onUserDelete($event)"
+                      (addUserGroup)="onAddGroup($event)"
+                      (showGroupDetails)="onShowGroupDetails($event)"
+                      (removeUserGroup)="removeUserGroup($event)">
+    </user-detail-form>
+</div>`
 })
 
 export class UserDetailComponent implements OnInit{

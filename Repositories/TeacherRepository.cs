@@ -55,23 +55,18 @@ namespace angular.Models
             _context.SaveChanges();
         }
 
-        public Group[] AddGroups(int teacherId, int[] groups)
+        public void AddGroups(int teacherId, int[] groups)
         {
-            foreach (var g in groups)
+            var existingGroups = _context.GroupTeachers.Where(g => g.TeacherId == teacherId && groups.Contains(g.GroupId))
+                .Select(g => g.GroupId)
+                .ToArray();
+            var newGroups = groups.Except(existingGroups);
+
+            foreach (var g in newGroups)
             {
-                if (!_context.GroupTeachers.Any(x => x.TeacherId == teacherId && x.GroupId == g))
-                {
                     _context.GroupTeachers.Add(new GroupTeachers { GroupId = g, TeacherId = teacherId });
-                }
             }
             _context.SaveChanges();
-
-            var groupItems = new List<Group>();
-            foreach(var g in groups)
-            {
-                groupItems.Add(GetGroup(g));
-            }
-            return groupItems.ToArray();
         }
 
         public TeacherDto GetTeacher(int teacherId)
@@ -79,9 +74,7 @@ namespace angular.Models
             var user = _context.Teachers
                 .Where(t => t.Id == teacherId)
                 .Select(t => t.User).First();
-            var groups = _context.GroupTeachers
-                .Where(g => g.TeacherId == user.Id)
-                .Select(g => g.Group).ToArray();
+            var groups = GetTeacherGroups(user.Id);
 
             var teacherDto = new TeacherDto
             {
@@ -90,6 +83,13 @@ namespace angular.Models
             };
 
             return teacherDto;
+        }
+
+        public Group[] GetTeacherGroups(int teacherId)
+        {
+            return _context.GroupTeachers
+                .Where(g => g.TeacherId == teacherId)
+                .Select(g => g.Group).ToArray();
         }
 
         public void RemoveTeacher(int id)
