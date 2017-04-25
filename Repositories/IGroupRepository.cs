@@ -9,7 +9,10 @@ namespace angular.Models
     {
         IEnumerable<User> GetStudents(int groupId);
         void AddStudent(int groupId, int userId);
-        User GetGroupUser(int userId);
+        User GetUser(int userId);
         void RemoveStudent(int groupId, int userId);
+        IEnumerable<User> GetTeachers(int groupId);
+        void AddTeacher(int groupId, int teacherId);
+        void RemoveTeacher(int groupId, int teacherId);
     }
 }
