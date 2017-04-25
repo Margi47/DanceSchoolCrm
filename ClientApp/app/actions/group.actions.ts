@@ -133,4 +133,53 @@ export class GroupActions {
             payload: user
         };
     }
+
+    static LOAD_TEACHERS = '[Group] Load Group Teachers';
+    loadTeaches(groupId): Action {
+        return {
+            type: GroupActions.LOAD_TEACHERS,
+            payload: groupId
+        };
+    }
+
+    static LOAD_TEACHERS_SUCCESS = '[Group] Load Group Teachers Success';
+    loadTeachesSuccess(teachers): Action {
+        return {
+            type: GroupActions.LOAD_TEACHERS_SUCCESS,
+            payload: teachers
+        };
+    }
+
+    static ADD_TEACHER = '[Group] Add Group Teacher';
+    addGroupTeacher(groupId, teacherId): Action {
+        console.log(teacherId + "from action");
+        return {
+            type: GroupActions.ADD_TEACHER,
+            payload: { group: groupId, teacher: teacherId },
+        }
+    }
+
+    static ADD_TEACHER_SUCCESS = '[Group] Add Group Teacher Success';
+    addGroupTeacherSuccess(teacher): Action {
+        return {
+            type: GroupActions.ADD_TEACHER_SUCCESS,
+            payload: teacher
+        }
+    }
+
+    static REMOVE_TEACHER = '[Group] Remove Teacher';
+    removeTeacher(groupId, teacherId): Action {
+        return {
+            type: GroupActions.REMOVE_TEACHER,
+            payload: { group: groupId, teacher: teacherId }
+        };
+    }
+
+    static REMOVE_TEACHER_SUCCESS = '[Group] Remove Teacher Success';
+    removeTeacherSuccess(teacher): Action {
+        return {
+            type: GroupActions.REMOVE_TEACHER_SUCCESS,
+            payload: teacher
+        };
+    }
 }

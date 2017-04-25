@@ -29,7 +29,7 @@ namespace angular.Models
                 .ToList();                
         }
 
-        public User GetGroupUser(int userId)
+        public User GetUser(int userId)
         {
             return Context.Users.FirstOrDefault(u => u.Id == userId);
         }
@@ -50,6 +50,35 @@ namespace angular.Models
                 var entity = Context.GroupUser.First(g => g.GroupId == groupId && g.UserId == userId);
 
                 Context.GroupUser.Remove(entity);
+                Context.SaveChanges();
+            }
+        }
+
+        public IEnumerable<User> GetTeachers(int groupId)
+        {
+            return Context.Groups.Where(g => g.Id == groupId)
+                .SelectMany(g => g.Teachers)
+                .Select(t => t.Teacher)
+                .Select(t => t.User)
+                .ToList();
+        }
+
+        public void AddTeacher(int groupId, int teacherId)
+        {
+            if (!Context.GroupTeachers.Any(x => x.TeacherId == teacherId && x.GroupId == groupId))
+            {
+                Context.GroupTeachers.Add(new GroupTeachers { GroupId = groupId, TeacherId = teacherId });
+                Context.SaveChanges();
+            }
+        }
+
+        public void RemoveTeacher(int groupId, int teacherId)
+        {
+            if (Context.GroupTeachers.Any(x => x.TeacherId == teacherId && x.GroupId == groupId))
+            {
+                var entity = Context.GroupTeachers.First(g => g.GroupId == groupId && g.TeacherId == teacherId);
+
+                Context.GroupTeachers.Remove(entity);
                 Context.SaveChanges();
             }
         }
