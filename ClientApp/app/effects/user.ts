@@ -1,6 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs/Observable';
 
 import { AppState } from '../reducers';
 import { UserActions } from '../actions/user.actions';
@@ -36,6 +38,15 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(user => this.service.addUser(user))
         .map(user => this.userActions.addUserSuccess(user));
+
+    @Effect() addTeacherToNewUser = this.update$
+        .ofType(UserActions.ADD_USER_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(user => {
+            if (user.isTeacher) {
+                return Observable.of(this.userActions.createTeacher(user));
+            }
+        })
 
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)
