@@ -1,6 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs/Observable';
 
 import { AppState } from '../reducers';
 import { UserActions } from '../actions/user.actions';
@@ -37,6 +39,15 @@ export class UserEffects {
         .switchMap(user => this.service.addUser(user))
         .map(user => this.userActions.addUserSuccess(user));
 
+    @Effect() addTeacherToNewUser = this.update$
+        .ofType(UserActions.ADD_USER_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(user => {
+            if (user.isTeacher) {
+                return Observable.of(this.userActions.createTeacher(user));
+            }
+        })
+
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)
         .map(action => action.payload)
@@ -66,4 +77,16 @@ export class UserEffects {
             return this.service.removeGroup(obj.user, obj.group);
         })
         .map(group => this.userActions.removeUserGroupSuccess(group));
+
+    @Effect() createTeacher = this.update$
+        .ofType(UserActions.CREATE_TEACHER)
+        .map(action => action.payload)
+        .switchMap(user => this.service.createTeacher(user))
+        .map(teacher => this.userActions.createTeacherSuccess());
+
+    @Effect() deleteTeacher$ = this.update$
+        .ofType(UserActions.DELETE_TEACHER)
+        .map(action => action.payload)
+        .switchMap(id => this.service.deleteTeacher(id))
+        .map(id => this.userActions.deleteTeacherSuccess());
 }

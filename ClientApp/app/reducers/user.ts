@@ -31,6 +31,12 @@ export default function (state = initialState, action: Action): UserState {
             return Object.assign({}, state,
                 { groups: state.groups.filter(g => g.id !== action.payload) });
         }
+        case UserActions.CREATE_TEACHER_SUCCESS: {
+            return Object.assign({}, state, { isTeacher: true });
+        }
+        case UserActions.DELETE_TEACHER_SUCCESS: {
+            return Object.assign({}, state, { isTeacher: false });
+        }
         default: {
             return state;
         }
