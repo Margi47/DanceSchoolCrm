@@ -61,10 +61,10 @@ export class GroupActions {
     }
 
     static ADD_GROUP_SUCCESS = '[Group] Add Group Success';
-    addGroupSuccess(group): Action {
+    addGroupSuccess(group, teachers): Action {
         return {
             type: GroupActions.ADD_GROUP_SUCCESS,
-            payload: group
+            payload: { group: group, teachers: teachers }
         };
     }
 
@@ -150,20 +150,20 @@ export class GroupActions {
         };
     }
 
-    static ADD_TEACHER = '[Group] Add Group Teacher';
-    addGroupTeacher(groupId, teacherId): Action {
-        console.log(teacherId + "from action");
+    static ADD_TEACHERS = '[Group] Add Group Teachers';
+    addGroupTeachers(groupId, teachers): Action {
+        console.log(teachers + "from action");
         return {
-            type: GroupActions.ADD_TEACHER,
-            payload: { group: groupId, teacher: teacherId },
+            type: GroupActions.ADD_TEACHERS,
+            payload: { group: groupId, teachers: teachers },
         }
     }
 
-    static ADD_TEACHER_SUCCESS = '[Group] Add Group Teacher Success';
-    addGroupTeacherSuccess(teacher): Action {
+    static ADD_TEACHERS_SUCCESS = '[Group] Add Group Teachers Success';
+    addGroupTeachersSuccess(teachers): Action {
         return {
-            type: GroupActions.ADD_TEACHER_SUCCESS,
-            payload: teacher
+            type: GroupActions.ADD_TEACHERS_SUCCESS,
+            payload: teachers
         }
     }
 

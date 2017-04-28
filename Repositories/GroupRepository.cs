@@ -63,13 +63,18 @@ namespace angular.Models
                 .ToList();
         }
 
-        public void AddTeacher(int groupId, int teacherId)
+        public void AddTeachers(int groupId, int[] teachers)
         {
-            if (!Context.GroupTeachers.Any(x => x.TeacherId == teacherId && x.GroupId == groupId))
+            var existingItems = Context.GroupTeachers.Where(g => g.GroupId == groupId && teachers.Contains(g.TeacherId))
+                        .Select(g => g.TeacherId)
+                        .ToArray();
+            var newTeachers = teachers.Except(existingItems);
+
+            foreach (var t in newTeachers)
             {
-                Context.GroupTeachers.Add(new GroupTeachers { GroupId = groupId, TeacherId = teacherId });
-                Context.SaveChanges();
+                Context.GroupTeachers.Add(new GroupTeachers { GroupId = groupId, TeacherId = t });
             }
+            Context.SaveChanges();
         }
 
         public void RemoveTeacher(int groupId, int teacherId)

@@ -25,14 +25,16 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    addGroup(group: Group): Observable<Group> {
+    addGroup(group: Group): Observable<any> {
         var body = JSON.stringify(group);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
 
         return this.http.post(this.groupsUrl, body, options)
-            .map(response => response.json());
+            .map(response => {
+                return { group: response.json(), teachers: group.teachers };
+            });
     }
 
     deleteGroup(group: Group): Observable<Group> {
@@ -80,13 +82,13 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    addTeacher(groupId: number, teacherId: number): Observable<Teacher> {
+    addTeachers(groupId: number, teachers: number[]): Observable<number> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-
-        console.log(teacherId);
-        return this.http.post(`${this.groupsUrl}/${groupId}/teachers/${teacherId}`, options)
-            .map(response => response.json());
+        var body = JSON.stringify(teachers);
+        console.log(body);
+        return this.http.post(`${this.groupsUrl}/${groupId}/teachers`, body, options)
+            .map(response => groupId);
     }
 
     removeTeacher(groupId: number, teacherId: number): Observable<number> {

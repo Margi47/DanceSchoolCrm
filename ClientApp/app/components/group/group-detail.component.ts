@@ -2,7 +2,7 @@
 import { Group } from '../../models/group';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';;
+import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { GroupActions } from '../../actions/group.actions';
 import { UserActions } from '../../actions/user.actions';
@@ -84,7 +84,7 @@ export class GroupDetailComponent implements OnInit {
     }
 
     addTeacherToGroup($event) {
-        this.store.dispatch(this.groupActions.addGroupTeacher($event.groupId, $event.teacherId));
+        this.store.dispatch(this.groupActions.addGroupTeachers($event.groupId, $event.teachers));
     }
 
     removeGroupTeacher($event) {

@@ -1,6 +1,8 @@
 ﻿import { Injectable } from '@angular/core';
 import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
+import 'rxjs/add/observable/of';
+import { Observable } from 'rxjs/Observable';
 
 import { AppState } from '../reducers';
 import { GroupActions } from '../actions/group.actions';
@@ -35,7 +37,35 @@ export class GroupEffects {
         .ofType(GroupActions.ADD_GROUP)
         .map(action => action.payload)
         .switchMap(group => this.service.addGroup(group))
-        .map(group => this.groupActions.addGroupSuccess(group));
+        .map(group => this.groupActions.addGroupSuccess(group.group, group.teachers));
+
+    @Effect() addGroupTeachers$ = this.update$
+        .ofType(GroupActions.ADD_GROUP_SUCCESS)
+        .map(action => {
+            console.log(action.payload);
+            return { group: action.payload.group.id, teachers: action.payload.teachers.map(t => t.id) };
+        })
+        .switchMap(group => Observable.of(this.groupActions.addGroupTeachers(group.group, group.teachers)));
+
+    @Effect() addGroupTeacher$ = this.update$
+        .ofType(GroupActions.ADD_TEACHERS)
+        .map(action => action.payload)
+        .switchMap(obj => {
+            console.log(obj);
+            return this.service.addTeachers(obj.group, obj.teachers);
+        })
+        .map(group => this.groupActions.addGroupTeachersSuccess(group));
+
+    @Effect() getAddedTeachers$ = this.update$
+        .ofType(GroupActions.ADD_TEACHERS_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(group => Observable.of(this.groupActions.loadTeaches(group)));
+
+    @Effect() loadTeachers$ = this.update$
+        .ofType(GroupActions.LOAD_TEACHERS)
+        .map(action => action.payload)
+        .switchMap(group => this.service.getTeachers(group))
+        .map(teachers => this.groupActions.loadTeachesSuccess(teachers));
 
     @Effect() deleteGroup$ = this.update$
         .ofType(GroupActions.DELETE_GROUP)
@@ -63,21 +93,6 @@ export class GroupEffects {
         .map(action => action.payload)
         .switchMap(obj => this.service.removeStudent(obj.group, obj.user))
         .map(user => this.groupActions.removeStudentSuccess(user));
-
-    @Effect() loadTeachers$ = this.update$
-        .ofType(GroupActions.LOAD_TEACHERS)
-        .map(action => action.payload)
-        .switchMap(group => this.service.getTeachers(group))
-        .map(teachers => this.groupActions.loadTeachesSuccess(teachers));
-
-    @Effect() addGroupTeacher$ = this.update$
-        .ofType(GroupActions.ADD_TEACHER)
-        .map(action => action.payload)
-        .switchMap(obj => {
-            console.log(obj);
-            return this.service.addTeacher(obj.group, obj.teacher);
-        })
-        .map(teacher => this.groupActions.addGroupTeacherSuccess(teacher));
 
     @Effect() removeTeacher = this.update$
         .ofType(GroupActions.REMOVE_TEACHER)

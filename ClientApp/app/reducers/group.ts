@@ -33,9 +33,6 @@ export default function (state = initialState, action: Action): GroupState {
         case GroupActions.LOAD_TEACHERS_SUCCESS: {
             return Object.assign({}, state, { teachers: action.payload });
         }
-        case GroupActions.ADD_TEACHER_SUCCESS: {
-            return Object.assign({}, state, { teachers: [...state.teachers, action.payload] });
-        }
         case GroupActions.REMOVE_TEACHER_SUCCESS: {
             return Object.assign({}, state, {
                 teachers: state.teachers.filter(teacher => teacher.id !== action.payload)

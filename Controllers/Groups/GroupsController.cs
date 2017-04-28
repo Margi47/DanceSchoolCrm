@@ -123,12 +123,12 @@ namespace angular.Controllers.Groups
             return result;
         }
 
-        [HttpPost("{groupId}/teachers/{teacherId}")]
-        public IActionResult AddTeacher(int groupId, int teacherId)
+        [HttpPost("{groupId}/teachers")]
+        public IActionResult AddTeachers(int groupId, [FromBody] int[] teachers)
         {
-            _groupRepository.AddTeacher(groupId, teacherId);
+            _groupRepository.AddTeachers(groupId, teachers);
 
-            return new ObjectResult(Mapper.Map<TeacherApiModel>(_groupRepository.GetUser(teacherId)));
+            return new NoContentResult();
         }
 
         [HttpDelete("{groupId}/teachers/{teacherId}")]
