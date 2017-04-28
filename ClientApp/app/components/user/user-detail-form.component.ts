@@ -17,6 +17,9 @@ export class UserDetailFormComponent {
     @Output() showGroupDetails = new EventEmitter<number>();
     @Output() removeUserGroup = new EventEmitter<any>();
 
+    @Output() goToTeacher = new EventEmitter<number>();
+    @Output() isTeacherChanged = new EventEmitter <any>()
+
     addingGroup: boolean = false;
     selectedGroup: Group;
 
@@ -29,4 +32,11 @@ export class UserDetailFormComponent {
     }
     showDetails(id: number) { this.showGroupDetails.emit(id); }
     removeGroup(id: number) { this.removeUserGroup.emit({ userId: this.model.id, groupId: id }); }
+
+    onTeacherDetails() { this.goToTeacher.emit(this.model.id); }
+    isTeacherClicked(value: boolean) {
+        console.log(value);
+        this.model.isTeacher = value;
+        this.isTeacherChanged.emit({ user: this.model, value: value });
+    }
 }

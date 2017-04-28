@@ -21,7 +21,9 @@ import { Location } from '@angular/common';
                       (userDelete)="onUserDelete($event)"
                       (addUserGroup)="onAddGroup($event)"
                       (showGroupDetails)="onShowGroupDetails($event)"
-                      (removeUserGroup)="removeUserGroup($event)">
+                      (removeUserGroup)="removeUserGroup($event)"
+                      (goToTeacher)="goToTeacher($event)"
+                      (isTeacherChanged)="isTeacherChanged($event)">
     </user-detail-form>
 </div>`
 })
@@ -73,6 +75,19 @@ export class UserDetailComponent implements OnInit{
 
     removeUserGroup($event) {
         this.store.dispatch(this.userActions.removeUserGroup($event.userId, $event.groupId));
+    }
+
+    goToTeacher(id: number) {
+        this.router.navigate(['/teacherdetail', id]);
+    }
+
+    isTeacherChanged($event) {
+        console.log($event.value);
+        if ($event.value) {
+            this.store.dispatch(this.userActions.createTeacher($event.user));
+        } else {
+            this.store.dispatch(this.userActions.deleteTeacher($event.user.id));
+        }
     }
 
     goBack(): void {

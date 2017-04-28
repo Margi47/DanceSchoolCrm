@@ -52,7 +52,7 @@ namespace angular.Controllers.Users
             var result = Mapper.Map<Teacher>(teacher);
             _teacherRepository.AddTeacher(result);
 
-            return CreatedAtRoute("GetTeacher", new { id = result.Id }, result);
+            return CreatedAtRoute("GetTeacher", new { id = result.Id }, null);
         }
 
         [HttpGet("{id}", Name = "GetTeacher")]

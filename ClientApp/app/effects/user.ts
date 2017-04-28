@@ -66,4 +66,16 @@ export class UserEffects {
             return this.service.removeGroup(obj.user, obj.group);
         })
         .map(group => this.userActions.removeUserGroupSuccess(group));
+
+    @Effect() createTeacher = this.update$
+        .ofType(UserActions.CREATE_TEACHER)
+        .map(action => action.payload)
+        .switchMap(user => this.service.createTeacher(user))
+        .map(teacher => this.userActions.createTeacherSuccess());
+
+    @Effect() deleteTeacher$ = this.update$
+        .ofType(UserActions.DELETE_TEACHER)
+        .map(action => action.payload)
+        .switchMap(id => this.service.deleteTeacher(id))
+        .map(id => this.userActions.deleteTeacherSuccess());
 }

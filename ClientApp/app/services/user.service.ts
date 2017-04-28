@@ -7,6 +7,7 @@ import 'rxjs/add/operator/map';
 
 import { User } from '../models/user';
 import { Group } from '../models/group';
+import { Teacher } from '../models/teacher';
 
 @Injectable()
 export class UserService {
@@ -80,5 +81,26 @@ export class UserService {
                 console.log(response);
                 return groupId;
             });
+    }
+
+    createTeacher(userData: User): Observable<Teacher> {
+        var teacher: Teacher = { id: userData.id, name: userData.name, groups: [], styles: [] };
+        var body = JSON.stringify(teacher);
+        console.log(body);
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('api/teachers', body, options)
+            .map(response => teacher);
+    }
+
+    deleteTeacher(userId: number): Observable<number> {
+        console.log(userId);
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        var teacherUrl = 'api/teachers';
+        return this.http.delete(`${teacherUrl}/${userId}`, headers)
+            .map(response => userId);
     }
 }
