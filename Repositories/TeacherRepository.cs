@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using angular.Exceptions;
 
 namespace angular.Models
 {
@@ -77,6 +78,12 @@ namespace angular.Models
             var user = _context.Teachers
                 .Where(t => t.Id == teacherId)
                 .Select(t => t.User).FirstOrDefault();
+
+            if(user == null)
+            {
+                throw new DataValidationException();
+            }
+
             var groups = GetTeacherGroups(user.Id);
 
             var teacherDto = new TeacherDto
