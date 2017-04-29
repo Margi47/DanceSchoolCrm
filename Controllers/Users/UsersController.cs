@@ -92,33 +92,5 @@ namespace angular.Controllers.Users
             _userRepository.Remove(id);
             return new NoContentResult();
         }
-
-        [HttpGet("{id}/groups", Name = "GetUserGroups")]
-        public IActionResult GetGroups(int id)
-        {
-            var groups = _userRepository.GetGroups(id);
-            if (groups == null)
-            {
-                return NotFound();
-            }
-
-            var result = Mapper.Map<IList<GroupApiModel>>(groups);
-            return new ObjectResult(result);
-        }
-
-        [HttpPost("{userId}/groups/{groupId}")]
-        public IActionResult AddGroup(int userId, int groupId)
-        {
-            _userRepository.AddGroup(userId, groupId);
-
-            return new ObjectResult(Mapper.Map<GroupApiModel>(_userRepository.GetUserGroup(groupId)));
-        }
-
-        [HttpDelete("{userId}/groups/{groupId}")]
-        public IActionResult RemoveGroup(int userId, int groupId)
-        {
-            _userRepository.RemoveGroup(userId, groupId);
-            return new NoContentResult();
-        }
     }
 }

@@ -48,11 +48,11 @@ namespace angular.Controllers.Groups
             {
                 return BadRequest();
             }
-            
+
             var result = Mapper.Map<GroupApiModel, Group>(group);
             _groupRepository.Add(result);
 
-            return CreatedAtRoute("GetGroup", new { id = result.Id }, result );
+            return CreatedAtRoute("GetGroup", new { id = result.Id }, result);
         }
 
         [HttpPut("{id}")]
@@ -62,13 +62,13 @@ namespace angular.Controllers.Groups
             {
                 return BadRequest();
             }
-            
+
             var baseGroup = _groupRepository.Find(id);
             if (baseGroup == null)
             {
                 return NotFound();
             }
-           
+
             baseGroup.Name = group.Name;
             baseGroup.Description = group.Description;
             baseGroup.IsActive = group.IsActive;
@@ -87,30 +87,6 @@ namespace angular.Controllers.Groups
             }
 
             _groupRepository.Remove(id);
-            return new NoContentResult();
-        }
-
-        [HttpGet("{groupId}/students")]
-        public IEnumerable<UserApiModel> GetStudents(int groupId)
-        {
-            var users = _groupRepository.GetStudents(groupId);
-            var result = Mapper.Map<UserApiModel[]>(users);
-
-            return result;
-        }
-
-        [HttpPost("{groupId}/students/{userId}")]
-        public IActionResult AddStudent(int groupId, int userId)
-        {
-            _groupRepository.AddStudent(groupId, userId);
-
-            return new ObjectResult(Mapper.Map<UserApiModel>(_groupRepository.GetUser(userId)));
-        }
-
-        [HttpDelete("{groupId}/students/{userId}")]
-        public IActionResult RemoveStudent(int groupId, int userId)
-        {
-            _groupRepository.RemoveStudent(groupId, userId);
             return new NoContentResult();
         }
 
