@@ -61,10 +61,10 @@ export class GroupActions {
     }
 
     static ADD_GROUP_SUCCESS = '[Group] Add Group Success';
-    addGroupSuccess(group): Action {
+    addGroupSuccess(group, teachers): Action {
         return {
             type: GroupActions.ADD_GROUP_SUCCESS,
-            payload: group
+            payload: { group: group, teachers: teachers }
         };
     }
 
@@ -131,6 +131,55 @@ export class GroupActions {
         return {
             type: GroupActions.REMOVE_STUDENT_SUCCESS,
             payload: user
+        };
+    }
+
+    static LOAD_TEACHERS = '[Group] Load Group Teachers';
+    loadTeaches(groupId): Action {
+        return {
+            type: GroupActions.LOAD_TEACHERS,
+            payload: groupId
+        };
+    }
+
+    static LOAD_TEACHERS_SUCCESS = '[Group] Load Group Teachers Success';
+    loadTeachesSuccess(teachers): Action {
+        return {
+            type: GroupActions.LOAD_TEACHERS_SUCCESS,
+            payload: teachers
+        };
+    }
+
+    static ADD_TEACHERS = '[Group] Add Group Teachers';
+    addGroupTeachers(groupId, teachers): Action {
+        console.log(teachers + "from action");
+        return {
+            type: GroupActions.ADD_TEACHERS,
+            payload: { group: groupId, teachers: teachers },
+        }
+    }
+
+    static ADD_TEACHERS_SUCCESS = '[Group] Add Group Teachers Success';
+    addGroupTeachersSuccess(teachers): Action {
+        return {
+            type: GroupActions.ADD_TEACHERS_SUCCESS,
+            payload: teachers
+        }
+    }
+
+    static REMOVE_TEACHER = '[Group] Remove Teacher';
+    removeTeacher(groupId, teacherId): Action {
+        return {
+            type: GroupActions.REMOVE_TEACHER,
+            payload: { group: groupId, teacher: teacherId }
+        };
+    }
+
+    static REMOVE_TEACHER_SUCCESS = '[Group] Remove Teacher Success';
+    removeTeacherSuccess(teacher): Action {
+        return {
+            type: GroupActions.REMOVE_TEACHER_SUCCESS,
+            payload: teacher
         };
     }
 }

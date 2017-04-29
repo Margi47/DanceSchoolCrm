@@ -10,7 +10,8 @@ const initialState: GroupState = {
     name: '',
     description: '',
     isActive: false,
-    students: []
+    students: [],
+    teachers: []
 };
 
 export default function (state = initialState, action: Action): GroupState {
@@ -27,6 +28,14 @@ export default function (state = initialState, action: Action): GroupState {
         case GroupActions.REMOVE_STUDENT_SUCCESS: {
             return Object.assign({}, state, {
                 students: state.students.filter(student => student.id !== action.payload)
+            });
+        }
+        case GroupActions.LOAD_TEACHERS_SUCCESS: {
+            return Object.assign({}, state, { teachers: action.payload });
+        }
+        case GroupActions.REMOVE_TEACHER_SUCCESS: {
+            return Object.assign({}, state, {
+                teachers: state.teachers.filter(teacher => teacher.id !== action.payload)
             });
         }
         default: {

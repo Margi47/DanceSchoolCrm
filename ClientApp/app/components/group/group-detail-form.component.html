@@ -27,66 +27,86 @@
                 <label>Is Active</label>
             </div>
             <button type="submit" [disabled]="!groupForm.form.valid" class="btn btn-default">Save changes</button>
-        </form>        
-        <br/>
-        <label style="margin-top:20px">Students</label>
-     </div>
+        </form> 
+
+        <table class="table table-hover" style="margin-top:20px" *ngIf="model">
+            <thead>
+                <tr>
+                    <th style="font-size:large">Teachers</th>
+                    <th>
+                        <button (click)="addingTeacher = true"
+                                class="btn btn-default"
+                                type="button">
+                            Add Teacher
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="addingTeacher">
+                    <td colspan="2">
+                        <select class="form-control" [ngModel]="selectedTeacher" (ngModelChange)="onTeacherAdd($event)">
+                            <option *ngFor="let teacher of allTeachers" [ngValue]="teacher">
+                                {{teacher.name}}
+                            </option>
+                        </select>
+                    </td>
+                </tr>
+                <tr *ngFor="let teacher of model.teachers">
+                    <td>{{teacher.name}}</td> 
+                    <td>
+                        <button (click)="showTeacherDetails(teacher.id)"
+                                class="btn btn-default"
+                                type="button">
+                            Show Details
+                        </button>
+                        <button class="btn btn-default"
+                                type="button"
+                                (click)="removeTeacher(teacher.id)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table style="margin-top:20px" class="table table-hover">
+            <thead>
+                <tr>
+                    <th style="font-size:large">Students</th>
+                    <th>
+                        <button (click)="addingStudent = true"
+                                class="btn btn-default"
+                                type="button">
+                            Add User
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngIf="addingStudent">
+                    <td colspan="2">
+                        <select class="form-control" [ngModel]="selectedUser" (ngModelChange)="addStudent($event)">
+                            <option *ngFor="let user of allUsers" [ngValue]="user">{{user.name}}</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr *ngFor="let user of model.students">
+                    <td>{{user.name}}</td>
+                    <td>
+                        <button (click)="showStudentDetails(user.id)"
+                                class="btn btn-default"
+                                type="button">
+                            Show Details
+                        </button>
+                        <button (click)="removeStudent(user.id)"
+                                class="btn btn-default"
+                                type="button">
+                            Remove Student
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <button type="button" (click)="onGroupDelete()" class="btn btn-default">Delete group</button>
+    </div>
 </div>
-<div *ngIf="model" style="margin-top:20px">
-    <table class="table table-hover">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Email</th>
-                <th>Status</th>
-                <th>
-                    <button (click)="addingStudent = true"
-                            class="btn btn-default"
-                            type="button">
-                        Add User
-                    </button>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngIf="addingStudent">
-                <td colspan="5">
-                    <select class="form-control" [(ngModel)]="selectedUser">
-                        <option *ngFor="let user of allUsers" [ngValue]="user">{{user.name}}</option>
-                    </select>
-                </td>
-                <td>
-                    <button (click)="addStudent()"
-                            class="btn btn-default"
-                            type="button">
-                        Add
-                    </button>
-                </td>
-            </tr>
-            <tr *ngFor="let user of model.students">
-                <td>{{user.id}}</td>
-                <td>{{user.name}}</td>
-                <td>{{user.phone}}</td>
-                <td>{{user.email}}</td>
-                <td>{{user.isActive}}</td>
-                <td>
-                    <button (click)="showDetails(user.id)"
-                            class="btn btn-default"
-                            type="button">
-                        Show Details
-                    </button>
-                </td>
-                <td>
-                    <button (click)="removeStudent(user.id)"
-                            class="btn btn-default"
-                            type="button">
-                        Remove Student
-                    </button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <button type="button" (click)="onGroupDelete()" class="btn btn-default">Delete group</button>
-</div>
+

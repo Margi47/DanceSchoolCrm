@@ -1,4 +1,5 @@
 ﻿import { User } from './user';
+import { Teacher } from './teacher';
 
 export class Group {
     id: number;
@@ -6,4 +7,5 @@ export class Group {
     description: string;
     isActive: boolean;
     students: User[];
+    teachers: Teacher[];
 }
