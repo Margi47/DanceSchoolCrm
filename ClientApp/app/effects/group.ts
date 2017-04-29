@@ -56,7 +56,7 @@ export class GroupEffects {
             console.log(obj);
             return this.service.addStudent(obj.group, obj.user);
         })
-        .map(user => this.groupActions.addGroupStudentSuccess(user));
+        .map(group => this.groupActions.loadStudents(group));
 
     @Effect() removeStudent = this.update$
         .ofType(GroupActions.REMOVE_STUDENT)

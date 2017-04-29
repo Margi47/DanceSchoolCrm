@@ -13,6 +13,7 @@ using angular.Models;
 using AutoMapper;
 using angular.Controllers.Users;
 using angular.Controllers.Groups;
+using angular.Repositories;
 
 namespace angular
 {
@@ -42,6 +43,7 @@ namespace angular
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<IGroupUserRepository, GroupUserRepository>();
 
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<User, UserApiModel>();

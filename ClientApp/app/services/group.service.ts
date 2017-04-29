@@ -12,6 +12,7 @@ import { User } from '../models/user';
 @Injectable()
 export class GroupService {
     private groupsUrl = 'api/groups';
+    private groupUserUrl = 'api/groupuser';
 
     constructor(private http: Http) { }
 
@@ -54,24 +55,24 @@ export class GroupService {
     }
 
     getStudents(groupId: number): Observable<User[]> {
-        return this.http.get(`${this.groupsUrl}/${groupId}/students`)
+        return this.http.get(`${this.groupUserUrl}/${groupId}/users`)
             .map(response => response.json());
     }
 
-    addStudent(groupId: number, userId: number): Observable<User> {
+    addStudent(groupId: number, userId: number): Observable<number> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         console.log(groupId);
-        return this.http.post(`${this.groupsUrl}/${groupId}/students/${userId}`, options)
-            .map(response => response.json());
+        return this.http.post(`${this.groupUserUrl}/${userId}/${groupId}`, options)
+            .map(response => groupId);
     }
 
     removeStudent(groupId: number, userId: number): Observable<number> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.groupsUrl}/${groupId}/students/${userId}`, headers)
+        return this.http.delete(`${this.groupUserUrl}/${userId}/${groupId}`, headers)
             .map(response => userId);
     }
 }
