@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 
 import { Group } from '../models/group';
 import { User } from '../models/user';
-
+import { Teacher } from '../models/teacher';
 
 @Injectable()
 export class GroupService {
@@ -26,14 +26,16 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    addGroup(group: Group): Observable<Group> {
+    addGroup(group: Group): Observable<any> {
         var body = JSON.stringify(group);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
 
         return this.http.post(this.groupsUrl, body, options)
-            .map(response => response.json());
+            .map(response => {
+                return { group: response.json(), teachers: group.teachers };
+            });
     }
 
     deleteGroup(group: Group): Observable<Group> {
@@ -74,5 +76,28 @@ export class GroupService {
 
         return this.http.delete(`${this.groupUserUrl}/${userId}/${groupId}`, headers)
             .map(response => userId);
+    }
+
+    getTeachers(groupId: number): Observable<Teacher[]> {
+        return this.http.get(`${this.groupsUrl}/${groupId}/teachers`)
+            .map(response => response.json());
+    }
+
+    addTeachers(groupId: number, teachers: number[]): Observable<number> {
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        var body = JSON.stringify(teachers);
+        console.log(body);
+        return this.http.post(`${this.groupsUrl}/${groupId}/teachers`, body, options)
+            .map(response => groupId);
+    }
+
+    removeTeacher(groupId: number, teacherId: number): Observable<number> {
+        console.log(teacherId);
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.delete(`${this.groupsUrl}/${groupId}/teachers/${teacherId}`, headers)
+            .map(response => teacherId);
     }
 }

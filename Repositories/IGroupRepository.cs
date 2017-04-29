@@ -7,6 +7,9 @@ namespace angular.Models
 {
     public interface IGroupRepository: ICrudRepository<Group>
     {
-        User GetGroupUser(int userId);
+        User GetUser(int userId);
+        IEnumerable<User> GetTeachers(int groupId);
+        void AddTeachers(int groupId, int[] teachers);
+        void RemoveTeacher(int groupId, int teacherId);
     }
 }
