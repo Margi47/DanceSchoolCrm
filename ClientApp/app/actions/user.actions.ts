@@ -45,26 +45,10 @@ export class UserActions {
         };
     }
 
-    static SAVE_USER_SUCCESS = '[User] Save User Success';
-    saveUserSuccess(user): Action {
-        return {
-            type: UserActions.SAVE_USER_SUCCESS,
-            payload: user
-        };
-    }
-
     static ADD_USER = '[User] Add User';
     addUser(user): Action {
         return {
             type: UserActions.ADD_USER,
-            payload: user
-        };
-    }
-
-    static ADD_USER_SUCCESS = '[User] Add User Success';
-    addUserSuccess(user): Action {
-        return {
-            type: UserActions.ADD_USER_SUCCESS,
             payload: user
         };
     }
@@ -74,14 +58,6 @@ export class UserActions {
         return {
             type: UserActions.DELETE_USER,
             payload: id
-        };
-    }
-
-    static DELETE_USER_SUCCESS = '[User] Delete User Success';
-    deleteUserSuccess(user): Action {
-        return {
-            type: UserActions.DELETE_USER_SUCCESS,
-            payload: user
         };
     }
 
@@ -108,13 +84,6 @@ export class UserActions {
             payload: { user: userId, group: groupId },
         }
     }
-    static ADD_USER_GROUP_SUCCESS = '[User] Add User Group Success';
-    addUserGroupSuccess(group): Action {
-        return {
-            type: UserActions.ADD_USER_GROUP_SUCCESS,
-            payload: group
-        }
-    }
 
     static REMOVE_USER_GROUP = '[User] Remove User Group';
     removeUserGroup(userId, groupId): Action {
@@ -122,13 +91,6 @@ export class UserActions {
         return {
             type: UserActions.REMOVE_USER_GROUP,
             payload: { user: userId, group: groupId },
-        }
-    }
-    static REMOVE_USER_GROUP_SUCCESS = '[User] Remove User Group Success';
-    removeUserGroupSuccess(group): Action {
-        return {
-            type: UserActions.REMOVE_USER_GROUP_SUCCESS,
-            payload: group
         }
     }
 
