@@ -9,10 +9,12 @@ import { Teacher } from '../../models/teacher';
 export class TeacherListComponent implements OnChanges {
     @Input() teachers: Teacher[];
     @Output() add = new EventEmitter();
-    @Output() details = new EventEmitter<number>();
+    @Output() teacherDetails = new EventEmitter<number>();
+    @Output() userDetails = new EventEmitter<number>();
 
     addTeacher() { this.add.emit(); }
-    showDetails(id: number) { this.details.emit(id); }
+    showTeacherDetails(id: number) { this.teacherDetails.emit(id); }
+    showUserDetails(id: number) { this.userDetails.emit(id); }
 
     ngOnChanges() {
         console.log(this.teachers);

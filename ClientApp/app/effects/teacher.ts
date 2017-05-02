@@ -19,50 +19,8 @@ export class TeacherEffects {
 
     @Effect() loadTeachersWithGroups$ = this.update$
         .ofType(TeacherActions.LOAD_ALL_TEACHERS)
-        .switchMap(() => this.service.getTeachersWithGroups())
+        .switchMap(() => this.service.getTeachers())
         .map(teachers => this.teacherActions.loadAllTeachersSuccess(teachers));
-
-    @Effect() addTeacher$ = this.update$
-        .ofType(TeacherActions.ADD_TEACHER)
-        .map(action => action.payload)
-        .switchMap(teacher => this.service.addTeacher(teacher))
-        .map(teacher => {
-            console.log(teacher);
-            return this.teacherActions.addTeacherSuccess(teacher);
-        });
-
-    @Effect() addGroupsToNewTeacher$ = this.update$
-        .ofType(TeacherActions.ADD_TEACHER_SUCCESS)
-        .map(action => {
-            return { teacher: action.payload.id, groups: action.payload.groups.map(g=>g.id) };
-        })
-        .switchMap(teacher => {
-            console.log(teacher);
-            return Observable.of(this.teacherActions.addTeacherGroups(teacher.teacher, teacher.groups));
-        });
-
-    @Effect() addTeacherGroups$ = this.update$
-        .ofType(TeacherActions.ADD_TEACHER_GROUPS)
-        .map(action => action.payload)
-        .switchMap(obj => this.service.addGroups(obj.teacher, obj.groups))
-        .map(teacher => this.teacherActions.addTeacherGroupsSuccess(teacher));
-
-    @Effect() getAddedTeacherGroups$ = this.update$
-        .ofType(TeacherActions.ADD_TEACHER_GROUPS_SUCCESS)
-        .map(action => action.payload)
-        .switchMap(teacher => Observable.of(this.teacherActions.getTeacherGroups(teacher)));
-
-    @Effect() getTeacherGroups$ = this.update$
-        .ofType(TeacherActions.GET_TEACHER_GROUPS)
-        .map(action => action.payload)
-        .switchMap(teacher => this.service.getTeacherGroups(teacher))
-        .map(groups => this.teacherActions.getTeacherGroupsSuccess(groups));
-
-    @Effect() removeTeacherGroup$ = this.update$
-        .ofType(TeacherActions.REMOVE_TEACHER_GROUP)
-        .map(action => action.payload)
-        .switchMap(obj => this.service.deleteGroup(obj.teacher, obj.group))
-        .map(group => this.teacherActions.removeTeacherGroupsSuccess(group));
 
     @Effect() getTeacher$ = this.update$
         .ofType(TeacherActions.GET_TEACHER)
@@ -70,9 +28,33 @@ export class TeacherEffects {
         .switchMap(id => this.service.getTeacher(id))
         .map(teacher => this.teacherActions.getTeacherSuccess(teacher));
 
+    @Effect() addTeacher$ = this.update$
+        .ofType(TeacherActions.ADD_TEACHER)
+        .map(action => action.payload)
+        .switchMap(teacher => this.service.addTeacher(teacher))
+        .map(() => this.teacherActions.loadAllTeachers());
+
     @Effect() deleteTeacher$ = this.update$
         .ofType(TeacherActions.DELETE_TEACHER)
         .map(action => action.payload)
         .switchMap(teacher => this.service.deleteTeacher(teacher))
-        .map(teacher => this.teacherActions.deleteTeacherSuccess(teacher));
+        .map(() => this.teacherActions.loadAllTeachers());
+
+    @Effect() getTeacherGroups$ = this.update$
+        .ofType(TeacherActions.GET_TEACHER_GROUPS)
+        .map(action => action.payload)
+        .switchMap(teacher => this.service.getTeacherGroups(teacher))
+        .map(groups => this.teacherActions.getTeacherGroupsSuccess(groups));
+
+    @Effect() addTeacherGroups$ = this.update$
+        .ofType(TeacherActions.ADD_TEACHER_GROUPS)
+        .map(action => action.payload)
+        .switchMap(obj => this.service.addGroups(obj.teacher, obj.groups))
+        .map(teacher => this.teacherActions.getTeacherGroups(teacher));
+
+    @Effect() removeTeacherGroup$ = this.update$
+        .ofType(TeacherActions.REMOVE_TEACHER_GROUP)
+        .map(action => action.payload)
+        .switchMap(obj => this.service.deleteGroup(obj.teacher, obj.group))
+        .map(teacher => this.teacherActions.getTeacherGroups(teacher));
 }

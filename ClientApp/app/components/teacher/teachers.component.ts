@@ -11,7 +11,8 @@ import { TeacherActions } from '../../actions/teacher.actions'
     template: `
 <teachers-list [teachers] = "teachers$ | async" 
               (add)="addTeacher()" 
-              (details)="showDetails($event)">
+              (teacherDetails)="showTeacherDetails($event)"
+              (userDetails)="showUserDetails($event)">
 </teachers-list>
 `
 })
@@ -33,7 +34,11 @@ export class TeachersComponent implements OnInit {
         this.router.navigate(['/teacheradd']);
     }
 
-    showDetails(id: number) {
+    showTeacherDetails(id: number) {
         this.router.navigate(['teacherdetail', id]);
+    }
+
+    showUserDetails(id: number) {
+        this.router.navigate(['userdetail', id]);
     }
 }

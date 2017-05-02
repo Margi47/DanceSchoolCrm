@@ -11,17 +11,8 @@
         <tr *ngFor="let teacher of teachers">
             <td>{{teacher.id}}</td>
             <td>{{teacher.name}}</td>
-            <td>
-                <ol>
-                    <li *ngFor="let group of teacher.groups">{{group.name}}</li>
-                </ol>
-            </td>
-            <!--<td>
-                <ul>
-                    <li *ngFor="let style of teacher.styles">{{style}}</li>
-                </ul>
-            </td>-->
-            <td><button (click)="showDetails(teacher.id)">Show Details</button></td>
+            <td><button (click)="showTeacherDetails(teacher.id)">Show Teacher Details</button></td>
+            <td><button (click)="showUserDetails(teacher.id)">Show User Details</button></td>
         </tr>
     </tbody>
 </table>

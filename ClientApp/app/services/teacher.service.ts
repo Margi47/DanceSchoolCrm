@@ -25,18 +25,37 @@ export class TeacherService {
             .map(response => response.json());
     }
 
-    addTeacher(teacher: Teacher): Observable<Teacher> {
+    getTeacher(id: number): Observable<Teacher> {
+        return this.http.get(`${this.teachersUrl}/${id}`)
+            .map(response => response.json());
+    }
+
+    addTeacher(teacher: Teacher): Observable<void> {
         console.log("adding new teacher from service");
+        console.log(teacher);
         var body = JSON.stringify({ id: teacher.id, name: teacher.name });
-        console.log(body);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.teachersUrl, body, options)
-            .map(response => teacher);
+            .map(response => null)
+            .mergeMap(() => {
+                if (teacher.groups.length > 0) {
+                    this.addGroups(teacher.id, teacher.groups.map(g => g.id)).subscribe();
+                }
+                return Observable.of(null);
+            });
     }
 
-    getTeacherGroups(teacherId: number) {
+    deleteTeacher(teacher: Teacher): Observable<void> {
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.delete(`${this.teachersUrl}/${teacher.id}`, headers)
+            .map(response => null);
+    }
+
+    getTeacherGroups(teacherId: number): Observable<Group[]> {
         return this.http.get(`${this.teachersUrl}/${teacherId}/groups`)
             .map(response => response.json());
     }
@@ -57,19 +76,6 @@ export class TeacherService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.delete(`${this.teachersUrl}/${teacherId}/groups/${groupId}`, headers)
-            .map(response => groupId);
-    }
-
-    getTeacher(id: number): Observable<Teacher> {
-        return this.http.get(`${this.teachersUrl}/${id}`)
-            .map(response => response.json());
-    }
-
-    deleteTeacher(teacher: Teacher): Observable<Teacher> {
-        var headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http.delete(`${this.teachersUrl}/${teacher.id}`, headers)
-            .map(response => teacher);
+            .map(response => teacherId);
     }
 }

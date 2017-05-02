@@ -14,25 +14,6 @@ export default function (state = initialState, action: Action): TeacherListState
         case TeacherActions.LOAD_ALL_TEACHERS_SUCCESS: {
             return action.payload;
         }
-        case TeacherActions.ADD_TEACHER_SUCCESS: {
-            return [...state, action.payload];
-        }
-        case TeacherActions.UPDATE_TEACHER_SUCCESS: {
-            let index = _.findIndex(state, { id: action.payload.id });
-            if (index >= 0) {
-                return [
-                    ...state.slice(0, index),
-                    action.payload,
-                    ...state.slice(index + 1)
-                ];
-            }
-            return state;
-        }
-        case TeacherActions.DELETE_TEACHER_SUCCESS: {
-            return state.filter(teacher => {
-                return teacher.id !== action.payload.id;
-            });
-        }
         default: {
             return state;
         }
