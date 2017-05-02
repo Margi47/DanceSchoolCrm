@@ -26,34 +26,39 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    addGroup(group: Group): Observable<any> {
+    addGroup(group: Group): Observable<void> {
         var body = JSON.stringify(group);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
 
         return this.http.post(this.groupsUrl, body, options)
-            .map(response => {
-                return { group: response.json(), teachers: group.teachers };
+            .map(response => response.json())
+            .mergeMap(g => {
+                console.log(group);
+                if (group.teachers.length > 0) {
+                    this.addTeachers(g.id, group.teachers.map(t => t.id)).subscribe();
+                }
+                return Observable.of(null);
             });
     }
 
-    deleteGroup(group: Group): Observable<Group> {
+    deleteGroup(group: Group): Observable<void> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http.delete(`${this.groupsUrl}/${group.id}`, headers)
-            .map(response => group);
+            .map(response => null);
     }
 
-    update(groupData: Group): Observable<Group> {
+    update(groupData: Group): Observable<void> {
         var body = JSON.stringify(groupData);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         console.log('before update');
         return this.http.put(`${this.groupsUrl}/${groupData.id}`, body, options)
-            .map(response => groupData);
+            .map(response => null);
     }
 
     getStudents(groupId: number): Observable<User[]> {
@@ -75,7 +80,7 @@ export class GroupService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.delete(`${this.groupUserUrl}/${userId}/${groupId}`, headers)
-            .map(response => userId);
+            .map(response => groupId);
     }
 
     getTeachers(groupId: number): Observable<Teacher[]> {
@@ -84,6 +89,7 @@ export class GroupService {
     }
 
     addTeachers(groupId: number, teachers: number[]): Observable<number> {
+        console.log("adding teacher" + groupId);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         var body = JSON.stringify(teachers);
@@ -98,6 +104,6 @@ export class GroupService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.delete(`${this.groupsUrl}/${groupId}/teachers/${teacherId}`, headers)
-            .map(response => teacherId);
+            .map(response => groupId);
     }
 }

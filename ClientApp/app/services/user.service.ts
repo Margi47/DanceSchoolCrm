@@ -49,17 +49,6 @@ export class UserService {
             });
     }
 
-    createTeacher(userData: User): Observable<number> {
-        var teacher: Teacher = { id: userData.id, name: userData.name, groups: [], styles: [] };
-        var body = JSON.stringify(teacher);
-        console.log(body);
-        var headers = new Headers({ 'Content-Type': 'application/json' });
-        let options = new RequestOptions({ headers: headers });
-
-        return this.http.post('api/teachers', body, options)
-            .map(response => userData.id);
-    }
-
     deleteUser(user: User): Observable<void> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
@@ -95,6 +84,17 @@ export class UserService {
 
         return this.http.delete(`${this.groupUserUrl}/${userId}/${groupId}`, options)
             .map(response => userId);
+    }
+
+    createTeacher(userData: User): Observable<number> {
+        var teacher: Teacher = { id: userData.id, name: userData.name, groups: [], styles: [] };
+        var body = JSON.stringify(teacher);
+        console.log(body);
+        var headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+
+        return this.http.post('api/teachers', body, options)
+            .map(response => userData.id);
     }
 
     deleteTeacher(userId: number): Observable<number> {

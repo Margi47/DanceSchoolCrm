@@ -51,11 +51,11 @@ namespace angular.Models
 
         public void RemoveTeacher(int groupId, int teacherId)
         {
-            if (Context.GroupTeachers.Any(x => x.TeacherId == teacherId && x.GroupId == groupId))
+            var entity = Context.GroupTeachers.First(g => g.GroupId == groupId && g.TeacherId == teacherId);
+            if (entity != null)
             {
-                var entity = Context.GroupTeachers.First(g => g.GroupId == groupId && g.TeacherId == teacherId);
-
                 Context.GroupTeachers.Remove(entity);
+                Context.SaveChanges();
             }
         }
     }

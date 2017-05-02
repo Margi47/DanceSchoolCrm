@@ -102,25 +102,11 @@ export class UserActions {
         };
     }
 
-    static CREATE_TEACHER_SUCCESS = '[User] Create Teacher Success';
-    createTeacherSuccess(): Action {
-        return {
-            type: UserActions.CREATE_TEACHER_SUCCESS
-        };
-    }
-
     static DELETE_TEACHER = '[User] Delete Teacher';
     deleteTeacher(id): Action {
         return {
             type: UserActions.DELETE_TEACHER,
             payload: id
-        };
-    }
-
-    static DELETE_TEACHER_SUCCESS = '[User] Delete Teacher Success';
-    deleteTeacherSuccess(): Action {
-        return {
-            type: UserActions.DELETE_TEACHER_SUCCESS
         };
     }
 }
