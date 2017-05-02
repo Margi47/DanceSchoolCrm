@@ -44,6 +44,7 @@ namespace angular
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<ITeacherRepository, TeacherRepository>();
             services.AddScoped<IGroupUserRepository, GroupUserRepository>();
+            services.AddScoped<IGroupTeacherRepository, GroupTeacherRepository>();
 
             Mapper.Initialize(cfg => {
                 cfg.CreateMap<User, UserApiModel>();

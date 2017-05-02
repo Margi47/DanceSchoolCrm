@@ -89,29 +89,5 @@ namespace angular.Controllers.Groups
             _groupRepository.Remove(id);
             return new NoContentResult();
         }
-
-        [HttpGet("{groupId}/teachers")]
-        public IEnumerable<TeacherApiModel> GetTeachers(int groupId)
-        {
-            var teachers = _groupRepository.GetTeachers(groupId);
-            var result = Mapper.Map<TeacherApiModel[]>(teachers);
-
-            return result;
-        }
-
-        [HttpPost("{groupId}/teachers")]
-        public IActionResult AddTeachers(int groupId, [FromBody] int[] teachers)
-        {
-            _groupRepository.AddTeachers(groupId, teachers);
-
-            return new NoContentResult();
-        }
-
-        [HttpDelete("{groupId}/teachers/{teacherId}")]
-        public IActionResult RemoveTeacher(int groupId, int teacherId)
-        {
-            _groupRepository.RemoveTeacher(groupId, teacherId);
-            return new NoContentResult();
-        }
     }
 }

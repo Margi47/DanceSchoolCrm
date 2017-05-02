@@ -68,13 +68,6 @@ namespace angular.Controllers.Users
             return new ObjectResult(result);
         }
 
-        [HttpGet("{id}/groups", Name = "GetTeacherGroups")]
-        public IActionResult GetTeacherGroups(int id)
-        {
-            var groups = _teacherRepository.GetTeacherGroups(id);
-            return new ObjectResult(Mapper.Map<GroupApiModel[]>(groups));
-        }
-
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
@@ -87,97 +80,5 @@ namespace angular.Controllers.Users
             _teacherRepository.RemoveTeacher(id);
             return new NoContentResult();
         }
-
-        [HttpPost("{teacherId}/groups")]
-        public IActionResult AddGroup(int teacherId, [FromBody] int[] groups)
-        {
-            _teacherRepository.AddGroups(teacherId, groups);
-            return new NoContentResult();
-        }
-
-        [HttpDelete("{teacherId}/groups/{groupId}")]
-        public IActionResult RemoveGroup(int teacherId, int groupId)
-        {
-            _teacherRepository.RemoveGroup(teacherId, groupId);
-            return new NoContentResult();
-        }
-
-        /*
-
-
-        [HttpPost]
-        public IActionResult Create([FromBody] TeacherApiModel teacher)
-        {
-            if (teacher == null)
-            {
-                return BadRequest();
-            }
-            
-            var result = Mapper.Map<Teacher>(teacher);
-            _teacherRepository.Add(result);
-
-            return CreatedAtRoute("GetTeacher", new { id = result.UserInfoId }, result );
-        }
-
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] TeacherApiModel teacher)
-        {
-            if (teacher == null || teacher.Id != id)
-            {
-                return BadRequest();
-            }
-            
-            var baseTeacher = _teacherRepository.Find(id);
-            if (baseTeacher == null)
-            {
-                return NotFound();
-            }
-           
-            baseTeacher.UserInfo = Mapper.Map<User>(teacher);
-
-            _teacherRepository.Update(baseTeacher);
-            return new NoContentResult();
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            var teacher = _teacherRepository.Find(id);
-            if (teacher == null)
-            {
-                return NotFound();
-            }
-
-            _teacherRepository.Remove(id);
-            return new NoContentResult();
-        }
-
-        [HttpGet("{id}/groups", Name = "GetUserGroups")]
-        public IActionResult GetGroups(int id)
-        {
-            var groups = _teacherRepository.GetGroups(id);
-            if (groups == null)
-            {
-                return NotFound();
-            }
-
-            var result = Mapper.Map<IList<GroupApiModel>>(groups);
-            return new ObjectResult(result);
-        }
-
-        [HttpPost("{userId}/groups/{groupId}")]
-        public IActionResult AddGroup(int userId, int groupId)
-        {
-            _teacherRepository.AddGroup(userId, groupId);
-
-            return new ObjectResult(Mapper.Map<GroupApiModel>(_teacherRepository.GetUserGroup(groupId)));
-        }
-
-        [HttpDelete("{userId}/groups/{groupId}")]
-        public IActionResult RemoveGroup(int userId, int groupId)
-        {
-            _teacherRepository.RemoveGroup(userId, groupId);
-            return new NoContentResult();
-        }*/
     }
 }
