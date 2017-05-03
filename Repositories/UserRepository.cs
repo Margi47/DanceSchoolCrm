@@ -20,10 +20,5 @@ namespace angular.Models
         {
             return context.Users;
         }
-
-        public Group GetUserGroup(int groupId)
-        {
-            return Context.Groups.FirstOrDefault(g => g.Id == groupId);
-        }
     }
 }

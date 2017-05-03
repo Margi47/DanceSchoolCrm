@@ -12,6 +12,7 @@ import { Teacher } from '../models/teacher';
 @Injectable()
 export class TeacherService {
     private teachersUrl = 'api/teachers';
+    private groupTeacherUrl = 'api/groupteacher';
 
     constructor(private http: Http) { }
 
@@ -37,7 +38,7 @@ export class TeacherService {
     }
 
     getTeacherGroups(teacherId: number) {
-        return this.http.get(`${this.teachersUrl}/${teacherId}/groups`)
+        return this.http.get(`${this.groupTeacherUrl}/${teacherId}/groups`)
             .map(response => response.json());
     }
 
@@ -48,7 +49,7 @@ export class TeacherService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(`${this.teachersUrl}/${teacherId}/groups`, body, options)
+        return this.http.post(`${this.groupTeacherUrl}/${teacherId}/groups`, body, options)
             .map(response => teacherId);        
     }
 
@@ -56,7 +57,7 @@ export class TeacherService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.teachersUrl}/${teacherId}/groups/${groupId}`, headers)
+        return this.http.delete(`${this.groupTeacherUrl}/${groupId}/${teacherId}`, headers)
             .map(response => groupId);
     }
 

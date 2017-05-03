@@ -13,6 +13,7 @@ import { Teacher } from '../models/teacher';
 export class GroupService {
     private groupsUrl = 'api/groups';
     private groupUserUrl = 'api/groupuser';
+    private groupTeacherUrl = 'api/groupteacher';
 
     constructor(private http: Http) { }
 
@@ -79,7 +80,7 @@ export class GroupService {
     }
 
     getTeachers(groupId: number): Observable<Teacher[]> {
-        return this.http.get(`${this.groupsUrl}/${groupId}/teachers`)
+        return this.http.get(`${this.groupTeacherUrl}/${groupId}/teachers`)
             .map(response => response.json());
     }
 
@@ -88,7 +89,7 @@ export class GroupService {
         let options = new RequestOptions({ headers: headers });
         var body = JSON.stringify(teachers);
         console.log(body);
-        return this.http.post(`${this.groupsUrl}/${groupId}/teachers`, body, options)
+        return this.http.post(`${this.groupTeacherUrl}/${groupId}/teachers`, body, options)
             .map(response => groupId);
     }
 
@@ -97,7 +98,7 @@ export class GroupService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.groupsUrl}/${groupId}/teachers/${teacherId}`, headers)
+        return this.http.delete(`${this.groupTeacherUrl}/${groupId}/${teacherId}`, headers)
             .map(response => teacherId);
     }
 }
