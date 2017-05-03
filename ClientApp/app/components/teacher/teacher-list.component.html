@@ -3,16 +3,21 @@
         <tr>
             <th>Id</th>
             <th>Name</th>
-            <th>Groups</th>
-            <th><button (click)="addTeacher()">Add</button></th>
+            <th><button (click)="addTeacher()" 
+                        class="btn btn-default"
+                        type="button">Add</button></th>
         </tr>
     </thead>
     <tbody>
         <tr *ngFor="let teacher of teachers">
             <td>{{teacher.id}}</td>
             <td>{{teacher.name}}</td>
-            <td><button (click)="showTeacherDetails(teacher.id)">Show Teacher Details</button></td>
-            <td><button (click)="showUserDetails(teacher.id)">Show User Details</button></td>
+            <td><button (click)="showTeacherDetails(teacher.id)" 
+                        class="btn btn-default"
+                        type="button">Show Teacher Details</button>
+                <button (click)="showUserDetails(teacher.id)" 
+                        class="btn btn-default"
+                        type="button">Show User Details</button></td>
         </tr>
     </tbody>
 </table>

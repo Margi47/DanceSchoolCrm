@@ -43,7 +43,7 @@ export class UserService {
             .map(response => response.json())
             .mergeMap(user => {
                 if (user.isTeacher) {
-                    this.createTeacher(user).subscribe();
+                    return this.createTeacher(user).map(x => null);
                 }
                 return Observable.of(null);
             });

@@ -37,7 +37,7 @@ export class GroupService {
             .mergeMap(g => {
                 console.log(group);
                 if (group.teachers.length > 0) {
-                    this.addTeachers(g.id, group.teachers.map(t => t.id)).subscribe();
+                    return this.addTeachers(g.id, group.teachers.map(t => t.id)).map(x => null);
                 }
                 return Observable.of(null);
             });
