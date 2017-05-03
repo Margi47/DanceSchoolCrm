@@ -19,8 +19,7 @@ namespace angular.Repositories
         {
             return _context.GroupTeachers
                            .Where(g => g.GroupId == groupId)
-                           .Select(g => g.Teacher)
-                           .Select(t => t.User)
+                           .Select(g => g.Teacher.User)
                            .ToList();
         }
 
@@ -66,7 +65,8 @@ namespace angular.Repositories
 
         public void RemoveGroupTeacher(int groupId, int teacherId)
         {
-            var entity = _context.GroupTeachers.First(g => g.GroupId == groupId && g.TeacherId == teacherId);
+            var entity = _context.GroupTeachers
+                .FirstOrDefault(g => g.GroupId == groupId && g.TeacherId == teacherId);
 
             if (entity != null)
             {
