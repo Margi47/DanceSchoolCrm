@@ -27,32 +27,23 @@ export class UserEffects {
         .switchMap(id => this.service.getUser(id))
         .map(user => this.userActions.getUserSuccess(user));
 
-    @Effect() saveUser$ = this.update$
-        .ofType(UserActions.SAVE_USER)
-        .map(action => action.payload)
-        .switchMap(user => this.service.update(user))
-        .map(user => this.userActions.saveUserSuccess(user));
-
     @Effect() addUser$ = this.update$
         .ofType(UserActions.ADD_USER)
         .map(action => action.payload)
         .switchMap(user => this.service.addUser(user))
-        .map(user => this.userActions.addUserSuccess(user));
-
-    @Effect() addTeacherToNewUser = this.update$
-        .ofType(UserActions.ADD_USER_SUCCESS)
-        .map(action => action.payload)
-        .switchMap(user => {
-            if (user.isTeacher) {
-                return Observable.of(this.userActions.createTeacher(user));
-            }
-        })
+        .map(() => this.userActions.loadUsers());
 
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)
         .map(action => action.payload)
         .switchMap(user => this.service.deleteUser(user))
-        .map(user => this.userActions.deleteUserSuccess(user));
+        .map(() => this.userActions.loadUsers());
+
+    @Effect() saveUser$ = this.update$
+        .ofType(UserActions.SAVE_USER)
+        .map(action => action.payload)
+        .switchMap(user => this.service.update(user))
+        .map(() => this.userActions.loadUsers());
 
     @Effect() loadUserGroups$ = this.update$
         .ofType(UserActions.LOAD_USER_GROUPS)
@@ -63,30 +54,24 @@ export class UserEffects {
     @Effect() addUserGroup$ = this.update$
         .ofType(UserActions.ADD_USER_GROUP)
         .map(action => action.payload)
-        .switchMap(obj => {
-            console.log(obj);
-            return this.service.addGroup(obj.user, obj.group);
-        })
+        .switchMap(obj => this.service.addGroup(obj.user, obj.group))
         .map(user => this.userActions.loadUserGroups(user));
 
     @Effect() removeUserGroup$ = this.update$
         .ofType(UserActions.REMOVE_USER_GROUP)
         .map(action => action.payload)
-        .switchMap(obj => {
-            console.log(obj);
-            return this.service.removeGroup(obj.user, obj.group);
-        })
-        .map(group => this.userActions.removeUserGroupSuccess(group));
+        .switchMap(obj => this.service.removeGroup(obj.user, obj.group))
+        .map(user => this.userActions.loadUserGroups(user));
 
     @Effect() createTeacher = this.update$
         .ofType(UserActions.CREATE_TEACHER)
         .map(action => action.payload)
         .switchMap(user => this.service.createTeacher(user))
-        .map(teacher => this.userActions.createTeacherSuccess());
+        .map(user => this.userActions.getUser(user));
 
     @Effect() deleteTeacher$ = this.update$
         .ofType(UserActions.DELETE_TEACHER)
         .map(action => action.payload)
         .switchMap(id => this.service.deleteTeacher(id))
-        .map(id => this.userActions.deleteTeacherSuccess());
+        .map(user => this.userActions.getUser(user));
 }

@@ -44,14 +44,6 @@ export class GroupActions {
         };
     }
 
-    static SAVE_GROUP_SUCCESS = '[Group] Save Group Success';
-    saveGroupSuccess(group): Action {
-        return {
-            type: GroupActions.SAVE_GROUP_SUCCESS,
-            payload: group
-        };
-    }
-
     static ADD_GROUP = '[Group] Add Group';
     addGroup(group): Action {
         return {
@@ -60,26 +52,10 @@ export class GroupActions {
         };
     }
 
-    static ADD_GROUP_SUCCESS = '[Group] Add Group Success';
-    addGroupSuccess(group, teachers): Action {
-        return {
-            type: GroupActions.ADD_GROUP_SUCCESS,
-            payload: { group: group, teachers: teachers }
-        };
-    }
-
     static DELETE_GROUP = '[Group] Delete Group';
     deleteGroup(group): Action {
         return {
             type: GroupActions.DELETE_GROUP,
-            payload: group
-        };
-    }
-
-    static DELETE_GROUP_SUCCESS = '[Group] Delete Group Success';
-    deleteGroupSuccess(group): Action {
-        return {
-            type: GroupActions.DELETE_GROUP_SUCCESS,
             payload: group
         };
     }
@@ -110,27 +86,11 @@ export class GroupActions {
         }
     }
 
-    static ADD_STUDENT_SUCCESS = '[Group] Add Group Student Success';
-    addGroupStudentSuccess(user): Action {
-        return {
-            type: GroupActions.ADD_STUDENT_SUCCESS,
-            payload: user
-        }
-    }
-
     static REMOVE_STUDENT = '[Group] Remove Student';
     removeStudent(groupId, userId): Action {
         return {
             type: GroupActions.REMOVE_STUDENT,
             payload: { group: groupId, user: userId }
-        };
-    }
-
-    static REMOVE_STUDENT_SUCCESS = '[Group] Remove Student Success';
-    removeStudentSuccess(user): Action {
-        return {
-            type: GroupActions.REMOVE_STUDENT_SUCCESS,
-            payload: user
         };
     }
 
@@ -159,27 +119,11 @@ export class GroupActions {
         }
     }
 
-    static ADD_TEACHERS_SUCCESS = '[Group] Add Group Teachers Success';
-    addGroupTeachersSuccess(teachers): Action {
-        return {
-            type: GroupActions.ADD_TEACHERS_SUCCESS,
-            payload: teachers
-        }
-    }
-
     static REMOVE_TEACHER = '[Group] Remove Teacher';
     removeTeacher(groupId, teacherId): Action {
         return {
             type: GroupActions.REMOVE_TEACHER,
             payload: { group: groupId, teacher: teacherId }
-        };
-    }
-
-    static REMOVE_TEACHER_SUCCESS = '[Group] Remove Teacher Success';
-    removeTeacherSuccess(teacher): Action {
-        return {
-            type: GroupActions.REMOVE_TEACHER_SUCCESS,
-            payload: teacher
         };
     }
 }
