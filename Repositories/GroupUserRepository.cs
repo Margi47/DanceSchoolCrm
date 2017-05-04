@@ -42,7 +42,8 @@ namespace angular.Repositories
 
         public void RemoveGroupUser(int userId, int groupId)
         {
-            var entity = _context.GroupUser.First(g => g.GroupId == groupId && g.UserId == userId);
+            var entity = _context.GroupUser
+                .FirstOrDefault(g => g.GroupId == groupId && g.UserId == userId);
             if (entity != null)
             {
                 _context.GroupUser.Remove(entity);

@@ -10,13 +10,7 @@ namespace angular.Models
         IEnumerable<User> GetTeachers();
         IEnumerable<TeacherDto> GetAllTeachersInfo();
         TeacherDto GetTeacher(int teacherId);
-        Group[] GetTeacherGroups(int teacherId);
-        Group GetGroup(int groupId);
-
         void AddTeacher(Teacher teacher);
-        void AddGroups(int teacherId, int[] groups); 
-        
-        void RemoveTeacher(int id);     
-        void RemoveGroup(int teacherId, int groupId);
+        void RemoveTeacher(int id);    
     }
 }

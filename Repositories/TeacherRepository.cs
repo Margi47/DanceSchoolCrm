@@ -59,20 +59,6 @@ namespace angular.Models
             _context.SaveChanges();
         }
 
-        public void AddGroups(int teacherId, int[] groups)
-        {
-            var existingGroups = _context.GroupTeachers.Where(g => g.TeacherId == teacherId && groups.Contains(g.GroupId))
-                .Select(g => g.GroupId)
-                .ToArray();
-            var newGroups = groups.Except(existingGroups);
-
-            foreach (var g in newGroups)
-            {
-                    _context.GroupTeachers.Add(new GroupTeachers { GroupId = g, TeacherId = teacherId });
-            }
-            _context.SaveChanges();
-        }
-
         public TeacherDto GetTeacher(int teacherId)
         {
             var user = _context.Teachers
@@ -84,22 +70,12 @@ namespace angular.Models
                 throw new DataValidationException();
             }
 
-            var groups = GetTeacherGroups(user.Id);
-
             var teacherDto = new TeacherDto
             {
                 Teacher = user,
-                Groups = groups
             };
 
             return teacherDto;
-        }
-
-        public Group[] GetTeacherGroups(int teacherId)
-        {
-            return _context.GroupTeachers
-                .Where(g => g.TeacherId == teacherId)
-                .Select(g => g.Group).ToArray();
         }
 
         public void RemoveTeacher(int id)
@@ -111,22 +87,5 @@ namespace angular.Models
             _context.Teachers.Remove(entity);
             _context.SaveChanges();
         }
-
-
-        public Group GetGroup(int groupId)
-        {
-            return _context.Groups.First(g => g.Id == groupId);
-        }
-
-        public void RemoveGroup(int teacherId, int groupId)
-        {
-            var entity = _context.GroupTeachers.FirstOrDefault(g => g.GroupId == groupId && g.TeacherId == teacherId);
-            if (entity != null)
-            {
-                _context.GroupTeachers.Remove(entity);
-                _context.SaveChanges();
-            }
-        }
-
     }
 }

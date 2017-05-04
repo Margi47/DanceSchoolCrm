@@ -45,6 +45,7 @@ export class TeacherDetailComponent implements OnInit{
        this.route.params.subscribe(params =>
        {
            this.store.dispatch(this.teacherActions.getTeacher(+params['id']));
+           this.store.dispatch(this.teacherActions.getTeacherGroups(+params['id']));
        });
 
        this.store.dispatch(this.groupActions.loadGroups());

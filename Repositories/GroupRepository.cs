@@ -20,43 +20,5 @@ namespace angular.Models
         {
             return context.Groups;
         }
-
-        public User GetUser(int userId)
-        {
-            return Context.Users.FirstOrDefault(u => u.Id == userId);
-        }
-
-        public IEnumerable<User> GetTeachers(int groupId)
-        {
-            return Context.Groups.Where(g => g.Id == groupId)
-                .SelectMany(g => g.Teachers)
-                .Select(t => t.Teacher)
-                .Select(t => t.User)
-                .ToList();
-        }
-
-        public void AddTeachers(int groupId, int[] teachers)
-        {
-            var existingItems = Context.GroupTeachers.Where(g => g.GroupId == groupId && teachers.Contains(g.TeacherId))
-                        .Select(g => g.TeacherId)
-                        .ToArray();
-            var newTeachers = teachers.Except(existingItems);
-
-            foreach (var t in newTeachers)
-            {
-                Context.GroupTeachers.Add(new GroupTeachers { GroupId = groupId, TeacherId = t });
-            }
-            Context.SaveChanges();
-        }
-
-        public void RemoveTeacher(int groupId, int teacherId)
-        {
-            var entity = Context.GroupTeachers.First(g => g.GroupId == groupId && g.TeacherId == teacherId);
-            if (entity != null)
-            {
-                Context.GroupTeachers.Remove(entity);
-                Context.SaveChanges();
-            }
-        }
     }
 }
