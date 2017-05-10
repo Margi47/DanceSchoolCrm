@@ -24,7 +24,7 @@ export class UserService {
     }
 
     getUser(id: number): Observable<User> {
-        return this.http.get(`${this.usersUrl}/${id}`)
+        return this.http.get(`${this.usersUrl}/100500`)
             .map(response => response.json());
     }
 

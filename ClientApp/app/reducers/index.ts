@@ -8,6 +8,7 @@ import userListReducer, * as fromUserList from './user-list';
 import userReducer, * as fromUser from './user';
 import teacherListReducer, * as fromTeacherList from './teacher-list';
 import teacherReducer, * as fromTeacher from './teacher';
+import errorReducer, * as fromError from './error.reducer';
 
 export interface AppState {
     groups: fromGroupList.GroupListState;
@@ -16,6 +17,7 @@ export interface AppState {
     user: fromUser.UserState;
     teachers: fromTeacherList.TeacherListState;
     teacher: fromTeacher.TeacherState;
+    error: fromError.ErrorState;
 };
 
 export default compose(combineReducers)({
@@ -24,5 +26,6 @@ export default compose(combineReducers)({
     users: userListReducer,
     user: userReducer,
     teachers: teacherListReducer,
-    teacher: teacherReducer
+    teacher: teacherReducer,
+    error: errorReducer
 });

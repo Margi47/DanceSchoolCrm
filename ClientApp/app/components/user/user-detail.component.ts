@@ -50,7 +50,7 @@ export class UserDetailComponent implements OnInit{
            this.store.dispatch(this.userActions.loadUserGroups(+params['id']));
        });
 
-       this.store.dispatch(this.groupActions.loadGroups());
+       //this.store.dispatch(this.groupActions.loadGroups());
    }
 
     onUserDelete(user: User) {
