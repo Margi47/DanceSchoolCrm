@@ -40,4 +40,16 @@ export class UserDetailFormComponent {
         this.model.isTeacher = value;
         this.isTeacherChanged.emit({ user: this.model, value: value });
     }
+    isActiveClicked(value: boolean) {
+        console.log(value);
+        if (!value) {
+            this.model.isActive = false;
+            this.model.isAdmin = false;
+            if (this.model.isTeacher) {
+                this.isTeacherClicked(false);
+            }
+        } else {
+            this.model.isActive = true;
+        }
+    }
 }

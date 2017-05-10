@@ -13,4 +13,13 @@ export class UserAddFormComponent {
 
     onUserSubmit() { this.userSave.emit(this.model); }
     onUserCancel() { this.userCancel.emit(); }
+    isActiveClicked(value: boolean) {
+        if (!value) {
+            this.model.isActive = false;
+            this.model.isAdmin = false;
+            this.model.isTeacher = false;
+        } else {
+            this.model.isActive = true;
+        }
+    }
 }

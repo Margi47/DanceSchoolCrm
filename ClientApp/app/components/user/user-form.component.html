@@ -1,22 +1,43 @@
 ﻿<div *ngIf="model" style="margin-top:20px">
         <form (ngSubmit)="onUserSubmit($event)" #userForm="ngForm">
             <div *ngIf="!newUser"><label>Id: {{model.id}}</label></div>
+
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text"
                        class="form-control"
                        id="name"
-                       required
+                       required minlength="4" maxlength="25"
                        [(ngModel)]="model.name"
-                       name="name">
+                       name="name" #name="ngModel">
+                <div *ngIf="name.errors && (name.dirty || name.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                    <div [hidden]="!name.errors.required">
+                        Name is required
+                    </div>
+                    <div [hidden]="!name.errors.minlength">
+                        Name must be at least 4 characters long.
+                    </div>
+                    <div [hidden]="!name.errors.maxlength">
+                        Name cannot be more than 25 characters long.
+                    </div>
+                </div>
             </div>
+
             <div class="form-group">
                 <label for="phone">Phone number</label>
                 <input type="text"
                        class="form-control"
                        id="phone"
                        [(ngModel)]="model.phone"
-                       name="phone">
+                       name="phone" #phone="ngModel"
+                       pattern="^\+[1-9]{1}[0-9]{3,14}$" />
+                <div *ngIf="phone.errors && (phone.dirty || phone.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                    <div [hidden]="!phone.errors.pattern">
+                        Enter valid phone number (Example: +76342054862)
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -24,30 +45,41 @@
                        class="form-control"
                        id="email"
                        [(ngModel)]="model.email"
-                       name="email">
+                       name="email" #email="ngModel"
+                       pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$">
+                <div *ngIf="email.errors && (email.dirty || email.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                    <div [hidden]="!email.errors.pattern">
+                        Enter valid email address
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <input type="checkbox"
-                       [(ngModel)]="model.isActive"
-                       name="active">
+                       [ngModel]="model.isActive"
+                       name="active"
+                       (ngModelChange)="isActiveClicked($event)">
                 <label>Is Active</label>
             </div>
             <div class="form-group">
                 <input type="checkbox"
                        [(ngModel)]="model.isAdmin"
-                       name="admin">
+                       name="admin"
+                       [disabled]="!model.isActive">
                 <label>Is Admin</label>
             </div>
             <div class="form-group">
                 <input *ngIf="newUser"
                        type="checkbox"
                        [(ngModel)]="model.isTeacher"
-                       name="teacher">
+                       name="teacher"
+                       [disabled]="!model.isActive">
                 <input *ngIf="!newUser"
                        type="checkbox"
                        [ngModel]="model.isTeacher"
                        name="teacher"
-                       (ngModelChange)="isTeacherClicked($event)">
+                       (ngModelChange)="isTeacherClicked($event)"
+                       [disabled]="!model.isActive">
                 <label>Is Teacher</label>
                 <button (click)="onTeacherDetails()" 
                         class="btn btn-default" 
