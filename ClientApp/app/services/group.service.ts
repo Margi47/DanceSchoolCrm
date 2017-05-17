@@ -27,6 +27,11 @@ export class GroupService {
             .map(response => response.json());
     }
 
+    getAddingGroups(id: number): Observable<Group[]> {
+        return this.http.get(`${this.groupsUrl}/${id}/available`)
+            .map(response => response.json());
+    }
+
     addGroup(group: Group): Observable<void> {
         var body = JSON.stringify(group);
         var headers = new Headers({ 'Content-Type': 'application/json' });

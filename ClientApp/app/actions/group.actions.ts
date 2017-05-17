@@ -36,6 +36,22 @@ export class GroupActions {
         };
     }
 
+    static LOAD_ADDING_GROUPS = '[Group] Load Adding Groups';
+    loadAddingGroups(user): Action {
+        return {
+            type: GroupActions.LOAD_ADDING_GROUPS,
+            payload: user
+        };
+    }
+
+    static LOAD_ADDING_GROUPS_SUCCESS = '[Group] Load Adding Groups Success';
+    loadAddingGroupsSuccess(groups): Action {
+        return {
+            type: GroupActions.LOAD_ADDING_GROUPS_SUCCESS,
+            payload: groups
+        };
+    }
+
     static SAVE_GROUP = '[Group] Save Group';
     saveGroup(group): Action {
         return {
@@ -75,7 +91,6 @@ export class GroupActions {
             payload: users
         };
     }
-
 
     static ADD_STUDENT = '[Group] Add Group Student';
     addGroupStudent(groupId, userId): Action {

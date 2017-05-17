@@ -85,6 +85,15 @@ export class UserActions {
         }
     }
 
+    static CHANGE_USER_GROUPS_SUCCESS = '[User] Change User Groups Success';
+    changeUserGroupsSuccess(userId): Action {
+        console.log(userId + "from action");
+        return {
+            type: UserActions.CHANGE_USER_GROUPS_SUCCESS,
+            payload: userId
+        }
+    }
+
     static REMOVE_USER_GROUP = '[User] Remove User Group';
     removeUserGroup(userId, groupId): Action {
         console.log(userId + "from action");

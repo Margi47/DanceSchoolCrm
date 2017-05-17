@@ -27,6 +27,12 @@ export class GroupEffects {
         .switchMap(id => this.service.getGroup(id))
         .map(group => this.groupActions.getGroupSuccess(group));
 
+    @Effect() getAddingGroup$ = this.update$
+        .ofType(GroupActions.LOAD_ADDING_GROUPS)
+        .map(action => action.payload)
+        .switchMap(id => this.service.getAddingGroups(id))
+        .map(groups => this.groupActions.loadAddingGroupsSuccess(groups));
+
     @Effect() saveGroup$ = this.update$
         .ofType(GroupActions.SAVE_GROUP)
         .map(action => action.payload)

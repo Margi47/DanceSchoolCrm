@@ -12,7 +12,7 @@ import { TeacherAddFormComponent } from '../teacher/teacher-add-form.component';
 
 import { TeacherService } from '../../services/teacher.service';
 import { TeacherActions } from '../../actions/teacher.actions';
-import { TeacherEffects } from '../../effects/teacher';
+import { TeacherEffects } from '../../effects/teacher.effects';
 
 @NgModule({
     imports: [

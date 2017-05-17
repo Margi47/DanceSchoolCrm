@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 
 import { AppState } from '../reducers';
 import { UserActions } from '../actions/user.actions';
+import { GroupActions } from '../actions/group.actions';
 import { UserService } from '../services/user.service';
 
 @Injectable()
@@ -13,6 +14,7 @@ export class UserEffects {
     constructor(
         private update$: Actions,
         private userActions: UserActions,
+        private groupActions: GroupActions,
         private service: UserService,
     ) { }
 
@@ -55,13 +57,23 @@ export class UserEffects {
         .ofType(UserActions.ADD_USER_GROUP)
         .map(action => action.payload)
         .switchMap(obj => this.service.addGroup(obj.user, obj.group))
-        .map(user => this.userActions.loadUserGroups(user));
+        .map(user => this.userActions.changeUserGroupsSuccess(user));
+
+    @Effect() changeUserGroups = this.update$
+        .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(userId => Observable.of(this.userActions.loadUserGroups(userId)));
+
+    @Effect() changeUserPossibleGroups = this.update$
+        .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(userId => Observable.of(this.groupActions.loadAddingGroups(userId)));
 
     @Effect() removeUserGroup$ = this.update$
         .ofType(UserActions.REMOVE_USER_GROUP)
         .map(action => action.payload)
         .switchMap(obj => this.service.removeGroup(obj.user, obj.group))
-        .map(user => this.userActions.loadUserGroups(user));
+        .map(user => this.userActions.changeUserGroupsSuccess(user));
 
     @Effect() createTeacher = this.update$
         .ofType(UserActions.CREATE_TEACHER)

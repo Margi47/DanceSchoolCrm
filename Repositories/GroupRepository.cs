@@ -20,5 +20,12 @@ namespace angular.Models
         {
             return context.Groups;
         }
+
+        public IEnumerable<Group> GetAvailableGroups(int id)
+        {
+            var addedGroups = Context.GroupUser.Where(g => g.UserId == id).Select(g => g.Group).ToArray();
+            var result = Context.Groups.Except(addedGroups).ToArray();
+            return result;
+        }
     }
 }
