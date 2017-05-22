@@ -33,11 +33,17 @@ export class GroupEffects {
         .switchMap(id => this.service.getGroup(id))
         .map(group => this.groupActions.getGroupSuccess(group));
 
-    @Effect() getAvailableGroup$ = this.update$
-        .ofType(GroupActions.LOAD_AVAILABLE_GROUPS)
+    @Effect() getAvailableUserGroup$ = this.update$
+        .ofType(GroupActions.LOAD_AVAILABLE_USER_GROUPS)
         .map(action => action.payload)
-        .switchMap(id => this.service.getAvailableGroups(id))
-        .map(groups => this.groupActions.loadAvailableGroupsSuccess(groups));
+        .switchMap(id => this.service.getAvailableUserGroups(id))
+        .map(groups => this.groupActions.loadAvailableUserGroupsSuccess(groups));
+
+    @Effect() getAvailableTeacherGroup$ = this.update$
+        .ofType(GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS)
+        .map(action => action.payload)
+        .switchMap(id => this.service.getAvailableTeacherGroups(id))
+        .map(groups => this.groupActions.loadAvailableTeacherGroupsSuccess(groups));
 
     @Effect() saveGroup$ = this.update$
         .ofType(GroupActions.SAVE_GROUP)

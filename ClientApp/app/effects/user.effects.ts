@@ -89,7 +89,7 @@ export class UserEffects {
     @Effect() changeUserPossibleGroups = this.update$
         .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
         .map(action => action.payload)
-        .switchMap(userId => Observable.of(this.groupActions.loadAvailableGroups(userId)));
+        .switchMap(userId => Observable.of(this.groupActions.loadAvailableUserGroups(userId)));
 
     @Effect() removeUserGroup$ = this.update$
         .ofType(UserActions.REMOVE_USER_GROUP)

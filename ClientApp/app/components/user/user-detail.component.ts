@@ -48,7 +48,7 @@ export class UserDetailComponent implements OnInit{
        {
            this.store.dispatch(this.userActions.getUser(+params['id']));
            this.store.dispatch(this.userActions.loadUserGroups(+params['id']));
-           this.store.dispatch(this.groupActions.loadAvailableGroups(+params['id']));
+           this.store.dispatch(this.groupActions.loadAvailableUserGroups(+params['id']));
        });
    }
 

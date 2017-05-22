@@ -108,4 +108,12 @@ export class TeacherActions {
             payload: { teacher: teacherId, group: groupId }
         };
     }
+
+    static CHANGE_TEACHER_GROUPS_SUCCESS = '[Teacher] Change Teacher Groups Success';
+    changeTeacherGroupsSuccess(teacherId): Action {
+        return {
+            type: TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS,
+            payload: teacherId
+        };
+    }
 }

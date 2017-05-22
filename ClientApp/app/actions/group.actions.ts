@@ -36,18 +36,34 @@ export class GroupActions {
         };
     }
 
-    static LOAD_AVAILABLE_GROUPS = '[Group] Load Available Groups';
-    loadAvailableGroups(user): Action {
+    static LOAD_AVAILABLE_USER_GROUPS = '[Group] Load Available User Groups';
+    loadAvailableUserGroups(user): Action {
         return {
-            type: GroupActions.LOAD_AVAILABLE_GROUPS,
+            type: GroupActions.LOAD_AVAILABLE_USER_GROUPS,
             payload: user
         };
     }
 
-    static LOAD_AVAILABLE_GROUPS_SUCCESS = '[Group] Load Available Groups Success';
-    loadAvailableGroupsSuccess(groups): Action {
+    static LOAD_AVAILABLE_USER_GROUPS_SUCCESS = '[Group] Load Available User Groups Success';
+    loadAvailableUserGroupsSuccess(groups): Action {
         return {
-            type: GroupActions.LOAD_AVAILABLE_GROUPS_SUCCESS,
+            type: GroupActions.LOAD_AVAILABLE_USER_GROUPS_SUCCESS,
+            payload: groups
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHER_GROUPS = '[Group] Load Available Teacher Groups';
+    loadAvailableTeacherGroups(teacher): Action {
+        return {
+            type: GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS,
+            payload: teacher
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS = '[Group] Load Available Teacher Groups Success';
+    loadAvailableTeacherGroupsSuccess(groups): Action {
+        return {
+            type: GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS,
             payload: groups
         };
     }

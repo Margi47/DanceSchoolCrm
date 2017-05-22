@@ -73,5 +73,19 @@ namespace angular.Controllers.Groups
             var result = Mapper.Map<UserApiModel[]>(teachers);
             return new ObjectResult(result);
         }
+
+
+        [HttpGet("{id}/groups/available", Name = "GetAvailableTeacherGroups")]
+        public IActionResult GetAvailableTeacherGroups(int id)
+        {
+            var groups = _repository.GetAvailableGroups(id);
+            if (groups == null)
+            {
+                return NotFound();
+            }
+
+            var result = Mapper.Map<GroupApiModel[]>(groups);
+            return new ObjectResult(result);
+        }
     }
 }

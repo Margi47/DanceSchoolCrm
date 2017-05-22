@@ -6,6 +6,7 @@ import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 
 import { TeacherActions } from '../actions/teacher.actions';
+import { GroupActions } from '../actions/group.actions';
 import { TeacherService } from '../services/teacher.service';
 import { Group } from '../models/group';
 import { Teacher } from '../models/teacher';
@@ -15,6 +16,7 @@ export class TeacherEffects {
     constructor(
         private update$: Actions,
         private teacherActions: TeacherActions,
+        private groupActions: GroupActions,
         private service: TeacherService,
         private router: Router
     ) { }
@@ -66,11 +68,21 @@ export class TeacherEffects {
         .ofType(TeacherActions.ADD_TEACHER_GROUPS)
         .map(action => action.payload)
         .switchMap(obj => this.service.addGroups(obj.teacher, obj.groups))
-        .map(teacher => this.teacherActions.getTeacherGroups(teacher));
+        .map(teacher => this.teacherActions.changeTeacherGroupsSuccess(teacher));
 
     @Effect() removeTeacherGroup$ = this.update$
         .ofType(TeacherActions.REMOVE_TEACHER_GROUP)
         .map(action => action.payload)
         .switchMap(obj => this.service.deleteGroup(obj.teacher, obj.group))
-        .map(teacher => this.teacherActions.getTeacherGroups(teacher));
+        .map(teacher => this.teacherActions.changeTeacherGroupsSuccess(teacher));
+
+    @Effect() getChangedGroups$ = this.update$
+        .ofType(TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(teacher => Observable.of(this.teacherActions.getTeacherGroups(teacher)));
+
+    @Effect() updateAvailableGroups$ = this.update$
+        .ofType(TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(teacher => Observable.of(this.groupActions.loadAvailableTeacherGroups(teacher)));
 }

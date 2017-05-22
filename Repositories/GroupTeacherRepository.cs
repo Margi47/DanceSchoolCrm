@@ -87,5 +87,17 @@ namespace angular.Repositories
                 .ToArray();
             return result;
         }
+
+        public IEnumerable<Group> GetAvailableGroups(int id)
+        {
+            var addedGroups = _context.GroupTeachers
+                .Where(g => g.TeacherId == id)
+                .Select(g => g.GroupId)
+                .ToArray();
+            var result = _context.Groups
+                .Where(t => !addedGroups.Contains(t.Id))
+                .ToArray();
+            return result;
+        }
     }
 }
