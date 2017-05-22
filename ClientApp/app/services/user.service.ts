@@ -38,6 +38,11 @@ export class UserService {
             .map(response => response.json());
     }
 
+    getAvailableTeachers(): Observable<User[]> {
+        return this.http.get(`${this.usersUrl}/teachers/available`)
+            .map(response => response.json());
+    }
+
     addUser(user: User): Observable<number> {
         var body = JSON.stringify(user);
         console.log(body);

@@ -37,6 +37,12 @@ export class UserEffects {
         .switchMap(id => this.service.getAvailableStudents(id))
         .map(students => this.userActions.loadAvailableStudentsSuccess(students));
 
+    @Effect() getAvailableTeachers$ = this.update$
+        .ofType(UserActions.LOAD_AVAILABLE_TEACHERS)
+        .map(action => action.payload)
+        .switchMap(() => this.service.getAvailableTeachers())
+        .map(users => this.userActions.loadAvailableTeachersSuccess(users));
+
     @Effect() addUser$ = this.update$
         .ofType(UserActions.ADD_USER)
         .map(action => action.payload)

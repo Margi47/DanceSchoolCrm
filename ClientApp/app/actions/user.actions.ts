@@ -36,6 +36,21 @@ export class UserActions {
         };
     }
 
+    static LOAD_AVAILABLE_TEACHERS = '[User] Load Available Teachers';
+    loadAvailableTeachers(): Action {
+        return {
+            type: UserActions.LOAD_AVAILABLE_TEACHERS
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHERS_SUCCESS = '[User] Load Available Teachers Success';
+    loadAvailableTeachersSuccess(users): Action {
+        return {
+            type: UserActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
+            payload: users
+        };
+    }
+
     static GET_USER = '[User] Get User';
     getUser(id): Action {
         return {

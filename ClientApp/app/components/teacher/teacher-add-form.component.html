@@ -1,25 +1,21 @@
-﻿<div class="form-group">
-    <label for="user">User</label>
-    <select class="form-control" [(ngModel)]="selectedUser">
-        <option *ngFor="let user of allUsers" [ngValue]="user">{{user.name}}</option>
-    </select>
-</div>
-<div class="form-group">
-    <label for="user">Add Group</label>
-    <select class="form-control" [ngModel] ="selectedGroup" (ngModelChange) ="onGroupAdd($event)">
-        <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
-    </select>
-</div>
+﻿<div style="margin-top:20px">
+    <form (ngSubmit)="onTeacherSave($event)" #teacherForm="ngForm">
+        <div class="form-group">
+            <label for="user">Select User</label>
+            <select class="form-control"
+                    [(ngModel)]="selectedUser"
+                    name="name" id="name"
+                    required #user="ngModel">
+                <option *ngFor="let user of allUsers" [ngValue]="user">{{user.id}} - {{user.name}}</option>
+            </select>
 
-<div *ngIf="selectedUser">
-    <label>{{selectedUser.id}}</label>
-    <label>{{selectedUser.name}}</label>
-</div>
-<div *ngIf="allSelectedGroups">
-    <ul>
-        <li *ngFor="let group of allSelectedGroups">{{group.id}} - {{group.name}}</li>
-    </ul>
-</div>
+            <div *ngIf="user.errors && (user.dirty || user.touched)"
+                 class="alert help-block" style="border-color: red; line-height: 5px">
+                Name is required
+            </div>
+        </div>
 
-<button (click)="onTeacherSave()" type="submit" [disabled]="!selectedUser" class="btn btn-default">Submit</button>
-<button (click)="onTeacherCancel()" class="btn btn-default" type="button">Cancel</button>
+        <button type="submit" [disabled]="!teacherForm.form.valid" class="btn btn-default">Save</button>
+        <button (click)="onTeacherCancel(); userForm.reset()" class="btn btn-default" type="button">Cancel</button>
+    </form>
+</div>

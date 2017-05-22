@@ -6,5 +6,7 @@ using System.Threading.Tasks;
 namespace angular.Models
 {
     public interface IUserRepository: ICrudRepository<User>
-    {}
+    {
+        User[] GetAvailableTeachers();
+    }
 }

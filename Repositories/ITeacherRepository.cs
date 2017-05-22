@@ -11,6 +11,6 @@ namespace angular.Models
         IEnumerable<TeacherDto> GetAllTeachersInfo();
         TeacherDto GetTeacher(int teacherId);
         void AddTeacher(Teacher teacher);
-        void RemoveTeacher(int id);    
+        void RemoveTeacher(int id);
     }
 }

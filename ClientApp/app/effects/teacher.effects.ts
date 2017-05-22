@@ -3,6 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 import { TeacherActions } from '../actions/teacher.actions';
 import { TeacherService } from '../services/teacher.service';
@@ -15,6 +16,7 @@ export class TeacherEffects {
         private update$: Actions,
         private teacherActions: TeacherActions,
         private service: TeacherService,
+        private router: Router
     ) { }
 
     @Effect() loadTeachersWithGroups$ = this.update$
@@ -38,7 +40,15 @@ export class TeacherEffects {
         .ofType(TeacherActions.ADD_TEACHER)
         .map(action => action.payload)
         .switchMap(teacher => this.service.addTeacher(teacher))
-        .map(() => this.teacherActions.loadAllTeachers());
+        .map(teacherId => this.teacherActions.addTeacherSuccess(teacherId));
+
+    @Effect() navigateToNewTeacher$ = this.update$
+        .ofType(TeacherActions.ADD_TEACHER_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(teacher => {
+            console.log(teacher);
+            return Observable.of(this.router.navigate(['teacherdetail', teacher]));
+        });
 
     @Effect() deleteTeacher$ = this.update$
         .ofType(TeacherActions.DELETE_TEACHER)

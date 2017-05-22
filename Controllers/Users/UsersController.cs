@@ -92,5 +92,14 @@ namespace angular.Controllers.Users
             _userRepository.Remove(id);
             return new NoContentResult();
         }
+
+        [HttpGet("teachers/available", Name = "GetAvailableTeachers")]
+        public IEnumerable<UserApiModel> GetAvailableTeachers()
+        {
+            var users = _userRepository.GetAvailableTeachers();
+            var result = Mapper.Map<UserApiModel[]>(users);
+
+            return result;
+        }
     }
 }

@@ -61,8 +61,8 @@ namespace angular.Controllers.Groups
             return new NoContentResult();
         }
 
-        [HttpGet("{id}/teachers/available", Name = "GetAvailableTeachers")]
-        public IActionResult GetAvailableTeachers(int id)
+        [HttpGet("{id}/teachers/available", Name = "GetAvailableGroupTeachers")]
+        public IActionResult GetAvailableGroupTeachers(int id)
         {
             var teachers = _repository.GetAvailableTeachers(id);
             if (teachers == null)
