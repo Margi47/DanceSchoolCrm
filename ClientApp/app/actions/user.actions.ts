@@ -20,7 +20,7 @@ export class UserActions {
         };
     }
 
-    static LOAD_AVAILABLE_STUDENTS = '[Group] Load Available Students';
+    static LOAD_AVAILABLE_STUDENTS = '[User] Load Available Students';
     loadAvailableStudents(group): Action {
         return {
             type: UserActions.LOAD_AVAILABLE_STUDENTS,
@@ -28,7 +28,7 @@ export class UserActions {
         };
     }
 
-    static LOAD_AVAILABLE_STUDENTS_SUCCESS = '[Group] Load Available Students Success';
+    static LOAD_AVAILABLE_STUDENTS_SUCCESS = '[User] Load Available Students Success';
     loadAvailableStudentsSuccess(students): Action {
         return {
             type: UserActions.LOAD_AVAILABLE_STUDENTS_SUCCESS,

@@ -28,6 +28,12 @@ export class TeacherEffects {
         .switchMap(id => this.service.getTeacher(id))
         .map(teacher => this.teacherActions.getTeacherSuccess(teacher));
 
+    @Effect() loadAvailableTeachers$ = this.update$
+        .ofType(TeacherActions.LOAD_AVAILABLE_TEACHERS)
+        .map(action => action.payload)
+        .switchMap(id => this.service.getAvailableTeachers(id))
+        .map(teachers => this.teacherActions.loadAvailableTeachersSuccess(teachers));
+
     @Effect() addTeacher$ = this.update$
         .ofType(TeacherActions.ADD_TEACHER)
         .map(action => action.payload)

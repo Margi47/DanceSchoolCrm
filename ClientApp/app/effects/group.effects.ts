@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { AppState } from '../reducers';
 import { GroupActions } from '../actions/group.actions';
 import { UserActions } from '../actions/user.actions';
+import { TeacherActions } from '../actions/teacher.actions';
 import { GroupService } from '../services/group.service';
 
 @Injectable()
@@ -16,6 +17,7 @@ export class GroupEffects {
         private update$: Actions,
         private groupActions: GroupActions,
         private userActions: UserActions,
+        private teacherActions: TeacherActions,
         private service: GroupService,
         private router: Router
     ) { }
@@ -76,13 +78,23 @@ export class GroupEffects {
             console.log(obj);
             return this.service.addTeachers(obj.group, obj.teachers);
         })
-        .map(group => this.groupActions.loadTeaches(group));
+        .map(group => this.groupActions.changeGroupTeachersSuccess(group));
 
     @Effect() removeTeacher = this.update$
         .ofType(GroupActions.REMOVE_TEACHER)
         .map(action => action.payload)
         .switchMap(obj => this.service.removeTeacher(obj.group, obj.teacher))
-        .map(group => this.groupActions.loadTeaches(group));
+        .map(group => this.groupActions.changeGroupTeachersSuccess(group));
+
+    @Effect() changeGroupTeachers = this.update$
+        .ofType(GroupActions.CHANGE_GROUP_TEACHERS_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(groupId => Observable.of(this.groupActions.loadTeaches(groupId)));
+
+    @Effect() changeAvailableGroupTeachers = this.update$
+        .ofType(GroupActions.CHANGE_GROUP_TEACHERS_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(groupId => Observable.of(this.teacherActions.loadAvailableTeachers(groupId)));
 
     @Effect() loadStudents$ = this.update$
         .ofType(GroupActions.LOAD_STUDENTS)

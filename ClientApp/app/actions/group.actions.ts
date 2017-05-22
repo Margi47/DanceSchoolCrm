@@ -117,7 +117,7 @@ export class GroupActions {
         };
     }
 
-    static CHANGE_GROUP_STUDENTS_SUCCESS = '[User] Change Group Students Success';
+    static CHANGE_GROUP_STUDENTS_SUCCESS = '[Group] Change Group Students Success';
     changeGroupStudentsSuccess(groupId): Action {
         return {
             type: GroupActions.CHANGE_GROUP_STUDENTS_SUCCESS,
@@ -156,5 +156,13 @@ export class GroupActions {
             type: GroupActions.REMOVE_TEACHER,
             payload: { group: groupId, teacher: teacherId }
         };
+    }
+
+    static CHANGE_GROUP_TEACHERS_SUCCESS = '[Group] Change Group Teachers Success';
+    changeGroupTeachersSuccess(groupId): Action {
+        return {
+            type: GroupActions.CHANGE_GROUP_TEACHERS_SUCCESS,
+            payload: groupId
+        }
     }
 }

@@ -52,8 +52,8 @@ export class GroupDetailComponent implements OnInit {
             this.store.dispatch(this.groupActions.loadStudents(+params['id']));
             this.store.dispatch(this.groupActions.loadTeaches(+params['id']));
             this.store.dispatch(this.userActions.loadAvailableStudents(+params['id']));
+            this.store.dispatch(this.teacherActions.loadAvailableTeachers(+params['id']));
         });
-        this.store.dispatch(this.teacherActions.loadAllTeachers());
     }
 
     deleteGroup(group: Group) {

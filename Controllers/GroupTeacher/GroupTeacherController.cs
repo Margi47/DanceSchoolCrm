@@ -60,5 +60,18 @@ namespace angular.Controllers.Groups
             _repository.RemoveGroupTeacher(groupId, teacherId);
             return new NoContentResult();
         }
+
+        [HttpGet("{id}/teachers/available", Name = "GetAvailableTeachers")]
+        public IActionResult GetAvailableTeachers(int id)
+        {
+            var teachers = _repository.GetAvailableTeachers(id);
+            if (teachers == null)
+            {
+                return NotFound();
+            }
+
+            var result = Mapper.Map<UserApiModel[]>(teachers);
+            return new ObjectResult(result);
+        }
     }
 }

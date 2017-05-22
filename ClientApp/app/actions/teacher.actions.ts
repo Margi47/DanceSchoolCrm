@@ -20,6 +20,22 @@ export class TeacherActions {
         };
     }
 
+    static LOAD_AVAILABLE_TEACHERS = '[Teacher] Load Available Teachers';
+    loadAvailableTeachers(groupId): Action {
+        return {
+            type: TeacherActions.LOAD_AVAILABLE_TEACHERS,
+            payload: groupId
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHERS_SUCCESS = '[Teacher] Load Available Teachers Success';
+    loadAvailableTeachersSuccess(teachers): Action {
+        return {
+            type: TeacherActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
+            payload: teachers
+        };
+    }
+
     static GET_TEACHER = '[Teacher] Get Teacher';
     getTeacher(id): Action {
         return {

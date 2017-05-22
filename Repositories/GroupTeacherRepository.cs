@@ -74,5 +74,18 @@ namespace angular.Repositories
                 _context.SaveChanges();
             }
         }
+
+        public IEnumerable<User> GetAvailableTeachers(int id)
+        {
+            var addedTeachers = _context.GroupTeachers
+                .Where(g => g.GroupId == id)
+                .Select(g => g.TeacherId)
+                .ToArray();
+            var result = _context.Teachers
+                .Where(t => !addedTeachers.Contains(t.Id))
+                .Select(t => t.User)
+                .ToArray();
+            return result;
+        }
     }
 }

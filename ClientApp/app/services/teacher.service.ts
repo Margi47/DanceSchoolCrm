@@ -21,6 +21,11 @@ export class TeacherService {
             .map(response => response.json());
     }
 
+    getAvailableTeachers(groupId: number): Observable<Teacher[]> {
+        return this.http.get(`${this.groupTeacherUrl}/${groupId}/teachers/available`)
+            .map(response => response.json());
+    }
+
     getTeachersWithGroups(): Observable<Teacher[]> {
         return this.http.get(`${this.teachersUrl}/all`)
             .map(response => response.json());

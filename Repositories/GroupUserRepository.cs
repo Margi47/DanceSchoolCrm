@@ -58,7 +58,6 @@ namespace angular.Repositories
             return result;
         }
 
-
         public IEnumerable<Group> GetAvailableGroups(int id)
         {
             var addedGroups = _context.GroupUser.Where(g => g.UserId == id).Select(g => g.Group).ToArray();
