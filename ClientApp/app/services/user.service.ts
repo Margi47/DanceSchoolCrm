@@ -38,7 +38,7 @@ export class UserService {
             .map(response => response.json());
     }
 
-    addUser(user: User): Observable<void> {
+    addUser(user: User): Observable<number> {
         var body = JSON.stringify(user);
         console.log(body);
         var headers = new Headers({ 'Content-Type': 'application/json' });
@@ -47,10 +47,11 @@ export class UserService {
         return this.http.post(this.usersUrl, body, options)
             .map(response => response.json())
             .mergeMap(user => {
+                console.log(user);
                 if (user.isTeacher) {
-                    return this.createTeacher(user).map(x => null);
+                    return this.createTeacher(user).map(x => user.id);
                 }
-                return Observable.of(null);
+                return Observable.of(user.id);
             });
     }
 

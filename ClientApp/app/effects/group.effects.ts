@@ -17,7 +17,7 @@ export class GroupEffects {
         private groupActions: GroupActions,
         private userActions: UserActions,
         private service: GroupService,
-        private router: Router,
+        private router: Router
     ) { }
 
     @Effect() loadGroups$ = this.update$

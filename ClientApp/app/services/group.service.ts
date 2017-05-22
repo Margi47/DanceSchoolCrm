@@ -37,7 +37,6 @@ export class GroupService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-
         return this.http.post(this.groupsUrl, body, options)
             .map(response => response.json().id);
     }

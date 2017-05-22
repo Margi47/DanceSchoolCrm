@@ -3,6 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 import { AppState } from '../reducers';
 import { UserActions } from '../actions/user.actions';
@@ -16,6 +17,7 @@ export class UserEffects {
         private userActions: UserActions,
         private groupActions: GroupActions,
         private service: UserService,
+        private router: Router
     ) { }
 
     @Effect() loadUsers$ = this.update$
@@ -39,7 +41,15 @@ export class UserEffects {
         .ofType(UserActions.ADD_USER)
         .map(action => action.payload)
         .switchMap(user => this.service.addUser(user))
-        .map(() => this.userActions.loadUsers());
+        .map(user => this.userActions.addUserSuccess(user));
+
+    @Effect() navigateToNewGroup$ = this.update$
+        .ofType(UserActions.ADD_USER_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(user => {
+            console.log(user);
+            return Observable.of(this.router.navigate(['userdetail', user]));
+        });
 
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)
