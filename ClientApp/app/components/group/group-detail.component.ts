@@ -14,7 +14,7 @@ import { Location } from '@angular/common';
     selector: 'group-detail',
     template: `
 <group-detail-form [model] = "model$ | async"
-                   [allUsers] = "allUsers$ | async"
+                   [allUsers] = "allStudents$ | async"
                    [allTeachers] = "allTeachers$ | async"
                    (deleteGroup) = "deleteGroup($event)"
                    (updateGroup) = "groupUpdate($event)"
@@ -30,7 +30,7 @@ import { Location } from '@angular/common';
 
 export class GroupDetailComponent implements OnInit {
     model$: Observable<any>;
-    allUsers$: Observable<any>;
+    allStudents$: Observable<any>;
     allTeachers$: Observable<any>;
 
     constructor(
@@ -42,7 +42,7 @@ export class GroupDetailComponent implements OnInit {
         private route: ActivatedRoute,
         private location: Location) {
         this.model$ = store.select('group');
-        this.allUsers$ = store.select('users');
+        this.allStudents$ = store.select('users');
         this.allTeachers$ = store.select('teachers');
     }
 
@@ -51,8 +51,8 @@ export class GroupDetailComponent implements OnInit {
             this.store.dispatch(this.groupActions.getGroup(+params['id']));
             this.store.dispatch(this.groupActions.loadStudents(+params['id']));
             this.store.dispatch(this.groupActions.loadTeaches(+params['id']));
+            this.store.dispatch(this.userActions.loadAvailableStudents(+params['id']));
         });
-        this.store.dispatch(this.userActions.loadUsers());
         this.store.dispatch(this.teacherActions.loadAllTeachers());
     }
 
@@ -75,7 +75,6 @@ export class GroupDetailComponent implements OnInit {
     }
 
     removeGroupStudent($event) {
-
         this.store.dispatch(this.groupActions.removeStudent($event.groupId, $event.studentId));
     }
 

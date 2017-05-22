@@ -33,6 +33,11 @@ export class UserService {
             .map(response => response.json());
     }
 
+    getAvailableStudents(groupId: number): Observable<User[]> {
+        return this.http.get(`${this.groupUserUrl}/${groupId}/students/available`)
+            .map(response => response.json());
+    }
+
     addUser(user: User): Observable<void> {
         var body = JSON.stringify(user);
         console.log(body);

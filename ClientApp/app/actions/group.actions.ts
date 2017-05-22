@@ -36,18 +36,18 @@ export class GroupActions {
         };
     }
 
-    static LOAD_ADDING_GROUPS = '[Group] Load Adding Groups';
-    loadAddingGroups(user): Action {
+    static LOAD_AVAILABLE_GROUPS = '[Group] Load Available Groups';
+    loadAvailableGroups(user): Action {
         return {
-            type: GroupActions.LOAD_ADDING_GROUPS,
+            type: GroupActions.LOAD_AVAILABLE_GROUPS,
             payload: user
         };
     }
 
-    static LOAD_ADDING_GROUPS_SUCCESS = '[Group] Load Adding Groups Success';
-    loadAddingGroupsSuccess(groups): Action {
+    static LOAD_AVAILABLE_GROUPS_SUCCESS = '[Group] Load Available Groups Success';
+    loadAvailableGroupsSuccess(groups): Action {
         return {
-            type: GroupActions.LOAD_ADDING_GROUPS_SUCCESS,
+            type: GroupActions.LOAD_AVAILABLE_GROUPS_SUCCESS,
             payload: groups
         };
     }
@@ -115,6 +115,14 @@ export class GroupActions {
             type: GroupActions.REMOVE_STUDENT,
             payload: { group: groupId, user: userId }
         };
+    }
+
+    static CHANGE_GROUP_STUDENTS_SUCCESS = '[User] Change Group Students Success';
+    changeGroupStudentsSuccess(groupId): Action {
+        return {
+            type: GroupActions.CHANGE_GROUP_STUDENTS_SUCCESS,
+            payload: groupId
+        }
     }
 
     static LOAD_TEACHERS = '[Group] Load Group Teachers';

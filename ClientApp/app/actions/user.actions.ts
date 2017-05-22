@@ -20,6 +20,22 @@ export class UserActions {
         };
     }
 
+    static LOAD_AVAILABLE_STUDENTS = '[Group] Load Available Students';
+    loadAvailableStudents(group): Action {
+        return {
+            type: UserActions.LOAD_AVAILABLE_STUDENTS,
+            payload: group
+        };
+    }
+
+    static LOAD_AVAILABLE_STUDENTS_SUCCESS = '[Group] Load Available Students Success';
+    loadAvailableStudentsSuccess(students): Action {
+        return {
+            type: UserActions.LOAD_AVAILABLE_STUDENTS_SUCCESS,
+            payload: students
+        };
+    }
+
     static GET_USER = '[User] Get User';
     getUser(id): Action {
         return {

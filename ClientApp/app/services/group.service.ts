@@ -27,8 +27,8 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    getAddingGroups(id: number): Observable<Group[]> {
-        return this.http.get(`${this.groupsUrl}/${id}/available`)
+    getAvailableGroups(id: number): Observable<Group[]> {
+        return this.http.get(`${this.groupUserUrl}/${id}/groups/available`)
             .map(response => response.json());
     }
 

@@ -41,19 +41,6 @@ namespace angular.Controllers.Groups
             return new ObjectResult(result);
         }
 
-        [HttpGet("{id}/available", Name = "GetAvailableGroup")]
-        public IActionResult GetAvailableGroups(int id)
-        {
-            var groups = _groupRepository.GetAvailableGroups(id);
-            if (groups == null)
-            {
-                return NotFound();
-            }
-
-            var result = Mapper.Map<GroupApiModel[]>(groups);
-            return new ObjectResult(result);
-        }
-
         [HttpPost]
         public IActionResult Create([FromBody] GroupApiModel group)
         {

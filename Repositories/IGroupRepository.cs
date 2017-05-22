@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 namespace angular.Models
 {
     public interface IGroupRepository: ICrudRepository<Group>
-    {
-        IEnumerable<Group> GetAvailableGroups(int id);
-    }
+    {}
 }

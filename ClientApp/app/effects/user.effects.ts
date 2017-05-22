@@ -29,6 +29,12 @@ export class UserEffects {
         .switchMap(id => this.service.getUser(id))
         .map(user => this.userActions.getUserSuccess(user));
 
+    @Effect() getAvailableStudents$ = this.update$
+        .ofType(UserActions.LOAD_AVAILABLE_STUDENTS)
+        .map(action => action.payload)
+        .switchMap(id => this.service.getAvailableStudents(id))
+        .map(students => this.userActions.loadAvailableStudentsSuccess(students));
+
     @Effect() addUser$ = this.update$
         .ofType(UserActions.ADD_USER)
         .map(action => action.payload)
@@ -67,7 +73,7 @@ export class UserEffects {
     @Effect() changeUserPossibleGroups = this.update$
         .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
         .map(action => action.payload)
-        .switchMap(userId => Observable.of(this.groupActions.loadAddingGroups(userId)));
+        .switchMap(userId => Observable.of(this.groupActions.loadAvailableGroups(userId)));
 
     @Effect() removeUserGroup$ = this.update$
         .ofType(UserActions.REMOVE_USER_GROUP)

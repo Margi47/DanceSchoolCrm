@@ -14,6 +14,9 @@ export default function (state = initialState, action: Action): UserListState {
         case UserActions.LOAD_USERS_SUCCESS: {
             return action.payload;
         }
+        case UserActions.LOAD_AVAILABLE_STUDENTS_SUCCESS: {
+            return action.payload;
+        }
         default: {
             return state;
         }
