@@ -3,6 +3,7 @@ import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 import { AppState } from '../reducers';
 import { GroupActions } from '../actions/group.actions';
@@ -14,6 +15,7 @@ export class GroupEffects {
         private update$: Actions,
         private groupActions: GroupActions,
         private service: GroupService,
+        private router: Router,
     ) { }
 
     @Effect() loadGroups$ = this.update$
@@ -43,7 +45,15 @@ export class GroupEffects {
         .ofType(GroupActions.ADD_GROUP)
         .map(action => action.payload)
         .switchMap(group => this.service.addGroup(group))
-        .map(() => this.groupActions.loadGroups());
+        .map(group => this.groupActions.addGroupSuccess(group));
+
+    @Effect() navigateToNewGroup$ = this.update$
+        .ofType(GroupActions.ADD_GROUP_SUCCESS)
+        .map(action => action.payload)
+        .switchMap(group => {
+            console.log(group);
+            return Observable.of(this.router.navigate(['groupdetail', group]));
+        });
 
     @Effect() deleteGroup$ = this.update$
         .ofType(GroupActions.DELETE_GROUP)
