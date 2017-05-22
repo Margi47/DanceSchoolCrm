@@ -8,9 +8,21 @@
                 <input type="text"
                        class="form-control"
                        id="name"
-                       required
                        [(ngModel)]="model.name"
-                       name="name">
+                       required minlength="4" maxlength="25"
+                       name="name" #name="ngModel">
+                <div *ngIf="name.errors && (name.dirty || name.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                    <div [hidden]="!name.errors.required">
+                        Name is required
+                    </div>
+                    <div [hidden]="!name.errors.minlength">
+                        Name must be at least 4 characters long.
+                    </div>
+                    <div [hidden]="!name.errors.maxlength">
+                        Name cannot be more than 25 characters long.
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
@@ -18,7 +30,14 @@
                        class="form-control"
                        id="description"
                        [(ngModel)]="model.description"
-                       name="description">
+                       maxlength="70"
+                       name="description" #name="ngModel">
+                <div *ngIf="name.errors && (name.dirty || name.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                    <div [hidden]="!name.errors.maxlength">
+                        Description cannot be more than 70 characters long.
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <input type="checkbox"
