@@ -47,15 +47,7 @@ export class UserEffects {
         .ofType(UserActions.ADD_USER)
         .map(action => action.payload)
         .switchMap(user => this.service.addUser(user))
-        .map(user => this.userActions.addUserSuccess(user));
-
-    @Effect() navigateToNewGroup$ = this.update$
-        .ofType(UserActions.ADD_USER_SUCCESS)
-        .map(action => action.payload)
-        .switchMap(user => {
-            console.log(user);
-            return Observable.of(this.router.navigate(['userdetail', user]));
-        });
+        .map(user => this.router.navigate(['userdetail', user]));
 
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)
@@ -81,21 +73,19 @@ export class UserEffects {
         .switchMap(obj => this.service.addGroup(obj.user, obj.group))
         .map(user => this.userActions.changeUserGroupsSuccess(user));
 
-    @Effect() changeUserGroups = this.update$
-        .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
-        .map(action => action.payload)
-        .switchMap(userId => Observable.of(this.userActions.loadUserGroups(userId)));
-
-    @Effect() changeUserPossibleGroups = this.update$
-        .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
-        .map(action => action.payload)
-        .switchMap(userId => Observable.of(this.groupActions.loadAvailableUserGroups(userId)));
-
     @Effect() removeUserGroup$ = this.update$
         .ofType(UserActions.REMOVE_USER_GROUP)
         .map(action => action.payload)
         .switchMap(obj => this.service.removeGroup(obj.user, obj.group))
         .map(user => this.userActions.changeUserGroupsSuccess(user));
+
+    @Effect() changeUserGroups = this.update$
+        .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
+        .map(action => this.userActions.loadUserGroups(action.payload));
+
+    @Effect() changeUserPossibleGroups = this.update$
+        .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
+        .map(action => this.groupActions.loadAvailableUserGroups(action.payload));
 
     @Effect() createTeacher = this.update$
         .ofType(UserActions.CREATE_TEACHER)

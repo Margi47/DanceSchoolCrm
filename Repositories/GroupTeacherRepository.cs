@@ -75,27 +75,19 @@ namespace angular.Repositories
             }
         }
 
-        public IEnumerable<User> GetAvailableTeachers(int id)
+        public IEnumerable<User> GetAvailableTeachers(int groupId)
         {
-            var addedTeachers = _context.GroupTeachers
-                .Where(g => g.GroupId == id)
-                .Select(g => g.TeacherId)
-                .ToArray();
             var result = _context.Teachers
-                .Where(t => !addedTeachers.Contains(t.Id))
+                .Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
                 .Select(t => t.User)
                 .ToArray();
             return result;
         }
 
-        public IEnumerable<Group> GetAvailableGroups(int id)
+        public IEnumerable<Group> GetAvailableGroups(int teacherId)
         {
-            var addedGroups = _context.GroupTeachers
-                .Where(g => g.TeacherId == id)
-                .Select(g => g.GroupId)
-                .ToArray();
             var result = _context.Groups
-                .Where(t => !addedGroups.Contains(t.Id))
+                .Where(g => g.IsActive && !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
                 .ToArray();
             return result;
         }

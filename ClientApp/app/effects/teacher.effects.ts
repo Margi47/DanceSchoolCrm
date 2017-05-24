@@ -42,15 +42,7 @@ export class TeacherEffects {
         .ofType(TeacherActions.ADD_TEACHER)
         .map(action => action.payload)
         .switchMap(teacher => this.service.addTeacher(teacher))
-        .map(teacherId => this.teacherActions.addTeacherSuccess(teacherId));
-
-    @Effect() navigateToNewTeacher$ = this.update$
-        .ofType(TeacherActions.ADD_TEACHER_SUCCESS)
-        .map(action => action.payload)
-        .switchMap(teacher => {
-            console.log(teacher);
-            return Observable.of(this.router.navigate(['teacherdetail', teacher]));
-        });
+        .map(teacherId => this.router.navigate(['teacherdetail', teacherId]));
 
     @Effect() deleteTeacher$ = this.update$
         .ofType(TeacherActions.DELETE_TEACHER)
@@ -78,11 +70,9 @@ export class TeacherEffects {
 
     @Effect() getChangedGroups$ = this.update$
         .ofType(TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS)
-        .map(action => action.payload)
-        .switchMap(teacher => Observable.of(this.teacherActions.getTeacherGroups(teacher)));
+        .map(action => this.teacherActions.getTeacherGroups(action.payload));
 
     @Effect() updateAvailableGroups$ = this.update$
         .ofType(TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS)
-        .map(action => action.payload)
-        .switchMap(teacher => Observable.of(this.groupActions.loadAvailableTeacherGroups(teacher)));
+        .map(action => this.groupActions.loadAvailableTeacherGroups(action.payload));
 }

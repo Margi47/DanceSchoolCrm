@@ -60,14 +60,6 @@ export class TeacherActions {
         };
     }
 
-    static ADD_TEACHER_SUCCESS = '[Teacher] Add Teacher Success';
-    addTeacherSuccess(teacherId): Action {
-        return {
-            type: TeacherActions.ADD_TEACHER_SUCCESS,
-            payload: teacherId
-        };
-    }
-
     static DELETE_TEACHER = '[Teacher] Delete Teacher';
     deleteTeacher(teacher): Action {
         return {

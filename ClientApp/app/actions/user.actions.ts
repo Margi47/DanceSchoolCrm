@@ -84,14 +84,6 @@ export class UserActions {
         };
     }
 
-    static ADD_USER_SUCCESS = '[User] Add User Success';
-    addUserSuccess(user): Action {
-        return {
-            type: UserActions.ADD_USER_SUCCESS,
-            payload: user
-        };
-    }
-
     static DELETE_USER = '[User] Delete User';
     deleteUser(id): Action {
         return {

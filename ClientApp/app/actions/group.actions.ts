@@ -84,14 +84,6 @@ export class GroupActions {
         };
     }
 
-    static ADD_GROUP_SUCCESS = '[Group] Add Group Success';
-    addGroupSuccess(groupId): Action {
-        return {
-            type: GroupActions.ADD_GROUP_SUCCESS,
-            payload: groupId
-        };
-    }
-
     static DELETE_GROUP = '[Group] Delete Group';
     deleteGroup(group): Action {
         return {
