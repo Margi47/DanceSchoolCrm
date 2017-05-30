@@ -12,7 +12,7 @@ import { GroupAddFormComponent } from './group-add-form.component';
 
 import { GroupService } from '../../services/group.service';
 import { GroupActions } from '../../actions/group.actions';
-import { GroupEffects } from '../../effects/group';
+import { GroupEffects } from '../../effects/group.effects';
 
 @NgModule({
     imports: [

@@ -20,6 +20,37 @@ export class UserActions {
         };
     }
 
+    static LOAD_AVAILABLE_STUDENTS = '[User] Load Available Students';
+    loadAvailableStudents(group): Action {
+        return {
+            type: UserActions.LOAD_AVAILABLE_STUDENTS,
+            payload: group
+        };
+    }
+
+    static LOAD_AVAILABLE_STUDENTS_SUCCESS = '[User] Load Available Students Success';
+    loadAvailableStudentsSuccess(students): Action {
+        return {
+            type: UserActions.LOAD_AVAILABLE_STUDENTS_SUCCESS,
+            payload: students
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHERS = '[User] Load Available Teachers';
+    loadAvailableTeachers(): Action {
+        return {
+            type: UserActions.LOAD_AVAILABLE_TEACHERS
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHERS_SUCCESS = '[User] Load Available Teachers Success';
+    loadAvailableTeachersSuccess(users): Action {
+        return {
+            type: UserActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
+            payload: users
+        };
+    }
+
     static GET_USER = '[User] Get User';
     getUser(id): Action {
         return {
@@ -82,6 +113,15 @@ export class UserActions {
         return {
             type: UserActions.ADD_USER_GROUP,
             payload: { user: userId, group: groupId },
+        }
+    }
+
+    static CHANGE_USER_GROUPS_SUCCESS = '[User] Change User Groups Success';
+    changeUserGroupsSuccess(userId): Action {
+        console.log(userId + "from action");
+        return {
+            type: UserActions.CHANGE_USER_GROUPS_SUCCESS,
+            payload: userId
         }
     }
 

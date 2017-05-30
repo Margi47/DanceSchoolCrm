@@ -50,5 +50,21 @@ namespace angular.Repositories
                 _context.SaveChanges();
             }
         }
+
+        public IEnumerable<User> GetAvailableStudents(int groupId)
+        {
+            var result = _context.Users
+                .Where(u => u.IsActive && !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
+                .ToArray();
+            return result;
+        }
+
+        public IEnumerable<Group> GetAvailableGroups(int userId)
+        {
+            var result = _context.Groups
+                .Where(g => g.IsActive && !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
+                .ToArray();
+            return result;
+        }
     }
 }

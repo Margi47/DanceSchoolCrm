@@ -27,21 +27,23 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    addGroup(group: Group): Observable<void> {
+    getAvailableUserGroups(id: number): Observable<Group[]> {
+        return this.http.get(`${this.groupUserUrl}/${id}/groups/available`)
+            .map(response => response.json());
+    }
+
+    getAvailableTeacherGroups(id: number): Observable<Group[]> {
+        return this.http.get(`${this.groupTeacherUrl}/${id}/groups/available`)
+            .map(response => response.json());
+    }
+
+    addGroup(group: Group): Observable<number> {
         var body = JSON.stringify(group);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-
         return this.http.post(this.groupsUrl, body, options)
-            .map(response => response.json())
-            .mergeMap(g => {
-                console.log(group);
-                if (group.teachers.length > 0) {
-                    return this.addTeachers(g.id, group.teachers.map(t => t.id)).map(x => null);
-                }
-                return Observable.of(null);
-            });
+            .map(response => response.json().id);
     }
 
     deleteGroup(group: Group): Observable<void> {

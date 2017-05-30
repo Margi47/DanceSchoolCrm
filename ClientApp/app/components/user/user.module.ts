@@ -12,7 +12,7 @@ import { UserAddFormComponent } from '../user/user-add-form.component';
 
 import { UserService } from '../../services/user.service';
 import { UserActions } from '../../actions/user.actions';
-import { UserEffects } from '../../effects/user';
+import { UserEffects } from '../../effects/user.effects';
 
 @NgModule({
     imports: [

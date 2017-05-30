@@ -5,10 +5,12 @@ import { Teacher } from '../../models/teacher';
 
 @Component({
     selector: 'group-detail-form',
-    templateUrl: './group-detail-form.component.html'
+    templateUrl: './group-form.component.html'
 })
 
 export class GroupDetailFormComponent{
+    newGroup: boolean = false;
+
     @Input() model: Group;
     @Input() allUsers: User[];
     @Input() allTeachers: Teacher[];

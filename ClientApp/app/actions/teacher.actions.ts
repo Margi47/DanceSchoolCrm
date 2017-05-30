@@ -20,6 +20,22 @@ export class TeacherActions {
         };
     }
 
+    static LOAD_AVAILABLE_TEACHERS = '[Teacher] Load Available Teachers';
+    loadAvailableTeachers(groupId): Action {
+        return {
+            type: TeacherActions.LOAD_AVAILABLE_TEACHERS,
+            payload: groupId
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHERS_SUCCESS = '[Teacher] Load Available Teachers Success';
+    loadAvailableTeachersSuccess(teachers): Action {
+        return {
+            type: TeacherActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
+            payload: teachers
+        };
+    }
+
     static GET_TEACHER = '[Teacher] Get Teacher';
     getTeacher(id): Action {
         return {
@@ -82,6 +98,14 @@ export class TeacherActions {
         return {
             type: TeacherActions.REMOVE_TEACHER_GROUP,
             payload: { teacher: teacherId, group: groupId }
+        };
+    }
+
+    static CHANGE_TEACHER_GROUPS_SUCCESS = '[Teacher] Change Teacher Groups Success';
+    changeTeacherGroupsSuccess(teacherId): Action {
+        return {
+            type: TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS,
+            payload: teacherId
         };
     }
 }

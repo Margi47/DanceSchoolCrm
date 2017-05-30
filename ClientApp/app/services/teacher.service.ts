@@ -21,6 +21,11 @@ export class TeacherService {
             .map(response => response.json());
     }
 
+    getAvailableTeachers(groupId: number): Observable<Teacher[]> {
+        return this.http.get(`${this.groupTeacherUrl}/${groupId}/teachers/available`)
+            .map(response => response.json());
+    }
+
     getTeachersWithGroups(): Observable<Teacher[]> {
         return this.http.get(`${this.teachersUrl}/all`)
             .map(response => response.json());
@@ -31,7 +36,7 @@ export class TeacherService {
             .map(response => response.json());
     }
 
-    addTeacher(teacher: Teacher): Observable<void> {
+    addTeacher(teacher: Teacher): Observable<number> {
         console.log("adding new teacher from service");
         console.log(teacher);
         var body = JSON.stringify({ id: teacher.id, name: teacher.name });
@@ -39,13 +44,7 @@ export class TeacherService {
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.teachersUrl, body, options)
-            .map(response => null)
-            .mergeMap(() => {
-                if (teacher.groups.length > 0) {
-                    return this.addGroups(teacher.id, teacher.groups.map(g => g.id)).map(x => null);
-                }
-                return Observable.of(null);
-            });
+            .map(response => teacher.id);
     }
 
     deleteTeacher(teacher: Teacher): Observable<void> {

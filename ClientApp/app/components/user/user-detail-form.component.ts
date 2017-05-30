@@ -4,10 +4,11 @@ import { Group } from '../../models/group';
 
 @Component({
     selector: 'user-detail-form',
-    templateUrl: './user-detail-form.component.html'
+    templateUrl: './user-form.component.html'
 })
 
 export class UserDetailFormComponent {
+    newUser: boolean = false;
     @Input() model: User;
     @Input() allGroups: Group[];
     @Output() userSubmit = new EventEmitter<User>();
@@ -38,5 +39,17 @@ export class UserDetailFormComponent {
         console.log(value);
         this.model.isTeacher = value;
         this.isTeacherChanged.emit({ user: this.model, value: value });
+    }
+    isActiveClicked(value: boolean) {
+        console.log(value);
+        if (!value) {
+            this.model.isActive = false;
+            this.model.isAdmin = false;
+            if (this.model.isTeacher) {
+                this.isTeacherClicked(false);
+            }
+        } else {
+            this.model.isActive = true;
+        }
     }
 }

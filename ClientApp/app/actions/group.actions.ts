@@ -36,6 +36,38 @@ export class GroupActions {
         };
     }
 
+    static LOAD_AVAILABLE_USER_GROUPS = '[Group] Load Available User Groups';
+    loadAvailableUserGroups(user): Action {
+        return {
+            type: GroupActions.LOAD_AVAILABLE_USER_GROUPS,
+            payload: user
+        };
+    }
+
+    static LOAD_AVAILABLE_USER_GROUPS_SUCCESS = '[Group] Load Available User Groups Success';
+    loadAvailableUserGroupsSuccess(groups): Action {
+        return {
+            type: GroupActions.LOAD_AVAILABLE_USER_GROUPS_SUCCESS,
+            payload: groups
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHER_GROUPS = '[Group] Load Available Teacher Groups';
+    loadAvailableTeacherGroups(teacher): Action {
+        return {
+            type: GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS,
+            payload: teacher
+        };
+    }
+
+    static LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS = '[Group] Load Available Teacher Groups Success';
+    loadAvailableTeacherGroupsSuccess(groups): Action {
+        return {
+            type: GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS,
+            payload: groups
+        };
+    }
+
     static SAVE_GROUP = '[Group] Save Group';
     saveGroup(group): Action {
         return {
@@ -76,7 +108,6 @@ export class GroupActions {
         };
     }
 
-
     static ADD_STUDENT = '[Group] Add Group Student';
     addGroupStudent(groupId, userId): Action {
         console.log(userId + "from action");
@@ -92,6 +123,14 @@ export class GroupActions {
             type: GroupActions.REMOVE_STUDENT,
             payload: { group: groupId, user: userId }
         };
+    }
+
+    static CHANGE_GROUP_STUDENTS_SUCCESS = '[Group] Change Group Students Success';
+    changeGroupStudentsSuccess(groupId): Action {
+        return {
+            type: GroupActions.CHANGE_GROUP_STUDENTS_SUCCESS,
+            payload: groupId
+        }
     }
 
     static LOAD_TEACHERS = '[Group] Load Group Teachers';
@@ -125,5 +164,13 @@ export class GroupActions {
             type: GroupActions.REMOVE_TEACHER,
             payload: { group: groupId, teacher: teacherId }
         };
+    }
+
+    static CHANGE_GROUP_TEACHERS_SUCCESS = '[Group] Change Group Teachers Success';
+    changeGroupTeachersSuccess(groupId): Action {
+        return {
+            type: GroupActions.CHANGE_GROUP_TEACHERS_SUCCESS,
+            payload: groupId
+        }
     }
 }
