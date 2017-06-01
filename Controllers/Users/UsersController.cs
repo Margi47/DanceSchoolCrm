@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using angular.Models;
 using AutoMapper;
 using angular.Controllers.Groups;
+using angular.Responses;
+using angular.Exceptions;
 
 namespace angular.Controllers.Users
 {
+    [HandleException]
+    [ApiValidation]
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
@@ -34,11 +38,11 @@ namespace angular.Controllers.Users
             var user = _userRepository.Find(id);
             if (user == null)
             {
-                return NotFound();
+                throw new EntityNotFoundException("User", id);
             }
 
             var result = Mapper.Map<UserApiModel>(user);
-            return new ObjectResult(result);
+            return new ObjectResult(new ApiOkResponse(result));
         }
 
         [HttpPost]
@@ -46,6 +50,7 @@ namespace angular.Controllers.Users
         {
             if (user == null)
             {
+                //toSolve
                 return BadRequest();
             }
             
@@ -60,13 +65,14 @@ namespace angular.Controllers.Users
         {
             if (user == null || user.Id != id)
             {
+                //toSolve
                 return BadRequest();
             }
             
             var baseUser = _userRepository.Find(id);
             if (baseUser == null)
             {
-                return NotFound();
+                throw new EntityNotFoundException("User", id);
             }
            
             baseUser.Name = user.Name;
@@ -77,6 +83,7 @@ namespace angular.Controllers.Users
             baseUser.IsTeacher = user.IsTeacher;
 
             _userRepository.Update(baseUser);
+            //ToSolve
             return new NoContentResult();
         }
 
@@ -86,10 +93,11 @@ namespace angular.Controllers.Users
             var user = _userRepository.Find(id);
             if (user == null)
             {
-                return NotFound();
+                throw new EntityNotFoundException("User", id);
             }
 
             _userRepository.Remove(id);
+            //ToSolve
             return new NoContentResult();
         }
 

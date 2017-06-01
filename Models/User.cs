@@ -16,9 +16,9 @@ namespace angular.Models
         [MinLength(4)]
         [MaxLength(25)]
         public string Name { get; set; }
-        [DataType(DataType.PhoneNumber)]
+        [Phone]
         public string Phone { get; set; }
-        [DataType(DataType.EmailAddress)]
+        [EmailAddress]
         public string Email { get; set; }
         public bool IsActive { get; set; }
         public bool IsAdmin { get; set; }
