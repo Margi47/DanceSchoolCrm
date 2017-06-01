@@ -50,25 +50,29 @@ namespace angular.Controllers.Users
         {
             if (user == null)
             {
-                //toSolve
-                return BadRequest();
+                throw new BadRequestException("User data was not provided");
             }
             
             var result = Mapper.Map<UserApiModel, User>(user);
             _userRepository.Add(result);
 
+            //?
             return CreatedAtRoute("GetUser", new { id = result.Id }, result );
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UserApiModel user)
         {
-            if (user == null || user.Id != id)
+            if (user == null)
             {
-                //toSolve
-                return BadRequest();
+                throw new BadRequestException("User data was not provided");
             }
-            
+
+            if (user.Id != id)
+            {
+                throw new BadRequestException("User data has diferent 'id' field");
+            }
+
             var baseUser = _userRepository.Find(id);
             if (baseUser == null)
             {
@@ -83,8 +87,8 @@ namespace angular.Controllers.Users
             baseUser.IsTeacher = user.IsTeacher;
 
             _userRepository.Update(baseUser);
-            //ToSolve
-            return new NoContentResult();
+
+            return new ObjectResult(new ApiResponse(204));
         }
 
         [HttpDelete("{id}")]
@@ -97,8 +101,8 @@ namespace angular.Controllers.Users
             }
 
             _userRepository.Remove(id);
-            //ToSolve
-            return new NoContentResult();
+            
+            return new ObjectResult(new ApiResponse(204));
         }
 
         [HttpGet("teachers/available", Name = "GetAvailableTeachers")]

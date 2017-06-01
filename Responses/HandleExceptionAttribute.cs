@@ -18,6 +18,12 @@ namespace angular.Responses
                 context.Result = new NotFoundObjectResult( new ApiNotFoundResponse(
                         notFoundException.Entity + " not found. Requested id = " + notFoundException.Id));
             }
+            else if (context.Exception is BadRequestException)
+            {
+                var badRequestException = context.Exception as BadRequestException;
+                context.Result = new BadRequestObjectResult(new ApiBadRequestResponse(
+                        badRequestException.ErrorMessage));
+            }
             return;
         }
     }

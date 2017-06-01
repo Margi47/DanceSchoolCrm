@@ -29,5 +29,9 @@ namespace angular.Responses
                 /*modelState.SelectMany(x => x.Value.Errors)
                 .Select(x => x.ErrorMessage).ToArray();*/
         }
+
+        public ApiBadRequestResponse(string message)
+            : base(400, message)
+        { }
     }
 }
