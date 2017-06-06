@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using angular.Models;
 using AutoMapper;
 using angular.Controllers.Groups;
+using angular.Responses;
+using angular.Exceptions;
 
 namespace angular.Controllers.Users
 {
+    [HandleException]
+    [ApiValidation]
     [Route("api/[controller]")]
     public class TeachersController : Controller
     {
@@ -28,25 +32,12 @@ namespace angular.Controllers.Users
             return result;
         }
 
-        [HttpGet("all")]
-        public IActionResult GetAll()
-        {
-            var teachers = _teacherRepository.GetAllTeachersInfo();
-            if (teachers == null)
-            {
-                return NotFound();
-            }
-
-            var result = Mapper.Map<TeacherApiModel[]>(teachers);
-            return new ObjectResult(result);
-        }
-
         [HttpPost]
         public IActionResult Create([FromBody] TeacherApiModel teacher)
         {
             if (teacher == null)
             {
-                return BadRequest();
+                throw new BadRequestException("Teacher data was not provided");
             }
 
             var result = Mapper.Map<Teacher>(teacher);
@@ -61,7 +52,7 @@ namespace angular.Controllers.Users
             var teacher = _teacherRepository.GetTeacher(id);
              if(teacher == null)
             {
-                return NotFound();
+                throw new EntityNotFoundException("Teacher", id);
             }
 
             var result = Mapper.Map<TeacherApiModel>(teacher);
@@ -74,10 +65,10 @@ namespace angular.Controllers.Users
             var teacher = _teacherRepository.GetTeacher(id);
             if (teacher == null)
             {
-                return NotFound();
+                throw new EntityNotFoundException("Teacher", id);
             }
 
-            _teacherRepository.RemoveTeacher(id);
+            _teacherRepository.RemoveTeacher(teacher);
             return new NoContentResult();
         }
     }

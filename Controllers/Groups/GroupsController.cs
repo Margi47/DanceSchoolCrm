@@ -6,9 +6,13 @@ using Microsoft.AspNetCore.Mvc;
 using angular.Models;
 using AutoMapper;
 using angular.Controllers.Users;
+using angular.Exceptions;
+using angular.Responses;
 
 namespace angular.Controllers.Groups
 {
+    [HandleException]
+    [ApiValidation]
     [Route("api/[controller]")]
     public class GroupsController : Controller
     {
@@ -34,7 +38,7 @@ namespace angular.Controllers.Groups
             var group = _groupRepository.Find(id);
             if (group == null)
             {
-                return NotFound();
+                throw new EntityNotFoundException("Group", id);
             }
 
             var result = Mapper.Map<GroupApiModel>(group);
@@ -46,7 +50,7 @@ namespace angular.Controllers.Groups
         {
             if (group == null)
             {
-                return BadRequest();
+                throw new BadRequestException("Group data was not provided");
             }
 
             var result = Mapper.Map<GroupApiModel, Group>(group);
@@ -58,15 +62,20 @@ namespace angular.Controllers.Groups
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] GroupApiModel group)
         {
-            if (group == null || group.Id != id)
+            if (group == null)
             {
-                return BadRequest();
+                throw new BadRequestException("Group data was not provided");
+            }
+
+            if (group.Id != id)
+            {
+                throw new BadRequestException("Group data data doesn`t match provided id.");
             }
 
             var baseGroup = _groupRepository.Find(id);
             if (baseGroup == null)
             {
-                return NotFound();
+                throw new EntityNotFoundException("Group", id);
             }
 
             baseGroup.Name = group.Name;
@@ -83,7 +92,7 @@ namespace angular.Controllers.Groups
             var group = _groupRepository.Find(id);
             if (group == null)
             {
-                return NotFound();
+                throw new EntityNotFoundException("Group", id);
             }
 
             _groupRepository.Remove(group);

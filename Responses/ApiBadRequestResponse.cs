@@ -1,5 +1,6 @@
 ﻿using angular.Exceptions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace angular.Responses
 {
     public class ApiBadRequestResponse : ApiErrorResponse
     {
+        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public Dictionary<string, List<string>> Result { get; }
 
         public ApiBadRequestResponse(ModelStateDictionary modelState)

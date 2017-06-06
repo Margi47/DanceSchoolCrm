@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 
 namespace angular.Responses
 {
-    public class ApiEntityNotFoundResponse : ApiErrorResponse
+    public class ApiDublicatedEntityResponse : ApiErrorResponse
     {
         public string Entity { get; set; }
         public int Id { get; set; }
-        [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
-        public int? SecondId { get; set; }
+        public int[] SecondId { get; set; }
 
-        public ApiEntityNotFoundResponse(string entity, int id, int? secondId = null)
-            : base("Entity not found.")
+        public ApiDublicatedEntityResponse(string entity, int id, int[] secondId)
+            : base("Entity already exists")
         {
             Entity = entity;
             Id = id;

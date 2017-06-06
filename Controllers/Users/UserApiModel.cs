@@ -11,7 +11,6 @@ namespace angular.Controllers.Users
     {
         public int Id { get; set; }
         [Required]
-        [MinLength(4)]
         [MaxLength(25)]
         public string Name { get; set; }
         [Phone]

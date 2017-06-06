@@ -56,7 +56,6 @@ namespace angular.Controllers.Users
             var result = Mapper.Map<UserApiModel, User>(user);
             _userRepository.Add(result);
 
-            //?
             return CreatedAtRoute("GetUser", new { id = result.Id }, result );
         }
 
@@ -70,7 +69,7 @@ namespace angular.Controllers.Users
 
             if (user.Id != id)
             {
-                throw new BadRequestException("User data has diferent 'id' field");
+                throw new BadRequestException("User data doesn`t match provided id.");
             }
 
             var baseUser = _userRepository.Find(id);

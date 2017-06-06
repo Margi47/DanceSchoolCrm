@@ -1,4 +1,5 @@
 ﻿using angular.Exceptions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
@@ -15,8 +16,9 @@ namespace angular.Responses
             if (context.Exception is EntityNotFoundException)
             {
                 var notFoundException = context.Exception as EntityNotFoundException;
-                context.Result = new NotFoundObjectResult( new ApiEntityNotFoundResponse(
-                        "Entity not found.", notFoundException.Entity, notFoundException.Id));
+                context.Result = new NotFoundObjectResult(new ApiEntityNotFoundResponse(
+                    notFoundException.Entity, notFoundException.Id, notFoundException.SecondId));
+
             }
             else if (context.Exception is BadRequestException)
             {
@@ -24,9 +26,17 @@ namespace angular.Responses
                 context.Result = new BadRequestObjectResult(new ApiBadRequestResponse(
                         badRequestException.ErrorMessage));
             }
+            else if (context.Exception is EntityDublicateException)
+            {
+                var dublicateException = context.Exception as EntityDublicateException;
+                context.Result = new BadRequestObjectResult(new ApiDublicatedEntityResponse(
+                        dublicateException.Entity, dublicateException.Id, dublicateException.SecondId));
+            }
             else
             {
-                context.Result = new (new ApiErrorResponse("Unhandled error occurred."));
+                var result = new ObjectResult(new ApiErrorResponse("Unhandled error occurred."));
+                result.StatusCode = StatusCodes.Status500InternalServerError;
+                context.Result = result;
             }
 
             return;

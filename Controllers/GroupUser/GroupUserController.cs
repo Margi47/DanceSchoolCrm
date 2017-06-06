@@ -7,9 +7,11 @@ using angular.Models;
 using AutoMapper;
 using angular.Controllers.Users;
 using angular.Repositories;
+using angular.Responses;
 
 namespace angular.Controllers.Groups
 {
+    [HandleException]
     [Route("api/[controller]")]
     public class GroupUserController : Controller
     {

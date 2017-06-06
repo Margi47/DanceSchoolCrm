@@ -7,9 +7,12 @@ using angular.Models;
 using AutoMapper;
 using angular.Controllers.Users;
 using angular.Repositories;
+using angular.Exceptions;
+using angular.Responses;
 
 namespace angular.Controllers.Groups
 {
+    [HandleException]
     [Route("api/[controller]")]
     public class GroupTeacherController : Controller
     {
@@ -41,6 +44,11 @@ namespace angular.Controllers.Groups
         [HttpPost("{groupId}/teachers")]
         public IActionResult AddTeachersToGroup(int groupId, [FromBody] int[] teachers)
         {
+            if(teachers == null || teachers.Length == 0)
+            {
+                throw new BadRequestException("Teachers were not provided.");
+            }
+
             _repository.AddGroupTeachers(groupId, teachers);
 
             return new NoContentResult();
@@ -49,6 +57,11 @@ namespace angular.Controllers.Groups
         [HttpPost("{teacherId}/groups")]
         public IActionResult AddGroupsToTeacher(int teacherId, [FromBody] int[] groups)
         {
+            if (groups == null || groups.Length == 0)
+            {
+                throw new BadRequestException("Groups were not provided.");
+            }
+
             _repository.AddTeacherGroups(teacherId, groups);
 
             return new NoContentResult();
@@ -62,30 +75,22 @@ namespace angular.Controllers.Groups
         }
 
         [HttpGet("{id}/teachers/available", Name = "GetAvailableGroupTeachers")]
-        public IActionResult GetAvailableGroupTeachers(int id)
+        public IEnumerable<UserApiModel> GetAvailableGroupTeachers(int id)
         {
             var teachers = _repository.GetAvailableTeachers(id);
-            if (teachers == null)
-            {
-                return NotFound();
-            }
 
             var result = Mapper.Map<UserApiModel[]>(teachers);
-            return new ObjectResult(result);
+            return result;
         }
 
 
         [HttpGet("{id}/groups/available", Name = "GetAvailableTeacherGroups")]
-        public IActionResult GetAvailableTeacherGroups(int id)
+        public IEnumerable<GroupApiModel> GetAvailableTeacherGroups(int id)
         {
             var groups = _repository.GetAvailableGroups(id);
-            if (groups == null)
-            {
-                return NotFound();
-            }
 
             var result = Mapper.Map<GroupApiModel[]>(groups);
-            return new ObjectResult(result);
+            return result;
         }
     }
 }

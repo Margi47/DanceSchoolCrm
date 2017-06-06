@@ -26,11 +26,6 @@ export class TeacherService {
             .map(response => response.json());
     }
 
-    getTeachersWithGroups(): Observable<Teacher[]> {
-        return this.http.get(`${this.teachersUrl}/all`)
-            .map(response => response.json());
-    }
-
     getTeacher(id: number): Observable<Teacher> {
         return this.http.get(`${this.teachersUrl}/${id}`)
             .map(response => response.json());
