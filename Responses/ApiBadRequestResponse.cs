@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace angular.Responses
 {
-    public class ApiBadRequestResponse : ApiResponse
+    public class ApiBadRequestResponse : ApiErrorResponse
     {
-        public ModelInvalidException ResultException { get; }
+        public Dictionary<string, List<string>> Result { get; }
 
         public ApiBadRequestResponse(ModelStateDictionary modelState)
-            : base(400)
+            : base("Bad request")
         {
             if (modelState.IsValid)
             {
@@ -25,13 +25,11 @@ namespace angular.Responses
                 result.Add(e.Key, e.Value.Errors.Select(x => x.ErrorMessage).ToList());
             }
 
-             ResultException = new ModelInvalidException(result);
-                /*modelState.SelectMany(x => x.Value.Errors)
-                .Select(x => x.ErrorMessage).ToArray();*/
+             Result = result;
         }
 
         public ApiBadRequestResponse(string message)
-            : base(400, message)
+            : base(message)
         { }
     }
 }

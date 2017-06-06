@@ -6,17 +6,14 @@ using System.Threading.Tasks;
 
 namespace angular.Responses
 {
-    public class ApiResponse
+    public class ApiErrorResponse
     {
-        public int StatusCode { get; }
-
         [JsonProperty(NullValueHandling = NullValueHandling.Ignore)]
         public string Message { get; }
 
-        public ApiResponse(int statusCode, string message = null)
+        public ApiErrorResponse(string message)
         {
-            StatusCode = statusCode;
-            Message = (message == null) ? GetDefaultMessageForStatusCode(statusCode): message;
+            Message = message;
         }
 
         private static string GetDefaultMessageForStatusCode(int statusCode)

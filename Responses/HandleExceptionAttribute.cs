@@ -15,8 +15,8 @@ namespace angular.Responses
             if (context.Exception is EntityNotFoundException)
             {
                 var notFoundException = context.Exception as EntityNotFoundException;
-                context.Result = new NotFoundObjectResult( new ApiNotFoundResponse(
-                        notFoundException.Entity + " not found. Requested id = " + notFoundException.Id));
+                context.Result = new NotFoundObjectResult( new ApiEntityNotFoundResponse(
+                        "Entity not found.", notFoundException.Entity, notFoundException.Id));
             }
             else if (context.Exception is BadRequestException)
             {
@@ -24,6 +24,11 @@ namespace angular.Responses
                 context.Result = new BadRequestObjectResult(new ApiBadRequestResponse(
                         badRequestException.ErrorMessage));
             }
+            else
+            {
+                context.Result = new (new ApiErrorResponse("Unhandled error occurred."));
+            }
+
             return;
         }
     }

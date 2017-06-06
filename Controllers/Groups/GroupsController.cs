@@ -86,7 +86,7 @@ namespace angular.Controllers.Groups
                 return NotFound();
             }
 
-            _groupRepository.Remove(id);
+            _groupRepository.Remove(group);
             return new NoContentResult();
         }
     }

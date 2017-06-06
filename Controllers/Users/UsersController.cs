@@ -42,7 +42,7 @@ namespace angular.Controllers.Users
             }
 
             var result = Mapper.Map<UserApiModel>(user);
-            return new ObjectResult(new ApiOkResponse(result));
+            return new ObjectResult(result);
         }
 
         [HttpPost]
@@ -88,7 +88,7 @@ namespace angular.Controllers.Users
 
             _userRepository.Update(baseUser);
 
-            return new ObjectResult(new ApiResponse(204));
+            return new NoContentResult();
         }
 
         [HttpDelete("{id}")]
@@ -100,9 +100,9 @@ namespace angular.Controllers.Users
                 throw new EntityNotFoundException("User", id);
             }
 
-            _userRepository.Remove(id);
+            _userRepository.Remove(user);
             
-            return new ObjectResult(new ApiResponse(204));
+            return new NoContentResult();
         }
 
         [HttpGet("teachers/available", Name = "GetAvailableTeachers")]
