@@ -11,7 +11,6 @@ using angular.Responses;
 
 namespace angular.Controllers.Groups
 {
-    [HandleException]
     [ApiValidation]
     [Route("api/[controller]")]
     public class GroupsController : Controller

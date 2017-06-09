@@ -14,6 +14,7 @@ using AutoMapper;
 using angular.Controllers.Users;
 using angular.Controllers.Groups;
 using angular.Repositories;
+using angular.Responses;
 
 namespace angular
 {
@@ -38,7 +39,13 @@ namespace angular
             services.AddDbContext<CrmContext>(options =>
                 options.UseSqlServer(connectionString));
             // Add framework services.
-            services.AddMvc();
+            services.AddMvc(
+                config =>
+                {
+                    config.Filters.Add(typeof(HandleExceptionAttribute));
+                    config.Filters.Add(typeof(ApiValidationAttribute));
+                }
+            );
             
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();

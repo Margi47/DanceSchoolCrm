@@ -12,7 +12,6 @@ using angular.Responses;
 
 namespace angular.Controllers.Groups
 {
-    [HandleException]
     [Route("api/[controller]")]
     public class GroupTeacherController : Controller
     {
