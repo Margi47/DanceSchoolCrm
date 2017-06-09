@@ -149,12 +149,11 @@ export class GroupActions {
         };
     }
 
-    static ADD_TEACHERS = '[Group] Add Group Teachers';
-    addGroupTeachers(groupId, teachers): Action {
-        console.log(teachers + "from action");
+    static ADD_TEACHER = '[Group] Add Group Teacher';
+    addGroupTeacher(groupId, teacherId): Action {
         return {
-            type: GroupActions.ADD_TEACHERS,
-            payload: { group: groupId, teachers: teachers },
+            type: GroupActions.ADD_TEACHER,
+            payload: { group: groupId, teacher: teacherId },
         }
     }
 

@@ -26,9 +26,9 @@ namespace angular.Responses
                 context.Result = new BadRequestObjectResult(new ApiBadRequestResponse(
                         badRequestException.ErrorMessage));
             }
-            else if (context.Exception is EntityDublicateException)
+            else if (context.Exception is EntityDuplicateException)
             {
-                var dublicateException = context.Exception as EntityDublicateException;
+                var dublicateException = context.Exception as EntityDuplicateException;
                 context.Result = new BadRequestObjectResult(new ApiDublicatedEntityResponse(
                         dublicateException.Entity, dublicateException.Id, dublicateException.SecondId));
             }

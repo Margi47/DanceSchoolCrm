@@ -44,68 +44,25 @@ namespace angular.Repositories
                            .ToList();
         }
 
-        public void AddGroupTeachers(int groupId, int[] teachers)
+        public void AddGroupTeachers(int groupId, int teacherId)
         {
-            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
-            if(group == null)
+
+            if (_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == teacherId))
+            {
+                throw new EntityDuplicateException("Group-Teacher", groupId, teacherId);
+            }
+
+            if (!_context.Groups.Any(g => g.Id == groupId))
             {
                 throw new EntityNotFoundException("Group", groupId);
             }
 
-            var existingItems = _context.GroupTeachers
-                .Where(g => g.GroupId == groupId && teachers.Contains(g.TeacherId))
-                .Select(g => g.TeacherId)
-                .ToArray();
-
-            var newTeachers = teachers.Except(existingItems);
-
-            if(newTeachers.Count() == 0)
-            {
-                throw new EntityDublicateException("Group-Teacher", groupId, teachers);
-            }
-
-            foreach (var t in newTeachers)
-            {
-                var teacher = _context.Teachers.FirstOrDefault(x => x.Id == t);
-                if (teacher == null)
-                {
-                    throw new EntityNotFoundException("Teacher", t);
-                }
-                _context.GroupTeachers.Add(new GroupTeachers { GroupId = groupId, TeacherId = t });
-            }
-            _context.SaveChanges();
-        }
-
-        public void AddTeacherGroups(int teacherId, int[] groups)
-        {
-            var teacher = _context.Teachers.FirstOrDefault(t => t.Id == teacherId);
-            if (teacher == null)
+            if (!_context.Teachers.Any(t => t.Id == teacherId))
             {
                 throw new EntityNotFoundException("Teacher", teacherId);
             }
 
-            var existingGroups = _context.GroupTeachers
-                .Where(g => g.TeacherId == teacherId && groups.Contains(g.GroupId))
-                .Select(g => g.GroupId)
-                .ToArray();
-
-            var newGroups = groups.Except(existingGroups);
-
-            if (newGroups.Count() == 0)
-            {
-                throw new EntityDublicateException("Teacher-Group", teacherId, groups);
-            }
-
-            foreach (var g in newGroups)
-            {
-                var group = _context.Groups.FirstOrDefault(x => x.Id == g);
-                if (group == null)
-                {
-                    throw new EntityNotFoundException("Group", g);
-                }
-
-                _context.GroupTeachers.Add(new GroupTeachers { GroupId = g, TeacherId = teacherId });
-            }
+            _context.GroupTeachers.Add(new GroupTeachers { GroupId = groupId, TeacherId = teacherId });
             _context.SaveChanges();
         }
 

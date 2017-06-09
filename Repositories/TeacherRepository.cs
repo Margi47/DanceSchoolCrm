@@ -33,7 +33,7 @@ namespace angular.Models
         public Teacher GetTeacher(int teacherId)
         {
             var teacher = _context.Teachers
-                .Where(t => t.Id == teacherId).FirstOrDefault();
+                .Where(t => t.Id == teacherId).Include(t => t.User).FirstOrDefault();
 
             return teacher;
         }

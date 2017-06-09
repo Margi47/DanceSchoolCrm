@@ -60,7 +60,7 @@ namespace angular.Repositories
 
             if (_context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))
             {
-                throw new EntityDublicateException("Group-User", groupId, new[] { userId });
+                throw new EntityDuplicateException("Group-User", groupId, userId);
             }
 
             _context.GroupUser.Add(new GroupUser { GroupId = groupId, UserId = userId });

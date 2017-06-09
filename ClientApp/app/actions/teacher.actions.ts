@@ -84,11 +84,11 @@ export class TeacherActions {
         };
     }
 
-    static ADD_TEACHER_GROUPS = '[Teacher] Add Teacher Groups';
-    addTeacherGroups(teacherId, groups): Action {
+    static ADD_TEACHER_GROUP = '[Teacher] Add Teacher Group';
+    addTeacherGroup(teacherId, groupId): Action {
         return {
-            type: TeacherActions.ADD_TEACHER_GROUPS,
-            payload: { teacher: teacherId, groups: groups }
+            type: TeacherActions.ADD_TEACHER_GROUP,
+            payload: { teacher: teacherId, group: groupId }
         };
     }
 

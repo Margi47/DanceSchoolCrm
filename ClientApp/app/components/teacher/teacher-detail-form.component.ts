@@ -20,8 +20,7 @@ export class TeacherDetailFormComponent {
     selectedGroup: Group;
 
     onGroupAdd(group: Group) {
-        console.log([group.id]);
-        this.addGroup.emit({ teacher: this.model.id, group: [group.id] });
+        this.addGroup.emit({ teacher: this.model.id, group: group.id });
         this.addingGroup = false;
         this.selectedGroup = null;
     }

@@ -10,8 +10,7 @@ namespace angular.Repositories
     {
         IEnumerable<User> GetTeachersByGroup(int groupId);
         IEnumerable<Group> GetGroupsByTeacher(int teacherId);
-        void AddGroupTeachers(int groupId, int[] teachers);
-        void AddTeacherGroups(int teacherId, int[] groups);
+        void AddGroupTeachers(int groupId, int teacherId);
         void RemoveGroupTeacher(int groupId, int teacherId);
         IEnumerable<User> GetAvailableTeachers(int id);
         IEnumerable<Group> GetAvailableGroups(int id);

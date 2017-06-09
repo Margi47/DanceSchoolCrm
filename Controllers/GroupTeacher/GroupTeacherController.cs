@@ -41,28 +41,10 @@ namespace angular.Controllers.Groups
             return result;
         }
 
-        [HttpPost("{groupId}/teachers")]
-        public IActionResult AddTeachersToGroup(int groupId, [FromBody] int[] teachers)
+        [HttpPost("{groupId}/{teacherId}")]
+        public IActionResult AddGroupTeacher(int groupId, int teacherId)
         {
-            if(teachers == null || teachers.Length == 0)
-            {
-                throw new BadRequestException("Teachers were not provided.");
-            }
-
-            _repository.AddGroupTeachers(groupId, teachers);
-
-            return new NoContentResult();
-        }
-
-        [HttpPost("{teacherId}/groups")]
-        public IActionResult AddGroupsToTeacher(int teacherId, [FromBody] int[] groups)
-        {
-            if (groups == null || groups.Length == 0)
-            {
-                throw new BadRequestException("Groups were not provided.");
-            }
-
-            _repository.AddTeacherGroups(teacherId, groups);
+            _repository.AddGroupTeachers(groupId, teacherId);
 
             return new NoContentResult();
         }
