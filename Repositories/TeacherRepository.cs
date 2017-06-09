@@ -35,6 +35,11 @@ namespace angular.Models
             var teacher = _context.Teachers
                 .Where(t => t.Id == teacherId).Include(t => t.User).FirstOrDefault();
 
+            if (teacher == null)
+            {
+                throw new EntityNotFoundException("Teacher", teacherId);
+            }
+
             return teacher;
         }
 

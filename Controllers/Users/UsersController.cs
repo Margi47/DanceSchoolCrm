@@ -35,10 +35,6 @@ namespace angular.Controllers.Users
         public IActionResult GetById(int id)
         {
             var user = _userRepository.Find(id);
-            if (user == null)
-            {
-                throw new EntityNotFoundException("User", id);
-            }
 
             var result = Mapper.Map<UserApiModel>(user);
             return new ObjectResult(result);
@@ -72,10 +68,6 @@ namespace angular.Controllers.Users
             }
 
             var baseUser = _userRepository.Find(id);
-            if (baseUser == null)
-            {
-                throw new EntityNotFoundException("User", id);
-            }
            
             baseUser.Name = user.Name;
             baseUser.Phone = user.Phone;
@@ -93,10 +85,6 @@ namespace angular.Controllers.Users
         public IActionResult Delete(int id)
         {
             var user = _userRepository.Find(id);
-            if (user == null)
-            {
-                throw new EntityNotFoundException("User", id);
-            }
 
             _userRepository.Remove(user);
             

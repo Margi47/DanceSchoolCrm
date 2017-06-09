@@ -58,10 +58,6 @@ namespace angular.Controllers.Groups
         public IActionResult GetAvailableGroups(int id)
         {
             var groups = _repository.GetAvailableGroups(id);
-            if (groups == null)
-            {
-                return NotFound();
-            }
 
             var result = Mapper.Map<GroupApiModel[]>(groups);
             return new ObjectResult(result);
@@ -71,10 +67,6 @@ namespace angular.Controllers.Groups
         public IActionResult GetAvailableStudents(int id)
         {
             var students = _repository.GetAvailableStudents(id);
-            if (students == null)
-            {
-                return NotFound();
-            }
 
             var result = Mapper.Map<UserApiModel[]>(students);
             return new ObjectResult(result);

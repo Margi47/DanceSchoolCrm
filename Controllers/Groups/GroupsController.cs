@@ -35,10 +35,6 @@ namespace angular.Controllers.Groups
         public IActionResult GetById(int id)
         {
             var group = _groupRepository.Find(id);
-            if (group == null)
-            {
-                throw new EntityNotFoundException("Group", id);
-            }
 
             var result = Mapper.Map<GroupApiModel>(group);
             return new ObjectResult(result);
@@ -72,10 +68,6 @@ namespace angular.Controllers.Groups
             }
 
             var baseGroup = _groupRepository.Find(id);
-            if (baseGroup == null)
-            {
-                throw new EntityNotFoundException("Group", id);
-            }
 
             baseGroup.Name = group.Name;
             baseGroup.Description = group.Description;
@@ -89,10 +81,6 @@ namespace angular.Controllers.Groups
         public IActionResult Delete(int id)
         {
             var group = _groupRepository.Find(id);
-            if (group == null)
-            {
-                throw new EntityNotFoundException("Group", id);
-            }
 
             _groupRepository.Remove(group);
             return new NoContentResult();

@@ -27,7 +27,14 @@ namespace angular.Models
         public T Find(int key)
         {
             var items = GetQuery(Context);
-            return items.FirstOrDefault(GetExpression(key));
+            var result = items.FirstOrDefault(GetExpression(key));
+
+            if(result == null)
+            {
+                throw new EntityNotFoundException(typeof(T).Name, key);
+            }
+
+            return result;
         }
 
         public IEnumerable<T> GetAll()

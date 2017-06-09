@@ -49,10 +49,6 @@ namespace angular.Controllers.Users
         public IActionResult GetTeacher(int id)
         {
             var teacher = _teacherRepository.GetTeacher(id);
-             if(teacher == null)
-            {
-                throw new EntityNotFoundException("Teacher", id);
-            }
 
             var result = Mapper.Map<TeacherApiModel>(teacher);
             return new ObjectResult(result);
@@ -62,10 +58,6 @@ namespace angular.Controllers.Users
         public IActionResult Delete(int id)
         {
             var teacher = _teacherRepository.GetTeacher(id);
-            if (teacher == null)
-            {
-                throw new EntityNotFoundException("Teacher", id);
-            }
 
             _teacherRepository.RemoveTeacher(teacher);
             return new NoContentResult();
