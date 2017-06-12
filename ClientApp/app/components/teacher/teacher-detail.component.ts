@@ -64,7 +64,7 @@ export class TeacherDetailComponent implements OnInit{
    }
 
    onAddGroup($event) {
-       this.store.dispatch(this.teacherActions.addTeacherGroups($event.teacher, $event.group));
+       this.store.dispatch(this.teacherActions.addTeacherGroup($event.teacher, $event.group));
    }
 
    onRemoveGroup($event) {

@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using angular.Models;
 using AutoMapper;
 using angular.Controllers.Groups;
+using angular.Responses;
+using angular.Exceptions;
 
 namespace angular.Controllers.Users
 {
+    [ApiValidation]
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
@@ -32,10 +35,6 @@ namespace angular.Controllers.Users
         public IActionResult GetById(int id)
         {
             var user = _userRepository.Find(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
 
             var result = Mapper.Map<UserApiModel>(user);
             return new ObjectResult(result);
@@ -46,7 +45,7 @@ namespace angular.Controllers.Users
         {
             if (user == null)
             {
-                return BadRequest();
+                throw new BadRequestException("User data was not provided");
             }
             
             var result = Mapper.Map<UserApiModel, User>(user);
@@ -58,16 +57,17 @@ namespace angular.Controllers.Users
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UserApiModel user)
         {
-            if (user == null || user.Id != id)
+            if (user == null)
             {
-                return BadRequest();
+                throw new BadRequestException("User data was not provided");
             }
-            
+
+            if (user.Id != id)
+            {
+                throw new BadRequestException("User data doesn`t match provided id.");
+            }
+
             var baseUser = _userRepository.Find(id);
-            if (baseUser == null)
-            {
-                return NotFound();
-            }
            
             baseUser.Name = user.Name;
             baseUser.Phone = user.Phone;
@@ -77,6 +77,7 @@ namespace angular.Controllers.Users
             baseUser.IsTeacher = user.IsTeacher;
 
             _userRepository.Update(baseUser);
+
             return new NoContentResult();
         }
 
@@ -84,12 +85,9 @@ namespace angular.Controllers.Users
         public IActionResult Delete(int id)
         {
             var user = _userRepository.Find(id);
-            if (user == null)
-            {
-                return NotFound();
-            }
 
-            _userRepository.Remove(id);
+            _userRepository.Remove(user);
+            
             return new NoContentResult();
         }
 

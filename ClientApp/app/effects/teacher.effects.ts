@@ -56,10 +56,10 @@ export class TeacherEffects {
         .switchMap(teacher => this.service.getTeacherGroups(teacher))
         .map(groups => this.teacherActions.getTeacherGroupsSuccess(groups));
 
-    @Effect() addTeacherGroups$ = this.update$
-        .ofType(TeacherActions.ADD_TEACHER_GROUPS)
+    @Effect() addTeacherGroup$ = this.update$
+        .ofType(TeacherActions.ADD_TEACHER_GROUP)
         .map(action => action.payload)
-        .switchMap(obj => this.service.addGroups(obj.teacher, obj.groups))
+        .switchMap(obj => this.service.addGroup(obj.teacher, obj.group))
         .map(teacher => this.teacherActions.changeTeacherGroupsSuccess(teacher));
 
     @Effect() removeTeacherGroup$ = this.update$

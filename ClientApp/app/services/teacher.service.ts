@@ -26,11 +26,6 @@ export class TeacherService {
             .map(response => response.json());
     }
 
-    getTeachersWithGroups(): Observable<Teacher[]> {
-        return this.http.get(`${this.teachersUrl}/all`)
-            .map(response => response.json());
-    }
-
     getTeacher(id: number): Observable<Teacher> {
         return this.http.get(`${this.teachersUrl}/${id}`)
             .map(response => response.json());
@@ -60,14 +55,11 @@ export class TeacherService {
             .map(response => response.json());
     }
 
-    addGroups(teacherId: number, groups: number[]): Observable<number> {
-        console.log("adding groups from service, teacher id:" + groups);
-        var body = JSON.stringify(groups);
-        console.log(body);
+    addGroup(teacherId: number, groupId: number): Observable<number> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.post(`${this.groupTeacherUrl}/${teacherId}/groups`, body, options)
+        return this.http.post(`${this.groupTeacherUrl}/${groupId}/${teacherId}`, options)
             .map(response => teacherId);        
     }
 

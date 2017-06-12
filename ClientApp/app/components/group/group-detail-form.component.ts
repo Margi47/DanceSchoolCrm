@@ -51,8 +51,7 @@ export class GroupDetailFormComponent{
 
     showTeacherDetails(id: number) { this.showGroupTeacherDetails.emit(id); }
     onTeacherAdd(teacher: Teacher) {
-        console.log(teacher);
-        this.addGroupTeacher.emit({ groupId: this.model.id, teachers: [teacher.id] });
+        this.addGroupTeacher.emit({ groupId: this.model.id, teacher: teacher.id });
         this.addingTeacher = false;
         this.selectedTeacher = null;
     }

@@ -91,13 +91,11 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    addTeachers(groupId: number, teachers: number[]): Observable<number> {
-        console.log("adding teacher" + groupId);
+    addTeacher(groupId: number, teacherId: number): Observable<number> {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
-        var body = JSON.stringify(teachers);
-        console.log(body);
-        return this.http.post(`${this.groupTeacherUrl}/${groupId}/teachers`, body, options)
+
+        return this.http.post(`${this.groupTeacherUrl}/${groupId}/${teacherId}`, options)
             .map(response => groupId);
     }
 

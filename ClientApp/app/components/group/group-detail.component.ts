@@ -83,7 +83,7 @@ export class GroupDetailComponent implements OnInit {
     }
 
     addTeacherToGroup($event) {
-        this.store.dispatch(this.groupActions.addGroupTeachers($event.groupId, $event.teachers));
+        this.store.dispatch(this.groupActions.addGroupTeacher($event.groupId, $event.teacher));
     }
 
     removeGroupTeacher($event) {

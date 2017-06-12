@@ -1,4 +1,5 @@
-﻿using angular.Models;
+﻿using angular.Exceptions;
+using angular.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,9 +16,15 @@ namespace angular.Repositories
             _context = context;
         }
 
-        public IEnumerable<Group> GetGroupsByUser(int id)
+        public IEnumerable<Group> GetGroupsByUser(int userId)
         {
-            return _context.Users.Where(u => u.Id == id)
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                throw new EntityNotFoundException("User", userId);
+            }
+
+            return _context.Users.Where(u => u.Id == userId)
                 .SelectMany(x => x.Groups)
                 .Select(x => x.Group)
                 .ToList();
@@ -25,6 +32,12 @@ namespace angular.Repositories
 
         public IEnumerable<User> GetStudentsByGroup(int groupId)
         {
+            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
+            if (group == null)
+            {
+                throw new EntityNotFoundException("Group", groupId);
+            }
+
             return _context.Groups.Where(g => g.Id == groupId)
                 .SelectMany(g => g.Students)
                 .Select(u => u.User)
@@ -33,26 +46,48 @@ namespace angular.Repositories
 
         public void AddGroupUser(int userId, int groupId)
         {
-            if (!_context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))
+            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
+            if (group == null)
             {
-                _context.GroupUser.Add(new GroupUser { GroupId = groupId, UserId = userId });
-                _context.SaveChanges();
+                throw new EntityNotFoundException("Group", groupId);
             }
+
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                throw new EntityNotFoundException("User", userId);
+            }
+
+            if (_context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))
+            {
+                throw new EntityDuplicateException("Group-User", groupId, userId);
+            }
+
+            _context.GroupUser.Add(new GroupUser { GroupId = groupId, UserId = userId });
+            _context.SaveChanges();
         }
 
         public void RemoveGroupUser(int userId, int groupId)
         {
             var entity = _context.GroupUser
                 .FirstOrDefault(g => g.GroupId == groupId && g.UserId == userId);
-            if (entity != null)
+            if (entity == null)
             {
-                _context.GroupUser.Remove(entity);
-                _context.SaveChanges();
+                throw new EntityNotFoundException("Group-User", groupId, userId);
             }
+
+            _context.GroupUser.Remove(entity);
+            _context.SaveChanges();
         }
 
         public IEnumerable<User> GetAvailableStudents(int groupId)
         {
+            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
+            if (group == null)
+            {
+                throw new EntityNotFoundException("Group", groupId);
+            }
+
             var result = _context.Users
                 .Where(u => u.IsActive && !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
                 .ToArray();
@@ -61,6 +96,12 @@ namespace angular.Repositories
 
         public IEnumerable<Group> GetAvailableGroups(int userId)
         {
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                throw new EntityNotFoundException("User", userId);
+            }
+
             var result = _context.Groups
                 .Where(g => g.IsActive && !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
                 .ToArray();
