@@ -11,23 +11,15 @@ export class TeacherAddFormComponent {
     model = new Teacher();
 
     @Input() allUsers: User[];
-    @Input() allGroups: Group[];
 
     @Output() teacherSave = new EventEmitter<Teacher>();
     @Output() teacherCancel = new EventEmitter();
 
     selectedUser: User;
-    selectedGroup: Group;
-    allSelectedGroups: Group[] = [];
-
-    onGroupAdd(group) {
-        this.allSelectedGroups.push(group);
-    }
 
     onTeacherSave() {
         this.model.id = this.selectedUser.id;
         this.model.name = this.selectedUser.name;
-        this.model.groups = this.allSelectedGroups;
         this.teacherSave.emit(this.model);
     }
     onTeacherCancel() { this.teacherCancel.emit(); }

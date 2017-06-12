@@ -15,6 +15,12 @@ export default function (state = initialState, action: Action): GroupListState {
         case GroupActions.LOAD_GROUPS_SUCCESS: {
             return action.payload;
         }
+        case GroupActions.LOAD_AVAILABLE_USER_GROUPS_SUCCESS: {
+            return action.payload;
+        }
+        case GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS: {
+            return action.payload;
+        }
         default: {
             return state;
         }

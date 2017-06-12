@@ -10,7 +10,7 @@ namespace angular.Models
         void Add(T item);
         IEnumerable<T> GetAll();
         T Find(int key);
-        void Remove(int key);
+        void Remove(T item);
         void Update(T item);
     }
 }

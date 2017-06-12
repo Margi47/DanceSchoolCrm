@@ -5,10 +5,12 @@ import { Teacher } from '../../models/teacher';
 
 @Component({
     selector: 'group-detail-form',
-    templateUrl: './group-detail-form.component.html'
+    templateUrl: './group-form.component.html'
 })
 
 export class GroupDetailFormComponent{
+    newGroup: boolean = false;
+
     @Input() model: Group;
     @Input() allUsers: User[];
     @Input() allTeachers: Teacher[];
@@ -49,8 +51,7 @@ export class GroupDetailFormComponent{
 
     showTeacherDetails(id: number) { this.showGroupTeacherDetails.emit(id); }
     onTeacherAdd(teacher: Teacher) {
-        console.log(teacher);
-        this.addGroupTeacher.emit({ groupId: this.model.id, teachers: [teacher.id] });
+        this.addGroupTeacher.emit({ groupId: this.model.id, teacher: teacher.id });
         this.addingTeacher = false;
         this.selectedTeacher = null;
     }

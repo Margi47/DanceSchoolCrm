@@ -7,6 +7,8 @@ using angular.Models;
 using AutoMapper;
 using angular.Controllers.Users;
 using angular.Repositories;
+using angular.Exceptions;
+using angular.Responses;
 
 namespace angular.Controllers.Groups
 {
@@ -38,18 +40,10 @@ namespace angular.Controllers.Groups
             return result;
         }
 
-        [HttpPost("{groupId}/teachers")]
-        public IActionResult AddTeachersToGroup(int groupId, [FromBody] int[] teachers)
+        [HttpPost("{groupId}/{teacherId}")]
+        public IActionResult AddGroupTeacher(int groupId, int teacherId)
         {
-            _repository.AddGroupTeachers(groupId, teachers);
-
-            return new NoContentResult();
-        }
-
-        [HttpPost("{teacherId}/groups")]
-        public IActionResult AddGroupsToTeacher(int teacherId, [FromBody] int[] groups)
-        {
-            _repository.AddTeacherGroups(teacherId, groups);
+            _repository.AddGroupTeachers(groupId, teacherId);
 
             return new NoContentResult();
         }
@@ -59,6 +53,25 @@ namespace angular.Controllers.Groups
         {
             _repository.RemoveGroupTeacher(groupId, teacherId);
             return new NoContentResult();
+        }
+
+        [HttpGet("{id}/teachers/available", Name = "GetAvailableGroupTeachers")]
+        public IEnumerable<UserApiModel> GetAvailableGroupTeachers(int id)
+        {
+            var teachers = _repository.GetAvailableTeachers(id);
+
+            var result = Mapper.Map<UserApiModel[]>(teachers);
+            return result;
+        }
+
+
+        [HttpGet("{id}/groups/available", Name = "GetAvailableTeacherGroups")]
+        public IEnumerable<GroupApiModel> GetAvailableTeacherGroups(int id)
+        {
+            var groups = _repository.GetAvailableGroups(id);
+
+            var result = Mapper.Map<GroupApiModel[]>(groups);
+            return result;
         }
     }
 }

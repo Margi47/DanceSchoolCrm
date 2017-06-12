@@ -1,4 +1,4 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿  import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Teacher } from '../../models/teacher';
@@ -12,16 +12,17 @@ import { TeacherActions } from '../../actions/teacher.actions';
 @Component({
     selector: 'add-teacher',
     template: `
-<teacher-add-form 
-        [allUsers]="users$ | async"
-        [allGroups]="groups$ | async"
-        (teacherSave)="onTeacherSubmit($event)" 
-        (teacherCancel)="onTeacherCancel()">
-</teacher-add-form>`
+<div class="col-sm-6">
+    <teacher-add-form 
+            [allUsers]="users$ | async"
+            (teacherSave)="onTeacherSubmit($event)" 
+            (teacherCancel)="onTeacherCancel()">
+    </teacher-add-form>
+</div>
+`
 })
 export class TeacherAddComponent implements OnInit {
     users$: Observable<any>;
-    groups$: Observable<any>;
 
     constructor(
         private router: Router,
@@ -30,18 +31,15 @@ export class TeacherAddComponent implements OnInit {
         private groupActions: GroupActions,
         private teacherActions: TeacherActions) {
         this.users$ = this.store.select('users');
-        this.groups$ = this.store.select('groups');
     }
 
     ngOnInit() {
-        this.store.dispatch(this.userActions.loadUsers());
-        this.store.dispatch(this.groupActions.loadGroups());
+        this.store.dispatch(this.userActions.loadAvailableTeachers());
     }
 
     onTeacherSubmit(teacher: Teacher): void {
         console.log(teacher.name);
         this.store.dispatch(this.teacherActions.addTeacher(teacher));
-        this.router.navigate(['/teachers'])
     }
 
     onTeacherCancel(): void {

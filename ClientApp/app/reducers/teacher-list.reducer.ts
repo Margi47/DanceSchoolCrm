@@ -14,6 +14,9 @@ export default function (state = initialState, action: Action): TeacherListState
         case TeacherActions.LOAD_ALL_TEACHERS_SUCCESS: {
             return action.payload;
         }
+        case TeacherActions.LOAD_AVAILABLE_TEACHERS_SUCCESS: {
+            return action.payload;
+        }
         default: {
             return state;
         }

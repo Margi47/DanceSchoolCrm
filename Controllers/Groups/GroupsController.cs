@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using angular.Models;
 using AutoMapper;
 using angular.Controllers.Users;
+using angular.Exceptions;
+using angular.Responses;
 
 namespace angular.Controllers.Groups
 {
+    [ApiValidation]
     [Route("api/[controller]")]
     public class GroupsController : Controller
     {
@@ -32,10 +35,6 @@ namespace angular.Controllers.Groups
         public IActionResult GetById(int id)
         {
             var group = _groupRepository.Find(id);
-            if (group == null)
-            {
-                return NotFound();
-            }
 
             var result = Mapper.Map<GroupApiModel>(group);
             return new ObjectResult(result);
@@ -46,7 +45,7 @@ namespace angular.Controllers.Groups
         {
             if (group == null)
             {
-                return BadRequest();
+                throw new BadRequestException("Group data was not provided");
             }
 
             var result = Mapper.Map<GroupApiModel, Group>(group);
@@ -58,16 +57,17 @@ namespace angular.Controllers.Groups
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] GroupApiModel group)
         {
-            if (group == null || group.Id != id)
+            if (group == null)
             {
-                return BadRequest();
+                throw new BadRequestException("Group data was not provided");
+            }
+
+            if (group.Id != id)
+            {
+                throw new BadRequestException("Group data data doesn`t match provided id.");
             }
 
             var baseGroup = _groupRepository.Find(id);
-            if (baseGroup == null)
-            {
-                return NotFound();
-            }
 
             baseGroup.Name = group.Name;
             baseGroup.Description = group.Description;
@@ -81,12 +81,8 @@ namespace angular.Controllers.Groups
         public IActionResult Delete(int id)
         {
             var group = _groupRepository.Find(id);
-            if (group == null)
-            {
-                return NotFound();
-            }
 
-            _groupRepository.Remove(id);
+            _groupRepository.Remove(group);
             return new NoContentResult();
         }
     }

@@ -7,6 +7,7 @@ using angular.Models;
 using AutoMapper;
 using angular.Controllers.Users;
 using angular.Repositories;
+using angular.Responses;
 
 namespace angular.Controllers.Groups
 {
@@ -51,6 +52,24 @@ namespace angular.Controllers.Groups
         {
             _repository.RemoveGroupUser(userId, groupId);
             return new NoContentResult();
+        }
+
+        [HttpGet("{id}/groups/available", Name = "GetAvailableGroups")]
+        public IActionResult GetAvailableGroups(int id)
+        {
+            var groups = _repository.GetAvailableGroups(id);
+
+            var result = Mapper.Map<GroupApiModel[]>(groups);
+            return new ObjectResult(result);
+        }
+
+        [HttpGet("{id}/students/available", Name = "GetAvailableStudents")]
+        public IActionResult GetAvailableStudents(int id)
+        {
+            var students = _repository.GetAvailableStudents(id);
+
+            var result = Mapper.Map<UserApiModel[]>(students);
+            return new ObjectResult(result);
         }
     }
 }

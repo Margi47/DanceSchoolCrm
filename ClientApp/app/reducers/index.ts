@@ -2,12 +2,12 @@
 import { compose } from '@ngrx/core/compose';
 import { combineReducers } from '@ngrx/store';
 
-import groupListReducer, * as fromGroupList from './group-list';
-import groupReducer, * as fromGroup from './group';
-import userListReducer, * as fromUserList from './user-list';
-import userReducer, * as fromUser from './user';
-import teacherListReducer, * as fromTeacherList from './teacher-list';
-import teacherReducer, * as fromTeacher from './teacher';
+import groupListReducer, * as fromGroupList from './group-list.reducer';
+import groupReducer, * as fromGroup from './group.reducer';
+import userListReducer, * as fromUserList from './user-list.reducer';
+import userReducer, * as fromUser from './user.reducer';
+import teacherListReducer, * as fromTeacherList from './teacher-list.reducer';
+import teacherReducer, * as fromTeacher from './teacher.reducer';
 import errorReducer, * as fromError from './error.reducer';
 
 export interface AppState {

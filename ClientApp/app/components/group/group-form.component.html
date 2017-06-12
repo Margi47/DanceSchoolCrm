@@ -1,16 +1,28 @@
 ﻿<div class="col-sm-6">
-    <button type="button" (click)="goBack()" class="btn btn-default">Back</button>
+    <button type="button" (click)="goBack()" class="btn btn-default" *ngIf="!newGroup">Back</button>
     <div *ngIf="model" style="margin-top:20px">
         <form (ngSubmit)="onGroupSubmit()" #groupForm="ngForm" >
-            <div><label>Id: {{model.id}}</label></div>
+            <div *ngIf="!newGroup"><label>Id: {{model.id}}</label></div>
             <div class="form-group">
                 <label for="name">Name</label>
                 <input type="text"
                        class="form-control"
                        id="name"
-                       required
                        [(ngModel)]="model.name"
-                       name="name">
+                       required minlength="4" maxlength="25"
+                       name="name" #name="ngModel">
+                <div *ngIf="name.errors && (name.dirty || name.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                    <div [hidden]="!name.errors.required">
+                        Name is required
+                    </div>
+                    <div [hidden]="!name.errors.minlength">
+                        Name must be at least 4 characters long.
+                    </div>
+                    <div [hidden]="!name.errors.maxlength">
+                        Name cannot be more than 25 characters long.
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <label for="description">Description</label>
@@ -18,7 +30,14 @@
                        class="form-control"
                        id="description"
                        [(ngModel)]="model.description"
-                       name="description">
+                       maxlength="70"
+                       name="description" #name="ngModel">
+                <div *ngIf="name.errors && (name.dirty || name.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                    <div [hidden]="!name.errors.maxlength">
+                        Description cannot be more than 70 characters long.
+                    </div>
+                </div>
             </div>
             <div class="form-group">
                 <input type="checkbox"
@@ -26,10 +45,11 @@
                        name="active">
                 <label>Is Active</label>
             </div>
-            <button type="submit" [disabled]="!groupForm.form.valid" class="btn btn-default">Save changes</button>
+            <button type="submit" [disabled]="!groupForm.form.valid" class="btn btn-default">Save</button>
+            <button type="button" (click)="onCancel(); groupForm.reset()" class="btn btn-default" *ngIf="newGroup">Cancel</button>
         </form> 
 
-        <table class="table table-hover" style="margin-top:20px" *ngIf="model">
+        <table class="table table-hover" style="margin-top:20px" *ngIf="model && !newGroup">
             <thead>
                 <tr>
                     <th style="font-size:large">Teachers</th>
@@ -68,7 +88,7 @@
             </tbody>
         </table>
 
-        <table style="margin-top:20px" class="table table-hover">
+        <table style="margin-top:20px" class="table table-hover" *ngIf="!newGroup">
             <thead>
                 <tr>
                     <th style="font-size:large">Students</th>
@@ -106,7 +126,7 @@
                 </tr>
             </tbody>
         </table>
-        <button type="button" (click)="onGroupDelete()" class="btn btn-default">Delete group</button>
+        <button type="button" (click)="onGroupDelete()" class="btn btn-default" *ngIf="!newGroup">Delete group</button>
     </div>
 </div>
 

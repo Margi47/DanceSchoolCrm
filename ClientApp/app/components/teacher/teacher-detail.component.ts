@@ -46,9 +46,8 @@ export class TeacherDetailComponent implements OnInit{
        {
            this.store.dispatch(this.teacherActions.getTeacher(+params['id']));
            this.store.dispatch(this.teacherActions.getTeacherGroups(+params['id']));
+           this.store.dispatch(this.groupActions.loadAvailableTeacherGroups(+params['id']));
        });
-
-       this.store.dispatch(this.groupActions.loadGroups());
     }
 
    onShowGroupDetails(id: number) {
@@ -65,7 +64,7 @@ export class TeacherDetailComponent implements OnInit{
    }
 
    onAddGroup($event) {
-       this.store.dispatch(this.teacherActions.addTeacherGroups($event.teacher, $event.group));
+       this.store.dispatch(this.teacherActions.addTeacherGroup($event.teacher, $event.group));
    }
 
    onRemoveGroup($event) {

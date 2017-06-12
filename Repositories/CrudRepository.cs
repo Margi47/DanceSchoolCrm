@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using angular.Exceptions;
 
 namespace angular.Models
 {
@@ -26,7 +27,14 @@ namespace angular.Models
         public T Find(int key)
         {
             var items = GetQuery(Context);
-            return items.FirstOrDefault(GetExpression(key));
+            var result = items.FirstOrDefault(GetExpression(key));
+
+            if(result == null)
+            {
+                throw new EntityNotFoundException(typeof(T).Name, key);
+            }
+
+            return result;
         }
 
         public IEnumerable<T> GetAll()
@@ -35,11 +43,10 @@ namespace angular.Models
             return items.ToList();
         }
 
-        public void Remove(int key)
+        public void Remove(T item)
         {
             var items = GetQuery(Context);
-            var entity = items.First(GetExpression(key));
-            items.Remove(entity);
+            items.Remove(item);
             Context.SaveChanges();
         }
 

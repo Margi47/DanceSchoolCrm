@@ -3,10 +3,12 @@ import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 import { AppState } from '../reducers';
 import { UserActions } from '../actions/user.actions';
 import { ErrorActions } from '../actions/error.actions';
+import { GroupActions } from '../actions/group.actions';
 import { UserService } from '../services/user.service';
 
 @Injectable()
@@ -15,7 +17,9 @@ export class UserEffects {
         private update$: Actions,
         private userActions: UserActions,
         private errorActions: ErrorActions,
-        private service: UserService
+        private groupActions: GroupActions,
+        private service: UserService,
+        private router: Router
     ) { }
 
     @Effect() loadUsers$ = this.update$
@@ -39,11 +43,23 @@ export class UserEffects {
             })
         );
 
+    @Effect() getAvailableStudents$ = this.update$
+        .ofType(UserActions.LOAD_AVAILABLE_STUDENTS)
+        .map(action => action.payload)
+        .switchMap(id => this.service.getAvailableStudents(id))
+        .map(students => this.userActions.loadAvailableStudentsSuccess(students));
+
+    @Effect() getAvailableTeachers$ = this.update$
+        .ofType(UserActions.LOAD_AVAILABLE_TEACHERS)
+        .map(action => action.payload)
+        .switchMap(() => this.service.getAvailableTeachers())
+        .map(users => this.userActions.loadAvailableTeachersSuccess(users));
+
     @Effect() addUser$ = this.update$
         .ofType(UserActions.ADD_USER)
         .map(action => action.payload)
         .switchMap(user => this.service.addUser(user)
-            .map(() => this.userActions.loadUsers())
+            .map(user => this.router.navigate(['userdetail', user]))
             .catch(error => Observable.of(this.errorActions.catchError(error)))
         );
 
@@ -75,7 +91,7 @@ export class UserEffects {
         .ofType(UserActions.ADD_USER_GROUP)
         .map(action => action.payload)
         .switchMap(obj => this.service.addGroup(obj.user, obj.group)
-            .map(user => this.userActions.loadUserGroups(user))
+            .map(user => this.userActions.changeUserGroupsSuccess(user))
             .catch(error => Observable.of(this.errorActions.catchError(error)))
         );
 
@@ -83,9 +99,17 @@ export class UserEffects {
         .ofType(UserActions.REMOVE_USER_GROUP)
         .map(action => action.payload)
         .switchMap(obj => this.service.removeGroup(obj.user, obj.group)
-            .map(user => this.userActions.loadUserGroups(user))
+            .map(user => this.userActions.changeUserGroupsSuccess(user))
             .catch(error => Observable.of(this.errorActions.catchError(error)))
         );
+
+    @Effect() changeUserGroups = this.update$
+        .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
+        .map(action => this.userActions.loadUserGroups(action.payload));
+
+    @Effect() changeUserPossibleGroups = this.update$
+        .ofType(UserActions.CHANGE_USER_GROUPS_SUCCESS)
+        .map(action => this.groupActions.loadAvailableUserGroups(action.payload));
 
     @Effect() createTeacher = this.update$
         .ofType(UserActions.CREATE_TEACHER)
