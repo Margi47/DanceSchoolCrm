@@ -27,8 +27,8 @@ export class UserEffects {
         .switchMap(() => this.service.getUsers()
             .map(users => this.userActions.loadUsersSuccess(users))
             .catch(error => {
-                console.log(error);
-                return Observable.of(this.errorActions.catchError(error));
+                console.log(error._body.json);
+                return Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body)));
             })
         );
 
@@ -38,8 +38,8 @@ export class UserEffects {
         .switchMap(id => this.service.getUser(id)
             .map(user => this.userActions.getUserSuccess(user))
             .catch(error => {
-                console.log(error);
-                return Observable.of(this.errorActions.catchError(error));
+                console.log(JSON.parse(error._body));
+                return Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body)));
             })
         );
 
@@ -60,15 +60,26 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(user => this.service.addUser(user)
             .map(user => this.router.navigate(['userdetail', user]))
-            .catch(error => Observable.of(this.errorActions.catchError(error)))
-        );
+            .catch(error => {
+                let body = JSON.parse(error._body);
+                console.log(body);
+                return body.result ?
+                    Observable.of(this.errorActions.catchValidationError(error.status, body)) :
+                    Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body)));
+            }
+        ));
+
+    @Effect() getMainMessage = this.update$
+        .ofType(ErrorActions.CATCH_VALIDATION_ERROR)
+        .map(action => this.errorActions.catchError(action.payload.code, action.payload.error));
+
 
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)
         .map(action => action.payload)
         .switchMap(user => this.service.deleteUser(user)
             .map(() => this.userActions.loadUsers())
-            .catch(error => Observable.of(this.errorActions.catchError(error)))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() saveUser$ = this.update$
@@ -76,7 +87,7 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(user => this.service.update(user)
             .map(() => this.userActions.loadUsers())
-            .catch(error => Observable.of(this.errorActions.catchError(error)))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() loadUserGroups$ = this.update$
@@ -84,7 +95,7 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(user => this.service.getUserGroups(user)
             .map(groups => this.userActions.loadUserGroupsSuccess(groups))
-            .catch(error => Observable.of(this.errorActions.catchError(error)))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() addUserGroup$ = this.update$
@@ -92,7 +103,7 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(obj => this.service.addGroup(obj.user, obj.group)
             .map(user => this.userActions.changeUserGroupsSuccess(user))
-            .catch(error => Observable.of(this.errorActions.catchError(error)))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() removeUserGroup$ = this.update$
@@ -100,7 +111,7 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(obj => this.service.removeGroup(obj.user, obj.group)
             .map(user => this.userActions.changeUserGroupsSuccess(user))
-            .catch(error => Observable.of(this.errorActions.catchError(error)))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() changeUserGroups = this.update$
@@ -116,7 +127,7 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(user => this.service.createTeacher(user)
             .map(user => this.userActions.getUser(user))
-            .catch(error => Observable.of(this.errorActions.catchError(error)))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() deleteTeacher$ = this.update$
@@ -124,6 +135,6 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(id => this.service.deleteTeacher(id)
             .map(user => this.userActions.getUser(user))
-            .catch(error => Observable.of(this.errorActions.catchError(error)))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 }

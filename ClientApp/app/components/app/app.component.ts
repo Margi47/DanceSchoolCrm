@@ -15,6 +15,6 @@ export class AppComponent {
         private store: Store<AppState>,
         private errorActions: ErrorActions)
     {
-        this.errorMessage$ = store.select('error');
+        this.errorMessage$ = store.select('errorMessage');
     }
 }

@@ -24,7 +24,7 @@ export class UserService {
     }
 
     getUser(id: number): Observable<User> {
-        return this.http.get(`${this.usersUrl}/100500`)
+        return this.http.get(`${this.usersUrl}/${id}`)
             .map(response => response.json());
     }
 
@@ -44,7 +44,7 @@ export class UserService {
     }
 
     addUser(user: User): Observable<number> {
-        var body = JSON.stringify(user);
+        var body = JSON.stringify({});
         console.log(body);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });

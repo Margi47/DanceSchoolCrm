@@ -1,15 +1,15 @@
 ﻿import { Component, Input, OnChanges } from '@angular/core';
-import { Error } from '../../models/error'
+import { ErrorMessage } from '../../models/error-message'
 
 @Component({
     selector: 'error',
     template: `
-<Label *ngIf="errorMessage.message">
+<Label *ngIf="errorMessage.statusCode != 0">
     Error: {{errorMessage.statusCode}} - {{errorMessage.message}}
 <Label>`
 })
 export class ErrorComponent implements OnChanges{
-    @Input() errorMessage: Error;
+    @Input() errorMessage: ErrorMessage;
 
     ngOnChanges() {
         console.log(this.errorMessage);

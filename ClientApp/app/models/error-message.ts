@@ -1,4 +1,4 @@
-﻿export class Error {
+﻿export class ErrorMessage {
     statusCode: number;
     message: string;
 }
