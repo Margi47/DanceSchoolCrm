@@ -7,16 +7,13 @@
                 <input type="text"
                        class="form-control"
                        id="name"
-                       required minlength="4" maxlength="25"
+                       required maxlength="25"
                        [(ngModel)]="model.name"
                        name="name" #name="ngModel">
                 <div *ngIf="name.errors && (name.dirty || name.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!name.errors.required">
                         Name is required
-                    </div>
-                    <div [hidden]="!name.errors.minlength">
-                        Name must be at least 4 characters long.
                     </div>
                     <div [hidden]="!name.errors.maxlength">
                         Name cannot be more than 25 characters long.
@@ -31,7 +28,7 @@
                        id="phone"
                        [(ngModel)]="model.phone"
                        name="phone" #phone="ngModel"
-                       pattern="^\+[1-9]{1}[0-9]{3,14}$" />
+                       pattern="^\+[1-9]{1}[0-9]{3,14}$"/>
                 <div *ngIf="phone.errors && (phone.dirty || phone.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!phone.errors.pattern">

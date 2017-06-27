@@ -1,16 +1,21 @@
-﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { User } from '../../models/user';
 import { Group } from '../../models/group';
+import { ErrorField } from '../../models/error-field';
 
 @Component({
     selector: 'user-detail-form',
     templateUrl: './user-form.component.html'
 })
 
-export class UserDetailFormComponent {
+export class UserDetailFormComponent implements OnChanges {
+    ngOnChanges() {
+        console.log(this.errors);
+    }
     newUser: boolean = false;
     @Input() model: User;
     @Input() allGroups: Group[];
+    @Input() errors: ErrorField[];
     @Output() userSubmit = new EventEmitter<User>();
     @Output() userDelete = new EventEmitter<User>();
 

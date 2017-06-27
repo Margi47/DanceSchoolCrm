@@ -30,5 +30,5 @@ export default compose(combineReducers)({
     teachers: teacherListReducer,
     teacher: teacherReducer,
     errorMessage: errorMessageReducer,
-    errorFieldes: formErrorReducer
+    errorFields: formErrorReducer
 });

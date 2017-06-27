@@ -44,7 +44,7 @@ export class UserService {
     }
 
     addUser(user: User): Observable<number> {
-        var body = JSON.stringify({});
+        var body = JSON.stringify({ phone: "sgdgd"});
         console.log(body);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
