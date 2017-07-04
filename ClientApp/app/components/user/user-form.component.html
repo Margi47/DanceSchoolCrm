@@ -18,6 +18,9 @@
                     <div [hidden]="!name.errors.maxlength">
                         Name cannot be more than 25 characters long.
                     </div>
+                    <div [hidden]="!name.errors.server">
+                        Server Error
+                    </div>
                 </div>
             </div>
 

@@ -15,15 +15,13 @@ export class UserAddFormComponent implements OnChanges {
             for (let i in this.errors) {
                 let item = this.errors[i];
                 let nameControl = this.userForm.form.get(item.key.toLowerCase());
-
-                for (let r in item.reasons) {
-                    let result = item.reasons[r].toString();
-                    nameControl.markAsDirty();
-                    nameControl.setErrors({ [result] : true });
-                }              
+                nameControl.markAsDirty();
+                nameControl.setErrors({ ["server"]: true });
+                
             }
         }
     }
+    
 
     model = new User();
     newUser: boolean = true;
