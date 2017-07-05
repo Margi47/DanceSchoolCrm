@@ -20,7 +20,6 @@ export class UserAddFormComponent implements OnChanges {
             }
         }
     }
-    
 
     model = new User();
     newUser: boolean = true;

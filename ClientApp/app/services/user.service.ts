@@ -44,15 +44,13 @@ export class UserService {
     }
 
     addUser(user: User): Observable<number> {
-        var body = JSON.stringify({ phone: "sgdgd"});
-        console.log(body);
+        var body = JSON.stringify(user);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(this.usersUrl, body, options)
             .map(response => response.json())
             .mergeMap(user => {
-                console.log(user);
                 if (user.isTeacher) {
                     return this.createTeacher(user).map(x => user.id);
                 }
@@ -73,7 +71,6 @@ export class UserService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        console.log('before update');
         return this.http.put(`${this.usersUrl}/${userData.id}`, body, options)
             .map(response => null);
     }
@@ -82,7 +79,6 @@ export class UserService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        console.log(userId + "from service");
         return this.http.post(`${this.groupUserUrl}/${userId}/${groupId}`, options)
             .map(response => userId);
     }
@@ -91,8 +87,6 @@ export class UserService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        console.log(userId + "from service");
-
         return this.http.delete(`${this.groupUserUrl}/${userId}/${groupId}`, options)
             .map(response => userId);
     }
@@ -100,7 +94,6 @@ export class UserService {
     createTeacher(userData: User): Observable<number> {
         var teacher: Teacher = { id: userData.id, name: userData.name, groups: [], styles: [] };
         var body = JSON.stringify(teacher);
-        console.log(body);
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 

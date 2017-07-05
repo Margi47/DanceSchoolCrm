@@ -26,10 +26,7 @@ export class UserEffects {
         .ofType(UserActions.LOAD_USERS)
         .switchMap(() => this.service.getUsers()
             .map(users => this.userActions.loadUsersSuccess(users))
-            .catch(error => {
-                console.log(error._body.json);
-                return Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body)));
-            })
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() getUser$ = this.update$
@@ -37,23 +34,24 @@ export class UserEffects {
         .map(action => action.payload)
         .switchMap(id => this.service.getUser(id)
             .map(user => this.userActions.getUserSuccess(user))
-            .catch(error => {
-                console.log(JSON.parse(error._body));
-                return Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body)));
-            })
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() getAvailableStudents$ = this.update$
         .ofType(UserActions.LOAD_AVAILABLE_STUDENTS)
         .map(action => action.payload)
-        .switchMap(id => this.service.getAvailableStudents(id))
-        .map(students => this.userActions.loadAvailableStudentsSuccess(students));
+        .switchMap(id => this.service.getAvailableStudents(id)
+            .map(students => this.userActions.loadAvailableStudentsSuccess(students))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
+        );
 
     @Effect() getAvailableTeachers$ = this.update$
         .ofType(UserActions.LOAD_AVAILABLE_TEACHERS)
         .map(action => action.payload)
-        .switchMap(() => this.service.getAvailableTeachers())
-        .map(users => this.userActions.loadAvailableTeachersSuccess(users));
+        .switchMap(() => this.service.getAvailableTeachers()
+            .map(users => this.userActions.loadAvailableTeachersSuccess(users))
+            .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
+        );
 
     @Effect() addUser$ = this.update$
         .ofType(UserActions.ADD_USER)
@@ -62,7 +60,6 @@ export class UserEffects {
             .map(user => this.router.navigate(['userdetail', user]))
             .catch(error => {
                 let body = JSON.parse(error._body);
-                console.log(body);
                 return body.result ?
                     Observable.of(this.errorActions.catchValidationError(error.status, body)) :
                     Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body)));

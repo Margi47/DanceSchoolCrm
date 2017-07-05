@@ -22,6 +22,9 @@
                     <div [hidden]="!name.errors.maxlength">
                         Name cannot be more than 25 characters long.
                     </div>
+                    <div [hidden]="!name.errors.server">
+                        <div *ngFor="let x of name.errors.server">{{x}}</div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -32,10 +35,13 @@
                        [(ngModel)]="model.description"
                        maxlength="70"
                        name="description" #name="ngModel">
-                <div *ngIf="name.errors && (name.dirty || name.touched)"
+                <div *ngIf="description.errors && (description.dirty || description.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
-                    <div [hidden]="!name.errors.maxlength">
+                    <div [hidden]="!description.errors.maxlength">
                         Description cannot be more than 70 characters long.
+                    </div>
+                    <div [hidden]="!description.errors.server">
+                        <div *ngFor="let x of description.errors.server">{{x}}</div>
                     </div>
                 </div>
             </div>

@@ -94,5 +94,6 @@ export class UserDetailComponent implements OnInit{
 
     goBack(): void {
         this.location.back();
+        this.store.dispatch(this.errorActions.removeError());
     }
 }

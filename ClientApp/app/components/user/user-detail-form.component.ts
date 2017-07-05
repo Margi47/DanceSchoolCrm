@@ -1,7 +1,8 @@
-﻿import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
 import { User } from '../../models/user';
 import { Group } from '../../models/group';
 import { ErrorField } from '../../models/error-field';
+import { NgForm } from "@angular/forms";
 
 @Component({
     selector: 'user-detail-form',
@@ -9,9 +10,19 @@ import { ErrorField } from '../../models/error-field';
 })
 
 export class UserDetailFormComponent implements OnChanges {
+    @ViewChild('userForm') public userForm: NgForm;
     ngOnChanges() {
         console.log(this.errors);
+        if (this.errors.length > 0) {
+            for (let i in this.errors) {
+                let item = this.errors[i];
+                let nameControl = this.userForm.form.get(item.key.toLowerCase());
+                nameControl.markAsDirty();
+                nameControl.setErrors({ ["server"]: item.reasons });
+            }
+        }
     }
+
     newUser: boolean = false;
     @Input() model: User;
     @Input() allGroups: Group[];

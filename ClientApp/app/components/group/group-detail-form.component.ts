@@ -1,16 +1,32 @@
-﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
 import { Group } from '../../models/group';
 import { User } from '../../models/user';
 import { Teacher } from '../../models/teacher';
+import { ErrorField } from '../../models/error-field';
+import { NgForm } from "@angular/forms";
 
 @Component({
     selector: 'group-detail-form',
     templateUrl: './group-form.component.html'
 })
 
-export class GroupDetailFormComponent{
+export class GroupDetailFormComponent implements OnChanges {
+    @ViewChild('groupForm') public groupForm: NgForm;
+    ngOnChanges() {
+        console.log(this.errors);
+        if (this.errors.length > 0) {
+            for (let i in this.errors) {
+                let item = this.errors[i];
+                let nameControl = this.groupForm.form.get(item.key.toLowerCase());
+                nameControl.markAsDirty();
+                nameControl.setErrors({ ["server"]: item.reasons });
+            }
+        }
+    }
+
     newGroup: boolean = false;
 
+    @Input() errors: ErrorField[];
     @Input() model: Group;
     @Input() allUsers: User[];
     @Input() allTeachers: Teacher[];
