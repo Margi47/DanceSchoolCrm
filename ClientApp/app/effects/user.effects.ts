@@ -137,4 +137,10 @@ export class UserEffects {
             .map(user => this.userActions.getUser(user))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
+
+    @Effect() removeError = this.update$
+        .ofType(UserActions.LOAD_USERS_SUCCESS, UserActions.GET_USER_SUCCESS, UserActions.LOAD_USER_GROUPS_SUCCESS,
+        UserActions.LOAD_AVAILABLE_STUDENTS_SUCCESS, UserActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
+        UserActions.CHANGE_USER_GROUPS_SUCCESS)
+        .map(users => this.errorActions.removeError());
 }

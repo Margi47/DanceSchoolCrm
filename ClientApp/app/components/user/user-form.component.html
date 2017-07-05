@@ -19,7 +19,7 @@
                         Name cannot be more than 25 characters long.
                     </div>
                     <div [hidden]="!name.errors.server">
-                        Server Error
+                        <div *ngFor="let x of name.errors.server">{{x}}</div>
                     </div>
                 </div>
             </div>
@@ -37,6 +37,9 @@
                     <div [hidden]="!phone.errors.pattern">
                         Enter valid phone number (Example: +76342054862)
                     </div>
+                    <div [hidden]="!phone.errors.server">
+                        <div *ngFor="let x of phone.errors.server">{{x}}</div>
+                    </div>
                 </div>
             </div>
             <div class="form-group">
@@ -51,6 +54,9 @@
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!email.errors.pattern">
                         Enter valid email address
+                    </div>
+                    <div [hidden]="!email.errors.server">
+                        <div *ngFor="let x of email.errors.server">{{x}}</div>
                     </div>
                 </div>
             </div>

@@ -16,8 +16,7 @@ export class UserAddFormComponent implements OnChanges {
                 let item = this.errors[i];
                 let nameControl = this.userForm.form.get(item.key.toLowerCase());
                 nameControl.markAsDirty();
-                nameControl.setErrors({ ["server"]: true });
-                
+                nameControl.setErrors({ ["server"]: item.reasons });               
             }
         }
     }

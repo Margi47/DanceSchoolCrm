@@ -14,7 +14,6 @@ export default function (state = initialState, action: Action): ErrorMessageStat
     switch (action.type) {
         case ErrorActions.CATCH_ERROR: {
             let obj: ErrorMessageState = Object.assign({}, state);
-            console.log(action.payload)
             obj.message = action.payload.error.message;
             obj.statusCode = action.payload.code;
             if (action.payload.error.entity) {
@@ -23,8 +22,10 @@ export default function (state = initialState, action: Action): ErrorMessageStat
                     obj.message += ", second id:" + action.payload.error.secondid;
                 }
             }
-            console.log(obj);
             return obj;
+        }
+        case ErrorActions.REMOVE_ERROR: {
+            return Object.assign({}, initialState);
         }
         default: {
             return state;

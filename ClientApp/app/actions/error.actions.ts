@@ -13,6 +13,13 @@ export class ErrorActions {
         };
     }
 
+    static REMOVE_ERROR = '[Error] Remove Error';
+    removeError(): Action {
+        return {
+            type: ErrorActions.REMOVE_ERROR,
+        };
+    }
+
     static CATCH_VALIDATION_ERROR = '[Error] Catch Validation Error';
     catchValidationError(code, error): Action {
         return {

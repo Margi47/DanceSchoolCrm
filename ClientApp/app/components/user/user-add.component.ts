@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';;
 import { AppState } from '../../reducers';
 import { UserActions } from '../../actions/user.actions';
+import { ErrorActions } from '../../actions/error.actions';
 
 @Component({
     selector: 'add-user',
@@ -23,7 +24,8 @@ export class UserAddComponent {
     constructor(
         private router: Router,
         private store: Store<AppState>,
-        private userActions: UserActions) {
+        private userActions: UserActions,
+        private errorActions: ErrorActions) {
         this.errors$ = this.store.select('errorFields');
     }
 
@@ -33,5 +35,6 @@ export class UserAddComponent {
 
     onUserCancel(): void {
         this.router.navigate(['/users']);
+        this.store.dispatch(this.errorActions.removeError());
     }
 }

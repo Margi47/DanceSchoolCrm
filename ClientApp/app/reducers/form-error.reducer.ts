@@ -18,10 +18,8 @@ export default function (state = initialState, action: Action): FormErrorState {
                     let value = source[i];
                     let field: ErrorField = { key: i, reasons: value };
                     result = [...result, field];
-                    console.log(result);
                 }
             }
-
             return result;
         }
         default: {
