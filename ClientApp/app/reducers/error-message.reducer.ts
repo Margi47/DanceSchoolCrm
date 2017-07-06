@@ -18,8 +18,8 @@ export default function (state = initialState, action: Action): ErrorMessageStat
             obj.statusCode = action.payload.code;
             if (action.payload.error.entity) {
                 obj.message += "Entity: " + action.payload.error.entity + ", id:" + action.payload.error.id;
-                if (action.payload.entity.secondid) {
-                    obj.message += ", second id:" + action.payload.error.secondid;
+                if (action.payload.error.secondId) {
+                    obj.message += ", second id:" + action.payload.error.secondId;
                 }
             }
             return obj;

@@ -13,7 +13,7 @@ import { NgForm } from "@angular/forms";
 export class GroupDetailFormComponent implements OnChanges {
     @ViewChild('groupForm') public groupForm: NgForm;
     ngOnChanges() {
-        console.log(this.errors);
+        console.log(this.newGroup);
         if (this.errors.length > 0) {
             for (let i in this.errors) {
                 let item = this.errors[i];

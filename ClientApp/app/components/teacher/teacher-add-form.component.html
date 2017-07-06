@@ -5,7 +5,8 @@
             <select class="form-control"
                     [(ngModel)]="selectedUser"
                     name="name" id="name"
-                    required #user="ngModel">
+                     #user="ngModel">
+                <!--required-->
                 <option *ngFor="let user of allUsers" [ngValue]="user">{{user.id}} - {{user.name}}</option>
             </select>
 

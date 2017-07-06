@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { UserActions } from '../../actions/user.actions';
 import { GroupActions } from '../../actions/group.actions';
+import { ErrorActions } from '../../actions/error.actions';
 import { Location } from '@angular/common';
 
 @Component({
@@ -40,6 +41,7 @@ export class UserDetailComponent implements OnInit{
         private store: Store<AppState>,
         private userActions: UserActions,
         private groupActions: GroupActions,
+        private errorActions: ErrorActions,
         private location: Location) {
         this.model$ = this.store.select('user');
         this.allGroups$ = this.store.select('groups');

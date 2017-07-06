@@ -9,8 +9,8 @@
                        class="form-control"
                        id="name"
                        [(ngModel)]="model.name"
-                       required minlength="4" maxlength="25"
-                       name="name" #name="ngModel">
+                       name="name" #name="ngModel"/>
+                <!--required minlength="4" maxlength="25"-->
                 <div *ngIf="name.errors && (name.dirty || name.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!name.errors.required">
@@ -33,8 +33,9 @@
                        class="form-control"
                        id="description"
                        [(ngModel)]="model.description"
-                       maxlength="70"
+                       
                        name="description" #name="ngModel">
+                <!--maxlength="70"-->
                 <div *ngIf="description.errors && (description.dirty || description.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!description.errors.maxlength">

@@ -7,9 +7,9 @@
                 <input type="text"
                        class="form-control"
                        id="name"
-                       required maxlength="25"
                        [(ngModel)]="model.name"
-                       name="name" #name="ngModel">
+                       name="name" #name="ngModel"
+                       /><!--required maxlength="25"-->
                 <div *ngIf="name.errors && (name.dirty || name.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!name.errors.required">
@@ -30,8 +30,8 @@
                        class="form-control"
                        id="phone"
                        [(ngModel)]="model.phone"
-                       name="phone" #phone="ngModel"
-                       pattern="^\+[1-9]{1}[0-9]{3,14}$"/>
+                       name="phone" #phone="ngModel"/>
+                       <!--pattern="^\+[1-9]{1}[0-9]{3,14}$"-->
                 <div *ngIf="phone.errors && (phone.dirty || phone.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!phone.errors.pattern">
@@ -44,12 +44,12 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email"
+                <input 
                        class="form-control"
                        id="email"
                        [(ngModel)]="model.email"
-                       name="email" #email="ngModel"
-                       pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$">
+                       name="email" #email="ngModel"/>
+                       <!-- type="email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$">-->
                 <div *ngIf="email.errors && (email.dirty || email.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!email.errors.pattern">
@@ -101,6 +101,23 @@
 
         <div style="margin-top:20px" *ngIf="!newUser">
             <label>Groups</label>
+            <form *ngIf="addingGroup" (ngSubmit)="addGroup()">
+                <div class="form-group">
+                    <select class="form-control" 
+                            [(ngModel)]="selectedGroup" 
+                            required
+                            id="group" #group="ngModel" name="group">
+                        <option *ngFor="let group of allGroups" [ngValue]="group">{{group.name}}</option>
+                    </select>
+                    <div *ngIf="group.errors && (group.dirty || group.touched)"
+                         class="alert help-block" style="border-color: red; line-height: 5px">
+                        <div [hidden]="!group.errors.required">
+                            Select group
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-default" type="submit">Add</button>
+            </form>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -112,17 +129,7 @@
                                     type="button">Add Group</button></th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr *ngIf="addingGroup">
-                         <td colspan="3">
-                            <select class="form-control" [(ngModel)]="selectedGroup">
-                                <option *ngFor="let group of allGroups" [ngValue]="group">{{group.name}}</option>
-                            </select>
-                         </td>
-                         <td>
-                            <button (click)="addGroup()" class="btn btn-default" type="button">Add</button>
-                        </td>
-                    </tr>
+                <tbody>                 
                     <tr *ngFor="let group of model.groups">
                         <td>{{group.id}}</td>
                         <td>{{group.name}}</td>
