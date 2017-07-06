@@ -35,7 +35,10 @@ export class GroupEffects {
         .ofType(GroupActions.GET_GROUP)
         .map(action => action.payload)
         .switchMap(id => this.service.getGroup(id)
-            .map(group => this.groupActions.getGroupSuccess(group))
+            .map(group => {
+                console.log(group);
+                return this.groupActions.getGroupSuccess(group);
+            })
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 

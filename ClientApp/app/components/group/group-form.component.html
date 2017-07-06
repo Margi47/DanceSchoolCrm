@@ -34,7 +34,7 @@
                        id="description"
                        [(ngModel)]="model.description"
                        
-                       name="description" #name="ngModel">
+                       name="description" #description="ngModel">
                 <!--maxlength="70"-->
                 <div *ngIf="description.errors && (description.dirty || description.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
