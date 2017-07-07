@@ -8,7 +8,7 @@
                        class="form-control"
                        [(ngModel)]="model.name"
                        name="name" #name="ngModel"
-                       /><!--required maxlength="25"-->
+                       required maxlength="25"/>
                 <div *ngIf="name.errors && (name.dirty || name.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!name.errors.required">
@@ -28,8 +28,8 @@
                 <input type="text"
                        class="form-control"
                        [(ngModel)]="model.phone"
-                       name="phone" #phone="ngModel"/>
-                       <!--pattern="^\+[1-9]{1}[0-9]{3,14}$"-->
+                       name="phone" #phone="ngModel"
+                       pattern="^\+[1-9]{1}[0-9]{3,14}$">
                 <div *ngIf="phone.errors && (phone.dirty || phone.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!phone.errors.pattern">
@@ -42,11 +42,10 @@
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
-                <input 
-                       class="form-control"
+                <input class="form-control"
                        [(ngModel)]="model.email"
-                       name="email" #email="ngModel"/>
-                       <!-- type="email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$">-->
+                       name="email" #email="ngModel"
+                       type="email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$"/>
                 <div *ngIf="email.errors && (email.dirty || email.touched)"
                      class="alert help-block" style="border-color: red; line-height: 5px">
                     <div [hidden]="!email.errors.pattern">

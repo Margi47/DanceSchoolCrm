@@ -53,9 +53,8 @@ export class GroupDetailFormComponent implements OnChanges {
     goBack() { this.groupGoBack.emit(); }
 
     showStudentDetails(id: number) { this.showUserDetails.emit(id); }
-    addStudent(student: User) {
-        console.log(student);
-        this.addGroupStudent.emit({ groupId: this.model.id, userId: student.id });
+    addStudent() {
+        this.addGroupStudent.emit({ groupId: this.model.id, userId: this.selectedUser.id });
         this.addingStudent = false;
         this.selectedUser = null;
     }
@@ -65,8 +64,8 @@ export class GroupDetailFormComponent implements OnChanges {
     }
 
     showTeacherDetails(id: number) { this.showGroupTeacherDetails.emit(id); }
-    onTeacherAdd(teacher: Teacher) {
-        this.addGroupTeacher.emit({ groupId: this.model.id, teacher: teacher.id });
+    onTeacherAdd() {
+        this.addGroupTeacher.emit({ groupId: this.model.id, teacher: this.selectedTeacher.id });
         this.addingTeacher = false;
         this.selectedTeacher = null;
     }
