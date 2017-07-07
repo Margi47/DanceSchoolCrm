@@ -18,7 +18,7 @@ export class GroupDetailFormComponent implements OnChanges {
                 let item = this.errors[i];
                 let nameControl = this.groupForm.form.get(item.key.toLowerCase());
                 nameControl.markAsDirty();
-                nameControl.setErrors({ ["server"]: item.reasons });
+                nameControl.setErrors({ "server": item.reasons });
             }
         }
     }

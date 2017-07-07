@@ -12,7 +12,6 @@ using angular.Exceptions;
 namespace angular.Controllers.Users
 {
     [ApiValidation]
-    [HandleException]
     [Route("api/[controller]")]
     public class TeachersController : Controller
     {

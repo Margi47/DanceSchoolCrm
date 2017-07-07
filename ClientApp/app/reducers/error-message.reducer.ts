@@ -16,12 +16,6 @@ export default function (state = initialState, action: Action): ErrorMessageStat
             let obj: ErrorMessageState = Object.assign({}, state);
             obj.message = action.payload.error.message;
             obj.statusCode = action.payload.code;
-            if (action.payload.error.entity) {
-                obj.message += "Entity: " + action.payload.error.entity + ", id:" + action.payload.error.id;
-                if (action.payload.error.secondId) {
-                    obj.message += ", second id:" + action.payload.error.secondId;
-                }
-            }
             return obj;
         }
         case ErrorActions.REMOVE_ERROR: {

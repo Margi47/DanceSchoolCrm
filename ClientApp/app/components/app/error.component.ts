@@ -5,7 +5,7 @@ import { ErrorMessage } from '../../models/error-message'
     selector: 'error',
     template: `
 <Label *ngIf="errorMessage.statusCode != 0">
-    Error: {{errorMessage.statusCode}} - {{errorMessage.message}}
+    Error: {{errorMessage.message}}
 <Label>`
 })
 export class ErrorComponent implements OnChanges{
