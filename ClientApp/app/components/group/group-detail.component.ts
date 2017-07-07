@@ -7,13 +7,15 @@ import { AppState } from '../../reducers';
 import { GroupActions } from '../../actions/group.actions';
 import { UserActions } from '../../actions/user.actions';
 import { TeacherActions } from '../../actions/teacher.actions';
+import { ErrorActions } from '../../actions/error.actions';
 import { Router } from '@angular/router'
 import { Location } from '@angular/common';
 
 @Component({
     selector: 'group-detail',
     template: `
-<group-detail-form [model] = "model$ | async"
+<group-detail-form [errors] = "errors$ | async"
+                   [model] = "model$ | async"
                    [allUsers] = "allStudents$ | async"
                    [allTeachers] = "allTeachers$ | async"
                    (deleteGroup) = "deleteGroup($event)"
@@ -32,6 +34,7 @@ export class GroupDetailComponent implements OnInit {
     model$: Observable<any>;
     allStudents$: Observable<any>;
     allTeachers$: Observable<any>;
+    errors$: Observable<any>;
 
     constructor(
         private store: Store<AppState>,
@@ -40,10 +43,12 @@ export class GroupDetailComponent implements OnInit {
         private teacherActions: TeacherActions,
         private router: Router,
         private route: ActivatedRoute,
-        private location: Location) {
+        private location: Location,
+        private errorActions: ErrorActions) {
         this.model$ = store.select('group');
         this.allStudents$ = store.select('users');
         this.allTeachers$ = store.select('teachers');
+        this.errors$ = this.store.select('errorFields');
     }
 
     ngOnInit(): void {
@@ -92,5 +97,6 @@ export class GroupDetailComponent implements OnInit {
 
     goBack(): void {
         this.location.back();
+        this.store.dispatch(this.errorActions.removeError());
     }
 }

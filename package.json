@@ -39,6 +39,7 @@
     "isomorphic-fetch": "^2.2.1",
     "jquery": "^2.2.1",
     "json-loader": "^0.5.4",
+    "ngx-bootstrap": "^1.6.6",
     "ngx-tabs": "0.0.13",
     "preboot": "^4.5.2",
     "raw-loader": "^0.5.1",

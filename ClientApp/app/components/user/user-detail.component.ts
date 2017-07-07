@@ -8,6 +8,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { UserActions } from '../../actions/user.actions';
 import { GroupActions } from '../../actions/group.actions';
+import { ErrorActions } from '../../actions/error.actions';
 import { Location } from '@angular/common';
 
 @Component({
@@ -17,6 +18,7 @@ import { Location } from '@angular/common';
     <button (click)="goBack()" class="btn btn-default">Back</button>
     <user-detail-form [model] = "model$ | async" 
                       [allGroups] = "allGroups$ | async"
+                      [errors] = "errors$ | async"
                       (userSubmit)="onUserSubmit($event)" 
                       (userDelete)="onUserDelete($event)"
                       (addUserGroup)="onAddGroup($event)"
@@ -31,6 +33,7 @@ import { Location } from '@angular/common';
 export class UserDetailComponent implements OnInit{
     model$: Observable<any>;
     allGroups$: Observable<any>;
+    errors$: Observable<any>;
 
     constructor(
         private router: Router,
@@ -38,9 +41,11 @@ export class UserDetailComponent implements OnInit{
         private store: Store<AppState>,
         private userActions: UserActions,
         private groupActions: GroupActions,
+        private errorActions: ErrorActions,
         private location: Location) {
         this.model$ = this.store.select('user');
         this.allGroups$ = this.store.select('groups');
+        this.errors$ = this.store.select('errorFields');
     }
 
    ngOnInit(): void {
@@ -91,5 +96,6 @@ export class UserDetailComponent implements OnInit{
 
     goBack(): void {
         this.location.back();
+        this.store.dispatch(this.errorActions.removeError());
     }
 }

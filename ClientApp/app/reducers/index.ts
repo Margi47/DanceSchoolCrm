@@ -8,6 +8,8 @@ import userListReducer, * as fromUserList from './user-list.reducer';
 import userReducer, * as fromUser from './user.reducer';
 import teacherListReducer, * as fromTeacherList from './teacher-list.reducer';
 import teacherReducer, * as fromTeacher from './teacher.reducer';
+import errorMessageReducer, * as fromErrorMessage from './error-message.reducer';
+import formErrorReducer, * as fromFormError from './form-error.reducer';
 
 export interface AppState {
     groups: fromGroupList.GroupListState;
@@ -16,6 +18,8 @@ export interface AppState {
     user: fromUser.UserState;
     teachers: fromTeacherList.TeacherListState;
     teacher: fromTeacher.TeacherState;
+    errorMessage: fromErrorMessage.ErrorMessageState;
+    errorFields: fromFormError.FormErrorState;
 };
 
 export default compose(combineReducers)({
@@ -24,5 +28,7 @@ export default compose(combineReducers)({
     users: userListReducer,
     user: userReducer,
     teachers: teacherListReducer,
-    teacher: teacherReducer
+    teacher: teacherReducer,
+    errorMessage: errorMessageReducer,
+    errorFields: formErrorReducer
 });

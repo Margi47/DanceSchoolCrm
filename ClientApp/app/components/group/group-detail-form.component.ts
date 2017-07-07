@@ -1,16 +1,31 @@
-﻿import { Component, Input, Output, EventEmitter } from '@angular/core';
+﻿import { Component, Input, Output, EventEmitter, OnChanges, ViewChild } from '@angular/core';
 import { Group } from '../../models/group';
 import { User } from '../../models/user';
 import { Teacher } from '../../models/teacher';
+import { ErrorField } from '../../models/error-field';
+import { NgForm } from "@angular/forms";
 
 @Component({
     selector: 'group-detail-form',
     templateUrl: './group-form.component.html'
 })
 
-export class GroupDetailFormComponent{
+export class GroupDetailFormComponent implements OnChanges {
+    @ViewChild('groupForm') public groupForm: NgForm;
+    ngOnChanges() {
+        if (this.errors.length > 0) {
+            for (let i in this.errors) {
+                let item = this.errors[i];
+                let nameControl = this.groupForm.form.get(item.key.toLowerCase());
+                nameControl.markAsDirty();
+                nameControl.setErrors({ "server": item.reasons });
+            }
+        }
+    }
+
     newGroup: boolean = false;
 
+    @Input() errors: ErrorField[];
     @Input() model: Group;
     @Input() allUsers: User[];
     @Input() allTeachers: Teacher[];
@@ -38,9 +53,8 @@ export class GroupDetailFormComponent{
     goBack() { this.groupGoBack.emit(); }
 
     showStudentDetails(id: number) { this.showUserDetails.emit(id); }
-    addStudent(student: User) {
-        console.log(student);
-        this.addGroupStudent.emit({ groupId: this.model.id, userId: student.id });
+    addStudent() {
+        this.addGroupStudent.emit({ groupId: this.model.id, userId: this.selectedUser.id });
         this.addingStudent = false;
         this.selectedUser = null;
     }
@@ -50,8 +64,8 @@ export class GroupDetailFormComponent{
     }
 
     showTeacherDetails(id: number) { this.showGroupTeacherDetails.emit(id); }
-    onTeacherAdd(teacher: Teacher) {
-        this.addGroupTeacher.emit({ groupId: this.model.id, teacher: teacher.id });
+    onTeacherAdd() {
+        this.addGroupTeacher.emit({ groupId: this.model.id, teacher: this.selectedTeacher.id });
         this.addingTeacher = false;
         this.selectedTeacher = null;
     }

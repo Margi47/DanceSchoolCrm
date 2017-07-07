@@ -9,13 +9,16 @@ import { UserModule } from '../user/user.module';
 import { TeacherModule } from '../teacher/teacher.module';
 
 import { AppComponent } from './app.component';
+import { ErrorComponent } from './error.component';
 
 import reducer from '../../reducers';
+import { ErrorActions } from '../../actions/error.actions';
 
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [
         AppComponent,
+        ErrorComponent
     ],
     imports: [
         UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
@@ -26,7 +29,7 @@ import reducer from '../../reducers';
         TeacherModule,
         StoreModule.provideStore(reducer)
     ],
-    providers: []
+    providers: [ErrorActions]
 })
 export class AppModule {
 }

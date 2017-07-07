@@ -17,7 +17,10 @@ const initialState: TeacherState = {
 export default function (state = initialState, action: Action): TeacherState {
     switch (action.type) {
         case TeacherActions.GET_TEACHER_SUCCESS: {
-            return Object.assign({}, state, { id: action.payload.id, name: action.payload.name });
+            return Object.assign({}, state, {
+                id: action.payload.id,
+                name: action.payload.name
+            });
         }
         case TeacherActions.GET_TEACHER_GROUPS_SUCCESS: {
             return Object.assign({}, state, { groups: action.payload });

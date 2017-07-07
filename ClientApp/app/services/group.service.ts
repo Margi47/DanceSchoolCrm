@@ -24,7 +24,10 @@ export class GroupService {
 
     getGroup(id: number): Observable<Group> {
         return this.http.get(`${this.groupsUrl}/${id}`)
-            .map(response => response.json());
+            .map(response => {
+                console.log(response);
+                return response.json();
+            });
     }
 
     getAvailableUserGroups(id: number): Observable<Group[]> {

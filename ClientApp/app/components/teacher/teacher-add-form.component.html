@@ -1,21 +1,23 @@
-﻿<div style="margin-top:20px">
-    <form (ngSubmit)="onTeacherSave($event)" #teacherForm="ngForm">
+﻿<div *ngIf="model" style="margin-top:20px">
+    <form (ngSubmit)="onTeacherSave()" #teacherAddForm="ngForm">
         <div class="form-group">
             <label for="user">Select User</label>
             <select class="form-control"
                     [(ngModel)]="selectedUser"
-                    name="name" id="name"
-                    required #user="ngModel">
+                    name="user"
+                    #user="ngModel"
+                    required >
                 <option *ngFor="let user of allUsers" [ngValue]="user">{{user.id}} - {{user.name}}</option>
             </select>
-
-            <div *ngIf="user.errors && (user.dirty || user.touched)"
-                 class="alert help-block" style="border-color: red; line-height: 5px">
-                Name is required
+            <div  *ngIf="user.errors && (user.dirty || user.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                <div [hidden]="!user.errors.required">
+                    Select User
+                </div>
             </div>
         </div>
 
-        <button type="submit" [disabled]="!teacherForm.form.valid" class="btn btn-default">Save</button>
-        <button (click)="onTeacherCancel(); userForm.reset()" class="btn btn-default" type="button">Cancel</button>
+        <button type="submit" [disabled]="!teacherAddForm.form.valid" class="btn btn-default">Save</button>
+        <button (click)="onTeacherCancel(); teacherAddForm.reset()" class="btn btn-default" type="button">Cancel</button>
     </form>
 </div>
