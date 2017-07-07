@@ -101,13 +101,13 @@
 
         <div style="margin-top:20px" *ngIf="!newUser">
             <label>Groups</label>
-            <form *ngIf="addingGroup" (ngSubmit)="addGroup()">
+            <form *ngIf="addingGroup" (ngSubmit)="addGroup()" #userGroupForm="ngForm">
                 <div class="form-group">
                     <select class="form-control" 
                             [(ngModel)]="selectedGroup" 
                             required
-                            id="group" #group="ngModel" name="group">
-                        <option *ngFor="let group of allGroups" [ngValue]="group">{{group.name}}</option>
+                            #group="ngModel" name="group">
+                        <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
                     </select>
                     <div *ngIf="group.errors && (group.dirty || group.touched)"
                          class="alert help-block" style="border-color: red; line-height: 5px">
@@ -116,7 +116,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-default" type="submit">Add</button>
+                <button class="btn btn-default" type="submit" [disabled]="!userGroupForm.form.valid">Add</button>
             </form>
             <table class="table table-hover">
                 <thead>

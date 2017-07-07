@@ -1,4 +1,4 @@
-﻿  import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Teacher } from '../../models/teacher';

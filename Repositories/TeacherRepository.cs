@@ -23,6 +23,11 @@ namespace angular.Models
 
         public void AddTeacher(Teacher teacher)
         {
+            if (_context.Teachers.Any(t => t.Id == teacher.Id))
+            {
+                throw new EntityDuplicateException("Teacher", teacher.Id);
+            } 
+
             _context.Teachers.Add(teacher);
             _context.SaveChanges();
             var user = _context.Users.First(x => x.Id == teacher.Id);

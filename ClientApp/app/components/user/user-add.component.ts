@@ -35,6 +35,5 @@ export class UserAddComponent {
 
     onUserCancel(): void {
         this.router.navigate(['/users']);
-        this.store.dispatch(this.errorActions.removeError());
     }
 }

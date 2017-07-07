@@ -33,6 +33,5 @@ export class GroupAddComponent {
 
     onGroupCancel(): void {
         this.router.navigate(['/groups']);
-        this.store.dispatch(this.errorActions.removeError());
     }
 }

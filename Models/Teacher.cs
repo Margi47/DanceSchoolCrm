@@ -11,6 +11,7 @@ namespace angular.Models
     {
         [Key]
         public int Id { get; set; }
+        [Required]
         public User User { get; set; }
         public List<GroupTeachers> Groups { get; set; }
         //public List<string> Styles { get; set; }

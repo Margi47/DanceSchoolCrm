@@ -9,6 +9,25 @@
 
     <div style="margin-top:20px">
         <label>Groups</label>
+
+        <form *ngIf="addingGroup" (ngSubmit)="onGroupAdd()" #teacherGroupForm="ngForm">
+            <div class="form-group">
+                <select class="form-control"
+                        [(ngModel)]="selectedGroup"
+                        required
+                        #group="ngModel" name="group">
+                    <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
+                </select>
+                <div *ngIf="group.errors && (group.dirty || group.touched)"
+                     class="alert help-block" style="border-color: red; line-height: 5px">
+                    <div [hidden]="!group.errors.required">
+                        Select group
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-default" type="submit" [disabled]="!teacherGroupForm.form.valid">Add</button>
+        </form>
+
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -25,15 +44,6 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngIf="addingGroup">
-                    <td colspan="3">
-                        <select class="form-control" [ngModel]="selectedGroup" (ngModelChange)="onGroupAdd($event)">
-                            <option *ngFor="let group of allGroups" [ngValue]="group">
-                                {{group.id}} - {{group.name}}
-                            </option>
-                        </select>
-                    </td>
-                </tr>
                 <tr *ngFor="let group of model.groups">
                     <td>{{group.id}}</td>
                     <td>{{group.name}}</td>
@@ -58,5 +68,7 @@
     </div>
     <button (click)="deleteTeacher()"
             class="btn btn-default"
-            type="button">Delete Teacher</button>
+            type="button">
+        Delete Teacher
+    </button>
 </div>
