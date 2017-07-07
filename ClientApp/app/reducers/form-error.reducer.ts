@@ -10,7 +10,6 @@ const initialState: FormErrorState = [];
 export default function (state = initialState, action: Action): FormErrorState {
     switch (action.type) {
         case ErrorActions.CATCH_VALIDATION_ERROR: {
-            console.log(action.payload)
             let result: ErrorField[] = [];
             let source = action.payload.error.result;
             for (let i in source) {
@@ -21,6 +20,9 @@ export default function (state = initialState, action: Action): FormErrorState {
                 }
             }
             return result;
+        }
+        case ErrorActions.REMOVE_VALIDATION_ERROR: {
+            return Object.assign({}, initialState);
         }
         default: {
             return state;

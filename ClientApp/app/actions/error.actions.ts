@@ -27,4 +27,11 @@ export class ErrorActions {
             payload: { code: code, error: error }
         };
     }
+
+    static REMOVE_VALIDATION_ERROR = '[Error] Remove Validation Error';
+    removeValidationError(): Action {
+        return {
+            type: ErrorActions.REMOVE_VALIDATION_ERROR,
+        };
+    }
 }

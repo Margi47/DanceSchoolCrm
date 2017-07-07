@@ -12,11 +12,13 @@ import { ErrorActions } from '../../actions/error.actions';
 @Component({
     selector: 'add-user',
     template: `
-<user-add-form 
-        [errors] = "errors$ | async"
-        (userSave)="onUserSubmit($event)" 
-        (userCancel)="onUserCancel()">
-</user-add-form>`
+<div  class="col-sm-6">
+    <user-add-form 
+            [errors] = "errors$ | async"
+            (userSave)="onUserSubmit($event)" 
+            (userCancel)="onUserCancel()">
+    </user-add-form>
+</div>`
 })
 export class UserAddComponent {
     errors$: Observable<any>;

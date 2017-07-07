@@ -35,10 +35,7 @@ export class GroupEffects {
         .ofType(GroupActions.GET_GROUP)
         .map(action => action.payload)
         .switchMap(id => this.service.getGroup(id)
-            .map(group => {
-                console.log(group);
-                return this.groupActions.getGroupSuccess(group);
-            })
+            .map(group => this.groupActions.getGroupSuccess(group))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -70,7 +67,7 @@ export class GroupEffects {
         .ofType(GroupActions.ADD_GROUP)
         .map(action => action.payload)
         .switchMap(group => this.service.addGroup(group)
-            .map(group => this.router.navigate(['groupdetail', group]))
+            .map(group => this.groupActions.addGroupSuccess(group))
             .catch(error => {
                 let body = JSON.parse(error._body);
                 return body.result ?
@@ -78,6 +75,10 @@ export class GroupEffects {
                     Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body)));
             })
         );
+
+    @Effect() navigateToDetails = this.update$
+        .ofType(GroupActions.ADD_GROUP_SUCCESS)
+        .map(action => this.router.navigate(['groupdetail', action.payload]));
 
     @Effect() getMainMessage = this.update$
         .ofType(ErrorActions.CATCH_VALIDATION_ERROR)
@@ -159,6 +160,6 @@ export class GroupEffects {
         .ofType(GroupActions.LOAD_GROUPS_SUCCESS, GroupActions.GET_GROUP_SUCCESS, GroupActions.LOAD_STUDENTS_SUCCESS,
         GroupActions.LOAD_TEACHERS_SUCCESS, GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS,
         GroupActions.LOAD_AVAILABLE_USER_GROUPS_SUCCESS, GroupActions.CHANGE_GROUP_STUDENTS_SUCCESS,
-        GroupActions.CHANGE_GROUP_TEACHERS_SUCCESS)
+        GroupActions.CHANGE_GROUP_TEACHERS_SUCCESS, GroupActions.ADD_GROUP_SUCCESS)
         .map(users => this.errorActions.removeError());
 }

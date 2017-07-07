@@ -6,7 +6,6 @@
                 <label for="name">Name</label>
                 <input type="text"
                        class="form-control"
-                       id="name"
                        [(ngModel)]="model.name"
                        name="name" #name="ngModel"
                        /><!--required maxlength="25"-->
@@ -28,7 +27,6 @@
                 <label for="phone">Phone number</label>
                 <input type="text"
                        class="form-control"
-                       id="phone"
                        [(ngModel)]="model.phone"
                        name="phone" #phone="ngModel"/>
                        <!--pattern="^\+[1-9]{1}[0-9]{3,14}$"-->
@@ -46,7 +44,6 @@
                 <label for="email">Email</label>
                 <input 
                        class="form-control"
-                       id="email"
                        [(ngModel)]="model.email"
                        name="email" #email="ngModel"/>
                        <!-- type="email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$">-->
@@ -95,7 +92,6 @@
             
 
             <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Save</button>
-            <button (click)="onUserDelete()" class="btn btn-default" type="button" *ngIf="!newUser">Delete user</button>
             <button (click)="onUserCancel(); userForm.reset()" class="btn btn-default" type="button" *ngIf="newUser">Cancel</button>
         </form>
 
@@ -143,5 +139,7 @@
                     </tr>
                 </tbody>
             </table>
+
+            <button (click)="onUserDelete()" class="btn btn-default" type="button">Delete user</button>
         </div>
 </div>

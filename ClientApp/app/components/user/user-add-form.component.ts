@@ -10,7 +10,6 @@ import { NgForm } from "@angular/forms";
 export class UserAddFormComponent implements OnChanges {
     @ViewChild('userForm') public userForm: NgForm;
     ngOnChanges() {
-        console.log(this.errors);
         if (this.errors.length > 0) {
             for (let i in this.errors) {
                 let item = this.errors[i];

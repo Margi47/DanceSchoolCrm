@@ -57,19 +57,22 @@ export class UserEffects {
         .ofType(UserActions.ADD_USER)
         .map(action => action.payload)
         .switchMap(user => this.service.addUser(user)
-            .map(user => this.router.navigate(['userdetail', user]))
+            .map(user => this.userActions.addUserSuccess(user))
             .catch(error => {
                 let body = JSON.parse(error._body);
                 return body.result ?
                     Observable.of(this.errorActions.catchValidationError(error.status, body)) :
                     Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body)));
-            }
-        ));
+            })
+        );
 
     @Effect() getMainMessage = this.update$
         .ofType(ErrorActions.CATCH_VALIDATION_ERROR)
         .map(action => this.errorActions.catchError(action.payload.code, action.payload.error));
 
+    @Effect() navigateToDetails = this.update$
+        .ofType(UserActions.ADD_USER_SUCCESS)
+        .map(action => this.router.navigate(['userdetail', action.payload]));
 
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)
@@ -138,6 +141,10 @@ export class UserEffects {
     @Effect() removeError = this.update$
         .ofType(UserActions.LOAD_USERS_SUCCESS, UserActions.GET_USER_SUCCESS, UserActions.LOAD_USER_GROUPS_SUCCESS,
         UserActions.LOAD_AVAILABLE_STUDENTS_SUCCESS, UserActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
-        UserActions.CHANGE_USER_GROUPS_SUCCESS)
+        UserActions.CHANGE_USER_GROUPS_SUCCESS, UserActions.ADD_USER_SUCCESS)
         .map(users => this.errorActions.removeError());
+
+    @Effect() removeValidationError = this.update$
+        .ofType(ErrorActions.REMOVE_ERROR)
+        .map(users => this.errorActions.removeValidationError());
 }

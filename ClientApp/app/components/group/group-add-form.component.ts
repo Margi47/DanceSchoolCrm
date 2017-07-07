@@ -11,7 +11,6 @@ import { ErrorField } from '../../models/error-field';
 export class GroupAddFormComponent implements OnChanges {
     @ViewChild('groupForm') public groupForm: NgForm;
     ngOnChanges() {
-        console.log(this.errors);
         if (this.errors.length > 0) {
             for (let i in this.errors) {
                 let item = this.errors[i];
