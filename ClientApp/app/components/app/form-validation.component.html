@@ -1,0 +1,19 @@
+﻿<div *ngIf="model.errors && (model.dirty || model.touched)"
+     class="alert help-block" style="border-color: red; line-height: 5px">
+    <div [hidden]="!model.errors.required">
+        {{requiredMessage}}
+    </div>
+    <div [hidden]="!model.errors.minlength">
+        {{minMessage}}
+    </div>
+    <div [hidden]="!model.errors.maxlength">
+        {{maxMessage}}
+    </div>
+    <div [hidden]="!model.errors.pattern">
+        {{patternMessage}}
+    </div>
+    <div [hidden]="!model.errors.server">
+        <div *ngFor="let x of model.errors.server">{{x}}</div>
+    </div>
+</div>
+<button (click)="onShowClick()" type="button">Show</button>

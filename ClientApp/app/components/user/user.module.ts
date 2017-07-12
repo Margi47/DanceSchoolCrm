@@ -10,6 +10,8 @@ import { UserDetailFormComponent } from '../user/user-detail-form.component';
 import { UserAddComponent } from '../user/user-add.component';
 import { UserAddFormComponent } from '../user/user-add-form.component';
 
+import { FormValidatiionComponent } from '../app/form-validation.component';
+
 import { UserService } from '../../services/user.service';
 import { UserActions } from '../../actions/user.actions';
 import { UserEffects } from '../../effects/user.effects';
@@ -26,7 +28,8 @@ import { UserEffects } from '../../effects/user.effects';
         UserDetailComponent,
         UserDetailFormComponent,       
         UserAddComponent,
-        UserAddFormComponent
+        UserAddFormComponent,
+        FormValidatiionComponent
     ],
     exports: [UsersComponent],
     providers: [UserService, UserActions]
