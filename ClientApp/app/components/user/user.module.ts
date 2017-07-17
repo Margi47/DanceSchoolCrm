@@ -11,10 +11,13 @@ import { UserAddComponent } from '../user/user-add.component';
 import { UserAddFormComponent } from '../user/user-add-form.component';
 
 import { FormValidatiionComponent } from '../app/form-validation.component';
+import { ServerValidationDirective } from '../app/server-validation.directive';
 
 import { UserService } from '../../services/user.service';
 import { UserActions } from '../../actions/user.actions';
 import { UserEffects } from '../../effects/user.effects';
+
+
 
 @NgModule({
     imports: [
@@ -29,7 +32,8 @@ import { UserEffects } from '../../effects/user.effects';
         UserDetailFormComponent,       
         UserAddComponent,
         UserAddFormComponent,
-        FormValidatiionComponent
+        FormValidatiionComponent,
+        ServerValidationDirective
     ],
     exports: [UsersComponent],
     providers: [UserService, UserActions]
