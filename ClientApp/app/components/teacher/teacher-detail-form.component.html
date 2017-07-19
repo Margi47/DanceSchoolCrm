@@ -18,12 +18,7 @@
                         #group="ngModel" name="group">
                     <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
                 </select>
-                <div *ngIf="group.errors && (group.dirty || group.touched)"
-                     class="alert help-block" style="border-color: red; line-height: 5px">
-                    <div [hidden]="!group.errors.required">
-                        Select group
-                    </div>
-                </div>
+                <form-validation [model]="group"></form-validation>
             </div>
             <button class="btn btn-default" type="submit" [disabled]="!teacherGroupForm.form.valid">Add</button>
         </form>
