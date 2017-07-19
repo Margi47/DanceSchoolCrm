@@ -8,8 +8,8 @@
                        class="form-control"
                        [(ngModel)]="model.name"
                        name="name" #name="ngModel"
-                        maxlength="25" minlength="3" />
-                <form-validation [model]="name" [minMessage]="'Name has to be longer, than 3 symbols'"></form-validation>
+                       required maxlength="25"/>
+                <form-validation [model]="name" [maxMessage]="'Name cannot be longer, than 25 symbols'"></form-validation>
             </div>
 
             <div class="form-group">
@@ -27,15 +27,7 @@
                        [(ngModel)]="model.email"
                        name="email" #email="ngModel"
                        type="email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" />
-                <div *ngIf="email.errors && (email.dirty || email.touched)"
-                     class="alert help-block" style="border-color: red; line-height: 5px">
-                    <div [hidden]="!email.errors.pattern">
-                        Enter valid email address
-                    </div>
-                    <div [hidden]="!email.errors.server">
-                        <div *ngFor="let x of email.errors.server">{{x}}</div>
-                    </div>
-                </div>
+                <form-validation [model]="email"></form-validation>
             </div>
             <div class="form-group">
                 <input type="checkbox"
@@ -87,12 +79,7 @@
                             #group="ngModel" name="group">
                         <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
                     </select>
-                    <div *ngIf="group.errors && (group.dirty || group.touched)"
-                         class="alert help-block" style="border-color: red; line-height: 5px">
-                        <div [hidden]="!group.errors.required">
-                            Select group
-                        </div>
-                    </div>
+                    <form-validation [model]="group"></form-validation>
                 </div>
                 <button class="btn btn-default" type="submit" [disabled]="!userGroupForm.form.valid">Add</button>
             </form>
