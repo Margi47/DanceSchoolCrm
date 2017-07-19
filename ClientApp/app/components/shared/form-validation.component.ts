@@ -8,7 +8,7 @@ import { FormControl } from "@angular/forms";
     templateUrl: 'form-validation.component.html'
 })
 
-export class FormValidatiionComponent{
+export class FormValidationComponent{
     @Input() model: FormControl;
     @Input() requiredMessage: string = "Field is required";
     @Input() minMessage: string = "Field has to be longer";     //+ this.model.errors.minlength.requiredLength;

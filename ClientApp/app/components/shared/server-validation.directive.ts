@@ -1,9 +1,6 @@
-﻿import { Directive, Input, ElementRef, Renderer, ViewChild, OnInit, OnChanges } from '@angular/core';
-import { User } from '../../models/user';
+﻿import { Directive, Input, ElementRef, Renderer, OnChanges } from '@angular/core';
 import { ErrorField } from '../../models/error-field';
 import { NgForm } from "@angular/forms";
-import { Observable } from 'rxjs/Observable';
-import { Store } from '@ngrx/store';
 
 @Directive({
     selector: '[serverValidator]'
