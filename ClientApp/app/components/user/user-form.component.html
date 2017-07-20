@@ -9,7 +9,9 @@
                        [(ngModel)]="model.name"
                        name="name" #name="ngModel"
                        required maxlength="25"/>
-                <form-validation [model]="name" [maxMessage]="'Name cannot be longer, than 25 symbols'"></form-validation>
+                <form-validation [model]="name" 
+                                 [fieldName]="'Name'" 
+                                 [maxMessage]="'Name cannot be longer, than 25 symbols'"></form-validation>
             </div>
 
             <div class="form-group">
@@ -19,7 +21,7 @@
                        [(ngModel)]="model.phone"
                        name="phone" #phone="ngModel"
                        pattern="^\+[1-9]{1}[0-9]{3,14}$" />
-                <form-validation [model]="phone"></form-validation>
+                <form-validation [model]="phone" [fieldName]="'Phone'"></form-validation>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
@@ -27,7 +29,7 @@
                        [(ngModel)]="model.email"
                        name="email" #email="ngModel"
                        type="email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" />
-                <form-validation [model]="email"></form-validation>
+                <form-validation [model]="email" [fieldName]="'Email'"></form-validation>
             </div>
             <div class="form-group">
                 <input type="checkbox"
@@ -79,7 +81,7 @@
                             #group="ngModel" name="group">
                         <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
                     </select>
-                    <form-validation [model]="group"></form-validation>
+                    <form-validation [model]="group" [fieldName]="'Group'"></form-validation>
                 </div>
                 <button class="btn btn-default" type="submit" [disabled]="!userGroupForm.form.valid">Add</button>
             </form>

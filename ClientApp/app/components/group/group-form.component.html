@@ -9,7 +9,9 @@
                    [(ngModel)]="model.name"
                    name="name" #name="ngModel"
                    required maxlength="25"/>
-            <form-validation [model]="name" [maxMessage]="'Name cannot be longer, than 25 symbols'"></form-validation>
+            <form-validation [model]="name" 
+                             [fieldName]="'Name'"
+                             [maxMessage]="'Name cannot be longer, than 25 symbols'"></form-validation>
         </div>
         <div class="form-group">
             <label for="description">Description</label>
@@ -19,7 +21,9 @@
                    [(ngModel)]="model.description"                      
                    name="description" #description="ngModel"
                    maxlength="70">
-            <form-validation [model]="description" [maxMessage]="'Description cannot be longer, than 70 symbols'"></form-validation>
+            <form-validation [model]="description" 
+                             [fieldName]="'Description'"
+                             [maxMessage]="'Description cannot be longer, than 70 symbols'"></form-validation>
         </div>
         <div class="form-group">
             <input type="checkbox"
@@ -42,7 +46,7 @@
                         #teacher="ngModel" name="teacher">
                     <option *ngFor="let teacher of allTeachers" [ngValue]="teacher">{{teacher.name}}</option>
                 </select>
-                <form-validation [model]="teacher"></form-validation>
+                <form-validation [model]="teacher" [fieldName]="'Teacher'"></form-validation>
             </div>
             <button class="btn btn-default" type="submit" [disabled]="!groupTeacherForm.form.valid">Add</button>
         </form>
@@ -93,7 +97,7 @@
                         #student="ngModel" name="student">
                     <option *ngFor="let user of allUsers" [ngValue]="user">{{user.name}}</option>
                 </select>
-                <form-validation [model]="student"></form-validation>
+                <form-validation [model]="student" [fieldName]="'Student'"></form-validation>
             </div>
             <button class="btn btn-default" type="submit" [disabled]="!groupStudentForm.form.valid">Add</button>
         </form>

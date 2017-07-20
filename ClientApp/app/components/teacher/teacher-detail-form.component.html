@@ -18,7 +18,7 @@
                         #group="ngModel" name="group">
                     <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
                 </select>
-                <form-validation [model]="group"></form-validation>
+                <form-validation [model]="group" [fieldName]="'Group'"></form-validation>
             </div>
             <button class="btn btn-default" type="submit" [disabled]="!teacherGroupForm.form.valid">Add</button>
         </form>

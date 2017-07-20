@@ -9,7 +9,7 @@
                     required >
                 <option *ngFor="let user of allUsers" [ngValue]="user">{{user.id}} - {{user.name}}</option>
             </select>
-            <form-validation [model]="user"></form-validation>
+            <form-validation [model]="user" [fieldName]="'User'"></form-validation>
         </div>
 
         <button type="submit" [disabled]="!teacherAddForm.form.valid" class="btn btn-default">Save</button>
