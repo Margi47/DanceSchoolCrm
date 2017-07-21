@@ -1,4 +1,4 @@
-﻿import { Component, Output, Input, EventEmitter, OnChanges, ViewChild } from '@angular/core';
+﻿import { Component, Output, Input, EventEmitter } from '@angular/core';
 import { User } from '../../models/user';
 import { ErrorField } from '../../models/error-field';
 import { NgForm } from "@angular/forms";
@@ -7,19 +7,7 @@ import { NgForm } from "@angular/forms";
     selector: 'user-add-form',
     templateUrl: './user-form.component.html'
 })
-export class UserAddFormComponent implements OnChanges {
-    @ViewChild('userForm') public userForm: NgForm;
-    ngOnChanges() {
-        if (this.errors.length > 0) {
-            for (let i in this.errors) {
-                let item = this.errors[i];
-                let nameControl = this.userForm.form.get(item.key.toLowerCase());
-                nameControl.markAsDirty();
-                nameControl.setErrors({ ["server"]: item.reasons });               
-            }
-        }
-    }
-
+export class UserAddFormComponent{
     model = new User();
     newUser: boolean = true;
     @Input() errors: ErrorField[];

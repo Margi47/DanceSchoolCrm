@@ -9,12 +9,7 @@
                     required >
                 <option *ngFor="let user of allUsers" [ngValue]="user">{{user.id}} - {{user.name}}</option>
             </select>
-            <div  *ngIf="user.errors && (user.dirty || user.touched)"
-                     class="alert help-block" style="border-color: red; line-height: 5px">
-                <div [hidden]="!user.errors.required">
-                    Select User
-                </div>
-            </div>
+            <form-validation [model]="user" [fieldName]="'User'"></form-validation>
         </div>
 
         <button type="submit" [disabled]="!teacherAddForm.form.valid" class="btn btn-default">Save</button>

@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { GroupModule } from '../group/group.module';
 import { UserModule } from '../user/user.module';
 import { TeacherModule } from '../teacher/teacher.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { ErrorComponent } from './error.component';
@@ -27,6 +28,7 @@ import { ErrorActions } from '../../actions/error.actions';
         GroupModule,
         UserModule,
         TeacherModule,
+        SharedModule,
         StoreModule.provideStore(reducer)
     ],
     providers: [ErrorActions]
