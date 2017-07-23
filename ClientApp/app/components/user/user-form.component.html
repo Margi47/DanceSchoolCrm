@@ -1,5 +1,5 @@
 ﻿<div *ngIf="model" style="margin-top:20px">
-        <form (ngSubmit)="onUserSubmit($event)" #userForm="ngForm">
+        <form (ngSubmit)="onUserSubmit($event)" #userForm="ngForm" [serverValidator]="userForm" [errors]="errors">
             <div *ngIf="!newUser"><label>Id: {{model.id}}</label></div>
 
             <div class="form-group">
@@ -9,18 +9,9 @@
                        [(ngModel)]="model.name"
                        name="name" #name="ngModel"
                        required maxlength="25"/>
-                <div *ngIf="name.errors && (name.dirty || name.touched)"
-                     class="alert help-block" style="border-color: red; line-height: 5px">
-                    <div [hidden]="!name.errors.required">
-                        Name is required
-                    </div>
-                    <div [hidden]="!name.errors.maxlength">
-                        Name cannot be more than 25 characters long.
-                    </div>
-                    <div [hidden]="!name.errors.server">
-                        <div *ngFor="let x of name.errors.server">{{x}}</div>
-                    </div>
-                </div>
+                <form-validation [model]="name" 
+                                 [fieldName]="'Name'" 
+                                 [maxMessage]="'Name cannot be longer than 25 symbols'"></form-validation>
             </div>
 
             <div class="form-group">
@@ -29,32 +20,16 @@
                        class="form-control"
                        [(ngModel)]="model.phone"
                        name="phone" #phone="ngModel"
-                       pattern="^\+[1-9]{1}[0-9]{3,14}$">
-                <div *ngIf="phone.errors && (phone.dirty || phone.touched)"
-                     class="alert help-block" style="border-color: red; line-height: 5px">
-                    <div [hidden]="!phone.errors.pattern">
-                        Enter valid phone number (Example: +76342054862)
-                    </div>
-                    <div [hidden]="!phone.errors.server">
-                        <div *ngFor="let x of phone.errors.server">{{x}}</div>
-                    </div>
-                </div>
+                       pattern="^\+[1-9]{1}[0-9]{3,14}$" />
+                <form-validation [model]="phone" [fieldName]="'Phone'"></form-validation>
             </div>
             <div class="form-group">
                 <label for="email">Email</label>
                 <input class="form-control"
                        [(ngModel)]="model.email"
                        name="email" #email="ngModel"
-                       type="email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$"/>
-                <div *ngIf="email.errors && (email.dirty || email.touched)"
-                     class="alert help-block" style="border-color: red; line-height: 5px">
-                    <div [hidden]="!email.errors.pattern">
-                        Enter valid email address
-                    </div>
-                    <div [hidden]="!email.errors.server">
-                        <div *ngFor="let x of email.errors.server">{{x}}</div>
-                    </div>
-                </div>
+                       type="email" pattern="^[a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,15})$" />
+                <form-validation [model]="email" [fieldName]="'Email'"></form-validation>
             </div>
             <div class="form-group">
                 <input type="checkbox"
@@ -83,12 +58,14 @@
                        (ngModelChange)="isTeacherClicked($event)"
                        [disabled]="!model.isActive">
                 <label>Is Teacher</label>
-                <button (click)="onTeacherDetails()" 
-                        class="btn btn-default" 
+                <button (click)="onTeacherDetails()"
+                        class="btn btn-default"
                         type="button"
-                        *ngIf="model.isTeacher && !newUser">Go to Teacher</button>
+                        *ngIf="model.isTeacher && !newUser">
+                    Go to Teacher
+                </button>
             </div>
-            
+
 
             <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Save</button>
             <button (click)="onUserCancel(); userForm.reset()" class="btn btn-default" type="button" *ngIf="newUser">Cancel</button>
@@ -104,12 +81,7 @@
                             #group="ngModel" name="group">
                         <option *ngFor="let group of allGroups" [ngValue]="group">{{group.id}} - {{group.name}}</option>
                     </select>
-                    <div *ngIf="group.errors && (group.dirty || group.touched)"
-                         class="alert help-block" style="border-color: red; line-height: 5px">
-                        <div [hidden]="!group.errors.required">
-                            Select group
-                        </div>
-                    </div>
+                    <form-validation [model]="group" [fieldName]="'Group'"></form-validation>
                 </div>
                 <button class="btn btn-default" type="submit" [disabled]="!userGroupForm.form.valid">Add</button>
             </form>

@@ -12,10 +12,12 @@ import { ErrorActions } from '../../actions/error.actions';
 @Component({
     selector: 'add-group',
     template: `
-<group-add-form [errors] = "errors$ | async"
-                (groupSave)="onGroupSubmit($event)" 
-                (groupCancel)="onGroupCancel()">
-</group-add-form>`
+<div  class="col-sm-6">
+    <group-add-form [errors] = "errors$ | async"
+                    (groupSave)="onGroupSubmit($event)" 
+                    (groupCancel)="onGroupCancel()">
+    </group-add-form>
+</div>`
 })
 export class GroupAddComponent {
     errors$: Observable<any>;

@@ -14,20 +14,23 @@ import { Location } from '@angular/common';
 @Component({
     selector: 'group-detail',
     template: `
-<group-detail-form [errors] = "errors$ | async"
-                   [model] = "model$ | async"
-                   [allUsers] = "allStudents$ | async"
-                   [allTeachers] = "allTeachers$ | async"
-                   (deleteGroup) = "deleteGroup($event)"
-                   (updateGroup) = "groupUpdate($event)"
-                   (groupGoBack) = "goBack()"
-                   (showUserDetails) = showUserDetails($event)
-                   (addGroupStudent) = addStudentToGroup($event)
-                   (removeGroupStudent) = removeGroupStudent($event)
-                   (showGroupTeacherDetails) = showTeacherDetails($event)
-                   (addGroupTeacher) = addTeacherToGroup($event)
-                   (removeGroupTeacher) = removeGroupTeacher($event)>
-</group-detail-form>`
+<div  class="col-sm-6">
+    <button (click)="goBack()" class="btn btn-default">Back</button>
+    <group-detail-form [errors] = "errors$ | async"
+                       [model] = "model$ | async"
+                       [allUsers] = "allStudents$ | async"
+                       [allTeachers] = "allTeachers$ | async"
+                       (deleteGroup) = "deleteGroup($event)"
+                       (updateGroup) = "groupUpdate($event)"
+                       (groupGoBack) = "goBack()"
+                       (showUserDetails) = showUserDetails($event)
+                       (addGroupStudent) = addStudentToGroup($event)
+                       (removeGroupStudent) = removeGroupStudent($event)
+                       (showGroupTeacherDetails) = showTeacherDetails($event)
+                       (addGroupTeacher) = addTeacherToGroup($event)
+                       (removeGroupTeacher) = removeGroupTeacher($event)>
+    </group-detail-form>
+</div>`
 })
 
 export class GroupDetailComponent implements OnInit {

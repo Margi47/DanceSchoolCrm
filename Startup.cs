@@ -10,13 +10,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using angular.Models;
+using angular.Responses;
+using angular.Repositories;
 using AutoMapper;
 using angular.Controllers.Users;
 using angular.Controllers.Groups;
-using angular.Repositories;
-using angular.Responses;
 
-namespace angular
+namespace WebApplicationBasic
 {
     public class Startup
     {
@@ -46,7 +46,7 @@ namespace angular
                     config.Filters.Add(typeof(ApiValidationAttribute));
                 }
             );
-            
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
             services.AddScoped<ITeacherRepository, TeacherRepository>();
