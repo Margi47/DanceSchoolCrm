@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
-import { UniversalModule } from 'angular2-universal';
+import { HttpModule } from '@angular/http';
+import { JsonpModule } from '@angular/http';
+import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
 
@@ -22,7 +24,9 @@ import { ErrorActions } from '../../actions/error.actions';
         ErrorComponent
     ],
     imports: [
-        UniversalModule, // Must be first import. This automatically imports BrowserModule, HttpModule, and JsonpModule too.
+        BrowserModule,
+        JsonpModule,
+        HttpModule,
         AppRoutingModule,
         FormsModule,
         GroupModule,
@@ -31,7 +35,7 @@ import { ErrorActions } from '../../actions/error.actions';
         SharedModule,
         StoreModule.provideStore(reducer)
     ],
-    providers: [ErrorActions]
+    providers: [ErrorActions, { provide: 'ORIGIN_URL', useValue: location.origin }]
 })
 export class AppModule {
 }

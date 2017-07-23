@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { Injectable, Inject } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
@@ -13,14 +13,21 @@ import { Teacher } from '../models/teacher';
 
 @Injectable()
 export class UserService {
-    private usersUrl = 'api/users';
-    private groupUserUrl = 'api/groupuser';
+    private usersUrl;
+    private groupUserUrl;
 
-    constructor(private http: Http) { }
+    constructor(private http: Http, @Inject('ORIGIN_URL') private originUrl: string) {
+        this.usersUrl = originUrl + '/api/users';
+        this.groupUserUrl = originUrl + '/api/groupuser';
+    }
 
     getUsers(): Observable<User[]> {
+        console.log(this.usersUrl);
         return this.http.get(this.usersUrl)
-            .map(response => response.json());
+            .map(response => {
+                console.log("response");
+                return response.json();
+            });
     }
 
     getUser(id: number): Observable<User> {
