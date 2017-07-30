@@ -8,9 +8,10 @@ using angular.Models;
 namespace angular.Migrations
 {
     [DbContext(typeof(CrmContext))]
-    partial class CrmContextModelSnapshot : ModelSnapshot
+    [Migration("20170730194905_SoftDeleteMigration")]
+    partial class SoftDeleteMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.2")

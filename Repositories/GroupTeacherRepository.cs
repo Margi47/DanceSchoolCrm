@@ -1,5 +1,6 @@
 ﻿using angular.Exceptions;
 using angular.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,8 @@ namespace angular.Repositories
 
         public IEnumerable<User> GetTeachersByGroup(int groupId)
         {
-            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
+            var group = _context.Groups.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FirstOrDefault(g => g.Id == groupId);
             if(group == null)
             {
                 throw new EntityNotFoundException("Group", groupId);
@@ -26,13 +28,16 @@ namespace angular.Repositories
 
             return _context.GroupTeachers
                            .Where(g => g.GroupId == groupId)
-                           .Select(g => g.Teacher.User)
+                           .Select(g => g.Teacher)
+                           .Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                           .Select(t => t.User)
                            .ToList();
         }
 
         public IEnumerable<Group> GetGroupsByTeacher(int teacherId)
         {
-            var teacher = _context.Teachers.FirstOrDefault(t => t.Id == teacherId);
+            var teacher = _context.Teachers.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FirstOrDefault(t => t.Id == teacherId);
             if (teacher == null)
             {
                 throw new EntityNotFoundException("Teacher", teacherId);
@@ -41,27 +46,12 @@ namespace angular.Repositories
             return _context.GroupTeachers
                            .Where(g => g.TeacherId == teacherId)
                            .Select(g => g.Group)
+                           .Where(i => EF.Property<bool>(i, "IsDeleted") == false)
                            .ToList();
         }
 
         public void AddGroupTeachers(int groupId, int teacherId)
         {
-
-            if (_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == teacherId))
-            {
-                throw new EntityDuplicateException("Group-Teacher", groupId, teacherId);
-            }
-
-            if (!_context.Groups.Any(g => g.Id == groupId))
-            {
-                throw new EntityNotFoundException("Group", groupId);
-            }
-
-            if (!_context.Teachers.Any(t => t.Id == teacherId))
-            {
-                throw new EntityNotFoundException("Teacher", teacherId);
-            }
-
             _context.GroupTeachers.Add(new GroupTeachers { GroupId = groupId, TeacherId = teacherId });
             _context.SaveChanges();
         }
@@ -71,25 +61,25 @@ namespace angular.Repositories
             var entity = _context.GroupTeachers
                 .FirstOrDefault(g => g.GroupId == groupId && g.TeacherId == teacherId);
 
-            if (entity == null)
+            if (entity != null)
             {
-                throw new EntityNotFoundException("Group-Teacher", groupId, teacherId);
-            }
-
-            _context.GroupTeachers.Remove(entity);
-            _context.SaveChanges();
+                _context.GroupTeachers.Remove(entity);
+                _context.SaveChanges();
+            }          
         }
 
         public IEnumerable<User> GetAvailableTeachers(int groupId)
         {
-            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
+            var group = _context.Groups.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FirstOrDefault(g => g.Id == groupId);
             if (group == null)
             {
                 throw new EntityNotFoundException("Group", groupId);
             }
 
             var result = _context.Teachers
-                .Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
+                .Where(t => t.IsActive && EF.Property<bool>(t, "IsDeleted") == false && 
+                        !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
                 .Select(t => t.User)
                 .ToArray();
             return result;
@@ -97,14 +87,16 @@ namespace angular.Repositories
 
         public IEnumerable<Group> GetAvailableGroups(int teacherId)
         {
-            var teacher = _context.Teachers.FirstOrDefault(t => t.Id == teacherId);
+            var teacher = _context.Teachers.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FirstOrDefault(t => t.Id == teacherId);
             if (teacher == null)
             {
                 throw new EntityNotFoundException("Teacher", teacherId);
             }
 
             var result = _context.Groups
-                .Where(g => g.IsActive && !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
+                .Where(g => g.IsActive && EF.Property<bool>(g, "IsDeleted") == false
+                    && !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
                 .ToArray();
             return result;
         }

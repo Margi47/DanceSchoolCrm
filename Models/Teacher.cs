@@ -14,6 +14,7 @@ namespace angular.Models
         [Required]
         public User User { get; set; }
         public List<GroupTeachers> Groups { get; set; }
+        public bool IsActive { get; set; }
         //public List<string> Styles { get; set; }
     }
 }

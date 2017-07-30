@@ -1,5 +1,6 @@
 ﻿using angular.Exceptions;
 using angular.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,21 +19,24 @@ namespace angular.Repositories
 
         public IEnumerable<Group> GetGroupsByUser(int userId)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _context.Users.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
                 throw new EntityNotFoundException("User", userId);
             }
 
             return _context.Users.Where(u => u.Id == userId)
-                .SelectMany(x => x.Groups)
+                .SelectMany(x => x.Groups)               
                 .Select(x => x.Group)
+                .Where(i => EF.Property<bool>(i, "IsDeleted") == false)
                 .ToList();
         }
 
         public IEnumerable<User> GetStudentsByGroup(int groupId)
         {
-            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
+            var group = _context.Groups.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FirstOrDefault(g => g.Id == groupId);
             if (group == null)
             {
                 throw new EntityNotFoundException("Group", groupId);
@@ -41,28 +45,12 @@ namespace angular.Repositories
             return _context.Groups.Where(g => g.Id == groupId)
                 .SelectMany(g => g.Students)
                 .Select(u => u.User)
+                .Where(i => EF.Property<bool>(i, "IsDeleted") == false)
                 .ToList();
         }
 
         public void AddGroupUser(int userId, int groupId)
         {
-            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
-            if (group == null)
-            {
-                throw new EntityNotFoundException("Group", groupId);
-            }
-
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-            if (user == null)
-            {
-                throw new EntityNotFoundException("User", userId);
-            }
-
-            if (_context.GroupUser.Any(x => x.UserId == userId && x.GroupId == groupId))
-            {
-                throw new EntityDuplicateException("Group-User", groupId, userId);
-            }
-
             _context.GroupUser.Add(new GroupUser { GroupId = groupId, UserId = userId });
             _context.SaveChanges();
         }
@@ -71,25 +59,26 @@ namespace angular.Repositories
         {
             var entity = _context.GroupUser
                 .FirstOrDefault(g => g.GroupId == groupId && g.UserId == userId);
-            if (entity == null)
-            {
-                throw new EntityNotFoundException("Group-User", groupId, userId);
-            }
 
-            _context.GroupUser.Remove(entity);
-            _context.SaveChanges();
+            if (entity != null)
+            {
+                _context.GroupUser.Remove(entity);
+                _context.SaveChanges();
+            }          
         }
 
         public IEnumerable<User> GetAvailableStudents(int groupId)
         {
-            var group = _context.Groups.FirstOrDefault(g => g.Id == groupId);
+            var group = _context.Groups.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FirstOrDefault(g => g.Id == groupId);
             if (group == null)
             {
                 throw new EntityNotFoundException("Group", groupId);
             }
 
             var result = _context.Users
-                .Where(u => u.IsActive && !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
+                .Where(u => u.IsActive && EF.Property<bool>(u, "IsDeleted") == false 
+                    && !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
                 .ToArray();
             return result;
         }
@@ -103,7 +92,8 @@ namespace angular.Repositories
             }
 
             var result = _context.Groups
-                .Where(g => g.IsActive && !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
+                .Where(g => g.IsActive && EF.Property<bool>(g, "IsDeleted") == false
+                    && !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
                 .ToArray();
             return result;
         }

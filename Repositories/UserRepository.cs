@@ -21,10 +21,23 @@ namespace angular.Models
             return context.Users;
         }
 
+        public override void Remove(User item)
+        {
+            base.Remove(item);
+
+            var teacher = Context.Teachers.FirstOrDefault(t => t.Id == item.Id);
+            if(teacher != null)
+            {
+                Context.Teachers.Remove(teacher);
+                Context.SaveChanges();
+            }
+        }
+
         public User[] GetAvailableTeachers()
         {
             var result = Context.Users
-                .Where(u => u.IsActive && !Context.Teachers.Any(t => t.Id == u.Id))
+                .Where(u => u.IsActive && EF.Property<bool>(u, "IsDeleted") == false
+                    && !Context.Teachers.Any(t => t.Id == u.Id))
                 .ToArray();
             return result;
         }

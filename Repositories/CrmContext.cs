@@ -48,6 +48,7 @@ namespace angular.Models
                 .HasForeignKey(gu => gu.TeacherId);
 
             modelBuilder.Entity<Teacher>()
+                
                 .HasOne(t => t.User)
                 .WithOne(i => i.TeacherInfo)
                 .HasForeignKey<Teacher>(t => t.Id);
@@ -62,12 +63,6 @@ namespace angular.Models
                 .Property<bool>("IsDeleted");
 
             modelBuilder.Entity<Teacher>()
-                .Property<bool>("IsDeleted");
-
-            modelBuilder.Entity<GroupUser>()
-                .Property<bool>("IsDeleted");
-
-            modelBuilder.Entity<GroupTeachers>()
                 .Property<bool>("IsDeleted");
         }
 
@@ -85,7 +80,15 @@ namespace angular.Models
 
         private void OnBeforeSaving()
         {
-            foreach (var entry in ChangeTracker.Entries<User>())
+            ChangeIsDeleted<User>();
+            ChangeIsDeleted<Group>();
+            ChangeIsDeleted<Teacher>();
+        }
+
+        public void ChangeIsDeleted<T>()
+            where T:class
+        {
+            foreach (var entry in ChangeTracker.Entries<T>())
             {
                 switch (entry.State)
                 {
@@ -96,66 +99,7 @@ namespace angular.Models
                     case EntityState.Deleted:
                         entry.State = EntityState.Modified;
                         entry.CurrentValues["IsDeleted"] = true;
-                        break;
-                }
-            }
-
-            foreach (var entry in ChangeTracker.Entries<Group>())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.CurrentValues["IsDeleted"] = false;
-                        break;
-
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.CurrentValues["IsDeleted"] = true;
-                        break;
-                }
-            }
-
-            foreach (var entry in ChangeTracker.Entries<Teacher>())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.CurrentValues["IsDeleted"] = false;
-                        break;
-
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.CurrentValues["IsDeleted"] = true;
-                        break;
-                }
-            }
-
-            foreach (var entry in ChangeTracker.Entries<GroupUser>())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.CurrentValues["IsDeleted"] = false;
-                        break;
-
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.CurrentValues["IsDeleted"] = true;
-                        break;
-                }
-            }
-
-            foreach (var entry in ChangeTracker.Entries<GroupTeachers>())
-            {
-                switch (entry.State)
-                {
-                    case EntityState.Added:
-                        entry.CurrentValues["IsDeleted"] = false;
-                        break;
-
-                    case EntityState.Deleted:
-                        entry.State = EntityState.Modified;
-                        entry.CurrentValues["IsDeleted"] = true;
+                        entry.CurrentValues["IsActive"] = false;
                         break;
                 }
             }

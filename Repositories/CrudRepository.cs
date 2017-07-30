@@ -27,7 +27,8 @@ namespace angular.Models
         public T Find(int key)
         {
             var items = GetQuery(Context);
-            var result = items.FirstOrDefault(GetExpression(key));
+            var result = items.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FirstOrDefault(GetExpression(key));
 
             if(result == null)
             {
@@ -40,14 +41,15 @@ namespace angular.Models
         public IEnumerable<T> GetAll()
         {
             var items = GetQuery(Context);
-            return items.ToList();
+            return items.Where(i => EF.Property<bool>(i, "IsDeleted") == false).ToList();
         }
 
-        public void Remove(T item)
+        public virtual void Remove(T item)
         {
             var items = GetQuery(Context);
             items.Remove(item);
             Context.SaveChanges();
+
         }
 
         public void Update(T item)

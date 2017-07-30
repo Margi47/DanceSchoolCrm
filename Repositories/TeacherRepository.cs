@@ -18,16 +18,11 @@ namespace angular.Models
 
         public IEnumerable<User> GetTeachers()
         {
-            return _context.Teachers.Select(t => t.User);
+            return _context.Teachers.Where(t => EF.Property<bool>(t, "IsDeleted") == false).Select(t => t.User);
         }
 
         public void AddTeacher(Teacher teacher)
         {
-            if (_context.Teachers.Any(t => t.Id == teacher.Id))
-            {
-                throw new EntityDuplicateException("Teacher", teacher.Id);
-            } 
-
             _context.Teachers.Add(teacher);
             _context.SaveChanges();
             var user = _context.Users.First(x => x.Id == teacher.Id);
@@ -38,7 +33,8 @@ namespace angular.Models
         public Teacher GetTeacher(int teacherId)
         {
             var teacher = _context.Teachers
-                .Where(t => t.Id == teacherId).Include(t => t.User).FirstOrDefault();
+                .Where(t => (t.Id == teacherId) && (EF.Property<bool>(t, "IsDeleted") == false))
+                .Include(t => t.User).FirstOrDefault();
 
             if (teacher == null)
             {
