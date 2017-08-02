@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using DanceSchoolCrm.Repositories;
 
 namespace angular.Models
 {
@@ -36,8 +37,9 @@ namespace angular.Models
         public User[] GetAvailableTeachers()
         {
             var result = Context.Users
-                .Where(u => u.IsActive && EF.Property<bool>(u, "IsDeleted") == false
-                    && !Context.Teachers.Any(t => t.Id == u.Id))
+                .Where(u => u.IsActive)
+                .FilterDeleted()
+                .Where(u => !Context.Teachers.Any(t => t.Id == u.Id))
                 .ToArray();
             return result;
         }

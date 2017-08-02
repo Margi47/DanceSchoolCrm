@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DanceSchoolCrm.Repositories;
 
 namespace angular.Repositories
 {
@@ -19,7 +20,7 @@ namespace angular.Repositories
 
         public IEnumerable<User> GetTeachersByGroup(int groupId)
         {
-            var group = _context.Groups.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+            var group = _context.Groups.FilterDeleted()
                 .FirstOrDefault(g => g.Id == groupId);
             if(group == null)
             {
@@ -29,14 +30,14 @@ namespace angular.Repositories
             return _context.GroupTeachers
                            .Where(g => g.GroupId == groupId)
                            .Select(g => g.Teacher)
-                           .Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                           .FilterDeleted()
                            .Select(t => t.User)
                            .ToList();
         }
 
         public IEnumerable<Group> GetGroupsByTeacher(int teacherId)
         {
-            var teacher = _context.Teachers.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+            var teacher = _context.Teachers.FilterDeleted()
                 .FirstOrDefault(t => t.Id == teacherId);
             if (teacher == null)
             {
@@ -46,7 +47,7 @@ namespace angular.Repositories
             return _context.GroupTeachers
                            .Where(g => g.TeacherId == teacherId)
                            .Select(g => g.Group)
-                           .Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                           .FilterDeleted()
                            .ToList();
         }
 
@@ -70,7 +71,7 @@ namespace angular.Repositories
 
         public IEnumerable<User> GetAvailableTeachers(int groupId)
         {
-            var group = _context.Groups.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+            var group = _context.Groups.FilterDeleted()
                 .FirstOrDefault(g => g.Id == groupId);
             if (group == null)
             {
@@ -78,8 +79,9 @@ namespace angular.Repositories
             }
 
             var result = _context.Teachers
-                .Where(t => t.IsActive && EF.Property<bool>(t, "IsDeleted") == false && 
-                        !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
+                .Where(t => t.IsActive)
+                .FilterDeleted()
+                .Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
                 .Select(t => t.User)
                 .ToArray();
             return result;
@@ -87,7 +89,7 @@ namespace angular.Repositories
 
         public IEnumerable<Group> GetAvailableGroups(int teacherId)
         {
-            var teacher = _context.Teachers.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+            var teacher = _context.Teachers.FilterDeleted()
                 .FirstOrDefault(t => t.Id == teacherId);
             if (teacher == null)
             {
@@ -95,8 +97,9 @@ namespace angular.Repositories
             }
 
             var result = _context.Groups
-                .Where(g => g.IsActive && EF.Property<bool>(g, "IsDeleted") == false
-                    && !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
+                .Where(g => g.IsActive)
+                .FilterDeleted()
+                .Where(g => !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
                 .ToArray();
             return result;
         }

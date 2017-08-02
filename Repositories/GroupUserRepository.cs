@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DanceSchoolCrm.Repositories;
 
 namespace angular.Repositories
 {
@@ -19,7 +20,7 @@ namespace angular.Repositories
 
         public IEnumerable<Group> GetGroupsByUser(int userId)
         {
-            var user = _context.Users.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+            var user = _context.Users.FilterDeleted()
                 .FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
@@ -29,13 +30,13 @@ namespace angular.Repositories
             return _context.Users.Where(u => u.Id == userId)
                 .SelectMany(x => x.Groups)               
                 .Select(x => x.Group)
-                .Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FilterDeleted()
                 .ToList();
         }
 
         public IEnumerable<User> GetStudentsByGroup(int groupId)
         {
-            var group = _context.Groups.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+            var group = _context.Groups.FilterDeleted()
                 .FirstOrDefault(g => g.Id == groupId);
             if (group == null)
             {
@@ -45,7 +46,7 @@ namespace angular.Repositories
             return _context.Groups.Where(g => g.Id == groupId)
                 .SelectMany(g => g.Students)
                 .Select(u => u.User)
-                .Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+                .FilterDeleted()
                 .ToList();
         }
 
@@ -69,7 +70,7 @@ namespace angular.Repositories
 
         public IEnumerable<User> GetAvailableStudents(int groupId)
         {
-            var group = _context.Groups.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+            var group = _context.Groups.FilterDeleted()
                 .FirstOrDefault(g => g.Id == groupId);
             if (group == null)
             {
@@ -77,23 +78,26 @@ namespace angular.Repositories
             }
 
             var result = _context.Users
-                .Where(u => u.IsActive && EF.Property<bool>(u, "IsDeleted") == false 
-                    && !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
+                .Where(u => u.IsActive)
+                .FilterDeleted()
+                .Where(u => !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
                 .ToArray();
             return result;
         }
 
         public IEnumerable<Group> GetAvailableGroups(int userId)
         {
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
+            var user = _context.Users.FilterDeleted()
+                .FirstOrDefault(u => u.Id == userId);
             if (user == null)
             {
                 throw new EntityNotFoundException("User", userId);
             }
 
             var result = _context.Groups
-                .Where(g => g.IsActive && EF.Property<bool>(g, "IsDeleted") == false
-                    && !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
+                .Where(g => g.IsActive)
+                .FilterDeleted()
+                .Where(g => !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
                 .ToArray();
             return result;
         }

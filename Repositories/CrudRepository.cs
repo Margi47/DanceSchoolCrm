@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 using angular.Exceptions;
+using DanceSchoolCrm.Repositories;
 
 namespace angular.Models
 {
@@ -27,7 +28,7 @@ namespace angular.Models
         public T Find(int key)
         {
             var items = GetQuery(Context);
-            var result = items.Where(i => EF.Property<bool>(i, "IsDeleted") == false)
+            var result = items.FilterDeleted()
                 .FirstOrDefault(GetExpression(key));
 
             if(result == null)
@@ -41,7 +42,7 @@ namespace angular.Models
         public IEnumerable<T> GetAll()
         {
             var items = GetQuery(Context);
-            return items.Where(i => EF.Property<bool>(i, "IsDeleted") == false).ToList();
+            return items.FilterDeleted().ToList();
         }
 
         public virtual void Remove(T item)

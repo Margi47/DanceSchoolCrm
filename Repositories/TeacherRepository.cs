@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using angular.Exceptions;
+using DanceSchoolCrm.Repositories;
 
 namespace angular.Models
 {
@@ -18,7 +19,7 @@ namespace angular.Models
 
         public IEnumerable<User> GetTeachers()
         {
-            return _context.Teachers.Where(t => EF.Property<bool>(t, "IsDeleted") == false).Select(t => t.User);
+            return _context.Teachers.FilterDeleted().Select(t => t.User);
         }
 
         public void AddTeacher(Teacher teacher)
@@ -33,7 +34,8 @@ namespace angular.Models
         public Teacher GetTeacher(int teacherId)
         {
             var teacher = _context.Teachers
-                .Where(t => (t.Id == teacherId) && (EF.Property<bool>(t, "IsDeleted") == false))
+                .Where(t => (t.Id == teacherId))
+                .FilterDeleted()
                 .Include(t => t.User).FirstOrDefault();
 
             if (teacher == null)
