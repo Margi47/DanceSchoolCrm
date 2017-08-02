@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using System;
 using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -26,11 +27,32 @@ namespace angular.Responses
                 context.Result = new BadRequestObjectResult(new ApiBadRequestResponse(
                         badRequestException.ErrorMessage));
             }
-            else if (context.Exception is EntityDuplicateException)
+            else if (context.Exception is SqlException)
             {
-                var dublicateException = context.Exception as EntityDuplicateException;
-                context.Result = new BadRequestObjectResult(new ApiDublicatedEntityResponse(
-                        dublicateException.Entity, dublicateException.Id, dublicateException.SecondId));
+                var result = context.Exception as SqlException;
+                string message;
+                switch (result.Number)
+                {
+
+                    case 547:
+                        // ForeignKey Violation
+                        message = "Entity not found.";
+                        break;
+                    case 2627:
+                        // Unique Index/Constriant Violation
+                        message = "Entity already exists";
+                        break;
+                    case 2601:
+                        // Unique Index/Constriant Violation
+                        message = "Entity alseady exists";
+                        break;
+                    default:
+                        // throw a general DAL Exception
+                        message = "Unhandled error occurred";
+                        break;
+                }
+
+                context.Result = new ObjectResult(new ApiErrorResponse(message));
             }
             else
             {

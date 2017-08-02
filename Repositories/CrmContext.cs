@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace angular.Models
@@ -10,7 +11,7 @@ namespace angular.Models
     {
         public CrmContext(DbContextOptions<CrmContext> options)
             : base(options)
-        {}
+        { }
 
         public DbSet<User> Users { get; set; }
         public DbSet<Group> Groups { get; set; }
@@ -47,9 +48,61 @@ namespace angular.Models
                 .HasForeignKey(gu => gu.TeacherId);
 
             modelBuilder.Entity<Teacher>()
+                
                 .HasOne(t => t.User)
                 .WithOne(i => i.TeacherInfo)
                 .HasForeignKey<Teacher>(t => t.Id);
+
+            modelBuilder.Entity<User>()
+                .Property<bool>("IsDeleted");
+
+            //modelBuilder.Entity<User>()
+              //  .HasQueryFilter(post => EF.Property<bool>(post, "IsDeleted") == false);
+
+            modelBuilder.Entity<Group>()
+                .Property<bool>("IsDeleted");
+
+            modelBuilder.Entity<Teacher>()
+                .Property<bool>("IsDeleted");
+        }
+
+        public override int SaveChanges(bool acceptAllChangesOnSuccess)
+        {
+            OnBeforeSaving();
+            return base.SaveChanges(acceptAllChangesOnSuccess);
+        }
+
+        public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            OnBeforeSaving();
+            return base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
+        }
+
+        private void OnBeforeSaving()
+        {
+            ChangeIsDeleted<User>();
+            ChangeIsDeleted<Group>();
+            ChangeIsDeleted<Teacher>();
+        }
+
+        public void ChangeIsDeleted<T>()
+            where T:class
+        {
+            foreach (var entry in ChangeTracker.Entries<T>())
+            {
+                switch (entry.State)
+                {
+                    case EntityState.Added:
+                        entry.CurrentValues["IsDeleted"] = false;
+                        break;
+
+                    case EntityState.Deleted:
+                        entry.State = EntityState.Modified;
+                        entry.CurrentValues["IsDeleted"] = true;
+                        entry.CurrentValues["IsActive"] = false;
+                        break;
+                }
+            }
         }
     }
 }
