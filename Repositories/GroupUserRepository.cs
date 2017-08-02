@@ -78,9 +78,9 @@ namespace angular.Repositories
             }
 
             var result = _context.Users
-                .Where(u => u.IsActive)
                 .FilterDeleted()
-                .Where(u => !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
+                .Where(u => u.IsActive && 
+                    !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
                 .ToArray();
             return result;
         }
@@ -95,9 +95,9 @@ namespace angular.Repositories
             }
 
             var result = _context.Groups
-                .Where(g => g.IsActive)
                 .FilterDeleted()
-                .Where(g => !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
+                .Where(g => g.IsActive && 
+                    !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
                 .ToArray();
             return result;
         }

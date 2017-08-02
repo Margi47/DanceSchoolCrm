@@ -37,9 +37,9 @@ namespace angular.Models
         public User[] GetAvailableTeachers()
         {
             var result = Context.Users
-                .Where(u => u.IsActive)
                 .FilterDeleted()
-                .Where(u => !Context.Teachers.Any(t => t.Id == u.Id))
+                .Where(u => u.IsActive && 
+                    !Context.Teachers.Any(t => t.Id == u.Id))
                 .ToArray();
             return result;
         }
