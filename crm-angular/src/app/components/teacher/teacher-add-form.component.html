@@ -1,0 +1,16 @@
+<div *ngIf="model" style="margin-top:20px">
+    <form (ngSubmit)="onTeacherSave()" #teacherAddForm="ngForm">
+        <div class="form-group">
+            <label for="user">Select User</label>
+          <ngx-paged-select [options]="allUsers.users"
+                            [hasMoreOptions]="isLastPage"
+                            [key]="'name'"
+                            [showNum]="5"
+                            (loadData)="loadNextUsers($event)"
+                            (optionSelected)="userSelected($event)"></ngx-paged-select>
+        </div>
+
+        <button type="submit" [disabled]="!teacherAddForm.form.valid" class="btn btn-default">Save</button>
+        <button (click)="onTeacherCancel(); teacherAddForm.reset()" class="btn btn-default" type="button">Cancel</button>
+    </form>
+</div>

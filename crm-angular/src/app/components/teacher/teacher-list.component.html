@@ -1,0 +1,25 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th><button (click)="addTeacher()" 
+                        class="btn btn-default btn-sm"
+                        type="button">Add</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let teacher of teachers.teachers | paginate: { itemsPerPage: 10, 
+                                                                   currentPage: currentPage, 
+                                                                   totalItems: teachers.total}">
+            <th scope="row">{{teacher.id}}</th>
+            <td>{{teacher.name}}</td>
+            <td><button (click)="showTeacherDetails(teacher.id)" 
+                        class="btn btn-default btn-sm"
+                        type="button">Show Details</button>
+        </tr>
+    </tbody>
+</table>
+
+<pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
+

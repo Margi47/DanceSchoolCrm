@@ -1,0 +1,68 @@
+<div *ngIf="model" style="margin-top:20px">
+    <div>
+        <label>Id: {{model.id}}</label><br>
+        <label>Name: {{model.name}}</label><br>
+        <button (click)="showUserInfo()"
+                class="btn btn-default"
+                type="button">Show User Info</button>
+    </div>
+
+    <div style="margin-top:20px">
+        <label>Groups</label>
+
+        <form *ngIf="addingGroup" #teacherGroupForm="ngForm">
+            <div class="form-group">
+              <ngx-paged-select [options]="allGroups.groups"
+                                [hasMoreOptions]="isLastPage"
+                                [key]="'name'"
+                                [showNum]="5"
+                                (loadData)="loadNextGroups($event)"
+                                (optionSelected)="groupSelected($event)"
+                                *ngIf="addingGroup"></ngx-paged-select>
+            </div>
+        </form>
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>
+                        <button (click)="addingGroup = true"
+                                class="btn btn-default"
+                                type="button">
+                            Add Group
+                        </button>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let group of model.groups">
+                    <td>{{group.id}}</td>
+                    <td>{{group.name}}</td>
+                    <td>{{group.description}}</td>
+                    <td>
+                        <button (click)="showDetails(group.id)"
+                                class="btn btn-default"
+                                type="button">
+                            Show Details
+                        </button>
+                    </td>
+                    <td>
+                        <button (click)="onGroupRemove(group.id)"
+                                class="btn btn-default"
+                                type="button">
+                            Remove Group
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <button (click)="deleteTeacher()"
+            class="btn btn-default"
+            type="button">
+        Delete Teacher
+    </button>
+</div>

@@ -1,0 +1,24 @@
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th><button class="btn btn-default btn-sm" (click)="addGroup()">Add</button></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let group of groups.groups | paginate: { itemsPerPage: 10, 
+                                                      currentPage: currentPage, 
+                                                      totalItems: groups.total}">
+            <th scope="row">{{group.id}}</th>
+            <td>{{group.name}}</td>
+            <td>{{group.description}}</td>
+            <td>{{group.isActive}}</td>
+            <td><button class="btn btn-default btn-sm" (click)="showDetails(group.id)">Show Details</button></td>
+        </tr>
+     </tbody>
+</table>
+
+<pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
