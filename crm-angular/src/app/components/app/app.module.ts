@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { GroupModule } from '../group/group.module';
@@ -28,14 +29,15 @@ import { ErrorActions } from '../../actions/error.actions';
         BrowserModule,
         JsonpModule,
         HttpModule,
-        AppRoutingModule,
         FormsModule,
         GroupModule,
         UserModule,
         TeacherModule,
         SharedModule,
+        AppRoutingModule,
         StoreModule.forRoot(reducers),
-        EffectsModule.forRoot([])
+        EffectsModule.forRoot([]),
+        StoreRouterConnectingModule
     ],
     providers: [ErrorActions, { provide: 'ORIGIN_URL', useValue: location.origin }]
 })
