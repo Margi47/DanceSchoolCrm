@@ -3,7 +3,6 @@ import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
 
 import { ActionWithPayload } from '../actions/actionWithPayload';
 import { AvailableGroupStudents } from '../actions/actionWithPayload';
@@ -16,6 +15,8 @@ import { AppState } from '../reducers';
 import { UserActions } from '../actions/user.actions';
 import { ErrorActions } from '../actions/error.actions';
 import { GroupActions } from '../actions/group.actions';
+import { RouterActions } from '../actions/router.actions';
+
 import { UserService } from '../services/user.service';
 
 @Injectable()
@@ -25,8 +26,8 @@ export class UserEffects {
         private userActions: UserActions,
         private errorActions: ErrorActions,
         private groupActions: GroupActions,
-        private service: UserService,
-        private router: Router
+        private routerActions: RouterActions,
+        private service: UserService
     ) { }
 
     @Effect() loadUsers$ = this.update$
@@ -81,7 +82,7 @@ export class UserEffects {
 
     @Effect() navigateToDetails = this.update$
         .ofType(UserActions.ADD_USER_SUCCESS)
-        .map((action: ActionWithPayload<number>) => this.router.navigate(['userdetail', action.payload]));
+        .map((action: ActionWithPayload<number>) => this.routerActions.Go(['userdetail', action.payload]));
 
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)

@@ -72,4 +72,10 @@ var ErrorPayload = (function () {
     return ErrorPayload;
 }());
 exports.ErrorPayload = ErrorPayload;
+var NavigationPayload = (function () {
+    function NavigationPayload(path, query, extras) {
+    }
+    return NavigationPayload;
+}());
+exports.NavigationPayload = NavigationPayload;
 //# sourceMappingURL=actionWithPayload.js.map

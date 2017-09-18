@@ -18,6 +18,8 @@ import { ErrorComponent } from './error.component';
 
 import { reducers } from '../../reducers';
 import { ErrorActions } from '../../actions/error.actions';
+import { RouterActions } from '../../actions/router.actions';
+import { RouterEffects } from '../../effects/router.effects';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -36,10 +38,10 @@ import { ErrorActions } from '../../actions/error.actions';
         SharedModule,
         AppRoutingModule,
         StoreModule.forRoot(reducers),
-        EffectsModule.forRoot([]),
+        EffectsModule.forRoot([RouterEffects]),
         StoreRouterConnectingModule
     ],
-    providers: [ErrorActions, { provide: 'ORIGIN_URL', useValue: location.origin }]
+    providers: [ErrorActions, RouterActions]
 })
 export class AppModule {
 }
