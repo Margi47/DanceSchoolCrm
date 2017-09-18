@@ -16,13 +16,15 @@ var store_1 = require("@ngrx/store");
 var teacher_actions_1 = require("../../actions/teacher.actions");
 var group_actions_1 = require("../../actions/group.actions");
 var router_actions_1 = require("../../actions/router.actions");
+var error_actions_1 = require("../../actions/error.actions");
 var TeacherDetailComponent = (function () {
-    function TeacherDetailComponent(routerActions, route, store, teacherActions, groupActions) {
+    function TeacherDetailComponent(routerActions, route, store, teacherActions, groupActions, errorActions) {
         this.routerActions = routerActions;
         this.route = route;
         this.store = store;
         this.teacherActions = teacherActions;
         this.groupActions = groupActions;
+        this.errorActions = errorActions;
         this.model$ = this.store.select('teacher');
         this.allGroups$ = this.store.select('groups');
     }
@@ -67,7 +69,8 @@ TeacherDetailComponent = __decorate([
         router_1.ActivatedRoute,
         store_1.Store,
         teacher_actions_1.TeacherActions,
-        group_actions_1.GroupActions])
+        group_actions_1.GroupActions,
+        error_actions_1.ErrorActions])
 ], TeacherDetailComponent);
 exports.TeacherDetailComponent = TeacherDetailComponent;
 //# sourceMappingURL=teacher-detail.component.js.map
