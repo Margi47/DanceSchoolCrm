@@ -3,12 +3,12 @@ import { User } from '../../models/user';
 import { Group } from '../../models/group';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { UserActions } from '../../actions/user.actions';
 import { GroupActions } from '../../actions/group.actions';
 import { ErrorActions } from '../../actions/error.actions';
+import { RouterActions } from '../../actions/router.actions';
 import { Location } from '@angular/common';
 
 @Component({
@@ -37,7 +37,7 @@ export class UserDetailComponent implements OnInit{
     errors$: Observable<any>;
 
     constructor(
-        private router: Router,
+        private routerActions: RouterActions,
         private route: ActivatedRoute,
         private store: Store<AppState>,
         private userActions: UserActions,
@@ -77,7 +77,7 @@ export class UserDetailComponent implements OnInit{
     }
 
     onShowGroupDetails(groupId: number) {
-        this.router.navigate(['/groupdetail', groupId]);
+        this.store.dispatch(this.routerActions.go(['/groupdetail', groupId]));
     }
 
     removeUserGroup($event) {
@@ -85,7 +85,7 @@ export class UserDetailComponent implements OnInit{
     }
 
     goToTeacher(id: number) {
-        this.router.navigate(['/teacherdetail', id]);
+        this.store.dispatch(this.routerActions.go(['/teacherdetail', id]));
     }
 
     isTeacherChanged($event) {
@@ -97,7 +97,7 @@ export class UserDetailComponent implements OnInit{
     }
 
     goBack(): void {
-        this.location.back();
+        this.store.dispatch(this.routerActions.back());
         this.store.dispatch(this.errorActions.removeError());
     }
 }

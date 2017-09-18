@@ -74,6 +74,9 @@ var ErrorPayload = (function () {
 exports.ErrorPayload = ErrorPayload;
 var NavigationPayload = (function () {
     function NavigationPayload(path, query, extras) {
+        this.path = path;
+        this.query = query;
+        this.extras = extras;
     }
     return NavigationPayload;
 }());

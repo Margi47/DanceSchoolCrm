@@ -8,24 +8,24 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var actionWithPayload_1 = require("../actions/actionWithPayload");
-var RouterActions = (function () {
+var RouterActions = RouterActions_1 = (function () {
     function RouterActions() {
     }
-    RouterActions.prototype.Go = function (path, query, extras) {
+    RouterActions.prototype.go = function (path, query, extras) {
         return {
-            type: UserActions.GO,
+            type: RouterActions_1.GO,
             payload: new actionWithPayload_1.NavigationPayload(path, query, extras)
         };
     };
-    RouterActions.prototype.Back = function () {
+    RouterActions.prototype.back = function () {
         return {
-            type: UserActions.BACK,
+            type: RouterActions_1.BACK,
             payload: null
         };
     };
-    RouterActions.prototype.Forward = function () {
+    RouterActions.prototype.forward = function () {
         return {
-            type: UserActions.FORWARD,
+            type: RouterActions_1.FORWARD,
             payload: null
         };
     };
@@ -34,8 +34,9 @@ var RouterActions = (function () {
 RouterActions.GO = '[Navigation] Go';
 RouterActions.BACK = '[Navigation] Go Back';
 RouterActions.FORWARD = '[Navigation] Go Forward';
-RouterActions = __decorate([
+RouterActions = RouterActions_1 = __decorate([
     core_1.Injectable()
 ], RouterActions);
 exports.RouterActions = RouterActions;
+var RouterActions_1;
 //# sourceMappingURL=router.actions.js.map

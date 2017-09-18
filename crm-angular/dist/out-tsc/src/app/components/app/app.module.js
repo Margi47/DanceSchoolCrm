@@ -24,6 +24,7 @@ var error_component_1 = require("./error.component");
 var reducers_1 = require("../../reducers");
 var error_actions_1 = require("../../actions/error.actions");
 var router_actions_1 = require("../../actions/router.actions");
+var router_effects_1 = require("../../effects/router.effects");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -47,7 +48,7 @@ AppModule = __decorate([
             shared_module_1.SharedModule,
             app_routing_module_1.AppRoutingModule,
             store_1.StoreModule.forRoot(reducers_1.reducers),
-            effects_1.EffectsModule.forRoot([]),
+            effects_1.EffectsModule.forRoot([router_effects_1.RouterEffects]),
             router_store_1.StoreRouterConnectingModule
         ],
         providers: [error_actions_1.ErrorActions, router_actions_1.RouterActions]

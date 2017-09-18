@@ -2,9 +2,9 @@
     <div class="navbar-brand">DanceSchool</div>
     <div class="collapse navbar-collapse">
         <div class="navbar-nav">
-            <a class="nav-item nav-link" routerLink="/users">Users</a>
-            <a class="nav-item nav-link" routerLink="/groups">Groups</a>
-            <a class="nav-item nav-link"routerLink="/teachers">Teachers</a>
+            <a class="nav-item nav-link" (click)="navigate('/users')" [routerLink]="">Users</a>
+            <a class="nav-item nav-link" (click)="navigate('/groups')" [routerLink]="">Groups</a>
+            <a class="nav-item nav-link" (click)="navigate('/teachers')" [routerLink]="">Teachers</a>
             <a class="nav-item nav-link disabled">Payments</a>
         </div>
     </div>       

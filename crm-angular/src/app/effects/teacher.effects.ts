@@ -55,7 +55,7 @@ export class TeacherEffects {
         .ofType(TeacherActions.ADD_TEACHER)
         .map((action: ActionWithPayload<Teacher>) => action.payload)
         .switchMap(teacher => this.service.addTeacher(teacher)
-            .map(teacherId => this.routerActions.Go(['teacherdetail', teacherId]))
+            .map(teacherId => this.routerActions.go(['teacherdetail', teacherId]))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 

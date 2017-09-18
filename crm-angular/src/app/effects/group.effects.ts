@@ -86,7 +86,7 @@ export class GroupEffects {
 
     @Effect() navigateToDetails = this.update$
         .ofType(GroupActions.ADD_GROUP_SUCCESS)
-        .map((action: ActionWithPayload<number>) => this.routerActions.Go(['groupdetail', action.payload]));
+        .map((action: ActionWithPayload<number>) => this.routerActions.go(['groupdetail', action.payload]));
 
     @Effect() getMainMessage = this.update$
         .ofType(ErrorActions.CATCH_VALIDATION_ERROR)

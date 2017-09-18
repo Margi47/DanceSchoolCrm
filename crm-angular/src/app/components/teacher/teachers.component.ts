@@ -1,10 +1,10 @@
-﻿import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Teacher } from '../../models/teacher';
-import { Router } from '@angular/router'
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { TeacherActions } from '../../actions/teacher.actions'
+import { RouterActions } from '../../actions/router.actions'
 
 @Component({
     selector: 'teachers',
@@ -12,7 +12,6 @@ import { TeacherActions } from '../../actions/teacher.actions'
 <teachers-list [teachers] = "teachers$ | async" 
               (add)="addTeacher()" 
               (teacherDetails)="showTeacherDetails($event)"
-              (userDetails)="showUserDetails($event)"
               (pageChanged)="onPageChanged($event)">
 </teachers-list>
 `
@@ -21,7 +20,7 @@ export class TeachersComponent implements OnInit {
     teachers$: Observable<any>;
 
     constructor(
-        private router: Router,
+        private routerActions: RouterActions,
         private store: Store<AppState>,
         private teacherActions: TeacherActions) {
         this.teachers$ = store.select('teachers');
@@ -32,15 +31,11 @@ export class TeachersComponent implements OnInit {
     };
 
     addTeacher() {
-        this.router.navigate(['/teacheradd']);
+        this.store.dispatch(this.routerActions.show(['/teacheradd']));
     }
 
     showTeacherDetails(id: number) {
-        this.router.navigate(['teacherdetail', id]);
-    }
-
-    showUserDetails(id: number) {
-        this.router.navigate(['userdetail', id]);
+        this.store.dispatch(this.routerActions.go(['teacherdetail', id]));
     }
 
     onPageChanged(page: number) {

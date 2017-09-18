@@ -10,6 +10,7 @@ export type UserListState = { users: User[], total: number };
 const initialState: UserListState = { users: [], total: 0};
 
 export default function (state = initialState, action: ActionWithPayload<UserList>): UserListState {
+    console.log(action);
     switch (action.type) {
         case UserActions.LOAD_USERS_SUCCESS: {
             

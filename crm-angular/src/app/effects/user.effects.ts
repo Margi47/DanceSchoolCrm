@@ -82,7 +82,7 @@ export class UserEffects {
 
     @Effect() navigateToDetails = this.update$
         .ofType(UserActions.ADD_USER_SUCCESS)
-        .map((action: ActionWithPayload<number>) => this.routerActions.Go(['userdetail', action.payload]));
+        .map((action: ActionWithPayload<number>) => this.routerActions.go(['userdetail', action.payload]));
 
     @Effect() deleteUser$ = this.update$
         .ofType(UserActions.DELETE_USER)

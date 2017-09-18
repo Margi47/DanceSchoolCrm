@@ -8,7 +8,7 @@ import { Store } from '@ngrx/store';;
 import { AppState } from '../../reducers';
 import { TeacherActions } from '../../actions/teacher.actions';
 import { GroupActions } from '../../actions/group.actions';
-import { Location } from '@angular/common';
+import { RouterActions } from '../../actions/router.actions';
 
 @Component({
     selector: 'teacher-detail',
@@ -32,12 +32,11 @@ export class TeacherDetailComponent implements OnInit{
     allGroups$: Observable<any>;
 
     constructor(
-        private router: Router,
+        private routerActions: RouterActions,
         private route: ActivatedRoute,
         private store: Store<AppState>,
         private teacherActions: TeacherActions,
-        private groupActions: GroupActions,
-        private location: Location) {
+        private groupActions: GroupActions) {
         this.model$ = this.store.select('teacher');
         this.allGroups$ = this.store.select('groups');
     }
@@ -56,11 +55,11 @@ export class TeacherDetailComponent implements OnInit{
    }
 
    onShowGroupDetails(id: number) {
-       this.router.navigate(['groupdetail', id]);
+       this.store.dispatch(this.routerActions.go(['groupdetail', id]));
    }
 
    onShowUserInfo(id: number) {
-       this.router.navigate(['userdetail', id]);
+       this.store.dispatch(this.routerActions.go(['userdetail', id]));
    }
 
    onTeacherDelete(teacher: Teacher) {
@@ -76,7 +75,7 @@ export class TeacherDetailComponent implements OnInit{
        this.store.dispatch(this.teacherActions.removeTeacherGroup($event.group, $event.teacher));
    }
 
-    goBack(): void {
-        this.location.back();
+   goBack(): void {
+       this.store.dispatch(this.routerActions.back());
     }
 }

@@ -12,12 +12,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var store_1 = require("@ngrx/store");
 var error_actions_1 = require("../../actions/error.actions");
+var router_actions_1 = require("../../actions/router.actions");
 var AppComponent = (function () {
-    function AppComponent(store, errorActions) {
+    function AppComponent(store, errorActions, routerActions) {
         this.store = store;
         this.errorActions = errorActions;
+        this.routerActions = routerActions;
         this.errorMessage$ = store.select('errorMessage');
     }
+    AppComponent.prototype.navigate = function (path) {
+        this.routerActions.go([path]);
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
@@ -26,7 +31,8 @@ AppComponent = __decorate([
         templateUrl: './app.component.html'
     }),
     __metadata("design:paramtypes", [store_1.Store,
-        error_actions_1.ErrorActions])
+        error_actions_1.ErrorActions,
+        router_actions_1.RouterActions])
 ], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

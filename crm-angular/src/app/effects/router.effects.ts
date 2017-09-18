@@ -21,7 +21,7 @@ export class RouterEffects {
 
     @Effect({ dispatch: false })
     go$ = this.update$
-        .ofType(RouterActions.GO)
+        .ofType(RouterActions.GO, RouterActions.SHOW)
         .map((action: ActionWithPayload<NavigationPayload>) => action.payload)
         .do(({ path, query: queryParams, extras }) =>
             this.router.navigate(path, { queryParams, ...extras }));

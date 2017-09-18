@@ -8,6 +8,7 @@ import { GroupActions } from '../../actions/group.actions';
 import { UserActions } from '../../actions/user.actions';
 import { TeacherActions } from '../../actions/teacher.actions';
 import { ErrorActions } from '../../actions/error.actions';
+import {RouterActions} from '../../actions/router.actions';
 import { Router } from '@angular/router'
 import { Location } from '@angular/common';
 
@@ -46,9 +47,8 @@ export class GroupDetailComponent implements OnInit {
         private groupActions: GroupActions,
         private userActions: UserActions,
         private teacherActions: TeacherActions,
-        private router: Router,
+        private routerActions: RouterActions,
         private route: ActivatedRoute,
-        private location: Location,
         private errorActions: ErrorActions) {
         this.model$ = store.select('group');
         this.allStudents$ = store.select('users');
@@ -81,7 +81,7 @@ export class GroupDetailComponent implements OnInit {
     }
 
     showUserDetails(id: number) {
-        this.router.navigate(['userdetail', id]);
+        this.store.dispatch(this.routerActions.go(['userdetail', id]));
     }
 
     addStudentToGroup($event) {
@@ -97,7 +97,7 @@ export class GroupDetailComponent implements OnInit {
     }
 
     showTeacherDetails(id: number) {
-        this.router.navigate(['teacherdetail', id]);
+        this.store.dispatch(this.routerActions.go(['teacherdetail', id]));
     }
 
     addTeacherToGroup($event) {
@@ -109,7 +109,7 @@ export class GroupDetailComponent implements OnInit {
     }
 
     goBack(): void {
-        this.location.back();
+        this.store.dispatch(this.routerActions.back());
         this.store.dispatch(this.errorActions.removeError());
     }
 }

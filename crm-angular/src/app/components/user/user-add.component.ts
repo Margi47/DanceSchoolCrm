@@ -1,13 +1,13 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { User } from '../../models/user';
-import { Router } from '@angular/router';
 
-import { Store } from '@ngrx/store';;
+import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { UserActions } from '../../actions/user.actions';
 import { ErrorActions } from '../../actions/error.actions';
+import {RouterActions} from '../../actions/router.actions';
 
 @Component({
     selector: 'add-user',
@@ -24,7 +24,7 @@ export class UserAddComponent {
     errors$: Observable<any>;
 
     constructor(
-        private router: Router,
+        private routerActions: RouterActions,
         private store: Store<AppState>,
         private userActions: UserActions,
         private errorActions: ErrorActions) {
@@ -36,6 +36,6 @@ export class UserAddComponent {
     }
 
     onUserCancel(): void {
-        this.router.navigate(['/users']);
+        this.store.dispatch(this.routerActions.back());
     }
 }
