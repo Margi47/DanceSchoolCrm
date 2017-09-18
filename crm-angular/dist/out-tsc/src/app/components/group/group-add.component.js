@@ -10,15 +10,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
 var store_1 = require("@ngrx/store");
 var group_actions_1 = require("../../actions/group.actions");
 var error_actions_1 = require("../../actions/error.actions");
+var router_actions_1 = require("../../actions/router.actions");
 var GroupAddComponent = (function () {
-    function GroupAddComponent(store, groupActions, router, errorActions) {
+    function GroupAddComponent(store, groupActions, routerActions, errorActions) {
         this.store = store;
         this.groupActions = groupActions;
-        this.router = router;
+        this.routerActions = routerActions;
         this.errorActions = errorActions;
         this.errors$ = this.store.select('errorFields');
     }
@@ -26,7 +26,7 @@ var GroupAddComponent = (function () {
         this.store.dispatch(this.groupActions.addGroup(group));
     };
     GroupAddComponent.prototype.onGroupCancel = function () {
-        this.router.navigate(['/groups']);
+        this.store.dispatch(this.routerActions.back());
     };
     return GroupAddComponent;
 }());
@@ -37,7 +37,7 @@ GroupAddComponent = __decorate([
     }),
     __metadata("design:paramtypes", [store_1.Store,
         group_actions_1.GroupActions,
-        router_1.Router,
+        router_actions_1.RouterActions,
         error_actions_1.ErrorActions])
 ], GroupAddComponent);
 exports.GroupAddComponent = GroupAddComponent;

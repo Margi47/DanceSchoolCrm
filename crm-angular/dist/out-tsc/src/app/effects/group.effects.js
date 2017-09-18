@@ -14,14 +14,14 @@ var effects_1 = require("@ngrx/effects");
 require("rxjs/add/operator/switchMap");
 require("rxjs/add/observable/of");
 var Observable_1 = require("rxjs/Observable");
-var router_1 = require("@angular/router");
 var group_actions_1 = require("../actions/group.actions");
 var user_actions_1 = require("../actions/user.actions");
 var teacher_actions_1 = require("../actions/teacher.actions");
 var error_actions_1 = require("../actions/error.actions");
+var router_actions_1 = require("../actions/router.actions");
 var group_service_1 = require("../services/group.service");
 var GroupEffects = (function () {
-    function GroupEffects(update$, groupActions, userActions, teacherActions, errorActions, service, router) {
+    function GroupEffects(update$, groupActions, userActions, teacherActions, errorActions, service, routerActions) {
         var _this = this;
         this.update$ = update$;
         this.groupActions = groupActions;
@@ -29,7 +29,7 @@ var GroupEffects = (function () {
         this.teacherActions = teacherActions;
         this.errorActions = errorActions;
         this.service = service;
-        this.router = router;
+        this.routerActions = routerActions;
         this.loadGroups$ = this.update$
             .ofType(group_actions_1.GroupActions.LOAD_GROUPS)
             .map(function (action) { return action.payload; })
@@ -58,8 +58,14 @@ var GroupEffects = (function () {
             .ofType(group_actions_1.GroupActions.SAVE_GROUP)
             .map(function (action) { return action.payload; })
             .switchMap(function (group) { return _this.service.update(group)
-            .map(function () { return _this.groupActions.loadGroups(1); })
+            .map(function () { return _this.groupActions.changeGroupSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
+        this.navigationAfterChange$ = this.update$
+            .ofType(group_actions_1.GroupActions.CHANGE_GROUP_SUCCESS)
+            .map(function () { return _this.routerActions.back(); });
+        this.changeUserSuccess$ = this.update$
+            .ofType(group_actions_1.GroupActions.CHANGE_GROUP_SUCCESS)
+            .map(function () { return _this.errorActions.removeError(); });
         this.addGroup$ = this.update$
             .ofType(group_actions_1.GroupActions.ADD_GROUP)
             .map(function (action) { return action.payload; })
@@ -73,7 +79,7 @@ var GroupEffects = (function () {
         }); });
         this.navigateToDetails = this.update$
             .ofType(group_actions_1.GroupActions.ADD_GROUP_SUCCESS)
-            .map(function (action) { return _this.router.navigate(['groupdetail', action.payload]); });
+            .map(function (action) { return _this.routerActions.go(['groupdetail', action.payload]); });
         this.getMainMessage = this.update$
             .ofType(error_actions_1.ErrorActions.CATCH_VALIDATION_ERROR)
             .map(function (action) {
@@ -83,7 +89,7 @@ var GroupEffects = (function () {
             .ofType(group_actions_1.GroupActions.DELETE_GROUP)
             .map(function (action) { return action.payload; })
             .switchMap(function (group) { return _this.service.deleteGroup(group)
-            .map(function () { return _this.groupActions.loadGroups(1); })
+            .map(function () { return _this.groupActions.changeGroupSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.loadTeachers$ = this.update$
             .ofType(group_actions_1.GroupActions.LOAD_TEACHERS)
@@ -164,6 +170,14 @@ __decorate([
 __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)
+], GroupEffects.prototype, "navigationAfterChange$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], GroupEffects.prototype, "changeUserSuccess$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
 ], GroupEffects.prototype, "addGroup$", void 0);
 __decorate([
     effects_1.Effect(),
@@ -229,7 +243,7 @@ GroupEffects = __decorate([
         teacher_actions_1.TeacherActions,
         error_actions_1.ErrorActions,
         group_service_1.GroupService,
-        router_1.Router])
+        router_actions_1.RouterActions])
 ], GroupEffects);
 exports.GroupEffects = GroupEffects;
 //# sourceMappingURL=group.effects.js.map

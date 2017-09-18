@@ -3,7 +3,6 @@ import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
 
 import { ActionWithPayload } from '../actions/actionWithPayload';
 import { AvailableGroupTeachers } from '../actions/actionWithPayload';
@@ -12,6 +11,7 @@ import { GroupTeacher } from '../actions/actionWithPayload';
 import { TeacherActions } from '../actions/teacher.actions';
 import { GroupActions } from '../actions/group.actions';
 import { ErrorActions } from '../actions/error.actions';
+import { RouterActions } from '../actions/router.actions';
 import { TeacherService } from '../services/teacher.service';
 import { Group } from '../models/group';
 import { Teacher } from '../models/teacher';
@@ -24,7 +24,7 @@ export class TeacherEffects {
         private groupActions: GroupActions,
         private service: TeacherService,
         private errorActions: ErrorActions,
-        private router: Router
+        private routerActions: RouterActions
     ) { }
 
     @Effect() loadTeachersWithGroups$ = this.update$
@@ -55,7 +55,7 @@ export class TeacherEffects {
         .ofType(TeacherActions.ADD_TEACHER)
         .map((action: ActionWithPayload<Teacher>) => action.payload)
         .switchMap(teacher => this.service.addTeacher(teacher)
-            .map(teacherId => this.router.navigate(['teacherdetail', teacherId]))
+            .map(teacherId => this.routerActions.go(['teacherdetail', teacherId]))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -63,9 +63,17 @@ export class TeacherEffects {
         .ofType(TeacherActions.DELETE_TEACHER)
         .map((action: ActionWithPayload<number>) => action.payload)
         .switchMap(teacher => this.service.deleteTeacher(teacher)
-            .map(() => this.teacherActions.loadAllTeachers(1))
+            .map(() => this.teacherActions.changeTeacherSuccess())
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
-        );
+    );
+
+    @Effect() navigationAfterChange$ = this.update$
+        .ofType(TeacherActions.CHANGE_TEACHER_SUCCESS)
+        .map(() => this.routerActions.back());
+
+    @Effect() changeUserSuccess$ = this.update$
+        .ofType(TeacherActions.CHANGE_TEACHER_SUCCESS)
+        .map(() => this.errorActions.removeError());
 
     @Effect() getTeacherGroups$ = this.update$
         .ofType(TeacherActions.GET_TEACHER_GROUPS)

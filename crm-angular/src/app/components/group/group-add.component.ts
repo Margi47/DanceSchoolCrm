@@ -1,13 +1,13 @@
-﻿import { Component } from '@angular/core';
+import { Component } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { Group } from '../../models/group';
-import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 
 import { GroupActions } from '../../actions/group.actions';
 import { ErrorActions } from '../../actions/error.actions';
+import { RouterActions } from '../../actions/router.actions';
 
 @Component({
     selector: 'add-group',
@@ -25,7 +25,7 @@ export class GroupAddComponent {
     constructor(
         private store: Store<AppState>,
         private groupActions: GroupActions,
-        private router: Router,
+        private routerActions: RouterActions,
         private errorActions: ErrorActions) {
         this.errors$ = this.store.select('errorFields');}
 
@@ -34,6 +34,6 @@ export class GroupAddComponent {
     }
 
     onGroupCancel(): void {
-        this.router.navigate(['/groups']);
+        this.store.dispatch(this.routerActions.back());
     }
 }

@@ -12,14 +12,12 @@ export class TeacherListComponent{
 
     @Output() add = new EventEmitter();
     @Output() teacherDetails = new EventEmitter<number>();
-    @Output() userDetails = new EventEmitter<number>();
     @Output() pageChanged = new EventEmitter<number>();
 
     currentPage: number = 1;
 
     addTeacher() { this.add.emit(); }
     showTeacherDetails(id: number) { this.teacherDetails.emit(id); }
-    showUserDetails(id: number) { this.userDetails.emit(id); }
 
     pageChange(page) {
         this.currentPage = page;

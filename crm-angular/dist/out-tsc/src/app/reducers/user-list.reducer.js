@@ -4,6 +4,7 @@ var user_actions_1 = require("../actions/user.actions");
 var initialState = { users: [], total: 0 };
 function default_1(state, action) {
     if (state === void 0) { state = initialState; }
+    console.log(action);
     switch (action.type) {
         case user_actions_1.UserActions.LOAD_USERS_SUCCESS: {
             return Object.assign({}, state, { users: action.payload.userList, total: action.payload.total });

@@ -14,20 +14,20 @@ var effects_1 = require("@ngrx/effects");
 require("rxjs/add/operator/switchMap");
 require("rxjs/add/observable/of");
 var Observable_1 = require("rxjs/Observable");
-var router_1 = require("@angular/router");
 var user_actions_1 = require("../actions/user.actions");
 var error_actions_1 = require("../actions/error.actions");
 var group_actions_1 = require("../actions/group.actions");
+var router_actions_1 = require("../actions/router.actions");
 var user_service_1 = require("../services/user.service");
 var UserEffects = (function () {
-    function UserEffects(update$, userActions, errorActions, groupActions, service, router) {
+    function UserEffects(update$, userActions, errorActions, groupActions, routerActions, service) {
         var _this = this;
         this.update$ = update$;
         this.userActions = userActions;
         this.errorActions = errorActions;
         this.groupActions = groupActions;
+        this.routerActions = routerActions;
         this.service = service;
-        this.router = router;
         this.loadUsers$ = this.update$
             .ofType(user_actions_1.UserActions.LOAD_USERS)
             .map(function (action) { return action.payload; })
@@ -70,19 +70,25 @@ var UserEffects = (function () {
         });
         this.navigateToDetails = this.update$
             .ofType(user_actions_1.UserActions.ADD_USER_SUCCESS)
-            .map(function (action) { return _this.router.navigate(['userdetail', action.payload]); });
+            .map(function (action) { return _this.routerActions.go(['userdetail', action.payload]); });
         this.deleteUser$ = this.update$
             .ofType(user_actions_1.UserActions.DELETE_USER)
             .map(function (action) { return action.payload; })
             .switchMap(function (userId) { return _this.service.deleteUser(userId)
-            .map(function () { return _this.userActions.loadUsers(1); })
+            .map(function () { return _this.userActions.changeUserSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.saveUser$ = this.update$
             .ofType(user_actions_1.UserActions.SAVE_USER)
             .map(function (action) { return action.payload; })
             .switchMap(function (user) { return _this.service.update(user)
-            .map(function () { return _this.userActions.loadUsers(1); })
+            .map(function () { return _this.userActions.changeUserSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
+        this.navigationAfterChange$ = this.update$
+            .ofType(user_actions_1.UserActions.CHANGE_USER_SUCCESS)
+            .map(function () { return _this.routerActions.back(); });
+        this.changeUserSuccess$ = this.update$
+            .ofType(user_actions_1.UserActions.CHANGE_USER_SUCCESS)
+            .map(function () { return _this.errorActions.removeError(); });
         this.loadUserGroups$ = this.update$
             .ofType(user_actions_1.UserActions.LOAD_USER_GROUPS)
             .map(function (action) { return action.payload; })
@@ -169,6 +175,14 @@ __decorate([
 __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)
+], UserEffects.prototype, "navigationAfterChange$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], UserEffects.prototype, "changeUserSuccess$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
 ], UserEffects.prototype, "loadUserGroups$", void 0);
 __decorate([
     effects_1.Effect(),
@@ -208,8 +222,8 @@ UserEffects = __decorate([
         user_actions_1.UserActions,
         error_actions_1.ErrorActions,
         group_actions_1.GroupActions,
-        user_service_1.UserService,
-        router_1.Router])
+        router_actions_1.RouterActions,
+        user_service_1.UserService])
 ], UserEffects);
 exports.UserEffects = UserEffects;
 //# sourceMappingURL=user.effects.js.map

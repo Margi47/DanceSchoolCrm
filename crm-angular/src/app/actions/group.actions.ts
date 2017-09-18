@@ -84,6 +84,14 @@ export class GroupActions {
         };
     }
 
+    static CHANGE_GROUP_SUCCESS = '[Group] Change Group Success';
+    changeGroupSuccess(): ActionWithPayload<null> {
+        return {
+            type: GroupActions.CHANGE_GROUP_SUCCESS,
+            payload: null
+        };
+    }
+
     static ADD_GROUP = '[Group] Add Group';
     addGroup(group: Group): ActionWithPayload<Group> {
         return {

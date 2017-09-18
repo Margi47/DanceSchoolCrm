@@ -16,17 +16,15 @@ var group_actions_1 = require("../../actions/group.actions");
 var user_actions_1 = require("../../actions/user.actions");
 var teacher_actions_1 = require("../../actions/teacher.actions");
 var error_actions_1 = require("../../actions/error.actions");
-var router_2 = require("@angular/router");
-var common_1 = require("@angular/common");
+var router_actions_1 = require("../../actions/router.actions");
 var GroupDetailComponent = (function () {
-    function GroupDetailComponent(store, groupActions, userActions, teacherActions, router, route, location, errorActions) {
+    function GroupDetailComponent(store, groupActions, userActions, teacherActions, routerActions, route, errorActions) {
         this.store = store;
         this.groupActions = groupActions;
         this.userActions = userActions;
         this.teacherActions = teacherActions;
-        this.router = router;
+        this.routerActions = routerActions;
         this.route = route;
-        this.location = location;
         this.errorActions = errorActions;
         this.model$ = store.select('group');
         this.allStudents$ = store.select('users');
@@ -45,17 +43,15 @@ var GroupDetailComponent = (function () {
     };
     GroupDetailComponent.prototype.deleteGroup = function (group) {
         this.store.dispatch(this.groupActions.deleteGroup(group.id));
-        this.goBack();
     };
     GroupDetailComponent.prototype.groupUpdate = function (group) {
         this.store.dispatch(this.groupActions.saveGroup(group));
-        this.goBack();
     };
     GroupDetailComponent.prototype.loadNextUsers = function ($event) {
         this.store.dispatch(this.userActions.loadAvailableStudents($event.group, $event.page));
     };
     GroupDetailComponent.prototype.showUserDetails = function (id) {
-        this.router.navigate(['userdetail', id]);
+        this.store.dispatch(this.routerActions.go(['userdetail', id]));
     };
     GroupDetailComponent.prototype.addStudentToGroup = function ($event) {
         this.store.dispatch(this.groupActions.addGroupStudent($event.groupId, $event.userId));
@@ -67,7 +63,7 @@ var GroupDetailComponent = (function () {
         this.store.dispatch(this.teacherActions.loadAvailableTeachers($event.group, $event.page));
     };
     GroupDetailComponent.prototype.showTeacherDetails = function (id) {
-        this.router.navigate(['teacherdetail', id]);
+        this.store.dispatch(this.routerActions.go(['teacherdetail', id]));
     };
     GroupDetailComponent.prototype.addTeacherToGroup = function ($event) {
         this.store.dispatch(this.groupActions.addGroupTeacher($event.groupId, $event.teacher));
@@ -76,7 +72,7 @@ var GroupDetailComponent = (function () {
         this.store.dispatch(this.groupActions.removeTeacher($event.groupId, $event.teacherId));
     };
     GroupDetailComponent.prototype.goBack = function () {
-        this.location.back();
+        this.store.dispatch(this.routerActions.back());
         this.store.dispatch(this.errorActions.removeError());
     };
     return GroupDetailComponent;
@@ -90,9 +86,8 @@ GroupDetailComponent = __decorate([
         group_actions_1.GroupActions,
         user_actions_1.UserActions,
         teacher_actions_1.TeacherActions,
-        router_2.Router,
+        router_actions_1.RouterActions,
         router_1.ActivatedRoute,
-        common_1.Location,
         error_actions_1.ErrorActions])
 ], GroupDetailComponent);
 exports.GroupDetailComponent = GroupDetailComponent;

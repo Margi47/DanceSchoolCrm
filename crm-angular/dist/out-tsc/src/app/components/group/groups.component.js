@@ -10,24 +10,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
 var store_1 = require("@ngrx/store");
 var group_actions_1 = require("../../actions/group.actions");
+var router_actions_1 = require("../../actions/router.actions");
 var GroupsComponent = (function () {
-    function GroupsComponent(store, groupActions, router) {
+    function GroupsComponent(store, groupActions, routerActions) {
         this.store = store;
         this.groupActions = groupActions;
-        this.router = router;
+        this.routerActions = routerActions;
         this.groups$ = store.select('groups');
     }
     GroupsComponent.prototype.ngOnInit = function () {
         this.store.dispatch(this.groupActions.loadGroups(1));
     };
     GroupsComponent.prototype.addGroup = function () {
-        this.router.navigate(['/groupadd']);
+        this.store.dispatch(this.routerActions.show(['/groupadd']));
     };
     GroupsComponent.prototype.showDetails = function (id) {
-        this.router.navigate(['groupdetail', id]);
+        this.store.dispatch(this.routerActions.go(['groupdetail', id]));
     };
     GroupsComponent.prototype.onPageChanged = function (page) {
         this.store.dispatch(this.groupActions.loadGroups(page));
@@ -41,7 +41,7 @@ GroupsComponent = __decorate([
     }),
     __metadata("design:paramtypes", [store_1.Store,
         group_actions_1.GroupActions,
-        router_1.Router])
+        router_actions_1.RouterActions])
 ], GroupsComponent);
 exports.GroupsComponent = GroupsComponent;
 //# sourceMappingURL=groups.component.js.map

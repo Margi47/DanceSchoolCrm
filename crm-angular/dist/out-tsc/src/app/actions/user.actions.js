@@ -67,6 +67,12 @@ var UserActions = UserActions_1 = (function () {
             payload: user
         };
     };
+    UserActions.prototype.changeUserSuccess = function () {
+        return {
+            type: UserActions_1.CHANGE_USER_SUCCESS,
+            payload: null
+        };
+    };
     UserActions.prototype.addUser = function (user) {
         return {
             type: UserActions_1.ADD_USER,
@@ -138,6 +144,7 @@ UserActions.LOAD_AVAILABLE_TEACHERS_SUCCESS = '[User] Load Available Teachers Su
 UserActions.GET_USER = '[User] Get User';
 UserActions.GET_USER_SUCCESS = '[User] Get User Success';
 UserActions.SAVE_USER = '[User] Save User';
+UserActions.CHANGE_USER_SUCCESS = '[User] Change User Success';
 UserActions.ADD_USER = '[User] Add User';
 UserActions.ADD_USER_SUCCESS = '[User] Add User Success';
 UserActions.DELETE_USER = '[User] Delete User';
