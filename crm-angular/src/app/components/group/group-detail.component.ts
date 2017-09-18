@@ -68,12 +68,10 @@ export class GroupDetailComponent implements OnInit {
 
     deleteGroup(group: Group) {
         this.store.dispatch(this.groupActions.deleteGroup(group.id));
-        this.goBack();
     }
 
     groupUpdate(group: Group): void {
         this.store.dispatch(this.groupActions.saveGroup(group));
-        this.goBack();
     }
 
     loadNextUsers($event) {

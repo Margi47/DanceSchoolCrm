@@ -32,7 +32,7 @@ var RouterEffects = (function () {
         this.router = router;
         this.location = location;
         this.go$ = this.update$
-            .ofType(router_actions_1.RouterActions.GO)
+            .ofType(router_actions_1.RouterActions.GO, router_actions_1.RouterActions.SHOW)
             .map(function (action) { return action.payload; })
             .do(function (_a) {
             var path = _a.path, queryParams = _a.query, extras = _a.extras;

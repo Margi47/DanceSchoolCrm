@@ -75,14 +75,20 @@ var UserEffects = (function () {
             .ofType(user_actions_1.UserActions.DELETE_USER)
             .map(function (action) { return action.payload; })
             .switchMap(function (userId) { return _this.service.deleteUser(userId)
-            .map(function () { return _this.userActions.loadUsers(1); })
+            .map(function () { return _this.userActions.changeUserSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.saveUser$ = this.update$
             .ofType(user_actions_1.UserActions.SAVE_USER)
             .map(function (action) { return action.payload; })
             .switchMap(function (user) { return _this.service.update(user)
-            .map(function () { return _this.userActions.loadUsers(1); })
+            .map(function () { return _this.userActions.changeUserSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
+        this.navigationAfterChange$ = this.update$
+            .ofType(user_actions_1.UserActions.CHANGE_USER_SUCCESS)
+            .map(function () { return _this.routerActions.back(); });
+        this.changeUserSuccess$ = this.update$
+            .ofType(user_actions_1.UserActions.CHANGE_USER_SUCCESS)
+            .map(function () { return _this.errorActions.removeError(); });
         this.loadUserGroups$ = this.update$
             .ofType(user_actions_1.UserActions.LOAD_USER_GROUPS)
             .map(function (action) { return action.payload; })
@@ -166,6 +172,14 @@ __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)
 ], UserEffects.prototype, "saveUser$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], UserEffects.prototype, "navigationAfterChange$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], UserEffects.prototype, "changeUserSuccess$", void 0);
 __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)

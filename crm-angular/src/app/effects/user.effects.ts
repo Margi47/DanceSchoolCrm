@@ -88,7 +88,7 @@ export class UserEffects {
         .ofType(UserActions.DELETE_USER)
         .map((action: ActionWithPayload<number>) => action.payload)
         .switchMap(userId => this.service.deleteUser(userId)
-            .map(() => this.userActions.loadUsers(1))
+            .map(() => this.userActions.changeUserSuccess())
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -96,9 +96,17 @@ export class UserEffects {
         .ofType(UserActions.SAVE_USER)
         .map((action: ActionWithPayload<User>) => action.payload)
         .switchMap(user => this.service.update(user)
-            .map(() => this.userActions.loadUsers(1))
+            .map(() => this.userActions.changeUserSuccess())
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
-        );
+    );
+
+    @Effect() navigationAfterChange$ = this.update$
+        .ofType(UserActions.CHANGE_USER_SUCCESS)
+        .map(() => this.routerActions.back());
+
+    @Effect() changeUserSuccess$ = this.update$
+        .ofType(UserActions.CHANGE_USER_SUCCESS)
+        .map(() => this.errorActions.removeError());
 
     @Effect() loadUserGroups$ = this.update$
         .ofType(UserActions.LOAD_USER_GROUPS)

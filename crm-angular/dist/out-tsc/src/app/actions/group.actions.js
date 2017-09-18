@@ -68,6 +68,12 @@ var GroupActions = GroupActions_1 = (function () {
             payload: group
         };
     };
+    GroupActions.prototype.changeGroupSuccess = function () {
+        return {
+            type: GroupActions_1.CHANGE_GROUP_SUCCESS,
+            payload: null
+        };
+    };
     GroupActions.prototype.addGroup = function (group) {
         return {
             type: GroupActions_1.ADD_GROUP,
@@ -158,6 +164,7 @@ GroupActions.LOAD_AVAILABLE_USER_GROUPS_SUCCESS = '[Group] Load Available User G
 GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS = '[Group] Load Available Teacher Groups';
 GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS = '[Group] Load Available Teacher Groups Success';
 GroupActions.SAVE_GROUP = '[Group] Save Group';
+GroupActions.CHANGE_GROUP_SUCCESS = '[Group] Change Group Success';
 GroupActions.ADD_GROUP = '[Group] Add Group';
 GroupActions.ADD_GROUP_SUCCESS = '[Group] Add Group Success';
 GroupActions.DELETE_GROUP = '[Group] Delete Group';

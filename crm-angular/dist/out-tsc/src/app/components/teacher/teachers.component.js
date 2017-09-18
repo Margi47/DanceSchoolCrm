@@ -10,12 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
 var store_1 = require("@ngrx/store");
 var teacher_actions_1 = require("../../actions/teacher.actions");
+var router_actions_1 = require("../../actions/router.actions");
 var TeachersComponent = (function () {
-    function TeachersComponent(router, store, teacherActions) {
-        this.router = router;
+    function TeachersComponent(routerActions, store, teacherActions) {
+        this.routerActions = routerActions;
         this.store = store;
         this.teacherActions = teacherActions;
         this.teachers$ = store.select('teachers');
@@ -25,13 +25,10 @@ var TeachersComponent = (function () {
     };
     ;
     TeachersComponent.prototype.addTeacher = function () {
-        this.router.navigate(['/teacheradd']);
+        this.store.dispatch(this.routerActions.show(['/teacheradd']));
     };
     TeachersComponent.prototype.showTeacherDetails = function (id) {
-        this.router.navigate(['teacherdetail', id]);
-    };
-    TeachersComponent.prototype.showUserDetails = function (id) {
-        this.router.navigate(['userdetail', id]);
+        this.store.dispatch(this.routerActions.go(['teacherdetail', id]));
     };
     TeachersComponent.prototype.onPageChanged = function (page) {
         this.store.dispatch(this.teacherActions.loadAllTeachers(page));
@@ -41,9 +38,9 @@ var TeachersComponent = (function () {
 TeachersComponent = __decorate([
     core_1.Component({
         selector: 'teachers',
-        template: "\n<teachers-list [teachers] = \"teachers$ | async\" \n              (add)=\"addTeacher()\" \n              (teacherDetails)=\"showTeacherDetails($event)\"\n              (userDetails)=\"showUserDetails($event)\"\n              (pageChanged)=\"onPageChanged($event)\">\n</teachers-list>\n"
+        template: "\n<teachers-list [teachers] = \"teachers$ | async\" \n              (add)=\"addTeacher()\" \n              (teacherDetails)=\"showTeacherDetails($event)\"\n              (pageChanged)=\"onPageChanged($event)\">\n</teachers-list>\n"
     }),
-    __metadata("design:paramtypes", [router_1.Router,
+    __metadata("design:paramtypes", [router_actions_1.RouterActions,
         store_1.Store,
         teacher_actions_1.TeacherActions])
 ], TeachersComponent);

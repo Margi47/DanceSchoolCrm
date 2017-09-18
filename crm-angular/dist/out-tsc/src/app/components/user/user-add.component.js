@@ -10,14 +10,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
 var store_1 = require("@ngrx/store");
-;
 var user_actions_1 = require("../../actions/user.actions");
 var error_actions_1 = require("../../actions/error.actions");
+var router_actions_1 = require("../../actions/router.actions");
 var UserAddComponent = (function () {
-    function UserAddComponent(router, store, userActions, errorActions) {
-        this.router = router;
+    function UserAddComponent(routerActions, store, userActions, errorActions) {
+        this.routerActions = routerActions;
         this.store = store;
         this.userActions = userActions;
         this.errorActions = errorActions;
@@ -27,7 +26,7 @@ var UserAddComponent = (function () {
         this.store.dispatch(this.userActions.addUser(user));
     };
     UserAddComponent.prototype.onUserCancel = function () {
-        this.router.navigate(['/users']);
+        this.store.dispatch(this.routerActions.back());
     };
     return UserAddComponent;
 }());
@@ -36,7 +35,7 @@ UserAddComponent = __decorate([
         selector: 'add-user',
         template: "\n<div  class=\"col-sm-6\">\n    <user-add-form \n            [errors] = \"errors$ | async\"\n            (userSave)=\"onUserSubmit($event)\" \n            (userCancel)=\"onUserCancel()\">\n    </user-add-form>\n</div>"
     }),
-    __metadata("design:paramtypes", [router_1.Router,
+    __metadata("design:paramtypes", [router_actions_1.RouterActions,
         store_1.Store,
         user_actions_1.UserActions,
         error_actions_1.ErrorActions])

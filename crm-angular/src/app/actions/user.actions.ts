@@ -82,6 +82,14 @@ export class UserActions {
         };
     }
 
+    static CHANGE_USER_SUCCESS = '[User] Change User Success';
+    changeUserSuccess(): ActionWithPayload<null> {
+        return {
+            type: UserActions.CHANGE_USER_SUCCESS,
+            payload: null
+        };
+    }
+
     static ADD_USER = '[User] Add User';
     addUser(user: User): ActionWithPayload<User> {
         return {

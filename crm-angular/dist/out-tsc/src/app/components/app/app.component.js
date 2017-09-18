@@ -21,7 +21,7 @@ var AppComponent = (function () {
         this.errorMessage$ = store.select('errorMessage');
     }
     AppComponent.prototype.navigate = function (path) {
-        this.routerActions.go([path]);
+        this.store.dispatch(this.routerActions.go([path]));
     };
     return AppComponent;
 }());

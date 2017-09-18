@@ -11,15 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var router_1 = require("@angular/router");
-var router_2 = require("@angular/router");
 var store_1 = require("@ngrx/store");
 var user_actions_1 = require("../../actions/user.actions");
 var group_actions_1 = require("../../actions/group.actions");
 var error_actions_1 = require("../../actions/error.actions");
+var router_actions_1 = require("../../actions/router.actions");
 var common_1 = require("@angular/common");
 var UserDetailComponent = (function () {
-    function UserDetailComponent(router, route, store, userActions, groupActions, errorActions, location) {
-        this.router = router;
+    function UserDetailComponent(routerActions, route, store, userActions, groupActions, errorActions, location) {
+        this.routerActions = routerActions;
         this.route = route;
         this.store = store;
         this.userActions = userActions;
@@ -40,11 +40,9 @@ var UserDetailComponent = (function () {
     };
     UserDetailComponent.prototype.onUserDelete = function (user) {
         this.store.dispatch(this.userActions.deleteUser(user.id));
-        this.goBack();
     };
     UserDetailComponent.prototype.onUserSubmit = function (user) {
         this.store.dispatch(this.userActions.saveUser(user));
-        this.goBack();
     };
     UserDetailComponent.prototype.onLoadNextGroups = function ($event) {
         this.store.dispatch(this.groupActions.loadAvailableUserGroups($event.user, $event.page));
@@ -53,13 +51,13 @@ var UserDetailComponent = (function () {
         this.store.dispatch(this.userActions.addUserGroup($event.userId, $event.groupId));
     };
     UserDetailComponent.prototype.onShowGroupDetails = function (groupId) {
-        this.router.navigate(['/groupdetail', groupId]);
+        this.store.dispatch(this.routerActions.go(['/groupdetail', groupId]));
     };
     UserDetailComponent.prototype.removeUserGroup = function ($event) {
         this.store.dispatch(this.userActions.removeUserGroup($event.userId, $event.groupId));
     };
     UserDetailComponent.prototype.goToTeacher = function (id) {
-        this.router.navigate(['/teacherdetail', id]);
+        this.store.dispatch(this.routerActions.go(['/teacherdetail', id]));
     };
     UserDetailComponent.prototype.isTeacherChanged = function ($event) {
         if ($event.value) {
@@ -70,7 +68,7 @@ var UserDetailComponent = (function () {
         }
     };
     UserDetailComponent.prototype.goBack = function () {
-        this.location.back();
+        this.store.dispatch(this.routerActions.back());
         this.store.dispatch(this.errorActions.removeError());
     };
     return UserDetailComponent;
@@ -80,7 +78,7 @@ UserDetailComponent = __decorate([
         selector: 'user-detail',
         template: "\n<div  class=\"col-sm-6\">\n    <button (click)=\"goBack()\" class=\"btn btn-default\">Back</button>\n    <user-detail-form [model] = \"model$ | async\" \n                      [allGroups] = \"allGroups$ | async\"\n                      [errors] = \"errors$ | async\"\n                      (userSubmit)=\"onUserSubmit($event)\" \n                      (userDelete)=\"onUserDelete($event)\"\n                      (loadNextGroups)=\"onLoadNextGroups($event)\"\n                      (addUserGroup)=\"onAddGroup($event)\"\n                      (showGroupDetails)=\"onShowGroupDetails($event)\"\n                      (removeUserGroup)=\"removeUserGroup($event)\"\n                      (goToTeacher)=\"goToTeacher($event)\"\n                      (isTeacherChanged)=\"isTeacherChanged($event)\">\n    </user-detail-form>\n</div>"
     }),
-    __metadata("design:paramtypes", [router_2.Router,
+    __metadata("design:paramtypes", [router_actions_1.RouterActions,
         router_1.ActivatedRoute,
         store_1.Store,
         user_actions_1.UserActions,

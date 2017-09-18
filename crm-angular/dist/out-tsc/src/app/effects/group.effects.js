@@ -58,8 +58,14 @@ var GroupEffects = (function () {
             .ofType(group_actions_1.GroupActions.SAVE_GROUP)
             .map(function (action) { return action.payload; })
             .switchMap(function (group) { return _this.service.update(group)
-            .map(function () { return _this.groupActions.loadGroups(1); })
+            .map(function () { return _this.groupActions.changeGroupSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
+        this.navigationAfterChange$ = this.update$
+            .ofType(group_actions_1.GroupActions.CHANGE_GROUP_SUCCESS)
+            .map(function () { return _this.routerActions.back(); });
+        this.changeUserSuccess$ = this.update$
+            .ofType(group_actions_1.GroupActions.CHANGE_GROUP_SUCCESS)
+            .map(function () { return _this.errorActions.removeError(); });
         this.addGroup$ = this.update$
             .ofType(group_actions_1.GroupActions.ADD_GROUP)
             .map(function (action) { return action.payload; })
@@ -83,7 +89,7 @@ var GroupEffects = (function () {
             .ofType(group_actions_1.GroupActions.DELETE_GROUP)
             .map(function (action) { return action.payload; })
             .switchMap(function (group) { return _this.service.deleteGroup(group)
-            .map(function () { return _this.groupActions.loadGroups(1); })
+            .map(function () { return _this.groupActions.changeGroupSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.loadTeachers$ = this.update$
             .ofType(group_actions_1.GroupActions.LOAD_TEACHERS)
@@ -161,6 +167,14 @@ __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)
 ], GroupEffects.prototype, "saveGroup$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], GroupEffects.prototype, "navigationAfterChange$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], GroupEffects.prototype, "changeUserSuccess$", void 0);
 __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)

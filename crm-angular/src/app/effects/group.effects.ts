@@ -67,9 +67,17 @@ export class GroupEffects {
         .ofType(GroupActions.SAVE_GROUP)
         .map((action: ActionWithPayload<Group>) => action.payload)
         .switchMap(group => this.service.update(group)
-            .map(() => this.groupActions.loadGroups(1))
+            .map(() => this.groupActions.changeGroupSuccess())
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
-        );
+    );
+
+    @Effect() navigationAfterChange$ = this.update$
+        .ofType(GroupActions.CHANGE_GROUP_SUCCESS)
+        .map(() => this.routerActions.back());
+
+    @Effect() changeUserSuccess$ = this.update$
+        .ofType(GroupActions.CHANGE_GROUP_SUCCESS)
+        .map(() => this.errorActions.removeError());
 
     @Effect() addGroup$ = this.update$
         .ofType(GroupActions.ADD_GROUP)
@@ -97,7 +105,7 @@ export class GroupEffects {
         .ofType(GroupActions.DELETE_GROUP)
         .map((action: ActionWithPayload<number>) => action.payload)
         .switchMap(group => this.service.deleteGroup(group)
-            .map(() => this.groupActions.loadGroups(1))
+            .map(() => this.groupActions.changeGroupSuccess())
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 

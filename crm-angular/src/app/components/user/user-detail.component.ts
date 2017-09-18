@@ -60,12 +60,10 @@ export class UserDetailComponent implements OnInit{
 
     onUserDelete(user: User) {
         this.store.dispatch(this.userActions.deleteUser(user.id));
-        this.goBack();
     }
 
     onUserSubmit(user: User): void {
-        this.store.dispatch(this.userActions.saveUser(user));
-        this.goBack();        
+        this.store.dispatch(this.userActions.saveUser(user));       
     }
 
     onLoadNextGroups($event) {

@@ -56,8 +56,14 @@ var TeacherEffects = (function () {
             .ofType(teacher_actions_1.TeacherActions.DELETE_TEACHER)
             .map(function (action) { return action.payload; })
             .switchMap(function (teacher) { return _this.service.deleteTeacher(teacher)
-            .map(function () { return _this.teacherActions.loadAllTeachers(1); })
+            .map(function () { return _this.teacherActions.changeTeacherSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
+        this.navigationAfterChange$ = this.update$
+            .ofType(teacher_actions_1.TeacherActions.CHANGE_TEACHER_SUCCESS)
+            .map(function () { return _this.routerActions.back(); });
+        this.changeUserSuccess$ = this.update$
+            .ofType(teacher_actions_1.TeacherActions.CHANGE_TEACHER_SUCCESS)
+            .map(function () { return _this.errorActions.removeError(); });
         this.getTeacherGroups$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.GET_TEACHER_GROUPS)
             .map(function (action) { return action.payload; })
@@ -108,6 +114,14 @@ __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)
 ], TeacherEffects.prototype, "deleteTeacher$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], TeacherEffects.prototype, "navigationAfterChange$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], TeacherEffects.prototype, "changeUserSuccess$", void 0);
 __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)

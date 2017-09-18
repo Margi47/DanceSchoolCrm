@@ -63,9 +63,17 @@ export class TeacherEffects {
         .ofType(TeacherActions.DELETE_TEACHER)
         .map((action: ActionWithPayload<number>) => action.payload)
         .switchMap(teacher => this.service.deleteTeacher(teacher)
-            .map(() => this.teacherActions.loadAllTeachers(1))
+            .map(() => this.teacherActions.changeTeacherSuccess())
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
-        );
+    );
+
+    @Effect() navigationAfterChange$ = this.update$
+        .ofType(TeacherActions.CHANGE_TEACHER_SUCCESS)
+        .map(() => this.routerActions.back());
+
+    @Effect() changeUserSuccess$ = this.update$
+        .ofType(TeacherActions.CHANGE_TEACHER_SUCCESS)
+        .map(() => this.errorActions.removeError());
 
     @Effect() getTeacherGroups$ = this.update$
         .ofType(TeacherActions.GET_TEACHER_GROUPS)

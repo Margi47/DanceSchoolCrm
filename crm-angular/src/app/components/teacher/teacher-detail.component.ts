@@ -9,6 +9,7 @@ import { AppState } from '../../reducers';
 import { TeacherActions } from '../../actions/teacher.actions';
 import { GroupActions } from '../../actions/group.actions';
 import { RouterActions } from '../../actions/router.actions';
+import { ErrorActions } from '../../actions/error.actions';
 
 @Component({
     selector: 'teacher-detail',
@@ -36,7 +37,8 @@ export class TeacherDetailComponent implements OnInit{
         private route: ActivatedRoute,
         private store: Store<AppState>,
         private teacherActions: TeacherActions,
-        private groupActions: GroupActions) {
+        private groupActions: GroupActions,
+        private errorActions: ErrorActions) {
         this.model$ = this.store.select('teacher');
         this.allGroups$ = this.store.select('groups');
     }
@@ -64,7 +66,6 @@ export class TeacherDetailComponent implements OnInit{
 
    onTeacherDelete(teacher: Teacher) {
         this.store.dispatch(this.teacherActions.deleteTeacher(teacher.id));
-        this.goBack();
    }
 
    onAddGroup($event) {
@@ -77,5 +78,6 @@ export class TeacherDetailComponent implements OnInit{
 
    goBack(): void {
        this.store.dispatch(this.routerActions.back());
+       this.store.dispatch(this.errorActions.removeError());
     }
 }

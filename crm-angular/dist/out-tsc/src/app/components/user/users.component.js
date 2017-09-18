@@ -10,12 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
 var store_1 = require("@ngrx/store");
 var user_actions_1 = require("../../actions/user.actions");
+var router_actions_1 = require("../../actions/router.actions");
 var UsersComponent = (function () {
-    function UsersComponent(router, store, userActions) {
-        this.router = router;
+    function UsersComponent(routerActions, store, userActions) {
+        this.routerActions = routerActions;
         this.store = store;
         this.userActions = userActions;
         this.users$ = store.select('users');
@@ -25,10 +25,10 @@ var UsersComponent = (function () {
     };
     ;
     UsersComponent.prototype.addUser = function () {
-        this.router.navigate(['/useradd']);
+        this.store.dispatch(this.routerActions.show(['useradd']));
     };
     UsersComponent.prototype.showDetails = function (id) {
-        this.router.navigate(['userdetail', id]);
+        this.store.dispatch(this.routerActions.go(['userdetail', id]));
     };
     UsersComponent.prototype.onPageChanged = function (page) {
         this.store.dispatch(this.userActions.loadUsers(page));
@@ -40,7 +40,7 @@ UsersComponent = __decorate([
         selector: 'users',
         template: "\n<users-list [users] = \"users$ | async\" \n            (add)=\"addUser()\" \n            (details)=\"showDetails($event)\"\n            (pageChanged)=\"onPageChanged($event)\">\n</users-list>\n"
     }),
-    __metadata("design:paramtypes", [router_1.Router,
+    __metadata("design:paramtypes", [router_actions_1.RouterActions,
         store_1.Store,
         user_actions_1.UserActions])
 ], UsersComponent);
