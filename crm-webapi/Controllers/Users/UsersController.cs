@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,7 @@ using AutoMapper;
 using crm_webapi.Controllers.Groups;
 using crm_webapi.Responses;
 using crm_webapi.Exceptions;
+using Serilog;
 
 namespace crm_webapi.Controllers.Users
 {
@@ -25,6 +26,7 @@ namespace crm_webapi.Controllers.Users
         [HttpGet]
         public PagedResponse<UserApiModel> GetAll([FromQuery] Parameters parameters)
         {
+      Log.Information("Getting users");
             var users = _userRepository.GetAll(parameters);
             var count = _userRepository.GetTotal();
             var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(users), count);

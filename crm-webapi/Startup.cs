@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +16,8 @@ using AutoMapper;
 using crm_webapi.Controllers.Users;
 using crm_webapi.Controllers.Groups;
 using Microsoft.Owin.Cors;
+using Serilog;
+using System.IO;
 
 namespace crm_webapi
 {
@@ -24,7 +26,13 @@ namespace crm_webapi
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-        }
+
+      Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+             .WriteTo.Console()
+             .WriteTo.RollingFile("log-{Date}.txt")
+            .CreateLogger();
+    }
 
         public IConfiguration Configuration { get; }
 
@@ -75,6 +83,7 @@ namespace crm_webapi
 
             app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
             app.UseMvc();
+
         }
     }
 }
