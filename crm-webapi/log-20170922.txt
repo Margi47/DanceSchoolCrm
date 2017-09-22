@@ -1,0 +1,57 @@
+2017-09-22 17:49:10.843 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:57150/api/values  
+2017-09-22 17:49:11.754 +02:00 [Information] Executing action method "crm_webapi.Controllers.ValuesController.Get (crm-webapi)" with arguments (null) - ModelState is Valid
+2017-09-22 17:49:12.019 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-09-22 17:49:12.439 +02:00 [Information] Executed action "crm_webapi.Controllers.ValuesController.Get (crm-webapi)" in 686.4806ms
+2017-09-22 17:49:12.722 +02:00 [Information] Request finished in 1671.7891ms 200 application/json; charset=utf-8
+2017-09-22 17:50:57.760 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:57150/api/users?page=1&pagesize=10  
+2017-09-22 17:50:57.806 +02:00 [Information] Policy execution successful.
+2017-09-22 17:50:59.023 +02:00 [Information] Executing action method "crm_webapi.Controllers.Users.UsersController.GetAll (crm-webapi)" with arguments (["crm_webapi.Models.Parameters"]) - ModelState is Valid
+2017-09-22 17:50:59.043 +02:00 [Information] Getting users
+2017-09-22 17:51:00.114 +02:00 [Information] Entity Framework Core "2.0.0-rtm-26452" initialized '"CrmContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+2017-09-22 17:51:00.322 +02:00 [Warning] Query: '"(from User <generated>_2 in DbSet<User> select [<generated>_2]).Skip(__p_0).Take(__p_1)"' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2017-09-22 17:51:00.843 +02:00 [Information] Executed DbCommand ("71"ms) [Parameters=["@__p_0='?', @__p_1='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT [u].[Id], [u].[Email], [u].[IsActive], [u].[IsAdmin], [u].[IsTeacher], [u].[Name], [u].[Phone]
+FROM [Users] AS [u]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY"
+2017-09-22 17:51:00.955 +02:00 [Information] Executed DbCommand ("23"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM [Users] AS [u]"
+2017-09-22 17:51:01.027 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-09-22 17:51:01.073 +02:00 [Information] Executed action "crm_webapi.Controllers.Users.UsersController.GetAll (crm-webapi)" in 3053.3196ms
+2017-09-22 17:51:01.078 +02:00 [Information] Request finished in 3379.9457ms 200 application/json; charset=utf-8
+2017-09-22 17:51:50.801 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:57150/api/groups?page=1&pagesize=10  
+2017-09-22 17:51:50.807 +02:00 [Information] Policy execution successful.
+2017-09-22 17:51:50.816 +02:00 [Information] Executing action method "crm_webapi.Controllers.Groups.GroupsController.GetAll (crm-webapi)" with arguments (["crm_webapi.Models.Parameters"]) - ModelState is Valid
+2017-09-22 17:51:50.825 +02:00 [Information] Entity Framework Core "2.0.0-rtm-26452" initialized '"CrmContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+2017-09-22 17:51:50.856 +02:00 [Warning] Query: '"(from Group <generated>_2 in DbSet<Group> select [<generated>_2]).Skip(__p_0).Take(__p_1)"' uses a row limiting operation (Skip/Take) without OrderBy which may lead to unpredictable results.
+2017-09-22 17:51:50.888 +02:00 [Information] Executed DbCommand ("22"ms) [Parameters=["@__p_0='?', @__p_1='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT [g].[Id], [g].[Description], [g].[IsActive], [g].[Name]
+FROM [Groups] AS [g]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY"
+2017-09-22 17:51:50.907 +02:00 [Information] Executed DbCommand ("1"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM [Groups] AS [g]"
+2017-09-22 17:51:50.925 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-09-22 17:51:50.933 +02:00 [Information] Executed action "crm_webapi.Controllers.Groups.GroupsController.GetAll (crm-webapi)" in 119.576ms
+2017-09-22 17:51:50.937 +02:00 [Information] Request finished in 136.793ms 200 application/json; charset=utf-8
+2017-09-22 17:51:52.984 +02:00 [Information] Request starting HTTP/1.1 GET http://localhost:57150/api/users?page=1&pagesize=10  
+2017-09-22 17:51:52.989 +02:00 [Information] Policy execution successful.
+2017-09-22 17:51:52.996 +02:00 [Information] Executing action method "crm_webapi.Controllers.Users.UsersController.GetAll (crm-webapi)" with arguments (["crm_webapi.Models.Parameters"]) - ModelState is Valid
+2017-09-22 17:51:52.996 +02:00 [Information] Getting users
+2017-09-22 17:51:53.000 +02:00 [Information] Entity Framework Core "2.0.0-rtm-26452" initialized '"CrmContext"' using provider '"Microsoft.EntityFrameworkCore.SqlServer"' with options: "None"
+2017-09-22 17:51:53.013 +02:00 [Information] Executed DbCommand ("7"ms) [Parameters=["@__p_0='?', @__p_1='?'"], CommandType='Text', CommandTimeout='30']"
+""SELECT [u].[Id], [u].[Email], [u].[IsActive], [u].[IsAdmin], [u].[IsTeacher], [u].[Name], [u].[Phone]
+FROM [Users] AS [u]
+ORDER BY (SELECT 1)
+OFFSET @__p_0 ROWS FETCH NEXT @__p_1 ROWS ONLY"
+2017-09-22 17:51:53.022 +02:00 [Information] Executed DbCommand ("3"ms) [Parameters=[""], CommandType='Text', CommandTimeout='30']"
+""SELECT COUNT(*)
+FROM [Users] AS [u]"
+2017-09-22 17:51:53.026 +02:00 [Information] Executing ObjectResult, writing value "Microsoft.AspNetCore.Mvc.ControllerContext".
+2017-09-22 17:51:53.034 +02:00 [Information] Executed action "crm_webapi.Controllers.Users.UsersController.GetAll (crm-webapi)" in 36.1548ms
+2017-09-22 17:51:53.038 +02:00 [Information] Request finished in 53.7233ms 200 application/json; charset=utf-8
+2017-09-22 17:56:43.084 +02:00 [Information] Getting users
+2017-09-22 18:06:02.105 +02:00 [Information] Getting users
+2017-09-22 18:07:03.063 +02:00 [Information] Getting users
