@@ -19,6 +19,7 @@ using Microsoft.Owin.Cors;
 using Serilog;
 using System.IO;
 using crm_webapi.Middlewares;
+using Serilog.Events;
 
 namespace crm_webapi
 {
@@ -49,8 +50,10 @@ namespace crm_webapi
 
       Log.Logger = new LoggerConfiguration()
       .MinimumLevel.Verbose()
-       .WriteTo.Console()
-       .WriteTo.RollingFile("log-{Date}.txt")
+      .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+      .MinimumLevel.Override("System", LogEventLevel.Warning)
+      .WriteTo.Console()
+      .WriteTo.RollingFile("log-{Date}.txt")
       .CreateLogger();
 
       services.AddScoped<IUserRepository, UserRepository>();

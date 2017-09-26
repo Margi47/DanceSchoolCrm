@@ -183,6 +183,8 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
+crm-webapi/log*.txt
+
 node_modules/
 
 /yarn.lock
