@@ -18,6 +18,7 @@ using crm_webapi.Controllers.Groups;
 using Microsoft.Owin.Cors;
 using Serilog;
 using System.IO;
+using crm_webapi.Middlewares;
 
 namespace crm_webapi
 {
@@ -47,7 +48,7 @@ namespace crm_webapi
           });
 
       Log.Logger = new LoggerConfiguration()
-      .MinimumLevel.Debug()
+      .MinimumLevel.Verbose()
        .WriteTo.Console()
        .WriteTo.RollingFile("log-{Date}.txt")
       .CreateLogger();
@@ -78,6 +79,7 @@ namespace crm_webapi
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
     {
+      app.UseLogging();
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();

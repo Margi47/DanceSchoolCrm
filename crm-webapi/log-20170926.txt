@@ -1,0 +1,10 @@
+2017-09-26 15:22:24.012 +02:00 [Information] Getting users
+2017-09-26 15:25:48.840 +02:00 [Information] Getting users
+2017-09-26 15:26:45.607 +02:00 [Verbose] Sending request "/api/values"
+2017-09-26 15:26:56.831 +02:00 [Verbose] Sending request "/api/users"
+2017-09-26 15:26:57.765 +02:00 [Information] Getting users
+2017-09-26 15:30:23.385 +02:00 [Verbose] Sending request "/api/values"
+2017-09-26 15:30:23.812 +02:00 [Verbose] Receiving response "Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.FrameResponseStream"
+2017-09-26 15:31:01.174 +02:00 [Verbose] Sending request "/api/users"
+2017-09-26 15:31:01.675 +02:00 [Information] Getting users
+2017-09-26 15:31:03.150 +02:00 [Verbose] Receiving response "Microsoft.AspNetCore.Server.Kestrel.Core.Internal.Http.FrameResponseStream"
