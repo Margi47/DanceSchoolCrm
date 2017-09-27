@@ -13,6 +13,7 @@ var platform_browser_1 = require("@angular/platform-browser");
 var forms_1 = require("@angular/forms");
 var store_1 = require("@ngrx/store");
 var effects_1 = require("@ngrx/effects");
+var router_store_1 = require("@ngrx/router-store");
 var app_routing_module_1 = require("./app-routing.module");
 var group_module_1 = require("../group/group.module");
 var user_module_1 = require("../user/user.module");
@@ -22,6 +23,8 @@ var app_component_1 = require("./app.component");
 var error_component_1 = require("./error.component");
 var reducers_1 = require("../../reducers");
 var error_actions_1 = require("../../actions/error.actions");
+var router_actions_1 = require("../../actions/router.actions");
+var router_effects_1 = require("../../effects/router.effects");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -38,16 +41,17 @@ AppModule = __decorate([
             platform_browser_1.BrowserModule,
             http_2.JsonpModule,
             http_1.HttpModule,
-            app_routing_module_1.AppRoutingModule,
             forms_1.FormsModule,
             group_module_1.GroupModule,
             user_module_1.UserModule,
             teacher_module_1.TeacherModule,
             shared_module_1.SharedModule,
+            app_routing_module_1.AppRoutingModule,
             store_1.StoreModule.forRoot(reducers_1.reducers),
-            effects_1.EffectsModule.forRoot([])
+            effects_1.EffectsModule.forRoot([router_effects_1.RouterEffects]),
+            router_store_1.StoreRouterConnectingModule
         ],
-        providers: [error_actions_1.ErrorActions, { provide: 'ORIGIN_URL', useValue: location.origin }]
+        providers: [error_actions_1.ErrorActions, router_actions_1.RouterActions]
     })
 ], AppModule);
 exports.AppModule = AppModule;

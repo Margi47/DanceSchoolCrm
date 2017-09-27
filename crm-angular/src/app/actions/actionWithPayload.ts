@@ -2,6 +2,7 @@ import { Action } from '@ngrx/store';
 import { User } from '../models/user';
 import { Group } from '../models/group';
 import { Teacher } from '../models/teacher';
+import { NavigationExtras } from '@angular/router';
 
 export interface ActionWithPayload<T> extends Action {
   payload: T;
@@ -41,4 +42,8 @@ export class GroupTeacher {
 
 export class ErrorPayload {
     constructor(public code: number, public error: any) { }
+}
+
+export class NavigationPayload {
+    constructor(public path: any[], public query?: object, public extras?: NavigationExtras) { }
 }

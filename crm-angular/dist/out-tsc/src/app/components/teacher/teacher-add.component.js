@@ -10,14 +10,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var router_1 = require("@angular/router");
 var store_1 = require("@ngrx/store");
 var user_actions_1 = require("../../actions/user.actions");
 var group_actions_1 = require("../../actions/group.actions");
 var teacher_actions_1 = require("../../actions/teacher.actions");
+var router_actions_1 = require("../../actions/router.actions");
 var TeacherAddComponent = (function () {
-    function TeacherAddComponent(router, store, userActions, groupActions, teacherActions) {
-        this.router = router;
+    function TeacherAddComponent(routerActions, store, userActions, groupActions, teacherActions) {
+        this.routerActions = routerActions;
         this.store = store;
         this.userActions = userActions;
         this.groupActions = groupActions;
@@ -31,11 +31,10 @@ var TeacherAddComponent = (function () {
         this.store.dispatch(this.userActions.loadAvailableTeachers($event.page));
     };
     TeacherAddComponent.prototype.onTeacherSubmit = function (teacher) {
-        console.log(teacher);
         this.store.dispatch(this.teacherActions.addTeacher(teacher));
     };
     TeacherAddComponent.prototype.onTeacherCancel = function () {
-        this.router.navigate(['/teachers']);
+        this.store.dispatch(this.routerActions.go(['/teachers']));
     };
     return TeacherAddComponent;
 }());
@@ -44,7 +43,7 @@ TeacherAddComponent = __decorate([
         selector: 'add-teacher',
         template: "\n<div class=\"col-sm-6\">\n    <teacher-add-form \n            [allUsers]=\"users$ | async\"\n            (loadUsers)=\"loadNextPage($event)\"\n            (teacherSave)=\"onTeacherSubmit($event)\" \n            (teacherCancel)=\"onTeacherCancel()\">\n    </teacher-add-form>\n</div>\n"
     }),
-    __metadata("design:paramtypes", [router_1.Router,
+    __metadata("design:paramtypes", [router_actions_1.RouterActions,
         store_1.Store,
         user_actions_1.UserActions,
         group_actions_1.GroupActions,

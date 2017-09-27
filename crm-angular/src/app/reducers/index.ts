@@ -2,6 +2,7 @@ import { compose } from '@ngrx/store';
 import { combineReducers } from '@ngrx/store';
 import { ActionReducerMap } from '@ngrx/store';
 
+import * as fromRouter from '@ngrx/router-store';
 import groupListReducer, * as fromGroupList from './group-list.reducer';
 import groupReducer, * as fromGroup from './group.reducer';
 import userListReducer, * as fromUserList from './user-list.reducer';
@@ -20,6 +21,7 @@ export interface AppState {
     teacher: fromTeacher.TeacherState;
     errorMessage: fromErrorMessage.ErrorMessageState;
     errorFields: fromFormError.FormErrorState;
+    routerReducer: fromRouter.RouterReducerState;
 };
 
 export const reducers: ActionReducerMap<AppState> = {
@@ -30,5 +32,6 @@ export const reducers: ActionReducerMap<AppState> = {
     teachers: teacherListReducer,
     teacher: teacherReducer,
     errorMessage: errorMessageReducer,
-    errorFields: formErrorReducer
+    errorFields: formErrorReducer,
+    routerReducer: fromRouter.routerReducer
 };

@@ -14,13 +14,11 @@ var TeacherListComponent = (function () {
     function TeacherListComponent() {
         this.add = new core_1.EventEmitter();
         this.teacherDetails = new core_1.EventEmitter();
-        this.userDetails = new core_1.EventEmitter();
         this.pageChanged = new core_1.EventEmitter();
         this.currentPage = 1;
     }
     TeacherListComponent.prototype.addTeacher = function () { this.add.emit(); };
     TeacherListComponent.prototype.showTeacherDetails = function (id) { this.teacherDetails.emit(id); };
-    TeacherListComponent.prototype.showUserDetails = function (id) { this.userDetails.emit(id); };
     TeacherListComponent.prototype.pageChange = function (page) {
         this.currentPage = page;
         this.pageChanged.emit(page);
@@ -39,10 +37,6 @@ __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
 ], TeacherListComponent.prototype, "teacherDetails", void 0);
-__decorate([
-    core_1.Output(),
-    __metadata("design:type", Object)
-], TeacherListComponent.prototype, "userDetails", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)

@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 
 import { Teacher } from '../../models/teacher';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../reducers';
 import { UserActions } from '../../actions/user.actions';
 import { GroupActions } from '../../actions/group.actions';
 import { TeacherActions } from '../../actions/teacher.actions';
+import { RouterActions } from '../../actions/router.actions';
 
 @Component({
     selector: 'add-teacher',
@@ -26,7 +26,7 @@ export class TeacherAddComponent implements OnInit {
     users$: Observable<any>;
 
     constructor(
-        private router: Router,
+        private routerActions: RouterActions,
         private store: Store<AppState>,
         private userActions: UserActions,
         private groupActions: GroupActions,
@@ -43,11 +43,10 @@ export class TeacherAddComponent implements OnInit {
     }
 
     onTeacherSubmit(teacher: Teacher): void {
-        console.log(teacher);
         this.store.dispatch(this.teacherActions.addTeacher(teacher));
     }
 
     onTeacherCancel(): void {
-        this.router.navigate(['/teachers']);
+        this.store.dispatch(this.routerActions.go(['/teachers']));
     }
 }

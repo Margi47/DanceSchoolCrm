@@ -61,6 +61,12 @@ var TeacherActions = TeacherActions_1 = (function () {
             payload: teacherId
         };
     };
+    TeacherActions.prototype.changeTeacherSuccess = function () {
+        return {
+            type: TeacherActions_1.CHANGE_TEACHER_SUCCESS,
+            payload: null
+        };
+    };
     TeacherActions.prototype.getTeacherGroups = function (teacherId) {
         return {
             type: TeacherActions_1.GET_TEACHER_GROUPS,
@@ -101,6 +107,7 @@ TeacherActions.GET_TEACHER = '[Teacher] Get Teacher';
 TeacherActions.GET_TEACHER_SUCCESS = '[Teacher] Get Teacher Success';
 TeacherActions.ADD_TEACHER = '[Teacher] Add Teacher';
 TeacherActions.DELETE_TEACHER = '[Teacher] Delete Teacher';
+TeacherActions.CHANGE_TEACHER_SUCCESS = '[Teacher] Change Teacher Success';
 TeacherActions.GET_TEACHER_GROUPS = '[Teacher] Get Teacher Groups';
 TeacherActions.GET_TEACHER_GROUPS_SUCCESS = '[Teacher] Get Teacher Groups Success';
 TeacherActions.ADD_TEACHER_GROUP = '[Teacher] Add Teacher Group';

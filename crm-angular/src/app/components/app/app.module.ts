@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { Store, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreRouterConnectingModule } from '@ngrx/router-store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { GroupModule } from '../group/group.module';
@@ -17,6 +18,8 @@ import { ErrorComponent } from './error.component';
 
 import { reducers } from '../../reducers';
 import { ErrorActions } from '../../actions/error.actions';
+import { RouterActions } from '../../actions/router.actions';
+import { RouterEffects } from '../../effects/router.effects';
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -28,16 +31,17 @@ import { ErrorActions } from '../../actions/error.actions';
         BrowserModule,
         JsonpModule,
         HttpModule,
-        AppRoutingModule,
         FormsModule,
         GroupModule,
         UserModule,
         TeacherModule,
         SharedModule,
+        AppRoutingModule,
         StoreModule.forRoot(reducers),
-        EffectsModule.forRoot([])
+        EffectsModule.forRoot([RouterEffects]),
+        StoreRouterConnectingModule
     ],
-    providers: [ErrorActions, { provide: 'ORIGIN_URL', useValue: location.origin }]
+    providers: [ErrorActions, RouterActions]
 })
 export class AppModule {
 }

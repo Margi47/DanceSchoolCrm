@@ -73,6 +73,14 @@ export class TeacherActions {
         };
     }
 
+    static CHANGE_TEACHER_SUCCESS = '[Teacher] Change Teacher Success';
+    changeTeacherSuccess(): ActionWithPayload<null> {
+        return {
+            type: TeacherActions.CHANGE_TEACHER_SUCCESS,
+            payload: null
+        };
+    }
+
     static GET_TEACHER_GROUPS = '[Teacher] Get Teacher Groups';
     getTeacherGroups(teacherId: number): ActionWithPayload<number> {
         return {

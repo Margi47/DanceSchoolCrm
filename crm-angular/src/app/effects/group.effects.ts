@@ -3,7 +3,6 @@ import { Effect, Actions } from '@ngrx/effects';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/of';
 import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
 
 import { ActionWithPayload } from '../actions/actionWithPayload';
 import { AvailableGroups } from '../actions/actionWithPayload';
@@ -17,6 +16,7 @@ import { GroupActions } from '../actions/group.actions';
 import { UserActions } from '../actions/user.actions';
 import { TeacherActions } from '../actions/teacher.actions';
 import { ErrorActions } from '../actions/error.actions';
+import { RouterActions } from '../actions/router.actions';
 import { GroupService } from '../services/group.service';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class GroupEffects {
         private teacherActions: TeacherActions,
         private errorActions: ErrorActions,
         private service: GroupService,
-        private router: Router
+        private routerActions: RouterActions
     ) { }
 
     @Effect() loadGroups$ = this.update$
@@ -67,9 +67,17 @@ export class GroupEffects {
         .ofType(GroupActions.SAVE_GROUP)
         .map((action: ActionWithPayload<Group>) => action.payload)
         .switchMap(group => this.service.update(group)
-            .map(() => this.groupActions.loadGroups(1))
+            .map(() => this.groupActions.changeGroupSuccess())
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
-        );
+    );
+
+    @Effect() navigationAfterChange$ = this.update$
+        .ofType(GroupActions.CHANGE_GROUP_SUCCESS)
+        .map(() => this.routerActions.back());
+
+    @Effect() changeUserSuccess$ = this.update$
+        .ofType(GroupActions.CHANGE_GROUP_SUCCESS)
+        .map(() => this.errorActions.removeError());
 
     @Effect() addGroup$ = this.update$
         .ofType(GroupActions.ADD_GROUP)
@@ -86,7 +94,7 @@ export class GroupEffects {
 
     @Effect() navigateToDetails = this.update$
         .ofType(GroupActions.ADD_GROUP_SUCCESS)
-        .map((action: ActionWithPayload<number>) => this.router.navigate(['groupdetail', action.payload]));
+        .map((action: ActionWithPayload<number>) => this.routerActions.go(['groupdetail', action.payload]));
 
     @Effect() getMainMessage = this.update$
         .ofType(ErrorActions.CATCH_VALIDATION_ERROR)
@@ -97,7 +105,7 @@ export class GroupEffects {
         .ofType(GroupActions.DELETE_GROUP)
         .map((action: ActionWithPayload<number>) => action.payload)
         .switchMap(group => this.service.deleteGroup(group)
-            .map(() => this.groupActions.loadGroups(1))
+            .map(() => this.groupActions.changeGroupSuccess())
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 

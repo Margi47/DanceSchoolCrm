@@ -14,20 +14,20 @@ var effects_1 = require("@ngrx/effects");
 require("rxjs/add/operator/switchMap");
 require("rxjs/add/observable/of");
 var Observable_1 = require("rxjs/Observable");
-var router_1 = require("@angular/router");
 var teacher_actions_1 = require("../actions/teacher.actions");
 var group_actions_1 = require("../actions/group.actions");
 var error_actions_1 = require("../actions/error.actions");
+var router_actions_1 = require("../actions/router.actions");
 var teacher_service_1 = require("../services/teacher.service");
 var TeacherEffects = (function () {
-    function TeacherEffects(update$, teacherActions, groupActions, service, errorActions, router) {
+    function TeacherEffects(update$, teacherActions, groupActions, service, errorActions, routerActions) {
         var _this = this;
         this.update$ = update$;
         this.teacherActions = teacherActions;
         this.groupActions = groupActions;
         this.service = service;
         this.errorActions = errorActions;
-        this.router = router;
+        this.routerActions = routerActions;
         this.loadTeachersWithGroups$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.LOAD_ALL_TEACHERS)
             .map(function (action) { return action.payload; })
@@ -50,14 +50,20 @@ var TeacherEffects = (function () {
             .ofType(teacher_actions_1.TeacherActions.ADD_TEACHER)
             .map(function (action) { return action.payload; })
             .switchMap(function (teacher) { return _this.service.addTeacher(teacher)
-            .map(function (teacherId) { return _this.router.navigate(['teacherdetail', teacherId]); })
+            .map(function (teacherId) { return _this.routerActions.go(['teacherdetail', teacherId]); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.deleteTeacher$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.DELETE_TEACHER)
             .map(function (action) { return action.payload; })
             .switchMap(function (teacher) { return _this.service.deleteTeacher(teacher)
-            .map(function () { return _this.teacherActions.loadAllTeachers(1); })
+            .map(function () { return _this.teacherActions.changeTeacherSuccess(); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
+        this.navigationAfterChange$ = this.update$
+            .ofType(teacher_actions_1.TeacherActions.CHANGE_TEACHER_SUCCESS)
+            .map(function () { return _this.routerActions.back(); });
+        this.changeUserSuccess$ = this.update$
+            .ofType(teacher_actions_1.TeacherActions.CHANGE_TEACHER_SUCCESS)
+            .map(function () { return _this.errorActions.removeError(); });
         this.getTeacherGroups$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.GET_TEACHER_GROUPS)
             .map(function (action) { return action.payload; })
@@ -111,6 +117,14 @@ __decorate([
 __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)
+], TeacherEffects.prototype, "navigationAfterChange$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
+], TeacherEffects.prototype, "changeUserSuccess$", void 0);
+__decorate([
+    effects_1.Effect(),
+    __metadata("design:type", Object)
 ], TeacherEffects.prototype, "getTeacherGroups$", void 0);
 __decorate([
     effects_1.Effect(),
@@ -139,7 +153,7 @@ TeacherEffects = __decorate([
         group_actions_1.GroupActions,
         teacher_service_1.TeacherService,
         error_actions_1.ErrorActions,
-        router_1.Router])
+        router_actions_1.RouterActions])
 ], TeacherEffects);
 exports.TeacherEffects = TeacherEffects;
 //# sourceMappingURL=teacher.effects.js.map
