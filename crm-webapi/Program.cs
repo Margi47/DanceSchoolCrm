@@ -20,6 +20,7 @@ namespace crm_webapi
           .MinimumLevel.Information()
           .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
           .MinimumLevel.Override("System", LogEventLevel.Warning)
+          .MinimumLevel.Override("Microsoft.AspNetCore.Hosting.Internal.WebHost", LogEventLevel.Information)
           .WriteTo.Console()
           .WriteTo.RollingFile("Logs/log-{Date}.txt")
           .CreateLogger();

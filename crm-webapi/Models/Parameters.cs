@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -9,7 +9,9 @@ namespace crm_webapi.Models
 {
     public class Parameters
     {
+        [Range(1, int.MaxValue)]
         public int Page { get; set; }
+        [Range(1, int.MaxValue)]
         public int PageSize { get; set; }
     }
 }

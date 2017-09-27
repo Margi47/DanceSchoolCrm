@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,11 +10,6 @@ namespace crm_webapi.Models
     {
         public GroupRepository(CrmContext context) : base(context)
         { }
-
-        public override Func<Group, bool> GetExpression(int key)
-        {
-            return Group => Group.Id == key; ;
-        }
 
         public override DbSet<Group> GetQuery(CrmContext context)
         {

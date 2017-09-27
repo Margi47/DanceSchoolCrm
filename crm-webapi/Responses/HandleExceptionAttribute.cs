@@ -24,7 +24,6 @@ namespace crm_webapi.Responses
             if (context.Exception is EntityNotFoundException)
             {
                 var notFoundException = context.Exception as EntityNotFoundException;
-                _logger.LogInformation("Entity was not found.");
                 context.Result = new NotFoundObjectResult(new ApiEntityNotFoundResponse(
                     notFoundException.Entity, notFoundException.Id, notFoundException.SecondId));
 
@@ -32,20 +31,18 @@ namespace crm_webapi.Responses
             else if (context.Exception is BadRequestException)
             {
                 var badRequestException = context.Exception as BadRequestException;
-                _logger.LogInformation(badRequestException.ErrorMessage);
                 context.Result = new BadRequestObjectResult(new ApiBadRequestResponse(
                         badRequestException.ErrorMessage));
             }
             else if (context.Exception is EntityDuplicateException)
             {
                 var duplicateException = context.Exception as EntityDuplicateException;
-                _logger.LogInformation("Entity already exists.");
                 context.Result = new BadRequestObjectResult(new ApiDuplicatedEntityResponse(
                         duplicateException.Entity, duplicateException.Id, duplicateException.SecondId));
             }
             else
             {
-                _logger.LogError("Unhandled exception.");
+                _logger.LogError(context.Exception, "Unhandled exception.");
                 var result = new ObjectResult(new ApiErrorResponse("Unhandled error occurred."));
                 result.StatusCode = StatusCodes.Status500InternalServerError;
                 context.Result = result;
