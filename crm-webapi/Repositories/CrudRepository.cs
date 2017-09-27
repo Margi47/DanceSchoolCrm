@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,7 +9,7 @@ using crm_webapi.Responses;
 
 namespace crm_webapi.Models
 {
-    public abstract class CrudRepository<T> : ICrudRepository<T> where T: class 
+    public abstract class CrudRepository<T> : ICrudRepository<T> where T: class , IEntity
     {
         protected readonly CrmContext Context;
 
@@ -28,7 +28,7 @@ namespace crm_webapi.Models
         public T Find(int key)
         {
             var items = GetQuery(Context);
-            var result = items.FirstOrDefault(GetExpression(key));
+            var result = items.FirstOrDefault(x => x.Id == key);
 
             if(result == null)
             {
@@ -41,7 +41,7 @@ namespace crm_webapi.Models
         public IEnumerable<T> GetAll(Parameters parameters)
         {
             var items = GetQuery(Context);
-            var data = items.Skip((parameters.Page - 1) * parameters.PageSize)
+            var data = items.OrderBy(x => x.Id).Skip((parameters.Page - 1) * parameters.PageSize)
                             .Take(parameters.PageSize).ToList();
             return data;
         }
@@ -66,7 +66,5 @@ namespace crm_webapi.Models
         }
 
         public abstract DbSet<T> GetQuery(CrmContext context);
-
-        public abstract Func<T,bool> GetExpression(int key);
     }
 }

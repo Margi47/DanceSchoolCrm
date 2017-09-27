@@ -1,4 +1,4 @@
-﻿using crm_webapi.Exceptions;
+using crm_webapi.Exceptions;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using System;

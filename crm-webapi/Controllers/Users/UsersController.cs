@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -8,6 +8,8 @@ using AutoMapper;
 using crm_webapi.Controllers.Groups;
 using crm_webapi.Responses;
 using crm_webapi.Exceptions;
+using Serilog;
+using Microsoft.Extensions.Logging;
 
 namespace crm_webapi.Controllers.Users
 {
@@ -86,7 +88,6 @@ namespace crm_webapi.Controllers.Users
         public IActionResult Delete(int id)
         {
             var user = _userRepository.Find(id);
-
             _userRepository.Remove(user);
             
             return new NoContentResult();

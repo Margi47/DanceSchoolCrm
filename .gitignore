@@ -183,6 +183,8 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
+Logs/
+
 node_modules/
 
 /yarn.lock

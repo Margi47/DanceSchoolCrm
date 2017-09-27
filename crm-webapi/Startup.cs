@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,6 +16,10 @@ using AutoMapper;
 using crm_webapi.Controllers.Users;
 using crm_webapi.Controllers.Groups;
 using Microsoft.Owin.Cors;
+using Serilog;
+using System.IO;
+using crm_webapi.Middlewares;
+using Serilog.Events;
 
 namespace crm_webapi
 {
@@ -41,6 +45,8 @@ namespace crm_webapi
                     config.Filters.Add(typeof(HandleExceptionAttribute));
                     config.Filters.Add(typeof(ApiValidationAttribute));
                 });
+
+
 
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IGroupRepository, GroupRepository>();
