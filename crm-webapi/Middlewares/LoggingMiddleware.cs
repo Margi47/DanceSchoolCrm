@@ -28,19 +28,17 @@ namespace crm_webapi.Middlewares
         var originalRequestBody = context.Request.Body;
         var requestBodyStream = new MemoryStream();
         context.Request.Body = requestBodyStream;
-_logger.Verbose( await GetRequestMessage(context, requestBodyStream));
+        _logger.Verbose( await GetRequestMessage(context, requestBodyStream));
         await context.Request.Body.CopyToAsync(requestBodyStream);        
         
-
         var originalResponseBody = context.Response.Body;
         var responseBodyStream = new MemoryStream();
         context.Response.Body = responseBodyStream;
 
         await _next.Invoke(context);
-            _logger.Verbose(await GetResponseMessage(responseBodyStream));    
+        _logger.Verbose(await GetResponseMessage(responseBodyStream));    
         await responseBodyStream.CopyToAsync(originalResponseBody);
         
-
         context.Request.Body = originalRequestBody;
         context.Response.Body = originalResponseBody;
       }

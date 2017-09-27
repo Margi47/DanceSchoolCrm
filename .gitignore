@@ -183,7 +183,7 @@ ClientBin/
 *.publishsettings
 orleans.codegen.cs
 
-crm-webapi/log*.txt
+Logs/
 
 node_modules/
 

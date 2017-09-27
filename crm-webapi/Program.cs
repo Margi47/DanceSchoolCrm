@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -7,19 +7,43 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Events;
 
 namespace crm_webapi
 {
-    public class Program
+  public class Program
+  {
+    public static int Main(string[] args)
     {
-        public static void Main(string[] args)
-        {
-            BuildWebHost(args).Run();
-        }
+      Log.Logger = new LoggerConfiguration()
+          .MinimumLevel.Information()
+          .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+          .MinimumLevel.Override("System", LogEventLevel.Warning)
+          .WriteTo.Console()
+          .WriteTo.RollingFile("Logs/log-{Date}.txt")
+          .CreateLogger();
 
-        public static IWebHost BuildWebHost(string[] args) =>
-            WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .Build();
+      try
+      {
+        Log.Information("Getting the motors running...");
+
+        WebHost.CreateDefaultBuilder(args)
+                      .UseStartup<Startup>()
+                      .UseSerilog()
+                      .Build().Run();
+
+        return 0;
+      }
+      catch (Exception ex)
+      {
+        Log.Fatal(ex, "Host terminated unexpectedly");
+        return 1;
+      }
+      finally
+      {
+        Log.CloseAndFlush();
+      }
     }
+  }
 }
