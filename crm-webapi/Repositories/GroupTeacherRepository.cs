@@ -101,9 +101,15 @@ namespace crm_webapi.Repositories
             return result;
         }
 
-        public int GetTotalTeachers(int groupId)
+        public int GetTotalTeachers(int groupId, string filter)
         {
-            return _context.Teachers
+            var items = _context.Teachers.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                items = items.Where(x => x.User.Name.Contains(filter.Trim()));
+            }
+
+            return items
                 .Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
                 .Count();
         }
@@ -129,9 +135,15 @@ namespace crm_webapi.Repositories
             return result;
         }
 
-        public int GetTotalGroups(int teacherId)
+        public int GetTotalGroups(int teacherId, string filter)
         {
-            return _context.Groups
+            var items = _context.Groups.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                items = items.Where(x => x.Name.Contains(filter.Trim()));
+            }
+
+            return items
                 .Where(g => g.IsActive && !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
                 .Count();
         }

@@ -57,7 +57,7 @@ namespace crm_webapi.Controllers.Groups
         [HttpGet("{id}/groups/available", Name = "GetAvailableGroups")]
         public PagedResponse<GroupApiModel> GetAvailableGroups(int id, [FromQuery] Parameters parameters)
         {          
-            var count = _repository.GetTotalGroups(id);
+            var count = _repository.GetTotalGroups(id, parameters.Filter);
             var groups = _repository.GetAvailableGroups(id, parameters);
 
             var result = new PagedResponse<GroupApiModel>(Mapper.Map<GroupApiModel[]>(groups), count, parameters.Filter);
@@ -67,7 +67,7 @@ namespace crm_webapi.Controllers.Groups
         [HttpGet("{id}/students/available", Name = "GetAvailableStudents")]
         public PagedResponse<UserApiModel> GetAvailableStudents(int id, [FromQuery] Parameters parameters)
         {
-            var count = _repository.GetTotalStudents(id);
+            var count = _repository.GetTotalStudents(id, parameters.Filter);
             var students = _repository.GetAvailableStudents(id, parameters);
 
             var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(students), count, parameters.Filter);

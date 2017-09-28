@@ -32,9 +32,15 @@ namespace crm_webapi.Models
             return result;
         }
 
-        public int CountTeachers(Parameters parameters)
+        public int CountTeachers(string filter)
         {
-            return Context.Users
+            var items = Context.Users.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                items = items.Where(x => x.Name.Contains(filter.Trim()));
+            }
+
+            return items
                 .Where(u => u.IsActive && !Context.Teachers.Any(t => t.Id == u.Id))
                 .Count();
         }

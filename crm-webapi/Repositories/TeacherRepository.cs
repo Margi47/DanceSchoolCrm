@@ -28,9 +28,15 @@ namespace crm_webapi.Models
                             .Take(parameters.PageSize).Select(t => t.User);
         }
 
-        public int GetTotal()
+        public int GetTotal(string filter)
         {
-            return _context.Teachers.Count();
+            var items = _context.Teachers.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                items = items.Where(x => x.User.Name.Contains(filter.Trim()));
+            }
+
+            return items.Count();
         }
 
         public void AddTeacher(Teacher teacher)

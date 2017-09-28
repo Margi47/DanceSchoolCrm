@@ -1,4 +1,4 @@
-﻿using crm_webapi.Models;
+using crm_webapi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +14,7 @@ namespace crm_webapi.Repositories
         void RemoveGroupTeacher(int groupId, int teacherId);
         IEnumerable<User> GetAvailableTeachers(int id, Parameters parameters);
         IEnumerable<Group> GetAvailableGroups(int id, Parameters parameters);
-        int GetTotalTeachers(int groupId);
-        int GetTotalGroups(int teacherId);
+        int GetTotalTeachers(int groupId, string filter);
+        int GetTotalGroups(int teacherId, string filter);
     }
 }

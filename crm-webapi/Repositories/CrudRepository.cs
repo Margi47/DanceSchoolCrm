@@ -53,9 +53,15 @@ namespace crm_webapi.Models
             return data;
         }
 
-        public int GetTotal()
+        public int GetTotal(string filter)
         {
-            return GetQuery(Context).Count();
+            var items = GetQuery(Context).AsQueryable();
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                items = items.Where(x => x.Name.Contains(filter.Trim()));
+            }
+
+            return items.Count();
         }
 
         public void Remove(T item)

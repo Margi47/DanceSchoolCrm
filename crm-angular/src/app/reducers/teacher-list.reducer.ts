@@ -23,7 +23,8 @@ export default function (state = initialState, action: ActionWithPayload<Teacher
             if (action.payload.filter == state.filter) {
                 return Object.assign({}, state, {
                     teachers: [...state.teachers, ...action.payload.teacherList],
-                    total: action.payload.total
+                    total: action.payload.total,
+                    filter: action.payload.filter
                 });
             }
             else {

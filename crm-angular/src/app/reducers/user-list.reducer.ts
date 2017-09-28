@@ -24,7 +24,8 @@ export default function (state = initialState, action: ActionWithPayload<UserLis
             if (action.payload.filter == state.filter) {
                 return Object.assign({}, state, {
                     users: [...state.users, ...action.payload.userList],
-                    total: action.payload.total
+                    total: action.payload.total,
+                    filter: action.payload.filter
                 });
             }
             else {
@@ -39,7 +40,8 @@ export default function (state = initialState, action: ActionWithPayload<UserLis
             if (action.payload.filter == state.filter) {
                 return Object.assign({}, state, {
                     users: [...state.users, ...action.payload.userList],
-                    total: action.payload.total
+                    total: action.payload.total,
+                    filter: action.payload.filter
                 });
             }
             else {

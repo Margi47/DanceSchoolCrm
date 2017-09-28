@@ -28,7 +28,7 @@ namespace crm_webapi.Controllers.Users
         public PagedResponse<UserApiModel> GetAll([FromQuery] Parameters parameters)
         {
             var users = _userRepository.GetAll(parameters);
-            var count = _userRepository.GetTotal();
+            var count = _userRepository.GetTotal(parameters.Filter);
             var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(users), count, parameters.Filter);
 
             return result;
@@ -97,7 +97,7 @@ namespace crm_webapi.Controllers.Users
         public PagedResponse<UserApiModel> GetAvailableTeachers([FromQuery] Parameters parameters)
         {
             var users = _userRepository.GetAvailableTeachers(parameters);
-            var count = _userRepository.CountTeachers(parameters);
+            var count = _userRepository.CountTeachers(parameters.Filter);
 
             var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(users), count, parameters.Filter);
 

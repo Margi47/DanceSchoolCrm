@@ -21,7 +21,8 @@ export default function (state = initialState, action: ActionWithPayload<GroupLi
             if (action.payload.filter == state.filter) {
                 return Object.assign({}, state, {
                     groups: [...state.groups, ...action.payload.groupList],
-                    total: action.payload.total
+                    total: action.payload.total,
+                    filter: action.payload.filter
                 });                     
             }
             else {
@@ -36,7 +37,8 @@ export default function (state = initialState, action: ActionWithPayload<GroupLi
             if (action.payload.filter == state.filter) {
                 return Object.assign({}, state, {
                     groups: [...state.groups, ...action.payload.groupList],
-                    total: action.payload.total
+                    total: action.payload.total,
+                    filter: action.payload.filter
                 });
             }
             else {
