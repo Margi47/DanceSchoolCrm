@@ -31,8 +31,8 @@ var TeacherEffects = (function () {
         this.loadTeachersWithGroups$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.LOAD_ALL_TEACHERS)
             .map(function (action) { return action.payload; })
-            .switchMap(function (page) { return _this.service.getTeachers(page)
-            .map(function (teachers) { return _this.teacherActions.loadAllTeachersSuccess(teachers.data, teachers.total); })
+            .switchMap(function (data) { return _this.service.getTeachers(data.page, data.filter)
+            .map(function (teachers) { return _this.teacherActions.loadAllTeachersSuccess(teachers.data, teachers.total, teachers.filter); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.getTeacher$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.GET_TEACHER)
@@ -43,8 +43,8 @@ var TeacherEffects = (function () {
         this.loadAvailableTeachers$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.LOAD_AVAILABLE_TEACHERS)
             .map(function (action) { return action.payload; })
-            .switchMap(function (data) { return _this.service.getAvailableTeachers(data.groupId, data.page)
-            .map(function (teachers) { return _this.teacherActions.loadAvailableTeachersSuccess(teachers.data, teachers.total); })
+            .switchMap(function (data) { return _this.service.getAvailableTeachers(data.groupId, data.page, data.filter)
+            .map(function (teachers) { return _this.teacherActions.loadAvailableTeachersSuccess(teachers.data, teachers.total, teachers.filter); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.addTeacher$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.ADD_TEACHER)
@@ -87,7 +87,7 @@ var TeacherEffects = (function () {
             .map(function (action) { return _this.teacherActions.getTeacherGroups(action.payload); });
         this.updateAvailableGroups$ = this.update$
             .ofType(teacher_actions_1.TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS)
-            .map(function (action) { return _this.groupActions.loadAvailableTeacherGroups(action.payload, 1); });
+            .map(function (action) { return _this.groupActions.loadAvailableTeacherGroups(action.payload, 1, ""); });
         this.removeError = this.update$
             .ofType(teacher_actions_1.TeacherActions.LOAD_ALL_TEACHERS_SUCCESS, teacher_actions_1.TeacherActions.GET_TEACHER_SUCCESS, teacher_actions_1.TeacherActions.LOAD_AVAILABLE_TEACHERS_SUCCESS, teacher_actions_1.TeacherActions.GET_TEACHER_GROUPS_SUCCESS, teacher_actions_1.TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS)
             .map(function (users) { return _this.errorActions.removeError(); });

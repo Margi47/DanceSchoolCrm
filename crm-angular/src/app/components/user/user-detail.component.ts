@@ -54,7 +54,7 @@ export class UserDetailComponent implements OnInit{
        {
            this.store.dispatch(this.userActions.getUser(+params['id']));
            this.store.dispatch(this.userActions.loadUserGroups(+params['id']));
-           this.store.dispatch(this.groupActions.loadAvailableUserGroups(+params['id'], 1));
+           this.store.dispatch(this.groupActions.loadAvailableUserGroups(+params['id'], 1, ""));
        });
    }
 
@@ -67,7 +67,7 @@ export class UserDetailComponent implements OnInit{
     }
 
     onLoadNextGroups($event) {
-        this.store.dispatch(this.groupActions.loadAvailableUserGroups($event.user, $event.page));
+        this.store.dispatch(this.groupActions.loadAvailableUserGroups($event.user, $event.page, $event.filter));
     }
 
     onAddGroup($event) {

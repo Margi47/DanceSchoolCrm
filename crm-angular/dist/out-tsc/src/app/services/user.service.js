@@ -23,11 +23,8 @@ var UserService = (function () {
         this.usersUrl = environment_1.environment.url + '/api/users';
         this.groupUserUrl = environment_1.environment.url + '/api/groupuser';
     }
-    UserService.prototype.getUsers = function (page) {
-        var params = new URLSearchParams();
-        params.append('page', '1');
-        params.append('pagesize', '10');
-        return this.http.get(this.usersUrl + '?page=' + page + '&pagesize=10')
+    UserService.prototype.getUsers = function (page, filter) {
+        return this.http.get(this.usersUrl + "?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) { return response.json(); });
     };
     UserService.prototype.getUser = function (id) {
@@ -38,13 +35,12 @@ var UserService = (function () {
         return this.http.get(this.groupUserUrl + "/" + userId + "/groups")
             .map(function (response) { return response.json(); });
     };
-    UserService.prototype.getAvailableStudents = function (groupId, page) {
-        return this.http.get(this.groupUserUrl + "/" + groupId + "/students/available?page=" + page + "&pagesize=10")
+    UserService.prototype.getAvailableStudents = function (groupId, page, filter) {
+        return this.http.get(this.groupUserUrl + "/" + groupId + "/students/available?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) { return response.json(); });
     };
-    UserService.prototype.getAvailableTeachers = function (page) {
-        console.log(page);
-        return this.http.get(this.usersUrl + "/teachers/available?page=" + page + "&pagesize=10")
+    UserService.prototype.getAvailableTeachers = function (page, filter) {
+        return this.http.get(this.usersUrl + "/teachers/available?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) {
             console.log(response);
             return response.json();

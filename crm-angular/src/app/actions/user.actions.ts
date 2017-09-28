@@ -4,6 +4,7 @@ import { UserList } from '../actions/actionWithPayload';
 import { GroupList } from '../actions/actionWithPayload';
 import { UserGroup } from '../actions/actionWithPayload';
 import { AvailableGroupStudents } from '../actions/actionWithPayload';
+import { ListRequest } from '../actions/actionWithPayload';
 
 import { User } from '../models/user';
 import { Group } from '../models/group';
@@ -11,50 +12,50 @@ import { Group } from '../models/group';
 @Injectable()
 export class UserActions {
     static LOAD_USERS = '[User] Load Users';
-    loadUsers(page: number): ActionWithPayload<number> {
+    loadUsers(page: number, filter: string): ActionWithPayload<ListRequest> {
         return {
             type: UserActions.LOAD_USERS,
-            payload: page
+            payload: new ListRequest(page, filter)
         };
     }
 
     static LOAD_USERS_SUCCESS = '[User] Load Users Success';
-    loadUsersSuccess(users: User[], total: number): ActionWithPayload<UserList> {
+    loadUsersSuccess(users: User[], total: number, filter): ActionWithPayload<UserList> {
         return {
             type: UserActions.LOAD_USERS_SUCCESS,
-            payload: new UserList ( users, total )
+            payload: new UserList (users, total, filter)
         };
     }
 
     static LOAD_AVAILABLE_STUDENTS = '[User] Load Available Students';
-    loadAvailableStudents(groupId: number, page: number): ActionWithPayload<AvailableGroupStudents> {
+    loadAvailableStudents(groupId: number, page: number, filter: string): ActionWithPayload<AvailableGroupStudents> {
         return {
             type: UserActions.LOAD_AVAILABLE_STUDENTS,
-            payload: new AvailableGroupStudents(groupId, page)
+            payload: new AvailableGroupStudents(groupId, page, filter)
         };
     }
 
     static LOAD_AVAILABLE_STUDENTS_SUCCESS = '[User] Load Available Students Success';
-    loadAvailableStudentsSuccess(students: User[], total: number): ActionWithPayload<UserList> {
+    loadAvailableStudentsSuccess(students: User[], total: number, filter: string): ActionWithPayload<UserList> {
         return {
             type: UserActions.LOAD_AVAILABLE_STUDENTS_SUCCESS,
-            payload: new UserList(students, total)
+            payload: new UserList(students, total, filter)
         };
     }
 
     static LOAD_AVAILABLE_TEACHERS = '[User] Load Available Teachers';
-    loadAvailableTeachers(page: number): ActionWithPayload<number> {
+    loadAvailableTeachers(page: number, filter: string): ActionWithPayload<ListRequest> {
         return {
             type: UserActions.LOAD_AVAILABLE_TEACHERS,
-            payload: page
+            payload: new ListRequest(page, filter)
         };
     }
 
     static LOAD_AVAILABLE_TEACHERS_SUCCESS = '[User] Load Available Teachers Success';
-    loadAvailableTeachersSuccess(users: User[], total: number): ActionWithPayload<UserList> {
+    loadAvailableTeachersSuccess(users: User[], total: number, filter: string): ActionWithPayload<UserList> {
         return {
             type: UserActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
-            payload: new UserList(users,total)
+            payload: new UserList(users, total, filter)
         };
     }
 

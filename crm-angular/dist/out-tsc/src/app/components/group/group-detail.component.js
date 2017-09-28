@@ -37,8 +37,8 @@ var GroupDetailComponent = (function () {
             _this.store.dispatch(_this.groupActions.getGroup(+params['id']));
             _this.store.dispatch(_this.groupActions.loadStudents(+params['id']));
             _this.store.dispatch(_this.groupActions.loadTeaches(+params['id']));
-            _this.store.dispatch(_this.userActions.loadAvailableStudents(+params['id'], 1));
-            _this.store.dispatch(_this.teacherActions.loadAvailableTeachers(+params['id'], 1));
+            _this.store.dispatch(_this.userActions.loadAvailableStudents(+params['id'], 1, ""));
+            _this.store.dispatch(_this.teacherActions.loadAvailableTeachers(+params['id'], 1, ""));
         });
     };
     GroupDetailComponent.prototype.deleteGroup = function (group) {
@@ -47,8 +47,8 @@ var GroupDetailComponent = (function () {
     GroupDetailComponent.prototype.groupUpdate = function (group) {
         this.store.dispatch(this.groupActions.saveGroup(group));
     };
-    GroupDetailComponent.prototype.loadNextUsers = function ($event) {
-        this.store.dispatch(this.userActions.loadAvailableStudents($event.group, $event.page));
+    GroupDetailComponent.prototype.loadUsers = function ($event) {
+        this.store.dispatch(this.userActions.loadAvailableStudents($event.group, $event.page, $event.filter));
     };
     GroupDetailComponent.prototype.showUserDetails = function (id) {
         this.store.dispatch(this.routerActions.go(['userdetail', id]));
@@ -59,8 +59,8 @@ var GroupDetailComponent = (function () {
     GroupDetailComponent.prototype.removeGroupStudent = function ($event) {
         this.store.dispatch(this.groupActions.removeStudent($event.groupId, $event.studentId));
     };
-    GroupDetailComponent.prototype.loadNextTeachers = function ($event) {
-        this.store.dispatch(this.teacherActions.loadAvailableTeachers($event.group, $event.page));
+    GroupDetailComponent.prototype.loadTeachers = function ($event) {
+        this.store.dispatch(this.teacherActions.loadAvailableTeachers($event.group, $event.page, $event.filter));
     };
     GroupDetailComponent.prototype.showTeacherDetails = function (id) {
         this.store.dispatch(this.routerActions.go(['teacherdetail', id]));
@@ -80,7 +80,7 @@ var GroupDetailComponent = (function () {
 GroupDetailComponent = __decorate([
     core_1.Component({
         selector: 'group-detail',
-        template: "\n<div  class=\"col-sm-6\">\n    <button (click)=\"goBack()\" class=\"btn btn-default\">Back</button>\n    <group-detail-form [errors] = \"errors$ | async\"\n                       [model] = \"model$ | async\"\n                       [allUsers] = \"allStudents$ | async\"\n                       [allTeachers] = \"allTeachers$ | async\"\n                       (deleteGroup) = \"deleteGroup($event)\"\n                       (updateGroup) = \"groupUpdate($event)\"\n                       (groupGoBack) = \"goBack()\"\n                       (loadNextStudentPage) = \"loadNextUsers($event)\"\n                       (showUserDetails) = showUserDetails($event)\n                       (addGroupStudent) = addStudentToGroup($event)\n                       (removeGroupStudent) = removeGroupStudent($event)\n                       (loadNextTeacherPage) = \"loadNextTeachers($event)\"\n                       (showGroupTeacherDetails) = showTeacherDetails($event)\n                       (addGroupTeacher) = addTeacherToGroup($event)\n                       (removeGroupTeacher) = removeGroupTeacher($event)>\n    </group-detail-form>\n</div>"
+        template: "\n<div  class=\"col-sm-6\">\n    <button (click)=\"goBack()\" class=\"btn btn-default\">Back</button>\n    <group-detail-form [errors] = \"errors$ | async\"\n                       [model] = \"model$ | async\"\n                       [allUsers] = \"allStudents$ | async\"\n                       [allTeachers] = \"allTeachers$ | async\"\n                       (deleteGroup) = \"deleteGroup($event)\"\n                       (updateGroup) = \"groupUpdate($event)\"\n                       (groupGoBack) = \"goBack()\"\n                       (loadStudents) = \"loadUsers($event)\"\n                       (showUserDetails) = showUserDetails($event)\n                       (addGroupStudent) = addStudentToGroup($event)\n                       (removeGroupStudent) = removeGroupStudent($event)\n                       (loadTeachers) = \"loadTeachers($event)\"\n                       (showGroupTeacherDetails) = showTeacherDetails($event)\n                       (addGroupTeacher) = addTeacherToGroup($event)\n                       (removeGroupTeacher) = removeGroupTeacher($event)>\n    </group-detail-form>\n</div>"
     }),
     __metadata("design:paramtypes", [store_1.Store,
         group_actions_1.GroupActions,

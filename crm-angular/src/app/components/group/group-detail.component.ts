@@ -24,11 +24,11 @@ import { Location } from '@angular/common';
                        (deleteGroup) = "deleteGroup($event)"
                        (updateGroup) = "groupUpdate($event)"
                        (groupGoBack) = "goBack()"
-                       (loadNextStudentPage) = "loadNextUsers($event)"
+                       (loadStudents) = "loadUsers($event)"
                        (showUserDetails) = showUserDetails($event)
                        (addGroupStudent) = addStudentToGroup($event)
                        (removeGroupStudent) = removeGroupStudent($event)
-                       (loadNextTeacherPage) = "loadNextTeachers($event)"
+                       (loadTeachers) = "loadTeachers($event)"
                        (showGroupTeacherDetails) = showTeacherDetails($event)
                        (addGroupTeacher) = addTeacherToGroup($event)
                        (removeGroupTeacher) = removeGroupTeacher($event)>
@@ -61,8 +61,8 @@ export class GroupDetailComponent implements OnInit {
             this.store.dispatch(this.groupActions.getGroup(+params['id']));
             this.store.dispatch(this.groupActions.loadStudents(+params['id']));
             this.store.dispatch(this.groupActions.loadTeaches(+params['id']));
-            this.store.dispatch(this.userActions.loadAvailableStudents(+params['id'], 1));
-            this.store.dispatch(this.teacherActions.loadAvailableTeachers(+params['id'], 1));
+            this.store.dispatch(this.userActions.loadAvailableStudents(+params['id'], 1, ""));
+            this.store.dispatch(this.teacherActions.loadAvailableTeachers(+params['id'], 1, ""));
         });
     }
 
@@ -74,8 +74,8 @@ export class GroupDetailComponent implements OnInit {
         this.store.dispatch(this.groupActions.saveGroup(group));
     }
 
-    loadNextUsers($event) {
-        this.store.dispatch(this.userActions.loadAvailableStudents($event.group, $event.page));
+    loadUsers($event) {
+        this.store.dispatch(this.userActions.loadAvailableStudents($event.group, $event.page, $event.filter));
     }
 
     showUserDetails(id: number) {
@@ -90,8 +90,8 @@ export class GroupDetailComponent implements OnInit {
         this.store.dispatch(this.groupActions.removeStudent($event.groupId, $event.studentId));
     }
 
-    loadNextTeachers($event) {
-        this.store.dispatch(this.teacherActions.loadAvailableTeachers($event.group, $event.page));
+    loadTeachers($event) {
+        this.store.dispatch(this.teacherActions.loadAvailableTeachers($event.group, $event.page, $event.filter));
     }
 
     showTeacherDetails(id: number) {

@@ -1,4 +1,4 @@
-﻿using crm_webapi.Exceptions;
+using crm_webapi.Exceptions;
 using crm_webapi.Models;
 using System;
 using System.Collections.Generic;
@@ -88,17 +88,28 @@ namespace crm_webapi.Repositories
                 throw new EntityNotFoundException("Group", groupId);
             }
 
-            var result = _context.Teachers
-                .Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
+            var items = _context.Teachers.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.User.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            var result = items.Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
                 .Select(t => t.User)
                 .Skip((parameters.Page - 1) * parameters.PageSize)
                 .Take(parameters.PageSize).ToList();
             return result;
         }
 
-        public int GetTotalTeachers(int groupId)
+        public int GetTotalTeachers(int groupId, string filter)
         {
-            return _context.Teachers
+            var items = _context.Teachers.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                items = items.Where(x => x.User.Name.Contains(filter.Trim()));
+            }
+
+            return items
                 .Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
                 .Count();
         }
@@ -111,16 +122,28 @@ namespace crm_webapi.Repositories
                 throw new EntityNotFoundException("Teacher", teacherId);
             }
 
-            var result = _context.Groups
+            var items = _context.Groups.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            var result = items
                 .Where(g => g.IsActive && !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
                 .Skip((parameters.Page - 1) * parameters.PageSize)
                 .Take(parameters.PageSize).ToList();
             return result;
         }
 
-        public int GetTotalGroups(int teacherId)
+        public int GetTotalGroups(int teacherId, string filter)
         {
-            return _context.Groups
+            var items = _context.Groups.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                items = items.Where(x => x.Name.Contains(filter.Trim()));
+            }
+
+            return items
                 .Where(g => g.IsActive && !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
                 .Count();
         }

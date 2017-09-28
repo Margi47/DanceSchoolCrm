@@ -20,12 +20,12 @@ var TeacherService = (function () {
         this.teachersUrl = environment_1.environment.url + '/api/teachers';
         this.groupTeacherUrl = environment_1.environment.url + '/api/groupteacher';
     }
-    TeacherService.prototype.getTeachers = function (page) {
-        return this.http.get(this.teachersUrl + '?page=' + page + '&pagesize=10')
+    TeacherService.prototype.getTeachers = function (page, filter) {
+        return this.http.get(this.teachersUrl + "?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) { return response.json(); });
     };
-    TeacherService.prototype.getAvailableTeachers = function (groupId, page) {
-        return this.http.get(this.groupTeacherUrl + "/" + groupId + "/teachers/available?page=" + page + "&pagesize=10")
+    TeacherService.prototype.getAvailableTeachers = function (groupId, page, filter) {
+        return this.http.get(this.groupTeacherUrl + "/" + groupId + "/teachers/available?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) { return response.json(); });
     };
     TeacherService.prototype.getTeacher = function (id) {

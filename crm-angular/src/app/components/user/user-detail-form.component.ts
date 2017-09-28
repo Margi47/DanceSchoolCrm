@@ -37,10 +37,9 @@ export class UserDetailFormComponent implements OnChanges {
     addGroup(data) {
         this.addingGroup = false;
         this.addUserGroup.emit({ userId: this.model.id, groupId: data.id });
-
     }
 
-    loadNextPage(data) {
+    loadData(data) {
         this.loadNextGroups.emit({ user: this.model.id, page: data.page, filter: data.filter });
     }
     showDetails(id: number) { this.showGroupDetails.emit(id); }

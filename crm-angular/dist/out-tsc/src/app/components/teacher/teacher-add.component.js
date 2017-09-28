@@ -25,10 +25,10 @@ var TeacherAddComponent = (function () {
         this.users$ = this.store.select('users');
     }
     TeacherAddComponent.prototype.ngOnInit = function () {
-        this.store.dispatch(this.userActions.loadAvailableTeachers(1));
+        this.store.dispatch(this.userActions.loadAvailableTeachers(1, ""));
     };
     TeacherAddComponent.prototype.loadNextPage = function ($event) {
-        this.store.dispatch(this.userActions.loadAvailableTeachers($event.page));
+        this.store.dispatch(this.userActions.loadAvailableTeachers($event.page, $event.filter));
     };
     TeacherAddComponent.prototype.onTeacherSubmit = function (teacher) {
         this.store.dispatch(this.teacherActions.addTeacher(teacher));

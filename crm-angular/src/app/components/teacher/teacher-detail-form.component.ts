@@ -14,7 +14,7 @@ export class TeacherDetailFormComponent implements OnChanges {
     @Output() showUser = new EventEmitter<number>();
     @Output() teacherDelete = new EventEmitter<Teacher>();
 
-    @Output() loadNextPage = new EventEmitter<any>();
+    @Output() loadGroups = new EventEmitter<any>();
     @Output() addGroup = new EventEmitter<any>();
     @Output() removeGroup = new EventEmitter<any>();
 
@@ -26,7 +26,7 @@ export class TeacherDetailFormComponent implements OnChanges {
     }
 
     loadNextGroups(data) {
-        this.loadNextPage.emit({ teacher: this.model.id, page: data.page, filter: data.filter });
+        this.loadGroups.emit({ teacher: this.model.id, page: data.page, filter: data.filter });
     }
 
     groupSelected(data) {

@@ -21,7 +21,7 @@ var TeachersComponent = (function () {
         this.teachers$ = store.select('teachers');
     }
     TeachersComponent.prototype.ngOnInit = function () {
-        this.store.dispatch(this.teacherActions.loadAllTeachers(1));
+        this.store.dispatch(this.teacherActions.loadAllTeachers(1, ""));
     };
     ;
     TeachersComponent.prototype.addTeacher = function () {
@@ -30,15 +30,15 @@ var TeachersComponent = (function () {
     TeachersComponent.prototype.showTeacherDetails = function (id) {
         this.store.dispatch(this.routerActions.go(['teacherdetail', id]));
     };
-    TeachersComponent.prototype.onPageChanged = function (page) {
-        this.store.dispatch(this.teacherActions.loadAllTeachers(page));
+    TeachersComponent.prototype.loadTeachers = function (data) {
+        this.store.dispatch(this.teacherActions.loadAllTeachers(data.page, data.filter));
     };
     return TeachersComponent;
 }());
 TeachersComponent = __decorate([
     core_1.Component({
         selector: 'teachers',
-        template: "\n<teachers-list [teachers] = \"teachers$ | async\" \n              (add)=\"addTeacher()\" \n              (teacherDetails)=\"showTeacherDetails($event)\"\n              (pageChanged)=\"onPageChanged($event)\">\n</teachers-list>\n"
+        template: "\n<teachers-list [teachers] = \"teachers$ | async\" \n              (add)=\"addTeacher()\" \n              (teacherDetails)=\"showTeacherDetails($event)\"\n              (loadTeachers)=\"loadTeachers($event)\">\n</teachers-list>\n"
     }),
     __metadata("design:paramtypes", [router_actions_1.RouterActions,
         store_1.Store,

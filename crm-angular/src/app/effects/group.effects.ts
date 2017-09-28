@@ -9,6 +9,7 @@ import { AvailableGroups } from '../actions/actionWithPayload';
 import { ErrorPayload } from '../actions/actionWithPayload';
 import { GroupTeacher } from '../actions/actionWithPayload';
 import { UserGroup } from '../actions/actionWithPayload';
+import { ListRequest } from '../actions/actionWithPayload';
 
 import { Group } from '../models/group';
 import { AppState } from '../reducers';
@@ -33,9 +34,9 @@ export class GroupEffects {
 
     @Effect() loadGroups$ = this.update$
         .ofType(GroupActions.LOAD_GROUPS)
-        .map((action: ActionWithPayload<number>) => action.payload)
-        .switchMap(page => this.service.getGroups(page)
-            .map(groups => this.groupActions.loadGroupsSuccess(groups.data, groups.total))
+        .map((action: ActionWithPayload<ListRequest>) => action.payload)
+        .switchMap(data => this.service.getGroups(data.page, data.filter)
+            .map(groups => this.groupActions.loadGroupsSuccess(groups.data, groups.total, groups.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -50,16 +51,16 @@ export class GroupEffects {
     @Effect() getAvailableUserGroup$ = this.update$
         .ofType(GroupActions.LOAD_AVAILABLE_USER_GROUPS)
         .map((action: ActionWithPayload<AvailableGroups>) => action.payload)
-        .switchMap(data => this.service.getAvailableUserGroups(data.userId, data.page)
-            .map(groups => this.groupActions.loadAvailableUserGroupsSuccess(groups.data, groups.total))
+        .switchMap(data => this.service.getAvailableUserGroups(data.userId, data.page, data.filter)
+            .map(groups => this.groupActions.loadAvailableUserGroupsSuccess(groups.data, groups.total, groups.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
     @Effect() getAvailableTeacherGroup$ = this.update$
         .ofType(GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS)
         .map((action: ActionWithPayload<AvailableGroups>) => action.payload)
-        .switchMap(data => this.service.getAvailableTeacherGroups(data.userId, data.page)
-            .map(groups => this.groupActions.loadAvailableTeacherGroupsSuccess(groups.data, groups.total))
+        .switchMap(data => this.service.getAvailableTeacherGroups(data.userId, data.page, data.filter)
+            .map(groups => this.groupActions.loadAvailableTeacherGroupsSuccess(groups.data, groups.total, groups.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -140,7 +141,7 @@ export class GroupEffects {
     @Effect() changeAvailableGroupTeachers = this.update$
         .ofType(GroupActions.CHANGE_GROUP_TEACHERS_SUCCESS)
         .map((action: ActionWithPayload<number>) =>
-            this.teacherActions.loadAvailableTeachers(action.payload, 1));
+            this.teacherActions.loadAvailableTeachers(action.payload, 1, ""));
 
     @Effect() loadStudents$ = this.update$
         .ofType(GroupActions.LOAD_STUDENTS)
@@ -172,7 +173,7 @@ export class GroupEffects {
 
     @Effect() changeAvailableGroupStudents = this.update$
         .ofType(GroupActions.CHANGE_GROUP_STUDENTS_SUCCESS)
-        .map((action: ActionWithPayload<number>) => this.userActions.loadAvailableStudents(action.payload, 1));
+        .map((action: ActionWithPayload<number>) => this.userActions.loadAvailableStudents(action.payload, 1, ""));
 
     @Effect() removeError = this.update$
         .ofType(GroupActions.LOAD_GROUPS_SUCCESS, GroupActions.GET_GROUP_SUCCESS, GroupActions.LOAD_STUDENTS_SUCCESS,

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -59,7 +59,7 @@ namespace crm_webapi.Controllers.Groups
         public PagedResponse<UserApiModel> GetAvailableGroupTeachers(int id, [FromQuery] Parameters parameters)
         {      
             var teachers = _repository.GetAvailableTeachers(id, parameters);
-            var count = _repository.GetTotalTeachers(id);
+            var count = _repository.GetTotalTeachers(id, parameters.Filter);
 
             var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(teachers), count);
             return result;
@@ -70,7 +70,7 @@ namespace crm_webapi.Controllers.Groups
         public PagedResponse<GroupApiModel> GetAvailableTeacherGroups(int id, [FromQuery] Parameters parameters)
         {
             var groups = _repository.GetAvailableGroups(id,parameters);
-            var count = _repository.GetTotalGroups(id);
+            var count = _repository.GetTotalGroups(id, parameters.Filter);
 
             var result = new PagedResponse<GroupApiModel>(Mapper.Map<GroupApiModel[]>(groups), count);
             return result;

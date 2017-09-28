@@ -1,49 +1,63 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var ListRequest = (function () {
+    function ListRequest(page, filter) {
+        this.page = page;
+        this.filter = filter;
+    }
+    return ListRequest;
+}());
+exports.ListRequest = ListRequest;
 var UserList = (function () {
-    function UserList(userList, total) {
+    function UserList(userList, total, filter) {
         this.userList = userList;
         this.total = total;
+        this.filter = filter;
     }
     return UserList;
 }());
 exports.UserList = UserList;
 var GroupList = (function () {
-    function GroupList(groupList, total) {
+    function GroupList(groupList, total, filter) {
         this.groupList = groupList;
         this.total = total;
+        this.filter = filter;
     }
     return GroupList;
 }());
 exports.GroupList = GroupList;
 var TeacherList = (function () {
-    function TeacherList(teacherList, total) {
+    function TeacherList(teacherList, total, filter) {
         this.teacherList = teacherList;
         this.total = total;
+        this.filter = filter;
     }
     return TeacherList;
 }());
 exports.TeacherList = TeacherList;
 var AvailableGroupStudents = (function () {
-    function AvailableGroupStudents(groupId, page) {
+    function AvailableGroupStudents(groupId, page, filter) {
         this.groupId = groupId;
         this.page = page;
+        this.filter = filter;
     }
     return AvailableGroupStudents;
 }());
 exports.AvailableGroupStudents = AvailableGroupStudents;
 var AvailableGroupTeachers = (function () {
-    function AvailableGroupTeachers(groupId, page) {
+    function AvailableGroupTeachers(groupId, page, filter) {
         this.groupId = groupId;
         this.page = page;
+        this.filter = filter;
     }
     return AvailableGroupTeachers;
 }());
 exports.AvailableGroupTeachers = AvailableGroupTeachers;
 var AvailableGroups = (function () {
-    function AvailableGroups(userId, page) {
+    function AvailableGroups(userId, page, filter) {
         this.userId = userId;
         this.page = page;
+        this.filter = filter;
     }
     return AvailableGroups;
 }());

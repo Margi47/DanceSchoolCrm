@@ -1,4 +1,4 @@
-﻿using crm_webapi.Responses;
+using crm_webapi.Responses;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace crm_webapi.Models
     {
         void Add(T item);
         IEnumerable<T> GetAll(Parameters parameters);
-        int GetTotal();
+        int GetTotal(string filter);
         T Find(int key);
         void Remove(T item);
         void Update(T item);

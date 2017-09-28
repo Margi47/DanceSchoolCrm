@@ -17,7 +17,7 @@ import { ErrorActions } from '../../actions/error.actions';
                     <button (click)="goBack()" class="btn btn-default" type = "button">Back</button>
                     <teacher-detail-form [model] = "model$ | async" 
                                          [allGroups] = "allGroups$ | async"
-                                         (loadNextPage) = "loadNextGroups($event)"
+                                         (loadGroups) = "loadGroups($event)"
                                          (showGroupDetails) = "onShowGroupDetails($event)"
                                          (showUser) = "onShowUserInfo($event)"
                                          (teacherDelete)="onTeacherDelete($event)"
@@ -48,12 +48,12 @@ export class TeacherDetailComponent implements OnInit{
        {
            this.store.dispatch(this.teacherActions.getTeacher(+params['id']));
            this.store.dispatch(this.teacherActions.getTeacherGroups(+params['id']));
-           this.store.dispatch(this.groupActions.loadAvailableTeacherGroups(+params['id'], 1));
+           this.store.dispatch(this.groupActions.loadAvailableTeacherGroups(+params['id'], 1, ""));
        });
     }
 
-   loadNextGroups($event) {
-       this.store.dispatch(this.groupActions.loadAvailableTeacherGroups($event.teacher, $event.page));
+   loadGroups($event) {
+       this.store.dispatch(this.groupActions.loadAvailableTeacherGroups($event.teacher, $event.page, $event.filter));
    }
 
    onShowGroupDetails(id: number) {

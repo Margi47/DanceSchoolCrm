@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +26,7 @@ namespace crm_webapi.Controllers.Groups
         public PagedResponse<GroupApiModel> GetAll([FromQuery] Parameters parameters)
         {
             var groups = _groupRepository.GetAll(parameters);
-            var count = _groupRepository.GetTotal();
+            var count = _groupRepository.GetTotal(parameters.Filter);
             var result = new PagedResponse<GroupApiModel>(Mapper.Map<GroupApiModel[]>(groups), count);
 
             return result;

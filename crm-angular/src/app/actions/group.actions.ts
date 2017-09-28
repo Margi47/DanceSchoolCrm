@@ -5,6 +5,7 @@ import { GroupList } from '../actions/actionWithPayload';
 import { AvailableGroups } from '../actions/actionWithPayload';
 import { UserGroup } from '../actions/actionWithPayload';
 import { GroupTeacher } from '../actions/actionWithPayload';
+import { ListRequest } from '../actions/actionWithPayload';
 
 import { Group } from '../models/group';
 import { User } from '../models/user';
@@ -13,18 +14,18 @@ import { Teacher } from '../models/teacher';
 @Injectable() 
 export class GroupActions {
     static LOAD_GROUPS = '[Group] Load Groups';
-    loadGroups(page: number): ActionWithPayload<number> {
+    loadGroups(page: number, filter: string): ActionWithPayload<ListRequest> {
         return {
             type: GroupActions.LOAD_GROUPS,
-            payload: page
+            payload: new ListRequest(page, filter)
         };
     }
 
     static LOAD_GROUPS_SUCCESS = '[Group] Load Groups Success';
-    loadGroupsSuccess(groups: Group[], total: number): ActionWithPayload<GroupList> {
+    loadGroupsSuccess(groups: Group[], total: number, filter: string): ActionWithPayload<GroupList> {
         return {
             type: GroupActions.LOAD_GROUPS_SUCCESS,
-            payload: new GroupList(groups, total)
+            payload: new GroupList(groups, total, filter)
         };
     }
 
@@ -45,34 +46,34 @@ export class GroupActions {
     }
 
     static LOAD_AVAILABLE_USER_GROUPS = '[Group] Load Available User Groups';
-    loadAvailableUserGroups(userId: number, page: number): ActionWithPayload<AvailableGroups> {
+    loadAvailableUserGroups(userId: number, page: number, filter: string): ActionWithPayload<AvailableGroups> {
         return {
             type: GroupActions.LOAD_AVAILABLE_USER_GROUPS,
-            payload: new AvailableGroups(userId, page)
+            payload: new AvailableGroups(userId, page, filter)
         };
     }
 
     static LOAD_AVAILABLE_USER_GROUPS_SUCCESS = '[Group] Load Available User Groups Success';
-    loadAvailableUserGroupsSuccess(groups: Group[], total: number): ActionWithPayload<GroupList> {
+    loadAvailableUserGroupsSuccess(groups: Group[], total: number, filter: string): ActionWithPayload<GroupList> {
         return {
             type: GroupActions.LOAD_AVAILABLE_USER_GROUPS_SUCCESS,
-            payload: new GroupList(groups, total)
+            payload: new GroupList(groups, total, filter)
         };
     }
 
     static LOAD_AVAILABLE_TEACHER_GROUPS = '[Group] Load Available Teacher Groups';
-    loadAvailableTeacherGroups(teacherId: number, page: number): ActionWithPayload<AvailableGroups> {
+    loadAvailableTeacherGroups(teacherId: number, page: number, filter: string): ActionWithPayload<AvailableGroups> {
         return {
             type: GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS,
-            payload: new AvailableGroups(teacherId, page)
+            payload: new AvailableGroups(teacherId, page, filter)
         };
     }
 
     static LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS = '[Group] Load Available Teacher Groups Success';
-    loadAvailableTeacherGroupsSuccess(groups: Group[], total: number): ActionWithPayload<GroupList> {
+    loadAvailableTeacherGroupsSuccess(groups: Group[], total: number, filter: string): ActionWithPayload<GroupList> {
         return {
             type: GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS,
-            payload: new GroupList(groups, total)
+            payload: new GroupList(groups, total, filter)
         };
     }
 

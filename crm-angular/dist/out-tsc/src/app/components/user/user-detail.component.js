@@ -35,7 +35,7 @@ var UserDetailComponent = (function () {
         this.route.params.subscribe(function (params) {
             _this.store.dispatch(_this.userActions.getUser(+params['id']));
             _this.store.dispatch(_this.userActions.loadUserGroups(+params['id']));
-            _this.store.dispatch(_this.groupActions.loadAvailableUserGroups(+params['id'], 1));
+            _this.store.dispatch(_this.groupActions.loadAvailableUserGroups(+params['id'], 1, ""));
         });
     };
     UserDetailComponent.prototype.onUserDelete = function (user) {
@@ -45,7 +45,7 @@ var UserDetailComponent = (function () {
         this.store.dispatch(this.userActions.saveUser(user));
     };
     UserDetailComponent.prototype.onLoadNextGroups = function ($event) {
-        this.store.dispatch(this.groupActions.loadAvailableUserGroups($event.user, $event.page));
+        this.store.dispatch(this.groupActions.loadAvailableUserGroups($event.user, $event.page, $event.filter));
     };
     UserDetailComponent.prototype.onAddGroup = function ($event) {
         this.store.dispatch(this.userActions.addUserGroup($event.userId, $event.groupId));

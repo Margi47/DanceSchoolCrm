@@ -7,6 +7,12 @@
             <th>Status</th>
             <th><button class="btn btn-default btn-sm" (click)="addGroup()">Add</button></th>
         </tr>
+        <tr>
+            <td colspan="5">
+                <input #searchInput type="search" autofocus class="form-control ds-input" placeholder="Search..."
+                       (input)="search.next(searchInput.value)">
+            </td>
+        </tr>
     </thead>
     <tbody>
         <tr *ngFor="let group of groups.groups | paginate: { itemsPerPage: 10, 

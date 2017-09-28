@@ -4,40 +4,42 @@ import { ActionWithPayload } from '../actions/actionWithPayload';
 import { TeacherList } from '../actions/actionWithPayload';
 import { AvailableGroupTeachers } from '../actions/actionWithPayload';
 import { GroupTeacher } from '../actions/actionWithPayload';
+import { ListRequest } from '../actions/actionWithPayload';
+
 import { Teacher } from '../models/teacher';
 import { Group } from '../models/group';
 
 @Injectable() 
 export class TeacherActions {
     static LOAD_ALL_TEACHERS = '[Teacher] Load All Teachers';
-    loadAllTeachers(page: number): ActionWithPayload<number> {
+    loadAllTeachers(page: number, filter: string): ActionWithPayload<ListRequest> {
         return {
             type: TeacherActions.LOAD_ALL_TEACHERS,
-            payload: page
+            payload: new ListRequest(page, filter)
         };
     }
 
     static LOAD_ALL_TEACHERS_SUCCESS = '[Teacher] Load All Teachers Success';
-    loadAllTeachersSuccess(teachers: Teacher[], total: number): ActionWithPayload<TeacherList> {
+    loadAllTeachersSuccess(teachers: Teacher[], total: number, filter: string): ActionWithPayload<TeacherList> {
         return {
             type: TeacherActions.LOAD_ALL_TEACHERS_SUCCESS,
-            payload: new TeacherList(teachers, total)
+            payload: new TeacherList(teachers, total, filter)
         };
     }
 
     static LOAD_AVAILABLE_TEACHERS = '[Teacher] Load Available Teachers';
-    loadAvailableTeachers(groupId: number, page: number): ActionWithPayload<AvailableGroupTeachers> {
+    loadAvailableTeachers(groupId: number, page: number, filter: string): ActionWithPayload<AvailableGroupTeachers> {
         return {
             type: TeacherActions.LOAD_AVAILABLE_TEACHERS,
-            payload: new AvailableGroupTeachers(groupId, page)
+            payload: new AvailableGroupTeachers(groupId, page, filter)
         };
     }
 
     static LOAD_AVAILABLE_TEACHERS_SUCCESS = '[Teacher] Load Available Teachers Success';
-    loadAvailableTeachersSuccess(teachers: Teacher[], total: number): ActionWithPayload<TeacherList> {
+    loadAvailableTeachersSuccess(teachers: Teacher[], total: number, filter: string): ActionWithPayload<TeacherList> {
         return {
             type: TeacherActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
-            payload: new TeacherList(teachers, total)
+            payload: new TeacherList(teachers, total, filter)
         };
     }
 

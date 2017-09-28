@@ -20,7 +20,6 @@ var TeacherAddFormComponent = (function () {
     }
     TeacherAddFormComponent.prototype.ngOnChanges = function () {
         this.isLastPage = this.allUsers.total != this.allUsers.users.length;
-        console.log(this.allUsers, this.isLastPage);
     };
     TeacherAddFormComponent.prototype.loadNextUsers = function (data) {
         this.loadUsers.emit({ page: data.page, filter: data.filter });

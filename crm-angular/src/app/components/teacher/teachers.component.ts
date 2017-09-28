@@ -12,7 +12,7 @@ import { RouterActions } from '../../actions/router.actions'
 <teachers-list [teachers] = "teachers$ | async" 
               (add)="addTeacher()" 
               (teacherDetails)="showTeacherDetails($event)"
-              (pageChanged)="onPageChanged($event)">
+              (loadTeachers)="loadTeachers($event)">
 </teachers-list>
 `
 })
@@ -27,7 +27,7 @@ export class TeachersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.store.dispatch(this.teacherActions.loadAllTeachers(1));
+        this.store.dispatch(this.teacherActions.loadAllTeachers(1, ""));
     };
 
     addTeacher() {
@@ -38,7 +38,7 @@ export class TeachersComponent implements OnInit {
         this.store.dispatch(this.routerActions.go(['teacherdetail', id]));
     }
 
-    onPageChanged(page: number) {
-        this.store.dispatch(this.teacherActions.loadAllTeachers(page));
+    loadTeachers(data) {
+        this.store.dispatch(this.teacherActions.loadAllTeachers(data.page, data.filter));
     }
 }

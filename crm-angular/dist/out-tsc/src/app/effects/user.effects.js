@@ -31,8 +31,8 @@ var UserEffects = (function () {
         this.loadUsers$ = this.update$
             .ofType(user_actions_1.UserActions.LOAD_USERS)
             .map(function (action) { return action.payload; })
-            .switchMap(function (page) { return _this.service.getUsers(page)
-            .map(function (users) { return _this.userActions.loadUsersSuccess(users.data, users.total); })
+            .switchMap(function (data) { return _this.service.getUsers(data.page, data.filter)
+            .map(function (users) { return _this.userActions.loadUsersSuccess(users.data, users.total, users.filter); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.getUser$ = this.update$
             .ofType(user_actions_1.UserActions.GET_USER)
@@ -43,14 +43,14 @@ var UserEffects = (function () {
         this.getAvailableStudents$ = this.update$
             .ofType(user_actions_1.UserActions.LOAD_AVAILABLE_STUDENTS)
             .map(function (action) { return action.payload; })
-            .switchMap(function (g) { return _this.service.getAvailableStudents(g.groupId, g.page)
-            .map(function (students) { return _this.userActions.loadAvailableStudentsSuccess(students.data, students.total); })
+            .switchMap(function (g) { return _this.service.getAvailableStudents(g.groupId, g.page, g.filter)
+            .map(function (students) { return _this.userActions.loadAvailableStudentsSuccess(students.data, students.total, students.filter); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.getAvailableTeachers$ = this.update$
             .ofType(user_actions_1.UserActions.LOAD_AVAILABLE_TEACHERS)
             .map(function (action) { return action.payload; })
-            .switchMap(function (page) { return _this.service.getAvailableTeachers(page)
-            .map(function (users) { return _this.userActions.loadAvailableTeachersSuccess(users.data, users.total); })
+            .switchMap(function (data) { return _this.service.getAvailableTeachers(data.page, data.filter)
+            .map(function (users) { return _this.userActions.loadAvailableTeachersSuccess(users.data, users.total, users.filter); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.addUser$ = this.update$
             .ofType(user_actions_1.UserActions.ADD_USER)
@@ -113,7 +113,7 @@ var UserEffects = (function () {
         this.changeUserPossibleGroups = this.update$
             .ofType(user_actions_1.UserActions.CHANGE_USER_GROUPS_SUCCESS)
             .map(function (action) {
-            return _this.groupActions.loadAvailableUserGroups(action.payload, 1);
+            return _this.groupActions.loadAvailableUserGroups(action.payload, 1, "");
         });
         this.createTeacher = this.update$
             .ofType(user_actions_1.UserActions.CREATE_TEACHER)

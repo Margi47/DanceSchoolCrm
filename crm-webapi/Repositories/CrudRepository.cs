@@ -40,15 +40,28 @@ namespace crm_webapi.Models
 
         public IEnumerable<T> GetAll(Parameters parameters)
         {
-            var items = GetQuery(Context);
-            var data = items.OrderBy(x => x.Id).Skip((parameters.Page - 1) * parameters.PageSize)
+            var items = GetQuery(Context).AsQueryable();
+
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            var data = items.OrderBy(x => x.Id)
+                            .Skip((parameters.Page - 1) * parameters.PageSize)
                             .Take(parameters.PageSize).ToList();
             return data;
         }
 
-        public int GetTotal()
+        public int GetTotal(string filter)
         {
-            return GetQuery(Context).Count();
+            var items = GetQuery(Context).AsQueryable();
+            if (!String.IsNullOrWhiteSpace(filter))
+            {
+                items = items.Where(x => x.Name.Contains(filter.Trim()));
+            }
+
+            return items.Count();
         }
 
         public void Remove(T item)

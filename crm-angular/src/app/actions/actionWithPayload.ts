@@ -7,29 +7,32 @@ import { NavigationExtras } from '@angular/router';
 export interface ActionWithPayload<T> extends Action {
   payload: T;
 }
+export class ListRequest {
+    constructor(public page: number, public filter: string) { }
+}
 
 export class UserList {
-    constructor( public userList: User[], public total: number){}
+    constructor( public userList: User[], public total: number, public filter: string){ }
 }
 
 export class GroupList {
-    constructor(public groupList: Group[], public total: number) { }
+    constructor(public groupList: Group[], public total: number, public filter: string) { }
 }
 
 export class TeacherList {
-    constructor(public teacherList: Teacher[], public total: number) { }
+    constructor(public teacherList: Teacher[], public total: number, public filter: string) { }
 }
 
 export class AvailableGroupStudents {
-    constructor(public groupId: number, public page: number) { }
+    constructor(public groupId: number, public page: number, public filter: string) { }
 }
 
 export class AvailableGroupTeachers {
-    constructor(public groupId: number, public page: number) { }
+    constructor(public groupId: number, public page: number, public filter: string) { }
 }
 
 export class AvailableGroups {
-    constructor(public userId: number, public page: number) { }
+    constructor(public userId: number, public page: number, public filter: string) { }
 }
 
 export class UserGroup {

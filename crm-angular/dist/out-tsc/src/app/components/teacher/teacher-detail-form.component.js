@@ -16,7 +16,7 @@ var TeacherDetailFormComponent = (function () {
         this.showGroupDetails = new core_1.EventEmitter();
         this.showUser = new core_1.EventEmitter();
         this.teacherDelete = new core_1.EventEmitter();
-        this.loadNextPage = new core_1.EventEmitter();
+        this.loadGroups = new core_1.EventEmitter();
         this.addGroup = new core_1.EventEmitter();
         this.removeGroup = new core_1.EventEmitter();
         this.addingGroup = false;
@@ -25,7 +25,7 @@ var TeacherDetailFormComponent = (function () {
         this.isLastPage = this.allGroups.total != this.allGroups.groups.length;
     };
     TeacherDetailFormComponent.prototype.loadNextGroups = function (data) {
-        this.loadNextPage.emit({ teacher: this.model.id, page: data.page, filter: data.filter });
+        this.loadGroups.emit({ teacher: this.model.id, page: data.page, filter: data.filter });
     };
     TeacherDetailFormComponent.prototype.groupSelected = function (data) {
         this.addGroup.emit({ teacher: this.model.id, group: data.id });
@@ -62,7 +62,7 @@ __decorate([
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], TeacherDetailFormComponent.prototype, "loadNextPage", void 0);
+], TeacherDetailFormComponent.prototype, "loadGroups", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)

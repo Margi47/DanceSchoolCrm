@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 import { ActionWithPayload } from '../actions/actionWithPayload';
 import { AvailableGroupTeachers } from '../actions/actionWithPayload';
 import { GroupTeacher } from '../actions/actionWithPayload';
+import { ListRequest } from '../actions/actionWithPayload';
 
 import { TeacherActions } from '../actions/teacher.actions';
 import { GroupActions } from '../actions/group.actions';
@@ -29,9 +30,9 @@ export class TeacherEffects {
 
     @Effect() loadTeachersWithGroups$ = this.update$
         .ofType(TeacherActions.LOAD_ALL_TEACHERS)
-        .map((action: ActionWithPayload<number>) => action.payload)
-        .switchMap(page => this.service.getTeachers(page)
-            .map(teachers => this.teacherActions.loadAllTeachersSuccess(teachers.data, teachers.total))
+        .map((action: ActionWithPayload<ListRequest>) => action.payload)
+        .switchMap(data => this.service.getTeachers(data.page, data.filter)
+            .map(teachers => this.teacherActions.loadAllTeachersSuccess(teachers.data, teachers.total, teachers.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -46,8 +47,8 @@ export class TeacherEffects {
     @Effect() loadAvailableTeachers$ = this.update$
         .ofType(TeacherActions.LOAD_AVAILABLE_TEACHERS)
         .map((action: ActionWithPayload<AvailableGroupTeachers>) => action.payload)
-        .switchMap(data => this.service.getAvailableTeachers(data.groupId, data.page)
-            .map(teachers => this.teacherActions.loadAvailableTeachersSuccess(teachers.data, teachers.total))
+        .switchMap(data => this.service.getAvailableTeachers(data.groupId, data.page, data.filter)
+            .map(teachers => this.teacherActions.loadAvailableTeachersSuccess(teachers.data, teachers.total, teachers.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -105,7 +106,7 @@ export class TeacherEffects {
 
     @Effect() updateAvailableGroups$ = this.update$
         .ofType(TeacherActions.CHANGE_TEACHER_GROUPS_SUCCESS)
-        .map((action: ActionWithPayload<number>) => this.groupActions.loadAvailableTeacherGroups(action.payload, 1));
+        .map((action: ActionWithPayload<number>) => this.groupActions.loadAvailableTeacherGroups(action.payload, 1, ""));
 
     @Effect() removeError = this.update$
         .ofType(TeacherActions.LOAD_ALL_TEACHERS_SUCCESS, TeacherActions.GET_TEACHER_SUCCESS,

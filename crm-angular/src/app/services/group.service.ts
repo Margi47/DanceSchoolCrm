@@ -22,9 +22,13 @@ export class GroupService {
         this.groupTeacherUrl = environment.url + '/api/groupteacher';
     }
 
-    getGroups(page: number): Observable<any> {
-        return this.http.get(this.groupsUrl + '?page=' + page + '&pagesize=10')
-            .map(response => response.json());
+    getGroups(page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.groupsUrl}?filter=${filter}&page=${page}&pagesize=10`)
+            .map(response => {
+                const data = response.json();
+                data.filter = filter;
+                return data;
+            });
     }
 
     getGroup(id: number): Observable<Group> {
@@ -32,14 +36,22 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    getAvailableUserGroups(id: number, page: number): Observable<any> {
-        return this.http.get(`${this.groupUserUrl}/${id}/groups/available?page=${page}&pagesize=10`)
-            .map(response => response.json());
+    getAvailableUserGroups(id: number, page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.groupUserUrl}/${id}/groups/available?filter=${filter}&page=${page}&pagesize=10`)
+            .map(response => {
+                const data = response.json();
+                data.filter = filter;
+                return data;
+            });
     }
 
-    getAvailableTeacherGroups(id: number, page: number): Observable<any> {
-        return this.http.get(`${this.groupTeacherUrl}/${id}/groups/available?page=${page}&pagesize=10`)
-            .map(response => response.json());
+    getAvailableTeacherGroups(id: number, page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.groupTeacherUrl}/${id}/groups/available?filter=${filter}&page=${page}&pagesize=10`)
+            .map(response => {
+                const data = response.json();
+                data.filter = filter;
+                return data;
+            });
     }
 
     addGroup(group: Group): Observable<number> {

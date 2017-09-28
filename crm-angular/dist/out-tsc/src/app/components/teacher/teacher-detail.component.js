@@ -33,11 +33,11 @@ var TeacherDetailComponent = (function () {
         this.route.params.subscribe(function (params) {
             _this.store.dispatch(_this.teacherActions.getTeacher(+params['id']));
             _this.store.dispatch(_this.teacherActions.getTeacherGroups(+params['id']));
-            _this.store.dispatch(_this.groupActions.loadAvailableTeacherGroups(+params['id'], 1));
+            _this.store.dispatch(_this.groupActions.loadAvailableTeacherGroups(+params['id'], 1, ""));
         });
     };
-    TeacherDetailComponent.prototype.loadNextGroups = function ($event) {
-        this.store.dispatch(this.groupActions.loadAvailableTeacherGroups($event.teacher, $event.page));
+    TeacherDetailComponent.prototype.loadGroups = function ($event) {
+        this.store.dispatch(this.groupActions.loadAvailableTeacherGroups($event.teacher, $event.page, $event.filter));
     };
     TeacherDetailComponent.prototype.onShowGroupDetails = function (id) {
         this.store.dispatch(this.routerActions.go(['groupdetail', id]));
@@ -63,7 +63,7 @@ var TeacherDetailComponent = (function () {
 TeacherDetailComponent = __decorate([
     core_1.Component({
         selector: 'teacher-detail',
-        template: "<div class=\"col-sm-6\">\n                    <button (click)=\"goBack()\" class=\"btn btn-default\" type = \"button\">Back</button>\n                    <teacher-detail-form [model] = \"model$ | async\" \n                                         [allGroups] = \"allGroups$ | async\"\n                                         (loadNextPage) = \"loadNextGroups($event)\"\n                                         (showGroupDetails) = \"onShowGroupDetails($event)\"\n                                         (showUser) = \"onShowUserInfo($event)\"\n                                         (teacherDelete)=\"onTeacherDelete($event)\"\n                                         (addGroup) = \"onAddGroup($event)\"\n                                         (removeGroup) = \"onRemoveGroup($event)\">\n                    </teacher-detail-form>\n               <div>\n               "
+        template: "<div class=\"col-sm-6\">\n                    <button (click)=\"goBack()\" class=\"btn btn-default\" type = \"button\">Back</button>\n                    <teacher-detail-form [model] = \"model$ | async\" \n                                         [allGroups] = \"allGroups$ | async\"\n                                         (loadGroups) = \"loadGroups($event)\"\n                                         (showGroupDetails) = \"onShowGroupDetails($event)\"\n                                         (showUser) = \"onShowUserInfo($event)\"\n                                         (teacherDelete)=\"onTeacherDelete($event)\"\n                                         (addGroup) = \"onAddGroup($event)\"\n                                         (removeGroup) = \"onRemoveGroup($event)\">\n                    </teacher-detail-form>\n               <div>\n               "
     }),
     __metadata("design:paramtypes", [router_actions_1.RouterActions,
         router_1.ActivatedRoute,

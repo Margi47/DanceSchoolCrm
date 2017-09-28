@@ -19,10 +19,8 @@ export class TeacherAddFormComponent implements OnChanges {
     isLastPage: boolean;
     selectedUser: User;
 
-    ngOnChanges() {
-        
+    ngOnChanges() {       
         this.isLastPage = this.allUsers.total != this.allUsers.users.length;
-        console.log(this.allUsers, this.isLastPage);
     }
 
     loadNextUsers(data) {

@@ -8,5 +8,6 @@ namespace crm_webapi.Models
     public interface IEntity
     {
         int Id { get; }
+        string Name { get; }
     }
 }

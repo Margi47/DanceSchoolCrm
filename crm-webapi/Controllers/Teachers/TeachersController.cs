@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +26,7 @@ namespace crm_webapi.Controllers.Users
         public PagedResponse<TeacherApiModel> GetTeachers([FromQuery] Parameters parameters)
         {
             var teachers = _teacherRepository.GetTeachers(parameters);
-            var count = _teacherRepository.GetTotal();
+            var count = _teacherRepository.GetTotal(parameters.Filter);
             var result = new PagedResponse<TeacherApiModel>(Mapper.Map<TeacherApiModel[]>(teachers),count);
 
             return result;
