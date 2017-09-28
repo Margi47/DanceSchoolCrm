@@ -10,13 +10,14 @@ var core_1 = require("@angular/core");
 var actionWithPayload_1 = require("../actions/actionWithPayload");
 var actionWithPayload_2 = require("../actions/actionWithPayload");
 var actionWithPayload_3 = require("../actions/actionWithPayload");
+var actionWithPayload_4 = require("../actions/actionWithPayload");
 var UserActions = UserActions_1 = (function () {
     function UserActions() {
     }
-    UserActions.prototype.loadUsers = function (page) {
+    UserActions.prototype.loadUsers = function (page, filter) {
         return {
             type: UserActions_1.LOAD_USERS,
-            payload: page
+            payload: new actionWithPayload_4.ListRequest(page, filter)
         };
     };
     UserActions.prototype.loadUsersSuccess = function (users, total) {
@@ -25,10 +26,10 @@ var UserActions = UserActions_1 = (function () {
             payload: new actionWithPayload_1.UserList(users, total)
         };
     };
-    UserActions.prototype.loadAvailableStudents = function (groupId, page) {
+    UserActions.prototype.loadAvailableStudents = function (groupId, page, filter) {
         return {
             type: UserActions_1.LOAD_AVAILABLE_STUDENTS,
-            payload: new actionWithPayload_3.AvailableGroupStudents(groupId, page)
+            payload: new actionWithPayload_3.AvailableGroupStudents(groupId, page, filter)
         };
     };
     UserActions.prototype.loadAvailableStudentsSuccess = function (students, total) {
@@ -37,10 +38,10 @@ var UserActions = UserActions_1 = (function () {
             payload: new actionWithPayload_1.UserList(students, total)
         };
     };
-    UserActions.prototype.loadAvailableTeachers = function (page) {
+    UserActions.prototype.loadAvailableTeachers = function (page, filter) {
         return {
             type: UserActions_1.LOAD_AVAILABLE_TEACHERS,
-            payload: page
+            payload: new actionWithPayload_4.ListRequest(page, filter)
         };
     };
     UserActions.prototype.loadAvailableTeachersSuccess = function (users, total) {

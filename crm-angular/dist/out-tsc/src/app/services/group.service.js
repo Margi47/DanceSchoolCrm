@@ -21,20 +21,20 @@ var GroupService = (function () {
         this.groupUserUrl = environment_1.environment.url + '/api/groupuser';
         this.groupTeacherUrl = environment_1.environment.url + '/api/groupteacher';
     }
-    GroupService.prototype.getGroups = function (page) {
-        return this.http.get(this.groupsUrl + '?page=' + page + '&pagesize=10')
+    GroupService.prototype.getGroups = function (page, filter) {
+        return this.http.get(this.groupsUrl + "?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) { return response.json(); });
     };
     GroupService.prototype.getGroup = function (id) {
         return this.http.get(this.groupsUrl + "/" + id)
             .map(function (response) { return response.json(); });
     };
-    GroupService.prototype.getAvailableUserGroups = function (id, page) {
-        return this.http.get(this.groupUserUrl + "/" + id + "/groups/available?page=" + page + "&pagesize=10")
+    GroupService.prototype.getAvailableUserGroups = function (id, page, filter) {
+        return this.http.get(this.groupUserUrl + "/" + id + "/groups/available?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) { return response.json(); });
     };
-    GroupService.prototype.getAvailableTeacherGroups = function (id, page) {
-        return this.http.get(this.groupTeacherUrl + "/" + id + "/groups/available?page=" + page + "&pagesize=10")
+    GroupService.prototype.getAvailableTeacherGroups = function (id, page, filter) {
+        return this.http.get(this.groupTeacherUrl + "/" + id + "/groups/available?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) { return response.json(); });
     };
     GroupService.prototype.addGroup = function (group) {

@@ -33,7 +33,8 @@ var UserDetailFormComponent = (function () {
         this.addingGroup = false;
         this.addUserGroup.emit({ userId: this.model.id, groupId: data.id });
     };
-    UserDetailFormComponent.prototype.loadNextPage = function (data) {
+    UserDetailFormComponent.prototype.loadData = function (data) {
+        console.log(data);
         this.loadNextGroups.emit({ user: this.model.id, page: data.page, filter: data.filter });
     };
     UserDetailFormComponent.prototype.showDetails = function (id) { this.showGroupDetails.emit(id); };

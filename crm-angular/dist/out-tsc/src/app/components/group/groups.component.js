@@ -21,7 +21,7 @@ var GroupsComponent = (function () {
         this.groups$ = store.select('groups');
     }
     GroupsComponent.prototype.ngOnInit = function () {
-        this.store.dispatch(this.groupActions.loadGroups(1));
+        this.store.dispatch(this.groupActions.loadGroups(1, ""));
     };
     GroupsComponent.prototype.addGroup = function () {
         this.store.dispatch(this.routerActions.show(['/groupadd']));
@@ -29,15 +29,15 @@ var GroupsComponent = (function () {
     GroupsComponent.prototype.showDetails = function (id) {
         this.store.dispatch(this.routerActions.go(['groupdetail', id]));
     };
-    GroupsComponent.prototype.onPageChanged = function (page) {
-        this.store.dispatch(this.groupActions.loadGroups(page));
+    GroupsComponent.prototype.loadGroups = function (data) {
+        this.store.dispatch(this.groupActions.loadGroups(data.page, data.filter));
     };
     return GroupsComponent;
 }());
 GroupsComponent = __decorate([
     core_1.Component({
         selector: 'groups',
-        template: "\n<group-list [groups]=\"groups$ | async\" \n            (addNewGroup) = \"addGroup()\" \n            (groupDetails) = \"showDetails($event)\"\n            (pageChanged)=\"onPageChanged($event)\">\n</group-list>"
+        template: "\n<group-list [groups]=\"groups$ | async\" \n            (addNewGroup) = \"addGroup()\" \n            (groupDetails) = \"showDetails($event)\"\n            (loadGroups)=\"loadGroups($event)\">\n</group-list>"
     }),
     __metadata("design:paramtypes", [store_1.Store,
         group_actions_1.GroupActions,

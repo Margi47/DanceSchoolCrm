@@ -1,5 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+var ListRequest = (function () {
+    function ListRequest(page, filter) {
+        this.page = page;
+        this.filter = filter;
+    }
+    return ListRequest;
+}());
+exports.ListRequest = ListRequest;
 var UserList = (function () {
     function UserList(userList, total) {
         this.userList = userList;
@@ -25,25 +33,28 @@ var TeacherList = (function () {
 }());
 exports.TeacherList = TeacherList;
 var AvailableGroupStudents = (function () {
-    function AvailableGroupStudents(groupId, page) {
+    function AvailableGroupStudents(groupId, page, filter) {
         this.groupId = groupId;
         this.page = page;
+        this.filter = filter;
     }
     return AvailableGroupStudents;
 }());
 exports.AvailableGroupStudents = AvailableGroupStudents;
 var AvailableGroupTeachers = (function () {
-    function AvailableGroupTeachers(groupId, page) {
+    function AvailableGroupTeachers(groupId, page, filter) {
         this.groupId = groupId;
         this.page = page;
+        this.filter = filter;
     }
     return AvailableGroupTeachers;
 }());
 exports.AvailableGroupTeachers = AvailableGroupTeachers;
 var AvailableGroups = (function () {
-    function AvailableGroups(userId, page) {
+    function AvailableGroups(userId, page, filter) {
         this.userId = userId;
         this.page = page;
+        this.filter = filter;
     }
     return AvailableGroups;
 }());

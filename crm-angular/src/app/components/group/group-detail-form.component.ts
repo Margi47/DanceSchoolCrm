@@ -22,12 +22,12 @@ export class GroupDetailFormComponent implements OnChanges {
     @Output() updateGroup = new EventEmitter<Group>();
     @Output() groupGoBack = new EventEmitter();
 
-    @Output() loadNextStudentPage = new EventEmitter<any>();
+    @Output() loadStudents = new EventEmitter<any>();
     @Output() showUserDetails = new EventEmitter<number>();
     @Output() addGroupStudent = new EventEmitter<any>();
     @Output() removeGroupStudent = new EventEmitter<any>();
 
-    @Output() loadNextTeacherPage = new EventEmitter<any>();
+    @Output() loadTeachers = new EventEmitter<any>();
     @Output() showGroupTeacherDetails = new EventEmitter<number>();
     @Output() addGroupTeacher = new EventEmitter<any>();
     @Output() removeGroupTeacher = new EventEmitter<any>();
@@ -48,7 +48,7 @@ export class GroupDetailFormComponent implements OnChanges {
     goBack() { this.groupGoBack.emit(); }
 
     loadNextUsers(data) {
-        this.loadNextStudentPage.emit({ group: this.model.id, page: data.page, filter: data.filter });
+        this.loadStudents.emit({ group: this.model.id, page: data.page, filter: data.filter });
     }
 
     showStudentDetails(id: number) { this.showUserDetails.emit(id); }
@@ -61,7 +61,7 @@ export class GroupDetailFormComponent implements OnChanges {
     }
 
     loadNextTeachers(data) {
-        this.loadNextTeacherPage.emit({ group: this.model.id, page: data.page, filter: data.filter });
+        this.loadTeachers.emit({ group: this.model.id, page: data.page, filter: data.filter });
     }
 
     showTeacherDetails(id: number) { this.showGroupTeacherDetails.emit(id); }

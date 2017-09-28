@@ -11,13 +11,14 @@ var actionWithPayload_1 = require("../actions/actionWithPayload");
 var actionWithPayload_2 = require("../actions/actionWithPayload");
 var actionWithPayload_3 = require("../actions/actionWithPayload");
 var actionWithPayload_4 = require("../actions/actionWithPayload");
+var actionWithPayload_5 = require("../actions/actionWithPayload");
 var GroupActions = GroupActions_1 = (function () {
     function GroupActions() {
     }
-    GroupActions.prototype.loadGroups = function (page) {
+    GroupActions.prototype.loadGroups = function (page, filter) {
         return {
             type: GroupActions_1.LOAD_GROUPS,
-            payload: page
+            payload: new actionWithPayload_5.ListRequest(page, filter)
         };
     };
     GroupActions.prototype.loadGroupsSuccess = function (groups, total) {
@@ -38,10 +39,10 @@ var GroupActions = GroupActions_1 = (function () {
             payload: group
         };
     };
-    GroupActions.prototype.loadAvailableUserGroups = function (userId, page) {
+    GroupActions.prototype.loadAvailableUserGroups = function (userId, page, filter) {
         return {
             type: GroupActions_1.LOAD_AVAILABLE_USER_GROUPS,
-            payload: new actionWithPayload_2.AvailableGroups(userId, page)
+            payload: new actionWithPayload_2.AvailableGroups(userId, page, filter)
         };
     };
     GroupActions.prototype.loadAvailableUserGroupsSuccess = function (groups, total) {
@@ -50,10 +51,10 @@ var GroupActions = GroupActions_1 = (function () {
             payload: new actionWithPayload_1.GroupList(groups, total)
         };
     };
-    GroupActions.prototype.loadAvailableTeacherGroups = function (teacherId, page) {
+    GroupActions.prototype.loadAvailableTeacherGroups = function (teacherId, page, filter) {
         return {
             type: GroupActions_1.LOAD_AVAILABLE_TEACHER_GROUPS,
-            payload: new actionWithPayload_2.AvailableGroups(teacherId, page)
+            payload: new actionWithPayload_2.AvailableGroups(teacherId, page, filter)
         };
     };
     GroupActions.prototype.loadAvailableTeacherGroupsSuccess = function (groups, total) {

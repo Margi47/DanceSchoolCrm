@@ -77,7 +77,7 @@
                               [hasMoreOptions]="isLastPage"
                               [key]="'name'"
                               [showNum]="5"
-                              (loadData)="loadNextPage($event)"
+                              (loadData)="loadData($event)"
                               (optionSelected)="addGroup($event)"
                               *ngIf="addingGroup"></ngx-paged-select>
             <table class="table table-hover">

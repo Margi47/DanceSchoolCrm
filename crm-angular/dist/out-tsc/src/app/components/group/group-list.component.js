@@ -10,18 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var Rx_1 = require("rxjs/Rx");
 var GroupListComponent = (function () {
     function GroupListComponent() {
+        var _this = this;
         this.addNewGroup = new core_1.EventEmitter();
         this.groupDetails = new core_1.EventEmitter();
-        this.pageChanged = new core_1.EventEmitter();
+        this.loadGroups = new core_1.EventEmitter();
         this.currentPage = 1;
+        this.currentFilter = "";
+        this.search = new Rx_1.Subject();
+        var observable = this.search
+            .debounceTime(400)
+            .distinctUntilChanged()
+            .subscribe(function (data) {
+            _this.currentFilter = data;
+            _this.loadGroups.emit({ page: _this.currentPage, filter: data });
+        });
     }
     GroupListComponent.prototype.addGroup = function () { this.addNewGroup.emit(); };
     GroupListComponent.prototype.showDetails = function (id) { this.groupDetails.emit(id); };
     GroupListComponent.prototype.pageChange = function (page) {
         this.currentPage = page;
-        this.pageChanged.emit(page);
+        this.loadGroups.emit({ page: page, filter: this.currentFilter });
     };
     return GroupListComponent;
 }());
@@ -40,13 +51,14 @@ __decorate([
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], GroupListComponent.prototype, "pageChanged", void 0);
+], GroupListComponent.prototype, "loadGroups", void 0);
 GroupListComponent = __decorate([
     core_1.Component({
         selector: 'group-list',
         templateUrl: './group-list.component.html',
         styles: ['tr td, th {vertical-align:middle}']
-    })
+    }),
+    __metadata("design:paramtypes", [])
 ], GroupListComponent);
 exports.GroupListComponent = GroupListComponent;
 //# sourceMappingURL=group-list.component.js.map

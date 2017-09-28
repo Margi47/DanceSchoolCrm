@@ -35,11 +35,11 @@ export class TeacherAddComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.store.dispatch(this.userActions.loadAvailableTeachers(1));
+        this.store.dispatch(this.userActions.loadAvailableTeachers(1, ""));
     }
 
     loadNextPage($event) {
-        this.store.dispatch(this.userActions.loadAvailableTeachers($event.page));
+        this.store.dispatch(this.userActions.loadAvailableTeachers($event.page, $event.filter));
     }
 
     onTeacherSubmit(teacher: Teacher): void {

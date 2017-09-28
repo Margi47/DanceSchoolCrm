@@ -17,11 +17,11 @@ var GroupDetailFormComponent = (function () {
         this.deleteGroup = new core_1.EventEmitter();
         this.updateGroup = new core_1.EventEmitter();
         this.groupGoBack = new core_1.EventEmitter();
-        this.loadNextStudentPage = new core_1.EventEmitter();
+        this.loadStudents = new core_1.EventEmitter();
         this.showUserDetails = new core_1.EventEmitter();
         this.addGroupStudent = new core_1.EventEmitter();
         this.removeGroupStudent = new core_1.EventEmitter();
-        this.loadNextTeacherPage = new core_1.EventEmitter();
+        this.loadTeachers = new core_1.EventEmitter();
         this.showGroupTeacherDetails = new core_1.EventEmitter();
         this.addGroupTeacher = new core_1.EventEmitter();
         this.removeGroupTeacher = new core_1.EventEmitter();
@@ -36,7 +36,7 @@ var GroupDetailFormComponent = (function () {
     GroupDetailFormComponent.prototype.onGroupSubmit = function () { this.updateGroup.emit(this.model); };
     GroupDetailFormComponent.prototype.goBack = function () { this.groupGoBack.emit(); };
     GroupDetailFormComponent.prototype.loadNextUsers = function (data) {
-        this.loadNextStudentPage.emit({ group: this.model.id, page: data.page, filter: data.filter });
+        this.loadStudents.emit({ group: this.model.id, page: data.page, filter: data.filter });
     };
     GroupDetailFormComponent.prototype.showStudentDetails = function (id) { this.showUserDetails.emit(id); };
     GroupDetailFormComponent.prototype.addStudent = function (data) {
@@ -47,7 +47,7 @@ var GroupDetailFormComponent = (function () {
         this.removeGroupStudent.emit({ groupId: this.model.id, studentId: id });
     };
     GroupDetailFormComponent.prototype.loadNextTeachers = function (data) {
-        this.loadNextTeacherPage.emit({ group: this.model.id, page: data.page, filter: data.filter });
+        this.loadTeachers.emit({ group: this.model.id, page: data.page, filter: data.filter });
     };
     GroupDetailFormComponent.prototype.showTeacherDetails = function (id) { this.showGroupTeacherDetails.emit(id); };
     GroupDetailFormComponent.prototype.onTeacherAdd = function (data) {
@@ -90,7 +90,7 @@ __decorate([
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], GroupDetailFormComponent.prototype, "loadNextStudentPage", void 0);
+], GroupDetailFormComponent.prototype, "loadStudents", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
@@ -106,7 +106,7 @@ __decorate([
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], GroupDetailFormComponent.prototype, "loadNextTeacherPage", void 0);
+], GroupDetailFormComponent.prototype, "loadTeachers", void 0);
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
