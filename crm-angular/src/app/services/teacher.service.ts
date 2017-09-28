@@ -22,12 +22,20 @@ export class TeacherService {
 
     getTeachers(page: number, filter: string): Observable<any> {
         return this.http.get(`${this.teachersUrl}?filter=${filter}&page=${page}&pagesize=10`)
-            .map(response => response.json());
+            .map(response => {
+                const data = response.json();
+                data.filter = filter;
+                return data;
+            });
     }
 
     getAvailableTeachers(groupId: number, page: number, filter: string): Observable<any> {
         return this.http.get(`${this.groupTeacherUrl}/${groupId}/teachers/available?filter=${filter}&page=${page}&pagesize=10`)
-            .map(response => response.json());
+            .map(response => {
+                const data = response.json();
+                data.filter = filter;
+                return data;
+            });
     }
 
     getTeacher(id: number): Observable<Teacher> {

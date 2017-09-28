@@ -61,7 +61,7 @@ namespace crm_webapi.Controllers.Groups
             var teachers = _repository.GetAvailableTeachers(id, parameters);
             var count = _repository.GetTotalTeachers(id, parameters.Filter);
 
-            var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(teachers), count, parameters.Filter);
+            var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(teachers), count);
             return result;
         }
 
@@ -72,7 +72,7 @@ namespace crm_webapi.Controllers.Groups
             var groups = _repository.GetAvailableGroups(id,parameters);
             var count = _repository.GetTotalGroups(id, parameters.Filter);
 
-            var result = new PagedResponse<GroupApiModel>(Mapper.Map<GroupApiModel[]>(groups), count, parameters.Filter);
+            var result = new PagedResponse<GroupApiModel>(Mapper.Map<GroupApiModel[]>(groups), count);
             return result;
         }
     }

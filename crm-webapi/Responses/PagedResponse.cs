@@ -10,13 +10,11 @@ namespace crm_webapi.Responses
     {
         public IEnumerable<T> Data { get; set; }
         public int Total { get; set; }
-        public string Filter { get; set; }
 
-        public PagedResponse(IEnumerable<T> data, int total, string filter)
+        public PagedResponse(IEnumerable<T> data, int total)
         {
             Data = data;
             Total = total;
-            Filter = filter;
         }
     }
 }

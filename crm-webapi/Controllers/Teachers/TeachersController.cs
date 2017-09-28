@@ -27,7 +27,7 @@ namespace crm_webapi.Controllers.Users
         {
             var teachers = _teacherRepository.GetTeachers(parameters);
             var count = _teacherRepository.GetTotal(parameters.Filter);
-            var result = new PagedResponse<TeacherApiModel>(Mapper.Map<TeacherApiModel[]>(teachers),count, parameters.Filter);
+            var result = new PagedResponse<TeacherApiModel>(Mapper.Map<TeacherApiModel[]>(teachers),count);
 
             return result;
         }
