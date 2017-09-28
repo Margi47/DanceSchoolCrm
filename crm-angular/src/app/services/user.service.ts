@@ -22,12 +22,8 @@ export class UserService {
         this.groupUserUrl = environment.url + '/api/groupuser';
     }
 
-    getUsers(page: number): Observable<any> {
-        let params = new URLSearchParams();
-        params.append('page', '1');
-        params.append('pagesize', '10');
-
-        return this.http.get(this.usersUrl + '?page=' +page+ '&pagesize=10')
+    getUsers(page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.usersUrl}?filter=${filter}&page=${page}&pagesize=10`)
             .map(response => response.json());
     }
 
@@ -47,7 +43,6 @@ export class UserService {
     }
 
     getAvailableTeachers(page: number): Observable<any> {
-        console.log(page);
         return this.http.get(`${this.usersUrl}/teachers/available?page=${page}&pagesize=10`)
             .map(response => {
                 console.log(response);

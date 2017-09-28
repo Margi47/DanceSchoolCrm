@@ -30,15 +30,16 @@ var UsersComponent = (function () {
     UsersComponent.prototype.showDetails = function (id) {
         this.store.dispatch(this.routerActions.go(['userdetail', id]));
     };
-    UsersComponent.prototype.onPageChanged = function (page) {
-        this.store.dispatch(this.userActions.loadUsers(page));
+    UsersComponent.prototype.onPageChanged = function (data) {
+        console.log(data.filter);
+        this.store.dispatch(this.userActions.loadUsers(data.page));
     };
     return UsersComponent;
 }());
 UsersComponent = __decorate([
     core_1.Component({
         selector: 'users',
-        template: "\n<users-list [users] = \"users$ | async\" \n            (add)=\"addUser()\" \n            (details)=\"showDetails($event)\"\n            (pageChanged)=\"onPageChanged($event)\">\n</users-list>\n"
+        template: "\n<users-list [users] = \"users$ | async\" \n            (add)=\"addUser()\" \n            (details)=\"showDetails($event)\"\n            (loadUsers)=\"onPageChanged($event)\">\n</users-list>\n"
     }),
     __metadata("design:paramtypes", [router_actions_1.RouterActions,
         store_1.Store,

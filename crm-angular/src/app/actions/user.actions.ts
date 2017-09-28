@@ -4,6 +4,7 @@ import { UserList } from '../actions/actionWithPayload';
 import { GroupList } from '../actions/actionWithPayload';
 import { UserGroup } from '../actions/actionWithPayload';
 import { AvailableGroupStudents } from '../actions/actionWithPayload';
+import { UserListRequest } from '../actions/actionWithPayload';
 
 import { User } from '../models/user';
 import { Group } from '../models/group';
@@ -11,10 +12,10 @@ import { Group } from '../models/group';
 @Injectable()
 export class UserActions {
     static LOAD_USERS = '[User] Load Users';
-    loadUsers(page: number): ActionWithPayload<number> {
+    loadUsers(page: number, filter: string): ActionWithPayload<UserListRequest> {
         return {
             type: UserActions.LOAD_USERS,
-            payload: page
+            payload: new UserListRequest(page, filter)
         };
     }
 

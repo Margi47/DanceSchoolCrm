@@ -9,6 +9,7 @@ namespace crm_webapi.Models
 {
     public class Parameters
     {
+        public string Filter { get; set; }
         [Range(1, int.MaxValue)]
         public int Page { get; set; }
         [Range(1, int.MaxValue)]

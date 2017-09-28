@@ -8,6 +8,7 @@ import { ActionWithPayload } from '../actions/actionWithPayload';
 import { AvailableGroupStudents } from '../actions/actionWithPayload';
 import { ErrorPayload } from '../actions/actionWithPayload';
 import { UserGroup } from '../actions/actionWithPayload';
+import { UserListRequest } from '../actions/actionWithPayload';
 
 import { User } from '../models/user';
 
@@ -32,8 +33,8 @@ export class UserEffects {
 
     @Effect() loadUsers$ = this.update$
         .ofType(UserActions.LOAD_USERS)
-        .map((action: ActionWithPayload<number>) => action.payload)
-        .switchMap(page => this.service.getUsers(page)
+        .map((action: ActionWithPayload<UserListRequest>) => action.payload)
+        .switchMap(data => this.service.getUsers(data.page, data.filter)
             .map(users => this.userActions.loadUsersSuccess(users.data, users.total))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );

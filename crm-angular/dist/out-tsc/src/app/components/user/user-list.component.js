@@ -10,18 +10,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
+var Rx_1 = require("rxjs/Rx");
 var UserListComponent = (function () {
     function UserListComponent() {
+        var _this = this;
         this.add = new core_1.EventEmitter();
         this.details = new core_1.EventEmitter();
-        this.pageChanged = new core_1.EventEmitter();
+        this.loadUsers = new core_1.EventEmitter();
         this.currentPage = 1;
+        this.currentFilter = "";
+        this.search = new Rx_1.Subject();
+        var observable = this.search
+            .debounceTime(400)
+            .distinctUntilChanged()
+            .subscribe(function (data) {
+            _this.currentFilter = data;
+            _this.loadUsers.emit({ page: _this.currentPage, filter: data });
+        });
     }
     UserListComponent.prototype.addUser = function () { this.add.emit(); };
     UserListComponent.prototype.showDetails = function (id) { this.details.emit(id); };
     UserListComponent.prototype.pageChange = function (page) {
         this.currentPage = page;
-        this.pageChanged.emit(page);
+        this.loadUsers.emit({ page: page, filter: this.currentFilter });
     };
     return UserListComponent;
 }());
@@ -40,13 +51,14 @@ __decorate([
 __decorate([
     core_1.Output(),
     __metadata("design:type", Object)
-], UserListComponent.prototype, "pageChanged", void 0);
+], UserListComponent.prototype, "loadUsers", void 0);
 UserListComponent = __decorate([
     core_1.Component({
         selector: 'users-list',
         templateUrl: './user-list.component.html',
         styles: ['tr td, th {vertical-align:middle}']
-    })
+    }),
+    __metadata("design:paramtypes", [])
 ], UserListComponent);
 exports.UserListComponent = UserListComponent;
 //# sourceMappingURL=user-list.component.js.map

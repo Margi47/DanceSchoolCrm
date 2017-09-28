@@ -41,7 +41,10 @@ namespace crm_webapi.Models
         public IEnumerable<T> GetAll(Parameters parameters)
         {
             var items = GetQuery(Context);
-            var data = items.OrderBy(x => x.Id).Skip((parameters.Page - 1) * parameters.PageSize)
+
+            var data = items.Where(x => String.IsNullOrWhiteSpace(parameters.Filter) || x.Name.Contains(parameters.Filter.Trim()))
+                            .OrderBy(x => x.Id)
+                            .Skip((parameters.Page - 1) * parameters.PageSize)
                             .Take(parameters.PageSize).ToList();
             return data;
         }

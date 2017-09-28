@@ -7,9 +7,12 @@ import { NavigationExtras } from '@angular/router';
 export interface ActionWithPayload<T> extends Action {
   payload: T;
 }
+export class UserListRequest {
+    constructor(public page: number, public filter: string) { }
+}
 
 export class UserList {
-    constructor( public userList: User[], public total: number){}
+    constructor( public userList: User[], public total: number){ }
 }
 
 export class GroupList {

@@ -12,7 +12,7 @@ import { RouterActions } from '../../actions/router.actions'
 <users-list [users] = "users$ | async" 
             (add)="addUser()" 
             (details)="showDetails($event)"
-            (pageChanged)="onPageChanged($event)">
+            (loadUsers)="onPageChanged($event)">
 </users-list>
 `
 })
@@ -27,7 +27,7 @@ export class UsersComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.store.dispatch(this.userActions.loadUsers(1));
+        this.store.dispatch(this.userActions.loadUsers(1, ""));
     };
 
     addUser() {
@@ -38,7 +38,8 @@ export class UsersComponent implements OnInit {
         this.store.dispatch(this.routerActions.go(['userdetail', id]));
     }
 
-    onPageChanged(page: number) {
-        this.store.dispatch(this.userActions.loadUsers(page));
+    onPageChanged(data) {
+        console.log(data.filter);
+        this.store.dispatch(this.userActions.loadUsers(data.page, data.filter));
     }
 }
