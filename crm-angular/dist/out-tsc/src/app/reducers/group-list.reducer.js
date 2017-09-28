@@ -1,18 +1,32 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var group_actions_1 = require("../actions/group.actions");
-var initialState = { groups: [], total: 0 };
+var initialState = { groups: [], total: 0, filter: "" };
 function default_1(state, action) {
     if (state === void 0) { state = initialState; }
     switch (action.type) {
         case group_actions_1.GroupActions.LOAD_GROUPS_SUCCESS: {
-            return Object.assign({}, state, { groups: action.payload.groupList, total: action.payload.total });
+            return Object.assign({}, state, {
+                groups: action.payload.groupList,
+                total: action.payload.total,
+                filter: action.payload.filter
+            });
         }
         case group_actions_1.GroupActions.LOAD_AVAILABLE_USER_GROUPS_SUCCESS: {
-            return Object.assign({}, state, {
-                groups: state.groups.concat(action.payload.groupList),
-                total: action.payload.total
-            });
+            console.log(action.payload.filter, state.filter);
+            if (action.payload.filter == state.filter) {
+                return Object.assign({}, state, {
+                    groups: state.groups.concat(action.payload.groupList),
+                    total: action.payload.total
+                });
+            }
+            else {
+                return Object.assign({}, state, {
+                    groups: action.payload.groupList,
+                    total: action.payload.total,
+                    filter: action.payload.filter
+                });
+            }
         }
         case group_actions_1.GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS: {
             return Object.assign({}, state, {

@@ -32,7 +32,7 @@ export class TeacherEffects {
         .ofType(TeacherActions.LOAD_ALL_TEACHERS)
         .map((action: ActionWithPayload<ListRequest>) => action.payload)
         .switchMap(data => this.service.getTeachers(data.page, data.filter)
-            .map(teachers => this.teacherActions.loadAllTeachersSuccess(teachers.data, teachers.total))
+            .map(teachers => this.teacherActions.loadAllTeachersSuccess(teachers.data, teachers.total, teachers.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -48,7 +48,7 @@ export class TeacherEffects {
         .ofType(TeacherActions.LOAD_AVAILABLE_TEACHERS)
         .map((action: ActionWithPayload<AvailableGroupTeachers>) => action.payload)
         .switchMap(data => this.service.getAvailableTeachers(data.groupId, data.page, data.filter)
-            .map(teachers => this.teacherActions.loadAvailableTeachersSuccess(teachers.data, teachers.total))
+            .map(teachers => this.teacherActions.loadAvailableTeachersSuccess(teachers.data, teachers.total, teachers.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 

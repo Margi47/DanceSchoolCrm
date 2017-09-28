@@ -27,7 +27,7 @@ namespace crm_webapi.Controllers.Groups
         {
             var groups = _groupRepository.GetAll(parameters);
             var count = _groupRepository.GetTotal();
-            var result = new PagedResponse<GroupApiModel>(Mapper.Map<GroupApiModel[]>(groups), count);
+            var result = new PagedResponse<GroupApiModel>(Mapper.Map<GroupApiModel[]>(groups), count, parameters.Filter);
 
             return result;
         }

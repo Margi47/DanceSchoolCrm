@@ -21,10 +21,10 @@ var GroupActions = GroupActions_1 = (function () {
             payload: new actionWithPayload_5.ListRequest(page, filter)
         };
     };
-    GroupActions.prototype.loadGroupsSuccess = function (groups, total) {
+    GroupActions.prototype.loadGroupsSuccess = function (groups, total, filter) {
         return {
             type: GroupActions_1.LOAD_GROUPS_SUCCESS,
-            payload: new actionWithPayload_1.GroupList(groups, total)
+            payload: new actionWithPayload_1.GroupList(groups, total, filter)
         };
     };
     GroupActions.prototype.getGroup = function (groupId) {
@@ -45,10 +45,10 @@ var GroupActions = GroupActions_1 = (function () {
             payload: new actionWithPayload_2.AvailableGroups(userId, page, filter)
         };
     };
-    GroupActions.prototype.loadAvailableUserGroupsSuccess = function (groups, total) {
+    GroupActions.prototype.loadAvailableUserGroupsSuccess = function (groups, total, filter) {
         return {
             type: GroupActions_1.LOAD_AVAILABLE_USER_GROUPS_SUCCESS,
-            payload: new actionWithPayload_1.GroupList(groups, total)
+            payload: new actionWithPayload_1.GroupList(groups, total, filter)
         };
     };
     GroupActions.prototype.loadAvailableTeacherGroups = function (teacherId, page, filter) {
@@ -57,10 +57,10 @@ var GroupActions = GroupActions_1 = (function () {
             payload: new actionWithPayload_2.AvailableGroups(teacherId, page, filter)
         };
     };
-    GroupActions.prototype.loadAvailableTeacherGroupsSuccess = function (groups, total) {
+    GroupActions.prototype.loadAvailableTeacherGroupsSuccess = function (groups, total, filter) {
         return {
             type: GroupActions_1.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS,
-            payload: new actionWithPayload_1.GroupList(groups, total)
+            payload: new actionWithPayload_1.GroupList(groups, total, filter)
         };
     };
     GroupActions.prototype.saveGroup = function (group) {

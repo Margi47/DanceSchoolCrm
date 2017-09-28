@@ -20,10 +20,10 @@ var UserActions = UserActions_1 = (function () {
             payload: new actionWithPayload_4.ListRequest(page, filter)
         };
     };
-    UserActions.prototype.loadUsersSuccess = function (users, total) {
+    UserActions.prototype.loadUsersSuccess = function (users, total, filter) {
         return {
             type: UserActions_1.LOAD_USERS_SUCCESS,
-            payload: new actionWithPayload_1.UserList(users, total)
+            payload: new actionWithPayload_1.UserList(users, total, filter)
         };
     };
     UserActions.prototype.loadAvailableStudents = function (groupId, page, filter) {
@@ -32,10 +32,10 @@ var UserActions = UserActions_1 = (function () {
             payload: new actionWithPayload_3.AvailableGroupStudents(groupId, page, filter)
         };
     };
-    UserActions.prototype.loadAvailableStudentsSuccess = function (students, total) {
+    UserActions.prototype.loadAvailableStudentsSuccess = function (students, total, filter) {
         return {
             type: UserActions_1.LOAD_AVAILABLE_STUDENTS_SUCCESS,
-            payload: new actionWithPayload_1.UserList(students, total)
+            payload: new actionWithPayload_1.UserList(students, total, filter)
         };
     };
     UserActions.prototype.loadAvailableTeachers = function (page, filter) {
@@ -44,10 +44,10 @@ var UserActions = UserActions_1 = (function () {
             payload: new actionWithPayload_4.ListRequest(page, filter)
         };
     };
-    UserActions.prototype.loadAvailableTeachersSuccess = function (users, total) {
+    UserActions.prototype.loadAvailableTeachersSuccess = function (users, total, filter) {
         return {
             type: UserActions_1.LOAD_AVAILABLE_TEACHERS_SUCCESS,
-            payload: new actionWithPayload_1.UserList(users, total)
+            payload: new actionWithPayload_1.UserList(users, total, filter)
         };
     };
     UserActions.prototype.getUser = function (userId) {

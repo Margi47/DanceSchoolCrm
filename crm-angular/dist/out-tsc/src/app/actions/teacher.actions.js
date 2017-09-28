@@ -20,10 +20,10 @@ var TeacherActions = TeacherActions_1 = (function () {
             payload: new actionWithPayload_4.ListRequest(page, filter)
         };
     };
-    TeacherActions.prototype.loadAllTeachersSuccess = function (teachers, total) {
+    TeacherActions.prototype.loadAllTeachersSuccess = function (teachers, total, filter) {
         return {
             type: TeacherActions_1.LOAD_ALL_TEACHERS_SUCCESS,
-            payload: new actionWithPayload_1.TeacherList(teachers, total)
+            payload: new actionWithPayload_1.TeacherList(teachers, total, filter)
         };
     };
     TeacherActions.prototype.loadAvailableTeachers = function (groupId, page, filter) {
@@ -32,10 +32,10 @@ var TeacherActions = TeacherActions_1 = (function () {
             payload: new actionWithPayload_2.AvailableGroupTeachers(groupId, page, filter)
         };
     };
-    TeacherActions.prototype.loadAvailableTeachersSuccess = function (teachers, total) {
+    TeacherActions.prototype.loadAvailableTeachersSuccess = function (teachers, total, filter) {
         return {
             type: TeacherActions_1.LOAD_AVAILABLE_TEACHERS_SUCCESS,
-            payload: new actionWithPayload_1.TeacherList(teachers, total)
+            payload: new actionWithPayload_1.TeacherList(teachers, total, filter)
         };
     };
     TeacherActions.prototype.getTeacher = function (id) {

@@ -22,10 +22,10 @@ export class GroupActions {
     }
 
     static LOAD_GROUPS_SUCCESS = '[Group] Load Groups Success';
-    loadGroupsSuccess(groups: Group[], total: number): ActionWithPayload<GroupList> {
+    loadGroupsSuccess(groups: Group[], total: number, filter: string): ActionWithPayload<GroupList> {
         return {
             type: GroupActions.LOAD_GROUPS_SUCCESS,
-            payload: new GroupList(groups, total)
+            payload: new GroupList(groups, total, filter)
         };
     }
 
@@ -54,10 +54,10 @@ export class GroupActions {
     }
 
     static LOAD_AVAILABLE_USER_GROUPS_SUCCESS = '[Group] Load Available User Groups Success';
-    loadAvailableUserGroupsSuccess(groups: Group[], total: number): ActionWithPayload<GroupList> {
+    loadAvailableUserGroupsSuccess(groups: Group[], total: number, filter: string): ActionWithPayload<GroupList> {
         return {
             type: GroupActions.LOAD_AVAILABLE_USER_GROUPS_SUCCESS,
-            payload: new GroupList(groups, total)
+            payload: new GroupList(groups, total, filter)
         };
     }
 
@@ -70,10 +70,10 @@ export class GroupActions {
     }
 
     static LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS = '[Group] Load Available Teacher Groups Success';
-    loadAvailableTeacherGroupsSuccess(groups: Group[], total: number): ActionWithPayload<GroupList> {
+    loadAvailableTeacherGroupsSuccess(groups: Group[], total: number, filter: string): ActionWithPayload<GroupList> {
         return {
             type: GroupActions.LOAD_AVAILABLE_TEACHER_GROUPS_SUCCESS,
-            payload: new GroupList(groups, total)
+            payload: new GroupList(groups, total, filter)
         };
     }
 

@@ -9,25 +9,28 @@ var ListRequest = (function () {
 }());
 exports.ListRequest = ListRequest;
 var UserList = (function () {
-    function UserList(userList, total) {
+    function UserList(userList, total, filter) {
         this.userList = userList;
         this.total = total;
+        this.filter = filter;
     }
     return UserList;
 }());
 exports.UserList = UserList;
 var GroupList = (function () {
-    function GroupList(groupList, total) {
+    function GroupList(groupList, total, filter) {
         this.groupList = groupList;
         this.total = total;
+        this.filter = filter;
     }
     return GroupList;
 }());
 exports.GroupList = GroupList;
 var TeacherList = (function () {
-    function TeacherList(teacherList, total) {
+    function TeacherList(teacherList, total, filter) {
         this.teacherList = teacherList;
         this.total = total;
+        this.filter = filter;
     }
     return TeacherList;
 }());

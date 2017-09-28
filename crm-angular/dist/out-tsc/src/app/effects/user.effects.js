@@ -32,7 +32,7 @@ var UserEffects = (function () {
             .ofType(user_actions_1.UserActions.LOAD_USERS)
             .map(function (action) { return action.payload; })
             .switchMap(function (data) { return _this.service.getUsers(data.page, data.filter)
-            .map(function (users) { return _this.userActions.loadUsersSuccess(users.data, users.total); })
+            .map(function (users) { return _this.userActions.loadUsersSuccess(users.data, users.total, users.filter); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.getUser$ = this.update$
             .ofType(user_actions_1.UserActions.GET_USER)
@@ -44,13 +44,13 @@ var UserEffects = (function () {
             .ofType(user_actions_1.UserActions.LOAD_AVAILABLE_STUDENTS)
             .map(function (action) { return action.payload; })
             .switchMap(function (g) { return _this.service.getAvailableStudents(g.groupId, g.page, g.filter)
-            .map(function (students) { return _this.userActions.loadAvailableStudentsSuccess(students.data, students.total); })
+            .map(function (students) { return _this.userActions.loadAvailableStudentsSuccess(students.data, students.total, students.filter); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.getAvailableTeachers$ = this.update$
             .ofType(user_actions_1.UserActions.LOAD_AVAILABLE_TEACHERS)
             .map(function (action) { return action.payload; })
             .switchMap(function (data) { return _this.service.getAvailableTeachers(data.page, data.filter)
-            .map(function (users) { return _this.userActions.loadAvailableTeachersSuccess(users.data, users.total); })
+            .map(function (users) { return _this.userActions.loadAvailableTeachersSuccess(users.data, users.total, users.filter); })
             .catch(function (error) { return Observable_1.Observable.of(_this.errorActions.catchError(error.status, JSON.parse(error._body))); }); });
         this.addUser$ = this.update$
             .ofType(user_actions_1.UserActions.ADD_USER)

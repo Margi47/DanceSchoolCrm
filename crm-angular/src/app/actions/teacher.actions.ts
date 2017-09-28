@@ -20,10 +20,10 @@ export class TeacherActions {
     }
 
     static LOAD_ALL_TEACHERS_SUCCESS = '[Teacher] Load All Teachers Success';
-    loadAllTeachersSuccess(teachers: Teacher[], total: number): ActionWithPayload<TeacherList> {
+    loadAllTeachersSuccess(teachers: Teacher[], total: number, filter: string): ActionWithPayload<TeacherList> {
         return {
             type: TeacherActions.LOAD_ALL_TEACHERS_SUCCESS,
-            payload: new TeacherList(teachers, total)
+            payload: new TeacherList(teachers, total, filter)
         };
     }
 
@@ -36,10 +36,10 @@ export class TeacherActions {
     }
 
     static LOAD_AVAILABLE_TEACHERS_SUCCESS = '[Teacher] Load Available Teachers Success';
-    loadAvailableTeachersSuccess(teachers: Teacher[], total: number): ActionWithPayload<TeacherList> {
+    loadAvailableTeachersSuccess(teachers: Teacher[], total: number, filter: string): ActionWithPayload<TeacherList> {
         return {
             type: TeacherActions.LOAD_AVAILABLE_TEACHERS_SUCCESS,
-            payload: new TeacherList(teachers, total)
+            payload: new TeacherList(teachers, total, filter)
         };
     }
 

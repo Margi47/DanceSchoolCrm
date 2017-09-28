@@ -35,7 +35,7 @@ export class UserEffects {
         .ofType(UserActions.LOAD_USERS)
         .map((action: ActionWithPayload<ListRequest>) => action.payload)
         .switchMap(data => this.service.getUsers(data.page, data.filter)
-            .map(users => this.userActions.loadUsersSuccess(users.data, users.total))
+            .map(users => this.userActions.loadUsersSuccess(users.data, users.total, users.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -51,7 +51,7 @@ export class UserEffects {
         .ofType(UserActions.LOAD_AVAILABLE_STUDENTS)
         .map((action: ActionWithPayload<AvailableGroupStudents>) => action.payload)
         .switchMap(g => this.service.getAvailableStudents(g.groupId, g.page, g.filter)
-            .map(students => this.userActions.loadAvailableStudentsSuccess(students.data, students.total))
+            .map(students => this.userActions.loadAvailableStudentsSuccess(students.data, students.total, students.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 
@@ -59,7 +59,7 @@ export class UserEffects {
         .ofType(UserActions.LOAD_AVAILABLE_TEACHERS)
         .map((action: ActionWithPayload<ListRequest>) => action.payload)
         .switchMap(data => this.service.getAvailableTeachers(data.page, data.filter)
-            .map(users => this.userActions.loadAvailableTeachersSuccess(users.data, users.total))
+            .map(users => this.userActions.loadAvailableTeachersSuccess(users.data, users.total, users.filter))
             .catch(error => Observable.of(this.errorActions.catchError(error.status, JSON.parse(error._body))))
         );
 

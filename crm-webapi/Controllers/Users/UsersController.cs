@@ -29,7 +29,7 @@ namespace crm_webapi.Controllers.Users
         {
             var users = _userRepository.GetAll(parameters);
             var count = _userRepository.GetTotal();
-            var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(users), count);
+            var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(users), count, parameters.Filter);
 
             return result;
         }
@@ -99,7 +99,7 @@ namespace crm_webapi.Controllers.Users
             var users = _userRepository.GetAvailableTeachers(parameters);
             var count = _userRepository.CountTeachers(parameters);
 
-            var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(users), count);
+            var result = new PagedResponse<UserApiModel>(Mapper.Map<UserApiModel[]>(users), count, parameters.Filter);
 
             return result;
         }
