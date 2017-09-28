@@ -17,7 +17,8 @@ function default_1(state, action) {
             if (action.payload.filter == state.filter) {
                 return Object.assign({}, state, {
                     users: state.users.concat(action.payload.userList),
-                    total: action.payload.total
+                    total: action.payload.total,
+                    filter: action.payload.filter
                 });
             }
             else {
@@ -32,7 +33,8 @@ function default_1(state, action) {
             if (action.payload.filter == state.filter) {
                 return Object.assign({}, state, {
                     users: state.users.concat(action.payload.userList),
-                    total: action.payload.total
+                    total: action.payload.total,
+                    filter: action.payload.filter
                 });
             }
             else {

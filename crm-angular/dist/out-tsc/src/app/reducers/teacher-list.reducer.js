@@ -16,7 +16,8 @@ function default_1(state, action) {
             if (action.payload.filter == state.filter) {
                 return Object.assign({}, state, {
                     teachers: state.teachers.concat(action.payload.teacherList),
-                    total: action.payload.total
+                    total: action.payload.total,
+                    filter: action.payload.filter
                 });
             }
             else {
