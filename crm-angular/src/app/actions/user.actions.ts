@@ -4,7 +4,7 @@ import { UserList } from '../actions/actionWithPayload';
 import { GroupList } from '../actions/actionWithPayload';
 import { UserGroup } from '../actions/actionWithPayload';
 import { AvailableGroupStudents } from '../actions/actionWithPayload';
-import { UserListRequest } from '../actions/actionWithPayload';
+import { ListRequest } from '../actions/actionWithPayload';
 
 import { User } from '../models/user';
 import { Group } from '../models/group';
@@ -12,10 +12,10 @@ import { Group } from '../models/group';
 @Injectable()
 export class UserActions {
     static LOAD_USERS = '[User] Load Users';
-    loadUsers(page: number, filter: string): ActionWithPayload<UserListRequest> {
+    loadUsers(page: number, filter: string): ActionWithPayload<ListRequest> {
         return {
             type: UserActions.LOAD_USERS,
-            payload: new UserListRequest(page, filter)
+            payload: new ListRequest(page, filter)
         };
     }
 
@@ -28,10 +28,10 @@ export class UserActions {
     }
 
     static LOAD_AVAILABLE_STUDENTS = '[User] Load Available Students';
-    loadAvailableStudents(groupId: number, page: number): ActionWithPayload<AvailableGroupStudents> {
+    loadAvailableStudents(groupId: number, page: number, filter: string): ActionWithPayload<AvailableGroupStudents> {
         return {
             type: UserActions.LOAD_AVAILABLE_STUDENTS,
-            payload: new AvailableGroupStudents(groupId, page)
+            payload: new AvailableGroupStudents(groupId, page, filter)
         };
     }
 
@@ -44,10 +44,10 @@ export class UserActions {
     }
 
     static LOAD_AVAILABLE_TEACHERS = '[User] Load Available Teachers';
-    loadAvailableTeachers(page: number): ActionWithPayload<number> {
+    loadAvailableTeachers(page: number, filter: string): ActionWithPayload<ListRequest> {
         return {
             type: UserActions.LOAD_AVAILABLE_TEACHERS,
-            payload: page
+            payload: new ListRequest(page, filter)
         };
     }
 

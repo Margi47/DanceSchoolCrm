@@ -22,8 +22,8 @@ export class GroupService {
         this.groupTeacherUrl = environment.url + '/api/groupteacher';
     }
 
-    getGroups(page: number): Observable<any> {
-        return this.http.get(this.groupsUrl + '?page=' + page + '&pagesize=10')
+    getGroups(page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.groupsUrl}?filter=${filter}&page=${page}&pagesize=10`)
             .map(response => response.json());
     }
 
@@ -32,13 +32,13 @@ export class GroupService {
             .map(response => response.json());
     }
 
-    getAvailableUserGroups(id: number, page: number): Observable<any> {
-        return this.http.get(`${this.groupUserUrl}/${id}/groups/available?page=${page}&pagesize=10`)
+    getAvailableUserGroups(id: number, page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.groupUserUrl}/${id}/groups/available?filter=${filter}&page=${page}&pagesize=10`)
             .map(response => response.json());
     }
 
-    getAvailableTeacherGroups(id: number, page: number): Observable<any> {
-        return this.http.get(`${this.groupTeacherUrl}/${id}/groups/available?page=${page}&pagesize=10`)
+    getAvailableTeacherGroups(id: number, page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.groupTeacherUrl}/${id}/groups/available?filter=${filter}&page=${page}&pagesize=10`)
             .map(response => response.json());
     }
 

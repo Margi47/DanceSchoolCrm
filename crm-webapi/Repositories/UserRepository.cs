@@ -18,7 +18,13 @@ namespace crm_webapi.Models
 
         public User[] GetAvailableTeachers(Parameters parameters)
         {
-            var result = Context.Users
+            var items = Context.Users.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            var result = items
                 .Where(u => u.IsActive && !Context.Teachers.Any(t => t.Id == u.Id))
                 .Skip((parameters.Page - 1) * parameters.PageSize)
                             .Take(parameters.PageSize)

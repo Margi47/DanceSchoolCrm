@@ -1,4 +1,4 @@
-﻿using crm_webapi.Exceptions;
+using crm_webapi.Exceptions;
 using crm_webapi.Models;
 using System;
 using System.Collections.Generic;
@@ -88,7 +88,13 @@ namespace crm_webapi.Repositories
                 throw new EntityNotFoundException("Group", groupId);
             }
 
-            var result = _context.Users
+            var items = _context.Users.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            var result = items
                 .Where(u => u.IsActive && !_context.GroupUser.Any(g => g.UserId == u.Id && g.GroupId == groupId))
                 .Skip((parameters.Page - 1) * parameters.PageSize)
                 .Take(parameters.PageSize).ToList();
@@ -111,7 +117,13 @@ namespace crm_webapi.Repositories
                 throw new EntityNotFoundException("User", userId);
             }
 
-            var result = _context.Groups
+            var items = _context.Groups.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            var result = items
                 .Where(g => g.IsActive && !_context.GroupUser.Any(u => u.GroupId == g.Id && u.UserId == userId))
                 .Skip((parameters.Page - 1) * parameters.PageSize)
                 .Take(parameters.PageSize).ToList();

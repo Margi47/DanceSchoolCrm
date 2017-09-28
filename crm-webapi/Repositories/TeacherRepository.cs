@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,7 +18,13 @@ namespace crm_webapi.Models
 
         public IEnumerable<User> GetTeachers(Parameters parameters)
         {
-            return _context.Teachers.Skip((parameters.Page - 1) * parameters.PageSize)
+            var items = _context.Teachers.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.User.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            return items.Skip((parameters.Page - 1) * parameters.PageSize)
                             .Take(parameters.PageSize).Select(t => t.User);
         }
 

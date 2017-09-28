@@ -20,13 +20,13 @@ export class TeacherService {
         this.groupTeacherUrl = environment.url + '/api/groupteacher';
     }
 
-    getTeachers(page: number): Observable<any> {
-        return this.http.get(this.teachersUrl + '?page=' + page + '&pagesize=10')
+    getTeachers(page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.teachersUrl}?filter=${filter}&page=${page}&pagesize=10`)
             .map(response => response.json());
     }
 
-    getAvailableTeachers(groupId: number, page: number): Observable<any> {
-        return this.http.get(`${this.groupTeacherUrl}/${groupId}/teachers/available?page=${page}&pagesize=10`)
+    getAvailableTeachers(groupId: number, page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.groupTeacherUrl}/${groupId}/teachers/available?filter=${filter}&page=${page}&pagesize=10`)
             .map(response => response.json());
     }
 

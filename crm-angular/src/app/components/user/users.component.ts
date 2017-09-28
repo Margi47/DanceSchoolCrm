@@ -12,7 +12,7 @@ import { RouterActions } from '../../actions/router.actions'
 <users-list [users] = "users$ | async" 
             (add)="addUser()" 
             (details)="showDetails($event)"
-            (loadUsers)="onPageChanged($event)">
+            (loadUsers)="loadUsers($event)">
 </users-list>
 `
 })
@@ -38,7 +38,7 @@ export class UsersComponent implements OnInit {
         this.store.dispatch(this.routerActions.go(['userdetail', id]));
     }
 
-    onPageChanged(data) {
+    loadUsers(data) {
         console.log(data.filter);
         this.store.dispatch(this.userActions.loadUsers(data.page, data.filter));
     }

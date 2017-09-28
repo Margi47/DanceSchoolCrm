@@ -7,7 +7,7 @@ import { NavigationExtras } from '@angular/router';
 export interface ActionWithPayload<T> extends Action {
   payload: T;
 }
-export class UserListRequest {
+export class ListRequest {
     constructor(public page: number, public filter: string) { }
 }
 
@@ -24,15 +24,15 @@ export class TeacherList {
 }
 
 export class AvailableGroupStudents {
-    constructor(public groupId: number, public page: number) { }
+    constructor(public groupId: number, public page: number, public filter: string) { }
 }
 
 export class AvailableGroupTeachers {
-    constructor(public groupId: number, public page: number) { }
+    constructor(public groupId: number, public page: number, public filter: string) { }
 }
 
 export class AvailableGroups {
-    constructor(public userId: number, public page: number) { }
+    constructor(public userId: number, public page: number, public filter: string) { }
 }
 
 export class UserGroup {

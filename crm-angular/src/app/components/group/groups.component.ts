@@ -12,7 +12,7 @@ import { RouterActions } from '../../actions/router.actions';
 <group-list [groups]="groups$ | async" 
             (addNewGroup) = "addGroup()" 
             (groupDetails) = "showDetails($event)"
-            (pageChanged)="onPageChanged($event)">
+            (loadGroups)="loadGroups($event)">
 </group-list>`
 })
 
@@ -27,7 +27,7 @@ export class GroupsComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.store.dispatch(this.groupActions.loadGroups(1));
+        this.store.dispatch(this.groupActions.loadGroups(1, ""));
     }
 
     addGroup(): void {
@@ -38,7 +38,7 @@ export class GroupsComponent implements OnInit {
         this.store.dispatch(this.routerActions.go(['groupdetail', id]));
     }
 
-    onPageChanged(page: number) {
-        this.store.dispatch(this.groupActions.loadGroups(page));
+    loadGroups(data) {
+        this.store.dispatch(this.groupActions.loadGroups(data.page, data.filter));
     }
 }

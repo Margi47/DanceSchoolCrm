@@ -1,4 +1,4 @@
-﻿using crm_webapi.Exceptions;
+using crm_webapi.Exceptions;
 using crm_webapi.Models;
 using System;
 using System.Collections.Generic;
@@ -88,8 +88,13 @@ namespace crm_webapi.Repositories
                 throw new EntityNotFoundException("Group", groupId);
             }
 
-            var result = _context.Teachers
-                .Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
+            var items = _context.Teachers.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.User.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            var result = items.Where(t => !_context.GroupTeachers.Any(g => g.GroupId == groupId && g.TeacherId == t.Id))
                 .Select(t => t.User)
                 .Skip((parameters.Page - 1) * parameters.PageSize)
                 .Take(parameters.PageSize).ToList();
@@ -111,7 +116,13 @@ namespace crm_webapi.Repositories
                 throw new EntityNotFoundException("Teacher", teacherId);
             }
 
-            var result = _context.Groups
+            var items = _context.Groups.AsQueryable();
+            if (!String.IsNullOrWhiteSpace(parameters.Filter))
+            {
+                items = items.Where(x => x.Name.Contains(parameters.Filter.Trim()));
+            }
+
+            var result = items
                 .Where(g => g.IsActive && !_context.GroupTeachers.Any(t => t.GroupId == g.Id && t.TeacherId == teacherId))
                 .Skip((parameters.Page - 1) * parameters.PageSize)
                 .Take(parameters.PageSize).ToList();

@@ -4,16 +4,18 @@ import { ActionWithPayload } from '../actions/actionWithPayload';
 import { TeacherList } from '../actions/actionWithPayload';
 import { AvailableGroupTeachers } from '../actions/actionWithPayload';
 import { GroupTeacher } from '../actions/actionWithPayload';
+import { ListRequest } from '../actions/actionWithPayload';
+
 import { Teacher } from '../models/teacher';
 import { Group } from '../models/group';
 
 @Injectable() 
 export class TeacherActions {
     static LOAD_ALL_TEACHERS = '[Teacher] Load All Teachers';
-    loadAllTeachers(page: number): ActionWithPayload<number> {
+    loadAllTeachers(page: number, filter: string): ActionWithPayload<ListRequest> {
         return {
             type: TeacherActions.LOAD_ALL_TEACHERS,
-            payload: page
+            payload: new ListRequest(page, filter)
         };
     }
 
@@ -26,10 +28,10 @@ export class TeacherActions {
     }
 
     static LOAD_AVAILABLE_TEACHERS = '[Teacher] Load Available Teachers';
-    loadAvailableTeachers(groupId: number, page: number): ActionWithPayload<AvailableGroupTeachers> {
+    loadAvailableTeachers(groupId: number, page: number, filter: string): ActionWithPayload<AvailableGroupTeachers> {
         return {
             type: TeacherActions.LOAD_AVAILABLE_TEACHERS,
-            payload: new AvailableGroupTeachers(groupId, page)
+            payload: new AvailableGroupTeachers(groupId, page, filter)
         };
     }
 

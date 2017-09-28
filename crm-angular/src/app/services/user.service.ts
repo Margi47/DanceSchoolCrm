@@ -37,13 +37,13 @@ export class UserService {
             .map(response => response.json());
     }
 
-    getAvailableStudents(groupId: number, page: number): Observable<any> {
-        return this.http.get(`${this.groupUserUrl}/${groupId}/students/available?page=${page}&pagesize=10`)
+    getAvailableStudents(groupId: number, page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.groupUserUrl}/${groupId}/students/available?filter=${filter}&page=${page}&pagesize=10`)
             .map(response => response.json());
     }
 
-    getAvailableTeachers(page: number): Observable<any> {
-        return this.http.get(`${this.usersUrl}/teachers/available?page=${page}&pagesize=10`)
+    getAvailableTeachers(page: number, filter: string): Observable<any> {
+        return this.http.get(`${this.usersUrl}/teachers/available?filter=${filter}&page=${page}&pagesize=10`)
             .map(response => {
                 console.log(response);
                 return response.json();
