@@ -23,7 +23,11 @@ var GroupService = (function () {
     }
     GroupService.prototype.getGroups = function (page, filter) {
         return this.http.get(this.groupsUrl + "?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     GroupService.prototype.getGroup = function (id) {
         return this.http.get(this.groupsUrl + "/" + id)
@@ -31,11 +35,19 @@ var GroupService = (function () {
     };
     GroupService.prototype.getAvailableUserGroups = function (id, page, filter) {
         return this.http.get(this.groupUserUrl + "/" + id + "/groups/available?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     GroupService.prototype.getAvailableTeacherGroups = function (id, page, filter) {
         return this.http.get(this.groupTeacherUrl + "/" + id + "/groups/available?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     GroupService.prototype.addGroup = function (group) {
         var body = JSON.stringify(group);

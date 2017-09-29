@@ -25,7 +25,11 @@ var UserService = (function () {
     }
     UserService.prototype.getUsers = function (page, filter) {
         return this.http.get(this.usersUrl + "?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     UserService.prototype.getUser = function (id) {
         return this.http.get(this.usersUrl + "/" + id)
@@ -37,13 +41,18 @@ var UserService = (function () {
     };
     UserService.prototype.getAvailableStudents = function (groupId, page, filter) {
         return this.http.get(this.groupUserUrl + "/" + groupId + "/students/available?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     UserService.prototype.getAvailableTeachers = function (page, filter) {
         return this.http.get(this.usersUrl + "/teachers/available?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) {
-            console.log(response);
-            return response.json();
+            var data = response.json();
+            data.filter = filter;
+            return data;
         });
     };
     UserService.prototype.addUser = function (user) {

@@ -22,11 +22,19 @@ var TeacherService = (function () {
     }
     TeacherService.prototype.getTeachers = function (page, filter) {
         return this.http.get(this.teachersUrl + "?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     TeacherService.prototype.getAvailableTeachers = function (groupId, page, filter) {
         return this.http.get(this.groupTeacherUrl + "/" + groupId + "/teachers/available?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     TeacherService.prototype.getTeacher = function (id) {
         return this.http.get(this.teachersUrl + "/" + id)
