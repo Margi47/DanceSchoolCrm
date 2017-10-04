@@ -51,8 +51,12 @@ export class UserList {
         return element(by.tagName('pagination-controls'));
     }
 
-    getPage(): promise.Promise<string> {
+    getPageText(): promise.Promise<string> {
         return this.getPageElement().getText();
+    }
+
+    getPageArray(page: number): ElementFinder {
+        return this.getPageElement().all(by.tagName('li')).get(page);
     }
 
     getPageCount(): promise.Promise<number> {

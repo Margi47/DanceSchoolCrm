@@ -10,41 +10,44 @@ var UserList = (function () {
     UserList.prototype.getTable = function () {
         return protractor_1.element(protractor_1.by.css('.table'));
     };
-    /* Pastebin Heading
-    getPastebinHeading(): promise.Promise<string> {
-        return this.getPastebin().element(by.css("h2")).getText();
-    }
-
-    Table Data
-
-    getTable(): ElementFinder {
-        return this.getTable().element(by.css('table'));
-
-    }*/
     UserList.prototype.getTableHeader = function () {
-        return this.getTable().all(protractor_1.by.tagName('tr')).get(0).getText();
+        return this.getTable().element(protractor_1.by.tagName('thead'));
     };
     UserList.prototype.getTableSearch = function () {
-        return this.getTable().all(protractor_1.by.tagName('tr')).get(1).getText();
+        return this.getTableHeader().element(protractor_1.by.tagName('input'));
     };
     UserList.prototype.getTableBody = function () {
-        return protractor_1.element(protractor_1.by.tagName('tbody'));
+        return this.getTable().element(protractor_1.by.tagName('tbody'));
     };
-    UserList.prototype.getTableRow = function () {
+    UserList.prototype.getTableHeaderText = function () {
+        return this.getTableHeader().all(protractor_1.by.tagName('tr')).get(0).getText();
+    };
+    UserList.prototype.getTableSearchText = function () {
+        return this.getTableSearch().getText();
+    };
+    UserList.prototype.getTableRows = function () {
         return this.getTableBody().all(protractor_1.by.tagName('tr'));
     };
+    UserList.prototype.getTableRowsCount = function () {
+        return this.getTableRows().count();
+    };
     UserList.prototype.getFirstRowData = function () {
-        return this.getTableRow().get(0).getText();
+        return this.getTableRows().get(0).getText();
     };
     UserList.prototype.getLastRowData = function () {
-        return this.getTableRow().last().getText();
+        return this.getTableRows().last().getText();
     };
-    /*app-add-paste tag*/
     UserList.prototype.getPageElement = function () {
         return protractor_1.element(protractor_1.by.tagName('pagination-controls'));
     };
-    UserList.prototype.getPage = function () {
+    UserList.prototype.getPageText = function () {
         return this.getPageElement().getText();
+    };
+    UserList.prototype.getPageArray = function (page) {
+        return this.getPageElement().all(protractor_1.by.tagName('li')).get(page);
+    };
+    UserList.prototype.getPageCount = function () {
+        return this.getPageElement().all(protractor_1.by.tagName('li')).count();
     };
     return UserList;
 }());
