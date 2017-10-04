@@ -44,9 +44,9 @@ var UserAdd = (function () {
         return this.getForm().element(protractor_1.by.name('teacher'));
     };
     UserAdd.prototype.getSaveButton = function () {
-        return this.getForm().element(protractor_1.by.buttonText('Save'));
+        return this.getForm().element(protractor_1.by.id('saveButton'));
     };
     return UserAdd;
 }());
 exports.UserAdd = UserAdd;
-//# sourceMappingURL=userAdd.po.js.map
+//# sourceMappingURL=user-add.po.js.map

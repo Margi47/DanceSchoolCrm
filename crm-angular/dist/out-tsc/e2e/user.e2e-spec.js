@@ -1,10 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var userList_po_1 = require("./userList.po");
-var userAdd_po_1 = require("./userAdd.po");
+var user_list_po_1 = require("./user-list.po");
+var user_add_po_1 = require("./user-add.po");
+var user_details_po_1 = require("./user-details.po");
+var protractor_1 = require("protractor");
 describe('Users Page', function () {
-    var userListPage = new userList_po_1.UserList();
-    var userAddPage = new userAdd_po_1.UserAdd();
+    var userListPage = new user_list_po_1.UserList();
+    var userAddPage = new user_add_po_1.UserAdd();
+    var userDetailsPage = new user_details_po_1.UserDetails();
     it('should accept search input and implement search', function () {
         userListPage.navigateToList();
         userListPage.getTableSearch().sendKeys("na");
@@ -20,7 +23,6 @@ describe('Users Page', function () {
         userAddPage.navigateToAddForm();
         userAddPage.getNameInput().sendKeys("abc")
             .then(function () { return userAddPage.getNameInput().clear(); });
-        //browser.pause();
         //.then(() => { expect(userAddPage.getNameValidatorText()).toContain("required") });
         userAddPage.getPhoneInput().sendKeys("abc")
             .then(function () { expect(userAddPage.getPhoneValidatorText()).toContain("pattern"); });
@@ -36,7 +38,29 @@ describe('Users Page', function () {
             .then(function () { return userAddPage.getSaveButton().click(); })
             .then(function () { return userListPage.navigateToList(); })
             .then(function () { return userListPage.getTableSearch().sendKeys("sparrow"); })
+            .then(function () { expect(userListPage.getTableRowsCount()).toBeGreaterThan(0); })
             .then(function () { expect(userListPage.getFirstRowName()).toContain("jack sparrow"); });
+    });
+    it('should edit user groups', function () {
+        userListPage.navigateToList();
+        userListPage.getTableSearch().sendKeys("sparrow")
+            .then(function () { return userListPage.getFirstRowId(); })
+            .then(function (id) { return userDetailsPage.navigateToDetailsForm(id); })
+            .then(function () { return userDetailsPage.getAddButton().click(); })
+            .then(function () { return userDetailsPage.getSelect().click(); })
+            .then(function () { return userDetailsPage.getSelectInput().sendKeys(protractor_1.Key.ARROW_DOWN); })
+            .then(function () { return userDetailsPage.getSelectInput().sendKeys(protractor_1.Key.ENTER); })
+            .then(function () { expect(userDetailsPage.getTableRowsCount()).toBe(1); });
+    });
+    it('should delete user', function () {
+        userListPage.navigateToList();
+        userListPage.getTableSearch().sendKeys("sparrow")
+            .then(function () { return userListPage.getFirstRowId(); })
+            .then(function (id) { return userDetailsPage.navigateToDetailsForm(id); })
+            .then(function () { return userDetailsPage.getDeleteButton().click(); })
+            .then(function () { return userListPage.navigateToList(); })
+            .then(function () { return userListPage.getTableSearch().sendKeys("sparrow"); })
+            .then(function () { expect(userListPage.getTableRowsCount()).toBe(0); });
     });
 });
 //# sourceMappingURL=user.e2e-spec.js.map

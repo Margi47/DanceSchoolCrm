@@ -67,7 +67,7 @@
             </div>
 
 
-            <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Save</button>
+            <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default" id="saveButton">Save</button>
             <button (click)="onUserCancel(); userForm.reset()" class="btn btn-default" type="button" *ngIf="newUser">Cancel</button>
         </form>
 
@@ -106,6 +106,6 @@
                 </tbody>
             </table>
 
-            <button (click)="onUserDelete()" class="btn btn-default" type="button">Delete user</button>
+            <button (click)="onUserDelete()" class="btn btn-default" type="button" id="deleteButton">Delete user</button>
         </div>
 </div>

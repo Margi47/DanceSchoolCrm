@@ -27,7 +27,10 @@ var UserList = (function () {
         return this.getTableRows().get(0).all(protractor_1.by.tagName('td'))
             .get(0).getText().then(function (x) { return x.toLowerCase(); });
     };
+    UserList.prototype.getFirstRowId = function () {
+        return this.getTableRows().get(0).element(protractor_1.by.tagName('th')).getText();
+    };
     return UserList;
 }());
 exports.UserList = UserList;
-//# sourceMappingURL=userList.po.js.map
+//# sourceMappingURL=user-list.po.js.map

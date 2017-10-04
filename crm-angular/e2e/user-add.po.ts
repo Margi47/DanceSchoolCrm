@@ -54,6 +54,6 @@ export class UserAdd {
     }
 
     getSaveButton(): ElementFinder {
-        return this.getForm().element(by.buttonText('Save'));
+        return this.getForm().element(by.id('saveButton'));
     }
 }

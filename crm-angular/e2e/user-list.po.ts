@@ -32,4 +32,8 @@ export class UserList {
         return this.getTableRows().get(0).all(by.tagName('td'))
             .get(0).getText().then(x => x.toLowerCase());
     }
+
+    getFirstRowId(): promise.Promise<string> {
+        return this.getTableRows().get(0).element(by.tagName('th')).getText();
+    }
 }

@@ -1,12 +1,14 @@
-import { UserList } from './userList.po';
-import { UserAdd } from './userAdd.po';
-import { browser } from 'protractor';
+import { UserList } from './user-list.po';
+import { UserAdd } from './user-add.po';
+import { UserDetails } from './user-details.po';
+import { browser, Key } from 'protractor';
 
 
 describe('Users Page', () => {
 
     const userListPage: UserList = new UserList();
     const userAddPage: UserAdd = new UserAdd();
+    const userDetailsPage: UserDetails = new UserDetails();
 
     it('should accept search input and implement search', () => {
         userListPage.navigateToList();
@@ -28,7 +30,6 @@ describe('Users Page', () => {
 
         userAddPage.getNameInput().sendKeys("abc")
             .then(() => userAddPage.getNameInput().clear());
-        //browser.pause();
             //.then(() => { expect(userAddPage.getNameValidatorText()).toContain("required") });
 
         userAddPage.getPhoneInput().sendKeys("abc")
@@ -50,6 +51,32 @@ describe('Users Page', () => {
             .then(() => userAddPage.getSaveButton().click())
             .then(() => userListPage.navigateToList())
             .then(() => userListPage.getTableSearch().sendKeys("sparrow"))
-            .then(() => { expect(userListPage.getFirstRowName()).toContain("jack sparrow"); })
+            .then(() => { expect(userListPage.getTableRowsCount()).toBeGreaterThan(0) })
+            .then(() => { expect(userListPage.getFirstRowName()).toContain("jack sparrow") });
     });
+
+    it('should edit user groups', () => {
+        userListPage.navigateToList();
+
+        userListPage.getTableSearch().sendKeys("sparrow")
+            .then(() => userListPage.getFirstRowId())
+            .then((id) => userDetailsPage.navigateToDetailsForm(id))
+            .then(() => userDetailsPage.getAddButton().click())
+            .then(() => userDetailsPage.getSelect().click())
+            .then(() => userDetailsPage.getSelectInput().sendKeys(Key.ARROW_DOWN))
+            .then(() => userDetailsPage.getSelectInput().sendKeys(Key.ENTER))
+            .then(() => { expect(userDetailsPage.getTableRowsCount()).toBe(1) });
+    });
+
+    it('should delete user', () => {
+        userListPage.navigateToList();
+
+        userListPage.getTableSearch().sendKeys("sparrow")
+            .then(() => userListPage.getFirstRowId())
+            .then((id) => userDetailsPage.navigateToDetailsForm(id))
+            .then(() => userDetailsPage.getDeleteButton().click())
+            .then(() => userListPage.navigateToList())
+            .then(() => userListPage.getTableSearch().sendKeys("sparrow"))
+            .then(() => { expect(userListPage.getTableRowsCount()).toBe(0) });
+    })
 });
