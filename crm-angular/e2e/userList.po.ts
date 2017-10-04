@@ -11,24 +11,13 @@ export class UserList {
         return element(by.css('.table'));
     }
 
-    getTableHeader(): ElementFinder {
-        return this.getTable().element(by.tagName('thead'));
-    }
-
     getTableSearch(): ElementFinder {
-        return this.getTableHeader().element(by.tagName('input'));
+        return this.getTable().element(by.tagName('thead'))
+            .element(by.tagName('input'));
     }
 
     getTableBody(): ElementFinder {
         return this.getTable().element(by.tagName('tbody'));
-    }
-
-    getTableHeaderText(): promise.Promise<string> {
-        return this.getTableHeader().all(by.tagName('tr')).get(0).getText();
-    }
-
-    getTableSearchText(): promise.Promise<string> {
-        return this.getTableSearch().getText();
     }
 
     getTableRows(): ElementArrayFinder {
@@ -39,28 +28,8 @@ export class UserList {
         return this.getTableRows().count();
     }
 
-    getFirstRowData(): promise.Promise<string> {
-        return this.getTableRows().get(0).getText();
+    getFirstRowName(): promise.Promise<string> {
+        return this.getTableRows().get(0).all(by.tagName('td'))
+            .get(0).getText().then(x => x.toLowerCase());
     }
-
-    getLastRowData(): promise.Promise<string> {
-        return this.getTableRows().last().getText();
-    }
-
-    getPageElement(): ElementFinder {
-        return element(by.tagName('pagination-controls'));
-    }
-
-    getPageText(): promise.Promise<string> {
-        return this.getPageElement().getText();
-    }
-
-    getPageArray(page: number): ElementFinder {
-        return this.getPageElement().all(by.tagName('li')).get(page);
-    }
-
-    getPageCount(): promise.Promise<number> {
-        return this.getPageElement().all(by.tagName('li')).count();
-    }
-
 }
