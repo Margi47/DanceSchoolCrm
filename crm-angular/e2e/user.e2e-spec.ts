@@ -13,76 +13,62 @@ describe('Users Page', () => {
 
 
     it('should accept search input and implement search', () => {
-        userListPage.navigateToList();
-
-        userListPage.performSearch("na");
-        expect(userListPage.getFirstRowName()).toContain("na");
-
-        userListPage.performSearch("to");
-        expect(userListPage.getFirstRowName()).toContain("to");
-
-        userListPage.performSearch("ndgrenaifnvfdlkv");
-        expect(userListPage.getTableRowsCount()).toEqual(0);
+        userListPage.navigateToList()
+            .then(() => userListPage.performSearch("na"))//wait
+            .then(() => { expect(userListPage.getFirstRowName()).toContain("na") })
+            .then(() => userListPage.performSearch("to"))//wait
+            .then(() => { expect(userListPage.getFirstRowName()).toContain("to") })
+            .then(() => userListPage.performSearch("ndgrenaifnvfdlkv"))//wait
+            .then(() => { expect(userListPage.getTableRowsCount()).toEqual(0) });
     })
 
     it('should validate user inputs', () => {
         userAddPage.navigateToAddForm()
+            .then(() => { expect(userAddPage.getSaveButton().isEnabled()).toBeFalsy() })
+            .then(() => userAddPage.inputInvalidData())
+            .then(() => { expect(userAddPage.getNameValidatorText()).toContain("required") })
+            .then(() => { expect(userAddPage.getPhoneValidatorText()).toContain("pattern") })
+            .then(() => { expect(userAddPage.getEmailValidatorText()).toContain("pattern") })          
+            .then(() => { expect(userAddPage.getAdminInput().isEnabled()).toBeFalsy() })
+            .then(() => { expect(userAddPage.getTeacherInput().isEnabled()).toBeFalsy() })
             .then(() => { expect(userAddPage.getSaveButton().isEnabled()).toBeFalsy() });
-        browser.pause();
-        userAddPage.getNameInput().sendKeys("abc")
-            .then(() => userAddPage.getNameInput().clear());
-            //.then(() => { expect(userAddPage.getNameValidatorText()).toContain("required") });
-
-        userAddPage.getPhoneInput().sendKeys("abc")
-            .then(() => { expect(userAddPage.getPhoneValidatorText()).toContain("pattern") });
-
-        userAddPage.getEmailInput().sendKeys("abc")
-            .then(() => { expect(userAddPage.getEmailValidatorText()).toContain("pattern"); });
-
-        expect(userAddPage.getAdminInput().isEnabled()).toBeFalsy();
-        expect(userAddPage.getTeacherInput().isEnabled()).toBeFalsy();
-
-        expect(userAddPage.getSaveButton().isEnabled()).toBeFalsy();
-
     })
 
     it('should add new user', () => {
-        userAddPage.navigateToAddForm();
-
-        userAddPage.getNameInput().sendKeys("Jack Sparrow")
+        userAddPage.navigateToAddForm()
+            .then(() => userAddPage.getNameInput().sendKeys("Jack Sparrow"))
             .then(() => userAddPage.getSaveButton().click())
             .then(() => TimeHelper.waitForVisibility(userDetailsPage.getTable()))
             .then(() => userListPage.navigateToList())
-            .then(() => userListPage.performSearch("sparrow"))
+            .then(() => userListPage.performSearch("sparrow"))//wait
             .then(() => { expect(userListPage.getTableRowsCount()).toBeGreaterThan(0) })
             .then(() => { expect(userListPage.getFirstRowName()).toContain("jack sparrow") });
     });
 
     it('should edit user groups', () => {
-        let groupsCount;
-        userListPage.navigateToList();
 
-        userListPage.performSearch("sparrow")
+        userListPage.navigateToList()
+            .then(() => userListPage.performSearch("sparrow")) //wait
             .then(() => userListPage.getFirstRowId())
             .then((id) => userDetailsPage.navigateToDetailsForm(id))
-            .then(() => groupsCount = userDetailsPage.getTableRowsCount())
-            .then(() => userDetailsPage.getAddButton().click())
-            .then(() => userDetailsPage.getSelect().click())
-            .then(() => userDetailsPage.getSelectInput().sendKeys(Key.ARROW_DOWN))
-            .then(() => userDetailsPage.getSelectInput().sendKeys(Key.ENTER))
-            .then(() => TimeHelper.waitForGroupsChange(groupsCount))
-            .then(() => { expect(userDetailsPage.getTableRowsCount()).toBe(1) });
+            .then(() => userDetailsPage.addNewGroup(1))
+            .then(() => { expect(userDetailsPage.getTableRowsCount()).toBe(1) })
+            .then(() => browser.sleep(5000))
+            .then(() => userDetailsPage.deleteFirstGroup())
+            .then(() => { expect(userDetailsPage.getTableRowsCount()).toBe(0) })
     });
 
     it('should delete user', () => {
-        userListPage.navigateToList();
-
-        userListPage.performSearch("sparrow")
+        let rowsCount: number;
+        userListPage.navigateToList()
+            .then(() => userListPage.performSearch("sparrow")) //wait
+            .then(() => userListPage.getTableRowsCount())
+            .then((num) => rowsCount = num)
             .then(() => userListPage.getFirstRowId())
             .then((id) => userDetailsPage.navigateToDetailsForm(id))
             .then(() => userDetailsPage.getDeleteButton().click())
             .then(() => TimeHelper.waitForVisibility(userListPage.getTable()))
-            .then(() => userListPage.performSearch("sparrow"))
-            .then(() => { expect(userListPage.getTableRowsCount()).toBe(0) });
+            .then(() => userListPage.performSearch("sparrow")) //wait
+            .then(() => { expect(userListPage.getTableRowsCount()).toBe(rowsCount -1) });
     })
 });

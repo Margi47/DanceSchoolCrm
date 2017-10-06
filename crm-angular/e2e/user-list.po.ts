@@ -1,10 +1,10 @@
 import { browser, by, element, promise, ElementFinder, ElementArrayFinder, protractor, ExpectedConditions } from 'protractor';
-
+import { TimeHelper } from './helpers/time.helper';
 
 export class UserList {
 
     navigateToList(): promise.Promise<any> {
-        return browser.get('/users');
+        return browser.get('/users').then(() => TimeHelper.waitForVisibility(this.getTable()));
     }
 
     getTable(): ElementFinder {

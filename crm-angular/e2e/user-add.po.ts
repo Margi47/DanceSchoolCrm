@@ -16,6 +16,7 @@ export class UserAdd {
             .element(by.tagName('input'));
     }
 
+
     getNameValidatorText(): promise.Promise<string> {
         return this.getForm().element(by.id('nameInput'))
             .element(by.tagName('form-validation')).getText();
@@ -55,5 +56,11 @@ export class UserAdd {
 
     getSaveButton(): ElementFinder {
         return this.getForm().element(by.id('saveButton'));
+    }
+
+    inputInvalidData() {
+        return this.getNameInput().sendKeys("")
+            .then(() => this.getPhoneInput().sendKeys("abc"))
+            .then(() => this.getEmailInput().sendKeys("abc"));
     }
 }

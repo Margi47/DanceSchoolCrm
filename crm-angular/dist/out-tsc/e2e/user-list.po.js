@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var protractor_1 = require("protractor");
+var time_helper_1 = require("./helpers/time.helper");
 var UserList = (function () {
     function UserList() {
     }
     UserList.prototype.navigateToList = function () {
-        return protractor_1.browser.get('/users');
+        var _this = this;
+        return protractor_1.browser.get('/users').then(function () { return time_helper_1.TimeHelper.waitForVisibility(_this.getTable()); });
     };
     UserList.prototype.getTable = function () {
         return protractor_1.element(protractor_1.by.css('.table'));

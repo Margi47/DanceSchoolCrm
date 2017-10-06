@@ -46,6 +46,12 @@ var UserAdd = (function () {
     UserAdd.prototype.getSaveButton = function () {
         return this.getForm().element(protractor_1.by.id('saveButton'));
     };
+    UserAdd.prototype.inputInvalidData = function () {
+        var _this = this;
+        return this.getNameInput().sendKeys("")
+            .then(function () { return _this.getPhoneInput().sendKeys("abc"); })
+            .then(function () { return _this.getEmailInput().sendKeys("abc"); });
+    };
     return UserAdd;
 }());
 exports.UserAdd = UserAdd;
