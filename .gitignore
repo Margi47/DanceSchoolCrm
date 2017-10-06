@@ -182,6 +182,8 @@ ClientBin/
 *.pfx
 *.publishsettings
 orleans.codegen.cs
+*.js
+
 
 Logs/
 

@@ -1,4 +1,4 @@
-import { browser, by, element, promise, ElementFinder, ElementArrayFinder } from 'protractor';
+import { browser, by, element, promise, ElementFinder, ElementArrayFinder, protractor, ExpectedConditions } from 'protractor';
 
 
 export class UserList {
@@ -35,5 +35,10 @@ export class UserList {
 
     getFirstRowId(): promise.Promise<string> {
         return this.getTableRows().get(0).element(by.tagName('th')).getText();
+    }
+
+    performSearch(key: string): promise.Promise<void> {
+
+        return this.getTableSearch().clear().then(() => this.getTableSearch().sendKeys(key));      
     }
 }

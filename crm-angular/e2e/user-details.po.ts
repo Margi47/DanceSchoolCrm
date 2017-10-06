@@ -1,4 +1,4 @@
-import { browser, by, element, promise, ElementFinder, ElementArrayFinder } from 'protractor';
+import { browser, by, element, promise, ElementFinder, ElementArrayFinder, protractor,  ExpectedConditions} from 'protractor';
 
 
 export class UserDetails {

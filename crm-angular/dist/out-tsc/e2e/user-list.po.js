@@ -30,6 +30,10 @@ var UserList = (function () {
     UserList.prototype.getFirstRowId = function () {
         return this.getTableRows().get(0).element(protractor_1.by.tagName('th')).getText();
     };
+    UserList.prototype.performSearch = function (key) {
+        var _this = this;
+        return this.getTableSearch().clear().then(function () { return _this.getTableSearch().sendKeys(key); });
+    };
     return UserList;
 }());
 exports.UserList = UserList;
