@@ -72,7 +72,7 @@ var UserService = (function () {
     UserService.prototype.deleteUser = function (userId) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.delete(this.usersUrl + "/" + userId, headers)
+        return this.http.delete(this.usersUrl + "/" + userId, options)
             .map(function (response) { return null; });
     };
     UserService.prototype.update = function (userData) {
@@ -106,7 +106,7 @@ var UserService = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         var teacherUrl = 'api/teachers';
-        return this.http.delete(teacherUrl + "/" + userId, headers)
+        return this.http.delete(teacherUrl + "/" + userId, options)
             .map(function (response) { return userId; });
     };
     return UserService;

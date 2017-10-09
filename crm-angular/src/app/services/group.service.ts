@@ -67,7 +67,7 @@ export class GroupService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.groupsUrl}/${groupId}`, headers)
+        return this.http.delete(`${this.groupsUrl}/${groupId}`, options)
             .map(response => null);
     }
 
@@ -97,7 +97,7 @@ export class GroupService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.groupUserUrl}/${userId}/${groupId}`, headers)
+        return this.http.delete(`${this.groupUserUrl}/${userId}/${groupId}`, options)
             .map(response => groupId);
     }
 
@@ -118,7 +118,7 @@ export class GroupService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.groupTeacherUrl}/${groupId}/${teacherId}`, headers)
+        return this.http.delete(`${this.groupTeacherUrl}/${groupId}/${teacherId}`, options)
             .map(response => groupId);
     }
 }

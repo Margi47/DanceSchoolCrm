@@ -1,18 +1,18 @@
-import { UserList } from './user-list.po';
-import { UserAdd } from './user-add.po';
-import { UserDetails } from './user-details.po';
+import { ListPO } from './po/list.po';
+import { UserAddPO } from './po/user-add.po';
+import { UserDetailsPO } from './po/user-details.po';
 import { TimeHelper } from './helpers/time.helper';
 import { browser, Key, protractor } from 'protractor';
 
 
 describe('Users Page', () => {
 
-    const userListPage: UserList = new UserList();
-    const userAddPage: UserAdd = new UserAdd();
-    const userDetailsPage: UserDetails = new UserDetails();
+    const userListPage: ListPO = new ListPO("/users");
+    const userAddPage: UserAddPO = new UserAddPO();
+    const userDetailsPage: UserDetailsPO = new UserDetailsPO();
 
 
-    it('should accept search input and implement search', () => {
+    it('should accept user search input and implement search', () => {
         userListPage.navigateToList()
             .then(() => userListPage.performSearch("na"))//wait
             .then(() => { expect(userListPage.getFirstRowName()).toContain("na") })
@@ -35,10 +35,13 @@ describe('Users Page', () => {
     })
 
     it('should add new user', () => {
+        let currentUrl;
         userAddPage.navigateToAddForm()
+            .then(() => browser.getCurrentUrl())
+            .then((url) => currentUrl = url)
             .then(() => userAddPage.getNameInput().sendKeys("Jack Sparrow"))
             .then(() => userAddPage.getSaveButton().click())
-            .then(() => TimeHelper.waitForVisibility(userDetailsPage.getTable()))
+            .then(() => TimeHelper.waitForUrlChange(currentUrl))
             .then(() => userListPage.navigateToList())
             .then(() => userListPage.performSearch("sparrow"))//wait
             .then(() => { expect(userListPage.getTableRowsCount()).toBeGreaterThan(0) })
@@ -53,12 +56,12 @@ describe('Users Page', () => {
             .then((id) => userDetailsPage.navigateToDetailsForm(id))
             .then(() => userDetailsPage.addNewGroup(1))
             .then(() => { expect(userDetailsPage.getTableRowsCount()).toBe(1) })
-            .then(() => browser.sleep(5000))
             .then(() => userDetailsPage.deleteFirstGroup())
             .then(() => { expect(userDetailsPage.getTableRowsCount()).toBe(0) })
     });
 
     it('should delete user', () => {
+        let currentUrl;
         let rowsCount: number;
         userListPage.navigateToList()
             .then(() => userListPage.performSearch("sparrow")) //wait
@@ -66,8 +69,11 @@ describe('Users Page', () => {
             .then((num) => rowsCount = num)
             .then(() => userListPage.getFirstRowId())
             .then((id) => userDetailsPage.navigateToDetailsForm(id))
+            .then(() => browser.getCurrentUrl())
+            .then((url) => currentUrl = url)
             .then(() => userDetailsPage.getDeleteButton().click())
-            .then(() => TimeHelper.waitForVisibility(userListPage.getTable()))
+            .then(() => browser.sleep(0))
+            .then(() => TimeHelper.waitForUrlChange(currentUrl))
             .then(() => userListPage.performSearch("sparrow")) //wait
             .then(() => { expect(userListPage.getTableRowsCount()).toBe(rowsCount -1) });
     })

@@ -1,7 +1,7 @@
 import { browser, by, element, promise, ElementFinder, ElementArrayFinder } from 'protractor';
 
 
-export class UserAdd {
+export class UserAddPO {
 
     navigateToAddForm(): promise.Promise<any> {
         return browser.get('/useradd');

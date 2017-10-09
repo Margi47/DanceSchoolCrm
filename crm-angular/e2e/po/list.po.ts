@@ -1,14 +1,19 @@
 import { browser, by, element, promise, ElementFinder, ElementArrayFinder, protractor, ExpectedConditions } from 'protractor';
-import { TimeHelper } from './helpers/time.helper';
+import { TimeHelper } from '../helpers/time.helper';
 
-export class UserList {
+export class ListPO {
+    url: string;
+
+    constructor(path: string) {
+        this.url = path;
+    }
 
     navigateToList(): promise.Promise<any> {
-        return browser.get('/users').then(() => TimeHelper.waitForVisibility(this.getTable()));
+        return browser.get(this.url).then(() => TimeHelper.waitForVisibility(this.getTable()));
     }
 
     getTable(): ElementFinder {
-        return element(by.css('.table'));
+        return element(by.tagName('table'));
     }
 
     getTableSearch(): ElementFinder {

@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var user_list_po_1 = require("./user-list.po");
-var user_add_po_1 = require("./user-add.po");
-var user_details_po_1 = require("./user-details.po");
+var list_po_1 = require("./po/list.po");
+var user_add_po_1 = require("./po/user-add.po");
+var user_details_po_1 = require("./po/user-details.po");
 var time_helper_1 = require("./helpers/time.helper");
 var protractor_1 = require("protractor");
 describe('Users Page', function () {
-    var userListPage = new user_list_po_1.UserList();
+    var userListPage = new list_po_1.ListPO("/users");
     var userAddPage = new user_add_po_1.UserAdd();
     var userDetailsPage = new user_details_po_1.UserDetails();
-    it('should accept search input and implement search', function () {
+    it('should accept user search input and implement search', function () {
         userListPage.navigateToList()
             .then(function () { return userListPage.performSearch("na"); }) //wait
             .then(function () { expect(userListPage.getFirstRowName()).toContain("na"); })
@@ -30,10 +30,13 @@ describe('Users Page', function () {
             .then(function () { expect(userAddPage.getSaveButton().isEnabled()).toBeFalsy(); });
     });
     it('should add new user', function () {
+        var currentUrl;
         userAddPage.navigateToAddForm()
+            .then(function () { return protractor_1.browser.getCurrentUrl(); })
+            .then(function (url) { return currentUrl = url; })
             .then(function () { return userAddPage.getNameInput().sendKeys("Jack Sparrow"); })
             .then(function () { return userAddPage.getSaveButton().click(); })
-            .then(function () { return time_helper_1.TimeHelper.waitForVisibility(userDetailsPage.getTable()); })
+            .then(function () { return time_helper_1.TimeHelper.waitForUrlChange(currentUrl); })
             .then(function () { return userListPage.navigateToList(); })
             .then(function () { return userListPage.performSearch("sparrow"); }) //wait
             .then(function () { expect(userListPage.getTableRowsCount()).toBeGreaterThan(0); })
@@ -46,11 +49,11 @@ describe('Users Page', function () {
             .then(function (id) { return userDetailsPage.navigateToDetailsForm(id); })
             .then(function () { return userDetailsPage.addNewGroup(1); })
             .then(function () { expect(userDetailsPage.getTableRowsCount()).toBe(1); })
-            .then(function () { return protractor_1.browser.sleep(5000); })
             .then(function () { return userDetailsPage.deleteFirstGroup(); })
             .then(function () { expect(userDetailsPage.getTableRowsCount()).toBe(0); });
     });
     it('should delete user', function () {
+        var currentUrl;
         var rowsCount;
         userListPage.navigateToList()
             .then(function () { return userListPage.performSearch("sparrow"); }) //wait
@@ -58,8 +61,11 @@ describe('Users Page', function () {
             .then(function (num) { return rowsCount = num; })
             .then(function () { return userListPage.getFirstRowId(); })
             .then(function (id) { return userDetailsPage.navigateToDetailsForm(id); })
+            .then(function () { return protractor_1.browser.getCurrentUrl(); })
+            .then(function (url) { return currentUrl = url; })
             .then(function () { return userDetailsPage.getDeleteButton().click(); })
-            .then(function () { return time_helper_1.TimeHelper.waitForVisibility(userListPage.getTable()); })
+            .then(function () { return protractor_1.browser.sleep(0); })
+            .then(function () { return time_helper_1.TimeHelper.waitForUrlChange(currentUrl); })
             .then(function () { return userListPage.performSearch("sparrow"); }) //wait
             .then(function () { expect(userListPage.getTableRowsCount()).toBe(rowsCount - 1); });
     });

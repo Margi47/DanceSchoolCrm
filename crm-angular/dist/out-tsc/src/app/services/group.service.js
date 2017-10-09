@@ -59,7 +59,7 @@ var GroupService = (function () {
     GroupService.prototype.deleteGroup = function (groupId) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.delete(this.groupsUrl + "/" + groupId, headers)
+        return this.http.delete(this.groupsUrl + "/" + groupId, options)
             .map(function (response) { return null; });
     };
     GroupService.prototype.update = function (groupData) {
@@ -82,7 +82,7 @@ var GroupService = (function () {
     GroupService.prototype.removeStudent = function (groupId, userId) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.delete(this.groupUserUrl + "/" + userId + "/" + groupId, headers)
+        return this.http.delete(this.groupUserUrl + "/" + userId + "/" + groupId, options)
             .map(function (response) { return groupId; });
     };
     GroupService.prototype.getTeachers = function (groupId) {
@@ -98,7 +98,7 @@ var GroupService = (function () {
     GroupService.prototype.removeTeacher = function (groupId, teacherId) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.delete(this.groupTeacherUrl + "/" + groupId + "/" + teacherId, headers)
+        return this.http.delete(this.groupTeacherUrl + "/" + groupId + "/" + teacherId, options)
             .map(function (response) { return groupId; });
     };
     return GroupService;

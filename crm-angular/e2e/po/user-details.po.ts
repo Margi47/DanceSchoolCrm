@@ -1,7 +1,7 @@
 import { browser, by, element, promise, ElementFinder, ElementArrayFinder, protractor,  ExpectedConditions, Key} from 'protractor';
-import {TimeHelper} from './helpers/time.helper';
+import {TimeHelper} from '../helpers/time.helper';
 
-export class UserDetails {
+export class UserDetailsPO {
 
     navigateToDetailsForm(id: string): promise.Promise<any> {
         return browser.get(`/userdetail/${id}`).then(() => TimeHelper.waitForVisibility(this.getTable()));
@@ -53,7 +53,7 @@ export class UserDetails {
                 }
             })
             .then(() => this.getSelectInput().sendKeys(Key.ENTER))
-            .then(() => TimeHelper.waitForGroupsChange(groupsCount));
+            .then(() => TimeHelper.waitForGroupsChange(this.getTableRowsCount(), groupsCount));
     }
 
     deleteFirstGroup() {
@@ -61,6 +61,6 @@ export class UserDetails {
         return this.getTableRowsCount()
             .then((num) => groupsCount = num)
             .then(() => this.getFistRowButton().click())
-            .then(() => TimeHelper.waitForGroupsChange(groupsCount));
+            .then(() => TimeHelper.waitForGroupsChange(this.getTableRowsCount(), groupsCount));
     }
 }

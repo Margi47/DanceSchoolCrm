@@ -63,7 +63,7 @@ var GroupEffects = (function () {
         this.navigationAfterChange$ = this.update$
             .ofType(group_actions_1.GroupActions.CHANGE_GROUP_SUCCESS)
             .map(function () { return _this.routerActions.back(); });
-        this.changeUserSuccess$ = this.update$
+        this.changeGroupSuccess$ = this.update$
             .ofType(group_actions_1.GroupActions.CHANGE_GROUP_SUCCESS)
             .map(function () { return _this.errorActions.removeError(); });
         this.addGroup$ = this.update$
@@ -174,7 +174,7 @@ __decorate([
 __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)
-], GroupEffects.prototype, "changeUserSuccess$", void 0);
+], GroupEffects.prototype, "changeGroupSuccess$", void 0);
 __decorate([
     effects_1.Effect(),
     __metadata("design:type", Object)

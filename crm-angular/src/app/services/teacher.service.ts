@@ -57,7 +57,7 @@ export class TeacherService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.teachersUrl}/${teacherId}`, headers)
+        return this.http.delete(`${this.teachersUrl}/${teacherId}`, options)
             .map(response => null);
     }
 
@@ -78,7 +78,7 @@ export class TeacherService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.groupTeacherUrl}/${groupId}/${teacherId}`, headers)
+        return this.http.delete(`${this.groupTeacherUrl}/${groupId}/${teacherId}`, options)
             .map(response => teacherId);
     }
 }

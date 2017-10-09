@@ -1,5 +1,5 @@
-import { browser, protractor, ElementFinder} from 'protractor';
-import { UserDetails } from '../user-details.po';
+import { browser, protractor, ElementFinder, promise} from 'protractor';
+import { UserDetails } from '../po/user-details.po';
 
 const userDetailsPage: UserDetails = new UserDetails();
 
@@ -9,11 +9,11 @@ export class TimeHelper {
         return browser.wait(protractor.ExpectedConditions.visibilityOf(element), 5000);
     }
 
-    static waitForGroupsChange(num: number) {
-        return browser.wait(() => {
-            return userDetailsPage.getTableRowsCount()
-                .then((rows) => rows != num)
-        }
-        , 5000);
+    static waitForUrlChange(url: string) {
+        return browser.wait(() => browser.getCurrentUrl().then((curUrl) => curUrl != url), 5000);
+    }
+
+    static waitForGroupsChange(expression: promise.Promise<any>, num: number) {
+        return browser.wait(() => expression.then((rows) => rows != num), 5000);
     }
 }
