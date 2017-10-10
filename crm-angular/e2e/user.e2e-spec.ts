@@ -72,7 +72,7 @@ describe('Users Page', () => {
             .then(() => browser.getCurrentUrl())
             .then((url) => currentUrl = url)
             .then(() => userDetailsPage.getDeleteButton().click())
-            .then(() => browser.sleep(0))
+            .then(() => browser.sleep(2000))
             .then(() => TimeHelper.waitForUrlChange(currentUrl))
             .then(() => userListPage.performSearch("sparrow")) //wait
             .then(() => { expect(userListPage.getTableRowsCount()).toBe(rowsCount -1) });

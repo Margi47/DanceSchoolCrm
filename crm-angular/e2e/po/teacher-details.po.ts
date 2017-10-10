@@ -1,75 +1,66 @@
 import { browser, by, element, promise, ElementFinder, ElementArrayFinder, protractor,  ExpectedConditions, Key} from 'protractor';
 import {TimeHelper} from '../helpers/time.helper';
 
-export class Keys {
-    public static teachers = "teachersList";
-    public static students = "studentsList"
-};
-
-export class GroupDetailsPO {
+export class TeacherDetailsPO {
 
     navigateToDetailsForm(id: string): promise.Promise<any> {
-        return browser.get(`/groupdetail/${id}`).then(() => TimeHelper.waitForVisibility(this.getTable(Keys.teachers)));
+        return browser.get(`/teacherdetail/${id}`).then(() => TimeHelper.waitForVisibility(this.getTable()));
     }
 
-    getSection(key: string): ElementFinder {
-        return element(by.id(key));
+    getGroupSelect(): ElementFinder {
+        return element(by.tagName('ngx-paged-select'));
     }
 
-    getSelect(key: string): ElementFinder {
-        return this.getSection(key).element(by.tagName('ngx-paged-select'));
+    getGroupSelectInput(): ElementFinder {
+        return this.getGroupSelect().element(by.tagName('input'));
     }
 
-    getSelectInput(key: string): ElementFinder {
-        return this.getSelect(key).element(by.tagName('input'));
+    getTable(): ElementFinder {
+        return element(by.tagName('table'));
     }
 
-    getTable(key: string): ElementFinder {
-        return this.getSection(key).element(by.tagName('table'));
+    getAddButton(): ElementFinder {
+        return this.getTable().element(by.tagName('thead')).element(by.tagName('button'));
     }
 
-    getAddButton(key: string): ElementFinder {
-        return this.getTable(key).element(by.tagName('thead')).element(by.tagName('button'));
+    getTableRows(): ElementArrayFinder {
+        return this.getTable().element(by.tagName('tbody')).all(by.tagName('tr'));
     }
 
-    getTableRows(key: string): ElementArrayFinder {
-        return this.getTable(key).element(by.tagName('tbody')).all(by.tagName('tr'));
+    getFistRowButton(): ElementFinder {
+        return this.getTableRows().get(0).all(by.tagName('button')).get(1);
     }
 
-    getFistRowButton(key: string): ElementFinder {
-        return this.getTableRows(key).get(0).all(by.tagName('button')).get(1);
-    }
-
-    getTableRowsCount(key: string): promise.Promise<number> {
-        return this.getTableRows(key).count();
+    getTableRowsCount(): promise.Promise<number> {
+        return this.getTableRows().count();
     }
 
     getDeleteButton(): ElementFinder {
         return element(by.id('deleteButton'));
     }
 
-    addNewItem(key: string, index: number) {
+    addNewGroup(index: number) {
         let count;
-        return this.getTableRowsCount(key)
+        return this.getTableRowsCount()
             .then((num) => count = num)
-            .then(() => this.getAddButton(key).click())
-            .then(() => this.getSelect(key).click())
+            .then(() => this.getAddButton().click())
+            .then(() => this.getGroupSelect().click())
             .then(() => {
                 let i = 0;
                 while (i < index) {
-                    this.getSelectInput(key).sendKeys(Key.ARROW_DOWN);
+                    this.getGroupSelectInput().sendKeys(Key.ARROW_DOWN);
                     i++;
                 }
             })
-            .then(() => this.getSelectInput(key).sendKeys(Key.ENTER))
-            .then(() => TimeHelper.waitForGroupsChange(this.getTableRowsCount(key), count));
+            .then(() => this.getGroupSelectInput().sendKeys(Key.ENTER))
+            .then(() => TimeHelper.waitForGroupsChange(this.getTableRowsCount(), count));
     }
 
-    deleteFirstItem(key: string) {
+    deleteFirstGroup() {
         let count;
-        return this.getTableRowsCount(key)
+        return this.getTableRowsCount()
             .then((num) => count = num)
-            .then(() => this.getFistRowButton(key).click())
-            .then(() => TimeHelper.waitForGroupsChange(this.getTableRowsCount(key), count));
+            .then(() => this.getFistRowButton().click())
+            .then(() => TimeHelper.waitForGroupsChange(this.getTableRowsCount(), count));
     }
 }

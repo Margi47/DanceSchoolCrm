@@ -79,7 +79,7 @@ describe('Group Page', () => {
             .then(() => browser.getCurrentUrl())
             .then((url) => currentUrl = url)
             .then(() => groupDetailsPage.getDeleteButton().click())
-            .then(() => browser.sleep(0))
+            .then(() => browser.sleep(2000))
             .then(() => TimeHelper.waitForUrlChange(currentUrl))
             .then(() => groupListPage.performSearch("all")) //wait
             .then(() => { expect(groupListPage.getTableRowsCount()).toBe(rowsCount -1) });

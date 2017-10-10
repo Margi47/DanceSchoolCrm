@@ -11,12 +11,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var teacher_1 = require("../../models/teacher");
+var user_1 = require("../../models/user");
 var TeacherAddFormComponent = (function () {
     function TeacherAddFormComponent() {
         this.model = new teacher_1.Teacher();
         this.loadUsers = new core_1.EventEmitter();
         this.teacherSave = new core_1.EventEmitter();
         this.teacherCancel = new core_1.EventEmitter();
+        this.selectedUser = new user_1.User();
     }
     TeacherAddFormComponent.prototype.ngOnChanges = function () {
         this.isLastPage = this.allUsers.total != this.allUsers.users.length;

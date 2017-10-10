@@ -7,8 +7,8 @@ var time_helper_1 = require("./helpers/time.helper");
 var protractor_1 = require("protractor");
 describe('Users Page', function () {
     var userListPage = new list_po_1.ListPO("/users");
-    var userAddPage = new user_add_po_1.UserAdd();
-    var userDetailsPage = new user_details_po_1.UserDetails();
+    var userAddPage = new user_add_po_1.UserAddPO();
+    var userDetailsPage = new user_details_po_1.UserDetailsPO();
     it('should accept user search input and implement search', function () {
         userListPage.navigateToList()
             .then(function () { return userListPage.performSearch("na"); }) //wait
@@ -64,7 +64,7 @@ describe('Users Page', function () {
             .then(function () { return protractor_1.browser.getCurrentUrl(); })
             .then(function (url) { return currentUrl = url; })
             .then(function () { return userDetailsPage.getDeleteButton().click(); })
-            .then(function () { return protractor_1.browser.sleep(0); })
+            .then(function () { return protractor_1.browser.sleep(2000); })
             .then(function () { return time_helper_1.TimeHelper.waitForUrlChange(currentUrl); })
             .then(function () { return userListPage.performSearch("sparrow"); }) //wait
             .then(function () { expect(userListPage.getTableRowsCount()).toBe(rowsCount - 1); });
