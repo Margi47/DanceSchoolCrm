@@ -25,7 +25,11 @@ var UserService = (function () {
     }
     UserService.prototype.getUsers = function (page, filter) {
         return this.http.get(this.usersUrl + "?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     UserService.prototype.getUser = function (id) {
         return this.http.get(this.usersUrl + "/" + id)
@@ -37,13 +41,18 @@ var UserService = (function () {
     };
     UserService.prototype.getAvailableStudents = function (groupId, page, filter) {
         return this.http.get(this.groupUserUrl + "/" + groupId + "/students/available?filter=" + filter + "&page=" + page + "&pagesize=10")
-            .map(function (response) { return response.json(); });
+            .map(function (response) {
+            var data = response.json();
+            data.filter = filter;
+            return data;
+        });
     };
     UserService.prototype.getAvailableTeachers = function (page, filter) {
         return this.http.get(this.usersUrl + "/teachers/available?filter=" + filter + "&page=" + page + "&pagesize=10")
             .map(function (response) {
-            console.log(response);
-            return response.json();
+            var data = response.json();
+            data.filter = filter;
+            return data;
         });
     };
     UserService.prototype.addUser = function (user) {
@@ -63,7 +72,7 @@ var UserService = (function () {
     UserService.prototype.deleteUser = function (userId) {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.delete(this.usersUrl + "/" + userId, headers)
+        return this.http.delete(this.usersUrl + "/" + userId, options)
             .map(function (response) { return null; });
     };
     UserService.prototype.update = function (userData) {
@@ -97,7 +106,7 @@ var UserService = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
         var options = new http_1.RequestOptions({ headers: headers });
         var teacherUrl = 'api/teachers';
-        return this.http.delete(teacherUrl + "/" + userId, headers)
+        return this.http.delete(teacherUrl + "/" + userId, options)
             .map(function (response) { return userId; });
     };
     return UserService;

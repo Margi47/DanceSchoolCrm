@@ -78,7 +78,7 @@ export class UserService {
         var headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
 
-        return this.http.delete(`${this.usersUrl}/${userId}`, headers)
+        return this.http.delete(`${this.usersUrl}/${userId}`, options)
             .map(response => null);
     }
 
@@ -122,7 +122,7 @@ export class UserService {
         let options = new RequestOptions({ headers: headers });
 
         var teacherUrl = 'api/teachers';
-        return this.http.delete(`${teacherUrl}/${userId}`, headers)
+        return this.http.delete(`${teacherUrl}/${userId}`, options)
             .map(response => userId);
     }
 }

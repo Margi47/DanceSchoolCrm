@@ -76,7 +76,7 @@ export class GroupEffects {
         .ofType(GroupActions.CHANGE_GROUP_SUCCESS)
         .map(() => this.routerActions.back());
 
-    @Effect() changeUserSuccess$ = this.update$
+    @Effect() changeGroupSuccess$ = this.update$
         .ofType(GroupActions.CHANGE_GROUP_SUCCESS)
         .map(() => this.errorActions.removeError());
 

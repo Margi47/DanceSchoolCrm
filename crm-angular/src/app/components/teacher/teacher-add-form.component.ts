@@ -17,7 +17,7 @@ export class TeacherAddFormComponent implements OnChanges {
     @Output() teacherCancel = new EventEmitter();
 
     isLastPage: boolean;
-    selectedUser: User;
+    selectedUser: User = new User();
 
     ngOnChanges() {       
         this.isLastPage = this.allUsers.total != this.allUsers.users.length;

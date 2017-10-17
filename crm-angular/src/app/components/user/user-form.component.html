@@ -2,7 +2,7 @@
         <form (ngSubmit)="onUserSubmit($event)" #userForm="ngForm" [serverValidator]="userForm" [errors]="errors">
             <div *ngIf="!newUser"><label>Id: {{model.id}}</label></div>
 
-            <div class="form-group">
+            <div class="form-group" id="nameInput">
                 <label for="name">Name</label>
                 <input type="text"
                        class="form-control"
@@ -14,7 +14,7 @@
                                  [maxMessage]="'Name cannot be longer than 25 symbols'"></form-validation>
             </div>
 
-            <div class="form-group">
+            <div class="form-group" id="phoneInput">
                 <label for="phone">Phone number</label>
                 <input type="text"
                        class="form-control"
@@ -23,7 +23,7 @@
                        pattern="^\+[1-9]{1}[0-9]{3,14}$" />
                 <form-validation [model]="phone" [fieldName]="'Phone'"></form-validation>
             </div>
-            <div class="form-group">
+            <div class="form-group" id="emailInput">
                 <label for="email">Email</label>
                 <input class="form-control"
                        [(ngModel)]="model.email"
@@ -67,7 +67,7 @@
             </div>
 
 
-            <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default">Save</button>
+            <button type="submit" [disabled]="!userForm.form.valid" class="btn btn-default" id="saveButton">Save</button>
             <button (click)="onUserCancel(); userForm.reset()" class="btn btn-default" type="button" *ngIf="newUser">Cancel</button>
         </form>
 
@@ -106,6 +106,6 @@
                 </tbody>
             </table>
 
-            <button (click)="onUserDelete()" class="btn btn-default" type="button">Delete user</button>
+            <button (click)="onUserDelete()" class="btn btn-default" type="button" id="deleteButton">Delete user</button>
         </div>
 </div>
