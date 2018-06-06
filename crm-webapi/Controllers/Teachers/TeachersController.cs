@@ -11,7 +11,6 @@ using crm_webapi.Exceptions;
 
 namespace crm_webapi.Controllers.Users
 {
-    [ApiValidation]
     [Route("api/[controller]")]
     public class TeachersController : Controller
     {

@@ -8,7 +8,7 @@ namespace crm_webapi.Middlewares
 {
   public static class MiddlewareExtensions
   {
-    public static IApplicationBuilder UseLogging(this IApplicationBuilder builder)
+    public static IApplicationBuilder UseRequestResponseLogging(this IApplicationBuilder builder)
     {
       return builder.UseMiddleware<LoggingMiddleware>();
     }

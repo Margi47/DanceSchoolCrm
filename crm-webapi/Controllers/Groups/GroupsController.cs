@@ -11,7 +11,6 @@ using crm_webapi.Responses;
 
 namespace crm_webapi.Controllers.Groups
 {
-    [ApiValidation]
     [Route("api/[controller]")]
     public class GroupsController : Controller
     {

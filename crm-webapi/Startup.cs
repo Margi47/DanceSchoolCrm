@@ -76,6 +76,8 @@ namespace crm_webapi
         {
             if (env.IsDevelopment())
             {
+                app.UseRequestResponseLogging();
+
                 app.UseDeveloperExceptionPage();
             }
 

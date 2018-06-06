@@ -13,7 +13,6 @@ using Microsoft.Extensions.Logging;
 
 namespace crm_webapi.Controllers.Users
 {
-    [ApiValidation]
     [Route("api/[controller]")]
     public class UsersController : Controller
     {
